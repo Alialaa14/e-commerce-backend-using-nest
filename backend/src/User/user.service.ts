@@ -60,18 +60,15 @@ export class UserService {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     let picture: { url: string; id: string } | undefined;
-    if (filePath) {
-      const isRemoteUrl = /^https?:\/\//i.test(filePath);
 
-      if (isRemoteUrl) {
-        picture = { url: filePath, id: '' };
-      } else {
-        const result = await this.cloudinaryService.uploadToCloudinary(
-          filePath,
-          'users',
-        );
-        picture = { url: result.secure_url, id: result.public_id };
-      }
+    if (filePath) {
+      // const isRemoteUrl = /^https?:\/\//i.test(filePath); fo
+
+      const result = await this.cloudinaryService.uploadToCloudinary(
+        filePath,
+        'users',
+      );
+      picture = { url: result.secure_url, id: result.public_id };
     }
 
     const generatedOtp = this.otpService.generateOtp(10);
@@ -132,6 +129,7 @@ export class UserService {
       }
       throw new ConflictException('Email already exists');
     }
+    console.log(payload.picture?.url);
 
     await this.userModel.createUser({
       username: payload.username,

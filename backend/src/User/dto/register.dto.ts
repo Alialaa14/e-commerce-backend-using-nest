@@ -24,8 +24,4 @@ export class RegisterDto {
     message: 'Password too weak',
   })
   password!: string;
-
-  @IsString()
-  @IsOptional()
-  picture?: string;
 }

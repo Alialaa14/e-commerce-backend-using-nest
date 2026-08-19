@@ -35,7 +35,6 @@ async function bootstrap() {
   );
 
   await app.register(multipart, {
-    attachFieldsToBody: 'keyValues',
     limits: {
       fileSize: 5 * 1024 * 1024,
     },

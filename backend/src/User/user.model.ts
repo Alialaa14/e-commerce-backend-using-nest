@@ -29,7 +29,6 @@ export class UserModel {
   }
 
   async findByEmail(email: string) {
-    console.log(this.prismaService.prisma);
     return this.prismaService.prisma.user.findFirst({
       where: { email },
     });
@@ -63,6 +62,8 @@ export class UserModel {
     picture_url_id?: string;
     isVerified?: boolean;
   }) {
+    console.log('At Create User Model ');
+    console.log(data.picture_url_id!, data.picture_url!);
     return this.prismaService.prisma.user.create({ data });
   }
 

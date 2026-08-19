@@ -3,10 +3,15 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { MultipartFile } from '@fastify/multipart';
 import { existsSync, mkdirSync, unlinkSync } from 'fs';
 import { writeFile } from 'fs/promises';
 import { extname, join } from 'path';
+
+interface UploadedFile {
+  filename: string;
+  mimetype: string;
+  buffer: Buffer;
+}
 
 @Injectable()
 export class MulterService {
@@ -17,7 +22,9 @@ export class MulterService {
     'image/jpg',
     'application/pdf',
     'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/vnd.ms-excel',
+    'text/csv',
   ]);
 
   isAllowedMimeType(mimeType: string): boolean {
@@ -45,10 +52,10 @@ export class MulterService {
   }
 
   async saveToDisk(
-    file: MultipartFile,
+    file: UploadedFile | undefined,
     subfolder = 'general',
   ): Promise<string> {
-    if (!file) {
+    if (!file || !file.buffer) {
       throw new BadRequestException('No file uploaded');
     }
 
@@ -63,8 +70,7 @@ export class MulterService {
     const filePath = join(dir, fileName);
 
     try {
-      const buffer = await file.toBuffer();
-      await writeFile(filePath, buffer);
+      await writeFile(filePath, file.buffer);
       return filePath;
     } catch (error) {
       throw new InternalServerErrorException(

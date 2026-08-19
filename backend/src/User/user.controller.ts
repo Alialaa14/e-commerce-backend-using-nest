@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -8,6 +9,7 @@ import {
   Res,
   UnauthorizedException,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import { AuthGuard } from '../common/guards/auth.guard';
@@ -18,6 +20,13 @@ import { RegisterDto } from './dto/register.dto';
 import { VerifyOtpDto } from './dto/register-verify-otp.dto';
 import { ForgetPasswordDto } from './dto/forget-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { plainToInstance } from 'class-transformer';
+import { validate } from 'class-validator';
+import { FastifyFileInterceptor } from '../utils/multer/multer.interceptor';
+import {
+  ParsedFields,
+  UploadedFastifyFile,
+} from '../utils/multer/multer-file.decorator';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -66,34 +75,27 @@ export class UserController {
   }
 
   @Post('register')
-  async register(@Req() req: FastifyRequest, @Body() body: RegisterDto) {
-    let localPath: string | undefined;
-    let pictureUrl: string | undefined;
-
-    const file = await (req as any).file?.();
-
-    if (file) {
-      localPath = await this.uploadService.saveToDisk(file, 'users');
-
-      try {
-        const { secure_url } = await this.cloudinaryService.uploadToCloudinary(
-          localPath,
-          `user/${body.username}`,
-        );
-        pictureUrl = secure_url;
-      } finally {
-        await this.uploadService.deleteFile(localPath);
-      }
+  @UseInterceptors(FastifyFileInterceptor)
+  async register(
+    @UploadedFastifyFile() file: any,
+    @ParsedFields() fields: Record<string, string>,
+  ) {
+    const dto = plainToInstance(RegisterDto, fields);
+    const errors = await validate(dto);
+    if (errors.length) {
+      throw new BadRequestException(errors);
     }
-
+    if (file) {
+      file.path = await this.uploadService.saveToDisk(file, 'users');
+    }
+    console.log(file.path);
     return this.userService.register(
-      body.username,
-      body.email,
-      body.password,
-      pictureUrl,
+      dto.username,
+      dto.email,
+      dto.password,
+      file?.path,
     );
   }
-
   @Post('register-verify-otp')
   async verifyRegisterOtp(@Body() body: VerifyOtpDto) {
     await this.userService.verifyRegisterOtp(body.token, body.otp);
