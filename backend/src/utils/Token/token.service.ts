@@ -66,7 +66,6 @@ export class TokenService {
     return this.jwtService.decode(token) as T | null;
   }
 
-  // token.service.ts — add these methods to the existing class
   signCustomToken<T extends object>(
     payload: T,
     expiresIn: string | number,

@@ -20,13 +20,8 @@ import { RegisterDto } from './dto/register.dto';
 import { VerifyOtpDto } from './dto/register-verify-otp.dto';
 import { ForgetPasswordDto } from './dto/forget-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
-import { plainToInstance } from 'class-transformer';
-import { validate } from 'class-validator';
-import { FastifyFileInterceptor } from '../utils/multer/multer.interceptor';
-import {
-  ParsedFields,
-  UploadedFastifyFile,
-} from '../utils/multer/multer-file.decorator';
+import { MultipartInterceptor } from '../utils/multer/multer.interceptor';
+import { UploadedFastifyFile } from '../utils/multer/multer-file.decorator';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -75,26 +70,26 @@ export class UserController {
   }
 
   @Post('register')
-  @UseInterceptors(FastifyFileInterceptor)
+  @UseInterceptors(MultipartInterceptor)
   async register(
-    @UploadedFastifyFile() file: any,
-    @ParsedFields() fields: Record<string, string>,
+    @UploadedFastifyFile() picture: any,
+    @Body() body: RegisterDto,
   ) {
-    const dto = plainToInstance(RegisterDto, fields);
-    const errors = await validate(dto);
-    if (errors.length) {
-      throw new BadRequestException(errors);
+    let filePath: string | undefined;
+    try {
+      filePath = await this.uploadService.saveToDisk(picture, `users`);
+      return this.userService.register(
+        body.username,
+        body.email,
+        body.password,
+        filePath,
+      );
+    } catch (error) {
+      console.log(error);
+      throw new BadRequestException('File upload failed');
+    } finally {
+      await this.uploadService.deleteFile(filePath);
     }
-    if (file) {
-      file.path = await this.uploadService.saveToDisk(file, 'users');
-    }
-    console.log(file.path);
-    return this.userService.register(
-      dto.username,
-      dto.email,
-      dto.password,
-      file?.path,
-    );
   }
   @Post('register-verify-otp')
   async verifyRegisterOtp(@Body() body: VerifyOtpDto) {

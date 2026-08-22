@@ -221,6 +221,7 @@ exports.Prisma.ProductScalarFieldEnum = {
   viewCount: 'viewCount',
   rating: 'rating',
   available: 'available',
+  isDeleted: 'isDeleted',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   wishlistUserId: 'wishlistUserId'
@@ -233,6 +234,7 @@ exports.Prisma.VariantScalarFieldEnum = {
   size: 'size',
   stock: 'stock',
   sold: 'sold',
+  isDeleted: 'isDeleted',
   cartId: 'cartId',
   orderOrderId: 'orderOrderId'
 };

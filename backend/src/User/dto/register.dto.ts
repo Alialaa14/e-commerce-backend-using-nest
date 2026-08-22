@@ -1,3 +1,4 @@
+import { MultipartFile } from '@fastify/multipart';
 import {
   IsEmail,
   IsNotEmpty,

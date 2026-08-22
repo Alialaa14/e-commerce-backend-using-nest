@@ -8,6 +8,7 @@ import {
   Req,
   UseGuards,
   BadRequestException,
+  UseInterceptors,
 } from '@nestjs/common';
 import type { FastifyRequest } from 'fastify';
 import { Roles } from '../common/decorators/roles.decorator';
@@ -19,6 +20,8 @@ import { UserModel } from '../User/user.model';
 import { BrandService } from './brand.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandProfileDto } from './dto/update-brand-profile.dto';
+import { MultipartInterceptor } from '../utils/multer/multer.interceptor';
+import { UploadedFastifyFile } from '../utils/multer/multer-file.decorator';
 
 @Controller('brands')
 export class BrandController {
@@ -32,41 +35,26 @@ export class BrandController {
   @Post()
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('admin', 'user', 'brand')
-  async createBrand(@Req() req: FastifyRequest, @Body() dto: CreateBrandDto) {
+  @UseInterceptors(MultipartInterceptor)
+  async createBrand(
+    @UploadedFastifyFile() picture: any,
+    @Req() req: FastifyRequest,
+    @Body() dto: CreateBrandDto,
+  ) {
     const user = (req as any).user;
     let localPath: string | undefined;
-    let logoUrl: string | undefined;
 
     // Parse location from JSON string
     let location: { latitude: number; longitude: number } | undefined;
-    if (dto.location) {
-      try {
-        location = JSON.parse(dto.location);
-      } catch (error) {
-        throw new BadRequestException('Invalid location JSON format');
-      }
-    }
 
-    const file = await (req as any).file?.();
-
-    if (file) {
-      localPath = await this.uploadService.saveToDisk(file, 'brands');
-
-      try {
-        const { secure_url } = await this.cloudinaryService.uploadToCloudinary(
-          localPath,
-          `brand/${dto.name}`,
-        );
-        logoUrl = secure_url;
-      } finally {
-        await this.uploadService.deleteFile(localPath);
-      }
+    if (picture) {
+      localPath = await this.uploadService.saveToDisk(picture, 'brands');
     }
 
     const brand = await this.brandService.createBrand(
       user.sub,
       dto.name,
-      logoUrl,
+      localPath,
     );
 
     await this.userModel.updateUser(user.sub, { role: 'brand' });

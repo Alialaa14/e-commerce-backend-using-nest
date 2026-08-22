@@ -20,6 +20,7 @@ export class BrandService {
   ) {}
 
   async createBrand(userId: string, name: string, logoFilePath?: string) {
+    console.log(`logo file path: ${logoFilePath}`);
     const existingBrand = await this.brandModel.getUserBrand(userId);
     if (existingBrand) {
       throw new BadRequestException('You have already created a brand');
