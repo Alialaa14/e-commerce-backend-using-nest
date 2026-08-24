@@ -1,4 +1,12 @@
-import { IsNotEmpty, IsNumber, IsString, MinLength } from 'class-validator';
+import { plainToInstance, Transform, Type } from 'class-transformer';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  MinLength,
+  ValidateNested,
+} from 'class-validator';
 
 class LocationDto {
   @IsNumber()
@@ -14,9 +22,18 @@ export class CreateBrandDto {
   @MinLength(2)
   name!: string;
 
-  @IsString()
-  location!: string; // JSON string containing {latitude, longitude}
+  @Transform(({ value }) => {
+    try {
+      const parsed = typeof value === 'string' ? JSON.parse(value) : value;
+      return plainToInstance(LocationDto, parsed);
+    } catch {
+      return value;
+    }
+  })
+  @ValidateNested()
+  location!: LocationDto;
 
   @IsString()
-  branchName!: string;
+  @IsOptional()
+  branchName?: string;
 }

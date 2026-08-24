@@ -35,8 +35,16 @@ async function bootstrap() {
   );
 
   await app.register(multipart, {
-    limits: {
-      fileSize: 5 * 1024 * 1024,
+    attachFieldsToBody: 'keyValues',
+    onFile: async (part) => {
+      const buffer = await part.toBuffer();
+      (part as any).value = {
+        buffer,
+        filename: part.filename,
+        mimetype: part.mimetype,
+        size: buffer.length,
+        fieldname: part.fieldname,
+      };
     },
   });
 

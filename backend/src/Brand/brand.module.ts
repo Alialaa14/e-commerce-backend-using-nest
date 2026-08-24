@@ -20,5 +20,6 @@ import { BrandService } from './brand.service';
   ],
   controllers: [BrandController],
   providers: [BrandService, BrandModel, AuthGuard, RolesGuard],
+  exports: [BrandService],
 })
 export class BrandModule {}

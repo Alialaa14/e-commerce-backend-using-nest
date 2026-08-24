@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -9,6 +10,7 @@ import {
   Put,
   Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AuthGuard } from '../common/guards/auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
@@ -17,10 +19,18 @@ import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { GetCategoriesQueryDto } from './dto/get-categories-query.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { MultipartInterceptor } from '../utils/multer/multer.interceptor';
+import { UploadedFastifyFile } from '../utils/multer/multer-file.decorator';
+import { MulterService } from '../utils/multer/multer.service';
+import { plainToInstance } from 'class-transformer';
+import { validate } from 'class-validator';
 
 @Controller('categories')
 export class CategoryController {
-  constructor(private readonly categoryService: CategoryService) {}
+  constructor(
+    private readonly categoryService: CategoryService,
+    private readonly multerService: MulterService,
+  ) {}
 
   @Get()
   @UseGuards(AuthGuard)
@@ -69,12 +79,21 @@ export class CategoryController {
 
   @Post()
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin')
-  async createCategory(@Body() dto: CreateCategoryDto) {
+  @Roles('admin', 'brand', 'user')
+  @UseInterceptors(MultipartInterceptor)
+  async createCategory(
+    @Body() dto: Record<string, any>,
+    @UploadedFastifyFile() file: any,
+  ) {
+    let filePath: string | undefined;
+    if (file) {
+      filePath = await this.multerService.saveToDisk(file, 'categories');
+    }
+
     const category = await this.categoryService.createCategory({
       name: dto.name,
       description: dto.description,
-      media: dto.media,
+      filePath,
     });
 
     return {

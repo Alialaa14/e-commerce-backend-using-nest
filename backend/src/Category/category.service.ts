@@ -9,10 +9,16 @@ import {
   CategoryModel,
   CategoryResult,
 } from './category.model';
+import { CloudinaryService } from '../utils/cloudinary/cloudinary.service';
+import { MulterService } from '../utils/multer/multer.service';
 
 @Injectable()
 export class CategoryService {
-  constructor(private readonly categoryModel: CategoryModel) {}
+  constructor(
+    private readonly categoryModel: CategoryModel,
+    private readonly cloudinaryService: CloudinaryService,
+    private readonly multerService: MulterService,
+  ) {}
 
   async getCategories(filter: CategoryFilter): Promise<CategoryResult<any>> {
     return this.categoryModel.getCategories(filter);
@@ -29,27 +35,42 @@ export class CategoryService {
   async createCategory(data: {
     name: string;
     description: string;
-    media?: any;
+    filePath?: string;
   }) {
-    const existing = await this.categoryModel.getCategories({
-      search: data.name,
-      take: 1,
-      skip: 0,
-    });
-
-    const duplicate = existing.data.find((item) => item.name === data.name);
-    if (duplicate) {
-      throw new BadRequestException(`Category "${data.name}" already exists`);
-    }
-
+    let media: { secure_url: string; public_id: string } | undefined;
     try {
+      const existing = await this.categoryModel.getCategories({
+        search: data.name,
+        take: 1,
+        skip: 0,
+      });
+
+      const duplicate = existing.data.find((item) => item.name === data.name);
+      if (duplicate) {
+        throw new BadRequestException(`Category "${data.name}" already exists`);
+      }
+      if (!data.filePath) {
+        throw new BadRequestException('Media is required');
+      }
+      if (data.filePath) {
+        const upload = await this.cloudinaryService.uploadToCloudinary(
+          data.filePath,
+          `categories/${data.name}`,
+        );
+        media = {
+          secure_url: upload.secure_url,
+          public_id: upload.public_id,
+        };
+      }
       return await this.categoryModel.createCategory({
         name: data.name,
         description: data.description,
-        media: data.media ?? {},
+        media: media ?? {},
       });
     } catch {
       throw new InternalServerErrorException('Failed to create category');
+    } finally {
+      await this.multerService.deleteFile(data.filePath);
     }
   }
 

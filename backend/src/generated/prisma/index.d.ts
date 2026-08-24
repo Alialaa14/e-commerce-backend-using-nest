@@ -10197,6 +10197,7 @@ export namespace Prisma {
     viewCount: number | null
     rating: Decimal | null
     available: boolean | null
+    isDeleted: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
     wishlistUserId: string | null
@@ -10213,6 +10214,7 @@ export namespace Prisma {
     viewCount: number | null
     rating: Decimal | null
     available: boolean | null
+    isDeleted: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
     wishlistUserId: string | null
@@ -10230,6 +10232,7 @@ export namespace Prisma {
     viewCount: number
     rating: number
     available: number
+    isDeleted: number
     createdAt: number
     updatedAt: number
     wishlistUserId: number
@@ -10262,6 +10265,7 @@ export namespace Prisma {
     viewCount?: true
     rating?: true
     available?: true
+    isDeleted?: true
     createdAt?: true
     updatedAt?: true
     wishlistUserId?: true
@@ -10278,6 +10282,7 @@ export namespace Prisma {
     viewCount?: true
     rating?: true
     available?: true
+    isDeleted?: true
     createdAt?: true
     updatedAt?: true
     wishlistUserId?: true
@@ -10295,6 +10300,7 @@ export namespace Prisma {
     viewCount?: true
     rating?: true
     available?: true
+    isDeleted?: true
     createdAt?: true
     updatedAt?: true
     wishlistUserId?: true
@@ -10399,6 +10405,7 @@ export namespace Prisma {
     viewCount: number
     rating: Decimal
     available: boolean
+    isDeleted: boolean
     createdAt: Date
     updatedAt: Date
     wishlistUserId: string | null
@@ -10435,6 +10442,7 @@ export namespace Prisma {
     viewCount?: boolean
     rating?: boolean
     available?: boolean
+    isDeleted?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     wishlistUserId?: boolean
@@ -10458,6 +10466,7 @@ export namespace Prisma {
     viewCount?: boolean
     rating?: boolean
     available?: boolean
+    isDeleted?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     wishlistUserId?: boolean
@@ -10478,6 +10487,7 @@ export namespace Prisma {
     viewCount?: boolean
     rating?: boolean
     available?: boolean
+    isDeleted?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     wishlistUserId?: boolean
@@ -10498,12 +10508,13 @@ export namespace Prisma {
     viewCount?: boolean
     rating?: boolean
     available?: boolean
+    isDeleted?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     wishlistUserId?: boolean
   }
 
-  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "media" | "description" | "brandId" | "categoryId" | "price" | "discount" | "viewCount" | "rating" | "available" | "createdAt" | "updatedAt" | "wishlistUserId", ExtArgs["result"]["product"]>
+  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "media" | "description" | "brandId" | "categoryId" | "price" | "discount" | "viewCount" | "rating" | "available" | "isDeleted" | "createdAt" | "updatedAt" | "wishlistUserId", ExtArgs["result"]["product"]>
   export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     brand?: boolean | BrandDefaultArgs<ExtArgs>
     category?: boolean | CategoryDefaultArgs<ExtArgs>
@@ -10544,6 +10555,7 @@ export namespace Prisma {
       viewCount: number
       rating: Prisma.Decimal
       available: boolean
+      isDeleted: boolean
       createdAt: Date
       updatedAt: Date
       wishlistUserId: string | null
@@ -10986,6 +10998,7 @@ export namespace Prisma {
     readonly viewCount: FieldRef<"Product", 'Int'>
     readonly rating: FieldRef<"Product", 'Decimal'>
     readonly available: FieldRef<"Product", 'Boolean'>
+    readonly isDeleted: FieldRef<"Product", 'Boolean'>
     readonly createdAt: FieldRef<"Product", 'DateTime'>
     readonly updatedAt: FieldRef<"Product", 'DateTime'>
     readonly wishlistUserId: FieldRef<"Product", 'String'>
@@ -11504,6 +11517,7 @@ export namespace Prisma {
     size: string | null
     stock: number | null
     sold: number | null
+    isDeleted: boolean | null
     cartId: string | null
     orderOrderId: string | null
   }
@@ -11515,6 +11529,7 @@ export namespace Prisma {
     size: string | null
     stock: number | null
     sold: number | null
+    isDeleted: boolean | null
     cartId: string | null
     orderOrderId: string | null
   }
@@ -11526,6 +11541,7 @@ export namespace Prisma {
     size: number
     stock: number
     sold: number
+    isDeleted: number
     cartId: number
     orderOrderId: number
     _all: number
@@ -11549,6 +11565,7 @@ export namespace Prisma {
     size?: true
     stock?: true
     sold?: true
+    isDeleted?: true
     cartId?: true
     orderOrderId?: true
   }
@@ -11560,6 +11577,7 @@ export namespace Prisma {
     size?: true
     stock?: true
     sold?: true
+    isDeleted?: true
     cartId?: true
     orderOrderId?: true
   }
@@ -11571,6 +11589,7 @@ export namespace Prisma {
     size?: true
     stock?: true
     sold?: true
+    isDeleted?: true
     cartId?: true
     orderOrderId?: true
     _all?: true
@@ -11668,8 +11687,9 @@ export namespace Prisma {
     color: string
     size: string
     stock: number
-    sold: number
-    cartId: string
+    sold: number | null
+    isDeleted: boolean | null
+    cartId: string | null
     orderOrderId: string | null
     _count: VariantCountAggregateOutputType | null
     _avg: VariantAvgAggregateOutputType | null
@@ -11699,10 +11719,11 @@ export namespace Prisma {
     size?: boolean
     stock?: boolean
     sold?: boolean
+    isDeleted?: boolean
     cartId?: boolean
     orderOrderId?: boolean
     product?: boolean | ProductDefaultArgs<ExtArgs>
-    cart?: boolean | CartDefaultArgs<ExtArgs>
+    cart?: boolean | Variant$cartArgs<ExtArgs>
     order?: boolean | Variant$orderArgs<ExtArgs>
   }, ExtArgs["result"]["variant"]>
 
@@ -11713,10 +11734,11 @@ export namespace Prisma {
     size?: boolean
     stock?: boolean
     sold?: boolean
+    isDeleted?: boolean
     cartId?: boolean
     orderOrderId?: boolean
     product?: boolean | ProductDefaultArgs<ExtArgs>
-    cart?: boolean | CartDefaultArgs<ExtArgs>
+    cart?: boolean | Variant$cartArgs<ExtArgs>
     order?: boolean | Variant$orderArgs<ExtArgs>
   }, ExtArgs["result"]["variant"]>
 
@@ -11727,10 +11749,11 @@ export namespace Prisma {
     size?: boolean
     stock?: boolean
     sold?: boolean
+    isDeleted?: boolean
     cartId?: boolean
     orderOrderId?: boolean
     product?: boolean | ProductDefaultArgs<ExtArgs>
-    cart?: boolean | CartDefaultArgs<ExtArgs>
+    cart?: boolean | Variant$cartArgs<ExtArgs>
     order?: boolean | Variant$orderArgs<ExtArgs>
   }, ExtArgs["result"]["variant"]>
 
@@ -11741,24 +11764,25 @@ export namespace Prisma {
     size?: boolean
     stock?: boolean
     sold?: boolean
+    isDeleted?: boolean
     cartId?: boolean
     orderOrderId?: boolean
   }
 
-  export type VariantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "productId" | "color" | "size" | "stock" | "sold" | "cartId" | "orderOrderId", ExtArgs["result"]["variant"]>
+  export type VariantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "productId" | "color" | "size" | "stock" | "sold" | "isDeleted" | "cartId" | "orderOrderId", ExtArgs["result"]["variant"]>
   export type VariantInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     product?: boolean | ProductDefaultArgs<ExtArgs>
-    cart?: boolean | CartDefaultArgs<ExtArgs>
+    cart?: boolean | Variant$cartArgs<ExtArgs>
     order?: boolean | Variant$orderArgs<ExtArgs>
   }
   export type VariantIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     product?: boolean | ProductDefaultArgs<ExtArgs>
-    cart?: boolean | CartDefaultArgs<ExtArgs>
+    cart?: boolean | Variant$cartArgs<ExtArgs>
     order?: boolean | Variant$orderArgs<ExtArgs>
   }
   export type VariantIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     product?: boolean | ProductDefaultArgs<ExtArgs>
-    cart?: boolean | CartDefaultArgs<ExtArgs>
+    cart?: boolean | Variant$cartArgs<ExtArgs>
     order?: boolean | Variant$orderArgs<ExtArgs>
   }
 
@@ -11766,7 +11790,7 @@ export namespace Prisma {
     name: "Variant"
     objects: {
       product: Prisma.$ProductPayload<ExtArgs>
-      cart: Prisma.$CartPayload<ExtArgs>
+      cart: Prisma.$CartPayload<ExtArgs> | null
       order: Prisma.$OrderPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -11775,8 +11799,9 @@ export namespace Prisma {
       color: string
       size: string
       stock: number
-      sold: number
-      cartId: string
+      sold: number | null
+      isDeleted: boolean | null
+      cartId: string | null
       orderOrderId: string | null
     }, ExtArgs["result"]["variant"]>
     composites: {}
@@ -12173,7 +12198,7 @@ export namespace Prisma {
   export interface Prisma__VariantClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    cart<T extends CartDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CartDefaultArgs<ExtArgs>>): Prisma__CartClient<$Result.GetResult<Prisma.$CartPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    cart<T extends Variant$cartArgs<ExtArgs> = {}>(args?: Subset<T, Variant$cartArgs<ExtArgs>>): Prisma__CartClient<$Result.GetResult<Prisma.$CartPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     order<T extends Variant$orderArgs<ExtArgs> = {}>(args?: Subset<T, Variant$orderArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -12210,6 +12235,7 @@ export namespace Prisma {
     readonly size: FieldRef<"Variant", 'String'>
     readonly stock: FieldRef<"Variant", 'Int'>
     readonly sold: FieldRef<"Variant", 'Int'>
+    readonly isDeleted: FieldRef<"Variant", 'Boolean'>
     readonly cartId: FieldRef<"Variant", 'String'>
     readonly orderOrderId: FieldRef<"Variant", 'String'>
   }
@@ -12610,6 +12636,25 @@ export namespace Prisma {
      * Limit how many Variants to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Variant.cart
+   */
+  export type Variant$cartArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cart
+     */
+    select?: CartSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cart
+     */
+    omit?: CartOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CartInclude<ExtArgs> | null
+    where?: CartWhereInput
   }
 
   /**
@@ -21784,6 +21829,7 @@ export namespace Prisma {
     viewCount: 'viewCount',
     rating: 'rating',
     available: 'available',
+    isDeleted: 'isDeleted',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     wishlistUserId: 'wishlistUserId'
@@ -21799,6 +21845,7 @@ export namespace Prisma {
     size: 'size',
     stock: 'stock',
     sold: 'sold',
+    isDeleted: 'isDeleted',
     cartId: 'cartId',
     orderOrderId: 'orderOrderId'
   };
@@ -22755,6 +22802,7 @@ export namespace Prisma {
     viewCount?: IntFilter<"Product"> | number
     rating?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
     available?: BoolFilter<"Product"> | boolean
+    isDeleted?: BoolFilter<"Product"> | boolean
     createdAt?: DateTimeFilter<"Product"> | Date | string
     updatedAt?: DateTimeFilter<"Product"> | Date | string
     wishlistUserId?: UuidNullableFilter<"Product"> | string | null
@@ -22777,6 +22825,7 @@ export namespace Prisma {
     viewCount?: SortOrder
     rating?: SortOrder
     available?: SortOrder
+    isDeleted?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     wishlistUserId?: SortOrderInput | SortOrder
@@ -22802,6 +22851,7 @@ export namespace Prisma {
     viewCount?: IntFilter<"Product"> | number
     rating?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
     available?: BoolFilter<"Product"> | boolean
+    isDeleted?: BoolFilter<"Product"> | boolean
     createdAt?: DateTimeFilter<"Product"> | Date | string
     updatedAt?: DateTimeFilter<"Product"> | Date | string
     wishlistUserId?: UuidNullableFilter<"Product"> | string | null
@@ -22824,6 +22874,7 @@ export namespace Prisma {
     viewCount?: SortOrder
     rating?: SortOrder
     available?: SortOrder
+    isDeleted?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     wishlistUserId?: SortOrderInput | SortOrder
@@ -22849,6 +22900,7 @@ export namespace Prisma {
     viewCount?: IntWithAggregatesFilter<"Product"> | number
     rating?: DecimalWithAggregatesFilter<"Product"> | Decimal | DecimalJsLike | number | string
     available?: BoolWithAggregatesFilter<"Product"> | boolean
+    isDeleted?: BoolWithAggregatesFilter<"Product"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Product"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Product"> | Date | string
     wishlistUserId?: UuidNullableWithAggregatesFilter<"Product"> | string | null
@@ -22863,11 +22915,12 @@ export namespace Prisma {
     color?: StringFilter<"Variant"> | string
     size?: StringFilter<"Variant"> | string
     stock?: IntFilter<"Variant"> | number
-    sold?: IntFilter<"Variant"> | number
-    cartId?: UuidFilter<"Variant"> | string
+    sold?: IntNullableFilter<"Variant"> | number | null
+    isDeleted?: BoolNullableFilter<"Variant"> | boolean | null
+    cartId?: UuidNullableFilter<"Variant"> | string | null
     orderOrderId?: UuidNullableFilter<"Variant"> | string | null
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
-    cart?: XOR<CartScalarRelationFilter, CartWhereInput>
+    cart?: XOR<CartNullableScalarRelationFilter, CartWhereInput> | null
     order?: XOR<OrderNullableScalarRelationFilter, OrderWhereInput> | null
   }
 
@@ -22877,8 +22930,9 @@ export namespace Prisma {
     color?: SortOrder
     size?: SortOrder
     stock?: SortOrder
-    sold?: SortOrder
-    cartId?: SortOrder
+    sold?: SortOrderInput | SortOrder
+    isDeleted?: SortOrderInput | SortOrder
+    cartId?: SortOrderInput | SortOrder
     orderOrderId?: SortOrderInput | SortOrder
     product?: ProductOrderByWithRelationInput
     cart?: CartOrderByWithRelationInput
@@ -22896,10 +22950,11 @@ export namespace Prisma {
     color?: StringFilter<"Variant"> | string
     size?: StringFilter<"Variant"> | string
     stock?: IntFilter<"Variant"> | number
-    sold?: IntFilter<"Variant"> | number
+    sold?: IntNullableFilter<"Variant"> | number | null
+    isDeleted?: BoolNullableFilter<"Variant"> | boolean | null
     orderOrderId?: UuidNullableFilter<"Variant"> | string | null
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
-    cart?: XOR<CartScalarRelationFilter, CartWhereInput>
+    cart?: XOR<CartNullableScalarRelationFilter, CartWhereInput> | null
     order?: XOR<OrderNullableScalarRelationFilter, OrderWhereInput> | null
   }, "id" | "cartId" | "productId_color_size">
 
@@ -22909,8 +22964,9 @@ export namespace Prisma {
     color?: SortOrder
     size?: SortOrder
     stock?: SortOrder
-    sold?: SortOrder
-    cartId?: SortOrder
+    sold?: SortOrderInput | SortOrder
+    isDeleted?: SortOrderInput | SortOrder
+    cartId?: SortOrderInput | SortOrder
     orderOrderId?: SortOrderInput | SortOrder
     _count?: VariantCountOrderByAggregateInput
     _avg?: VariantAvgOrderByAggregateInput
@@ -22928,8 +22984,9 @@ export namespace Prisma {
     color?: StringWithAggregatesFilter<"Variant"> | string
     size?: StringWithAggregatesFilter<"Variant"> | string
     stock?: IntWithAggregatesFilter<"Variant"> | number
-    sold?: IntWithAggregatesFilter<"Variant"> | number
-    cartId?: UuidWithAggregatesFilter<"Variant"> | string
+    sold?: IntNullableWithAggregatesFilter<"Variant"> | number | null
+    isDeleted?: BoolNullableWithAggregatesFilter<"Variant"> | boolean | null
+    cartId?: UuidNullableWithAggregatesFilter<"Variant"> | string | null
     orderOrderId?: UuidNullableWithAggregatesFilter<"Variant"> | string | null
   }
 
@@ -24133,6 +24190,7 @@ export namespace Prisma {
     viewCount?: number
     rating?: Decimal | DecimalJsLike | number | string
     available?: boolean
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     brand: BrandCreateNestedOneWithoutProductsInput
@@ -24154,6 +24212,7 @@ export namespace Prisma {
     viewCount?: number
     rating?: Decimal | DecimalJsLike | number | string
     available?: boolean
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     wishlistUserId?: string | null
@@ -24171,6 +24230,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     available?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brand?: BrandUpdateOneRequiredWithoutProductsNestedInput
@@ -24192,6 +24252,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     available?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     wishlistUserId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24211,6 +24272,7 @@ export namespace Prisma {
     viewCount?: number
     rating?: Decimal | DecimalJsLike | number | string
     available?: boolean
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     wishlistUserId?: string | null
@@ -24226,6 +24288,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     available?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -24242,6 +24305,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     available?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     wishlistUserId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24252,9 +24316,10 @@ export namespace Prisma {
     color: string
     size: string
     stock?: number
-    sold?: number
+    sold?: number | null
+    isDeleted?: boolean | null
     product: ProductCreateNestedOneWithoutVariantsInput
-    cart: CartCreateNestedOneWithoutProductsInput
+    cart?: CartCreateNestedOneWithoutProductsInput
     order?: OrderCreateNestedOneWithoutProductsInput
   }
 
@@ -24264,8 +24329,9 @@ export namespace Prisma {
     color: string
     size: string
     stock?: number
-    sold?: number
-    cartId: string
+    sold?: number | null
+    isDeleted?: boolean | null
+    cartId?: string | null
     orderOrderId?: string | null
   }
 
@@ -24274,9 +24340,10 @@ export namespace Prisma {
     color?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
     stock?: IntFieldUpdateOperationsInput | number
-    sold?: IntFieldUpdateOperationsInput | number
+    sold?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     product?: ProductUpdateOneRequiredWithoutVariantsNestedInput
-    cart?: CartUpdateOneRequiredWithoutProductsNestedInput
+    cart?: CartUpdateOneWithoutProductsNestedInput
     order?: OrderUpdateOneWithoutProductsNestedInput
   }
 
@@ -24286,8 +24353,9 @@ export namespace Prisma {
     color?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
     stock?: IntFieldUpdateOperationsInput | number
-    sold?: IntFieldUpdateOperationsInput | number
-    cartId?: StringFieldUpdateOperationsInput | string
+    sold?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cartId?: NullableStringFieldUpdateOperationsInput | string | null
     orderOrderId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -24297,8 +24365,9 @@ export namespace Prisma {
     color: string
     size: string
     stock?: number
-    sold?: number
-    cartId: string
+    sold?: number | null
+    isDeleted?: boolean | null
+    cartId?: string | null
     orderOrderId?: string | null
   }
 
@@ -24307,7 +24376,8 @@ export namespace Prisma {
     color?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
     stock?: IntFieldUpdateOperationsInput | number
-    sold?: IntFieldUpdateOperationsInput | number
+    sold?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type VariantUncheckedUpdateManyInput = {
@@ -24316,8 +24386,9 @@ export namespace Prisma {
     color?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
     stock?: IntFieldUpdateOperationsInput | number
-    sold?: IntFieldUpdateOperationsInput | number
-    cartId?: StringFieldUpdateOperationsInput | string
+    sold?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cartId?: NullableStringFieldUpdateOperationsInput | string | null
     orderOrderId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -25728,6 +25799,7 @@ export namespace Prisma {
     viewCount?: SortOrder
     rating?: SortOrder
     available?: SortOrder
+    isDeleted?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     wishlistUserId?: SortOrder
@@ -25751,6 +25823,7 @@ export namespace Prisma {
     viewCount?: SortOrder
     rating?: SortOrder
     available?: SortOrder
+    isDeleted?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     wishlistUserId?: SortOrder
@@ -25767,6 +25840,7 @@ export namespace Prisma {
     viewCount?: SortOrder
     rating?: SortOrder
     available?: SortOrder
+    isDeleted?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     wishlistUserId?: SortOrder
@@ -25795,14 +25869,14 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type ProductScalarRelationFilter = {
     is?: ProductWhereInput
     isNot?: ProductWhereInput
-  }
-
-  export type CartScalarRelationFilter = {
-    is?: CartWhereInput
-    isNot?: CartWhereInput
   }
 
   export type OrderNullableScalarRelationFilter = {
@@ -25823,6 +25897,7 @@ export namespace Prisma {
     size?: SortOrder
     stock?: SortOrder
     sold?: SortOrder
+    isDeleted?: SortOrder
     cartId?: SortOrder
     orderOrderId?: SortOrder
   }
@@ -25839,6 +25914,7 @@ export namespace Prisma {
     size?: SortOrder
     stock?: SortOrder
     sold?: SortOrder
+    isDeleted?: SortOrder
     cartId?: SortOrder
     orderOrderId?: SortOrder
   }
@@ -25850,6 +25926,7 @@ export namespace Prisma {
     size?: SortOrder
     stock?: SortOrder
     sold?: SortOrder
+    isDeleted?: SortOrder
     cartId?: SortOrder
     orderOrderId?: SortOrder
   }
@@ -25857,6 +25934,14 @@ export namespace Prisma {
   export type VariantSumOrderByAggregateInput = {
     stock?: SortOrder
     sold?: SortOrder
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
   export type JsonFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -27058,6 +27143,10 @@ export namespace Prisma {
     connect?: OrderWhereUniqueInput
   }
 
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+  }
+
   export type ProductUpdateOneRequiredWithoutVariantsNestedInput = {
     create?: XOR<ProductCreateWithoutVariantsInput, ProductUncheckedCreateWithoutVariantsInput>
     connectOrCreate?: ProductCreateOrConnectWithoutVariantsInput
@@ -27066,10 +27155,12 @@ export namespace Prisma {
     update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutVariantsInput, ProductUpdateWithoutVariantsInput>, ProductUncheckedUpdateWithoutVariantsInput>
   }
 
-  export type CartUpdateOneRequiredWithoutProductsNestedInput = {
+  export type CartUpdateOneWithoutProductsNestedInput = {
     create?: XOR<CartCreateWithoutProductsInput, CartUncheckedCreateWithoutProductsInput>
     connectOrCreate?: CartCreateOrConnectWithoutProductsInput
     upsert?: CartUpsertWithoutProductsInput
+    disconnect?: CartWhereInput | boolean
+    delete?: CartWhereInput | boolean
     connect?: CartWhereUniqueInput
     update?: XOR<XOR<CartUpdateToOneWithWhereWithoutProductsInput, CartUpdateWithoutProductsInput>, CartUncheckedUpdateWithoutProductsInput>
   }
@@ -27989,6 +28080,19 @@ export namespace Prisma {
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
+
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
   export type NestedJsonFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -28615,6 +28719,7 @@ export namespace Prisma {
     viewCount?: number
     rating?: Decimal | DecimalJsLike | number | string
     available?: boolean
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     category: CategoryCreateNestedOneWithoutProductsInput
@@ -28634,6 +28739,7 @@ export namespace Prisma {
     viewCount?: number
     rating?: Decimal | DecimalJsLike | number | string
     available?: boolean
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     wishlistUserId?: string | null
@@ -28880,6 +28986,7 @@ export namespace Prisma {
     viewCount?: IntFilter<"Product"> | number
     rating?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
     available?: BoolFilter<"Product"> | boolean
+    isDeleted?: BoolFilter<"Product"> | boolean
     createdAt?: DateTimeFilter<"Product"> | Date | string
     updatedAt?: DateTimeFilter<"Product"> | Date | string
     wishlistUserId?: UuidNullableFilter<"Product"> | string | null
@@ -29771,8 +29878,9 @@ export namespace Prisma {
     color: string
     size: string
     stock?: number
-    sold?: number
-    cart: CartCreateNestedOneWithoutProductsInput
+    sold?: number | null
+    isDeleted?: boolean | null
+    cart?: CartCreateNestedOneWithoutProductsInput
     order?: OrderCreateNestedOneWithoutProductsInput
   }
 
@@ -29781,8 +29889,9 @@ export namespace Prisma {
     color: string
     size: string
     stock?: number
-    sold?: number
-    cartId: string
+    sold?: number | null
+    isDeleted?: boolean | null
+    cartId?: string | null
     orderOrderId?: string | null
   }
 
@@ -29938,8 +30047,9 @@ export namespace Prisma {
     color?: StringFilter<"Variant"> | string
     size?: StringFilter<"Variant"> | string
     stock?: IntFilter<"Variant"> | number
-    sold?: IntFilter<"Variant"> | number
-    cartId?: UuidFilter<"Variant"> | string
+    sold?: IntNullableFilter<"Variant"> | number | null
+    isDeleted?: BoolNullableFilter<"Variant"> | boolean | null
+    cartId?: UuidNullableFilter<"Variant"> | string | null
     orderOrderId?: UuidNullableFilter<"Variant"> | string | null
   }
 
@@ -29972,6 +30082,7 @@ export namespace Prisma {
     viewCount?: number
     rating?: Decimal | DecimalJsLike | number | string
     available?: boolean
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     brand: BrandCreateNestedOneWithoutProductsInput
@@ -29992,6 +30103,7 @@ export namespace Prisma {
     viewCount?: number
     rating?: Decimal | DecimalJsLike | number | string
     available?: boolean
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     wishlistUserId?: string | null
@@ -30086,6 +30198,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     available?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brand?: BrandUpdateOneRequiredWithoutProductsNestedInput
@@ -30106,6 +30219,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     available?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     wishlistUserId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30196,6 +30310,7 @@ export namespace Prisma {
     viewCount?: number
     rating?: Decimal | DecimalJsLike | number | string
     available?: boolean
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     brand: BrandCreateNestedOneWithoutProductsInput
@@ -30215,6 +30330,7 @@ export namespace Prisma {
     viewCount?: number
     rating?: Decimal | DecimalJsLike | number | string
     available?: boolean
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     wishlistUserId?: string | null
@@ -30258,6 +30374,7 @@ export namespace Prisma {
     viewCount?: number
     rating?: Decimal | DecimalJsLike | number | string
     available?: boolean
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     brand: BrandCreateNestedOneWithoutProductsInput
@@ -30278,6 +30395,7 @@ export namespace Prisma {
     viewCount?: number
     rating?: Decimal | DecimalJsLike | number | string
     available?: boolean
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     wishlistUserId?: string | null
@@ -30379,6 +30497,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     available?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brand?: BrandUpdateOneRequiredWithoutProductsNestedInput
@@ -30399,6 +30518,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     available?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     wishlistUserId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30554,7 +30674,8 @@ export namespace Prisma {
     color: string
     size: string
     stock?: number
-    sold?: number
+    sold?: number | null
+    isDeleted?: boolean | null
     product: ProductCreateNestedOneWithoutVariantsInput
     order?: OrderCreateNestedOneWithoutProductsInput
   }
@@ -30565,7 +30686,8 @@ export namespace Prisma {
     color: string
     size: string
     stock?: number
-    sold?: number
+    sold?: number | null
+    isDeleted?: boolean | null
     orderOrderId?: string | null
   }
 
@@ -30749,6 +30871,7 @@ export namespace Prisma {
     viewCount?: number
     rating?: Decimal | DecimalJsLike | number | string
     available?: boolean
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     brand: BrandCreateNestedOneWithoutProductsInput
@@ -30769,6 +30892,7 @@ export namespace Prisma {
     viewCount?: number
     rating?: Decimal | DecimalJsLike | number | string
     available?: boolean
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     reviews?: ReviewUncheckedCreateNestedManyWithoutProductInput
@@ -30968,9 +31092,10 @@ export namespace Prisma {
     color: string
     size: string
     stock?: number
-    sold?: number
+    sold?: number | null
+    isDeleted?: boolean | null
     product: ProductCreateNestedOneWithoutVariantsInput
-    cart: CartCreateNestedOneWithoutProductsInput
+    cart?: CartCreateNestedOneWithoutProductsInput
   }
 
   export type VariantUncheckedCreateWithoutOrderInput = {
@@ -30979,8 +31104,9 @@ export namespace Prisma {
     color: string
     size: string
     stock?: number
-    sold?: number
-    cartId: string
+    sold?: number | null
+    isDeleted?: boolean | null
+    cartId?: string | null
   }
 
   export type VariantCreateOrConnectWithoutOrderInput = {
@@ -31826,6 +31952,7 @@ export namespace Prisma {
     viewCount?: number
     rating?: Decimal | DecimalJsLike | number | string
     available?: boolean
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     wishlistUserId?: string | null
@@ -31930,6 +32057,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     available?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
@@ -31949,6 +32077,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     available?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     wishlistUserId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31967,6 +32096,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     available?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     wishlistUserId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32052,8 +32182,9 @@ export namespace Prisma {
     color: string
     size: string
     stock?: number
-    sold?: number
-    cartId: string
+    sold?: number | null
+    isDeleted?: boolean | null
+    cartId?: string | null
     orderOrderId?: string | null
   }
 
@@ -32080,8 +32211,9 @@ export namespace Prisma {
     color?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
     stock?: IntFieldUpdateOperationsInput | number
-    sold?: IntFieldUpdateOperationsInput | number
-    cart?: CartUpdateOneRequiredWithoutProductsNestedInput
+    sold?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cart?: CartUpdateOneWithoutProductsNestedInput
     order?: OrderUpdateOneWithoutProductsNestedInput
   }
 
@@ -32090,8 +32222,9 @@ export namespace Prisma {
     color?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
     stock?: IntFieldUpdateOperationsInput | number
-    sold?: IntFieldUpdateOperationsInput | number
-    cartId?: StringFieldUpdateOperationsInput | string
+    sold?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cartId?: NullableStringFieldUpdateOperationsInput | string | null
     orderOrderId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -32100,8 +32233,9 @@ export namespace Prisma {
     color?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
     stock?: IntFieldUpdateOperationsInput | number
-    sold?: IntFieldUpdateOperationsInput | number
-    cartId?: StringFieldUpdateOperationsInput | string
+    sold?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cartId?: NullableStringFieldUpdateOperationsInput | string | null
     orderOrderId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -32116,6 +32250,7 @@ export namespace Prisma {
     viewCount?: number
     rating?: Decimal | DecimalJsLike | number | string
     available?: boolean
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     wishlistUserId?: string | null
@@ -32131,6 +32266,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     available?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brand?: BrandUpdateOneRequiredWithoutProductsNestedInput
@@ -32150,6 +32286,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     available?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     wishlistUserId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32168,6 +32305,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     available?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     wishlistUserId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32179,7 +32317,8 @@ export namespace Prisma {
     color: string
     size: string
     stock?: number
-    sold?: number
+    sold?: number | null
+    isDeleted?: boolean | null
     orderOrderId?: string | null
   }
 
@@ -32188,7 +32327,8 @@ export namespace Prisma {
     color?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
     stock?: IntFieldUpdateOperationsInput | number
-    sold?: IntFieldUpdateOperationsInput | number
+    sold?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     product?: ProductUpdateOneRequiredWithoutVariantsNestedInput
     order?: OrderUpdateOneWithoutProductsNestedInput
   }
@@ -32199,7 +32339,8 @@ export namespace Prisma {
     color?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
     stock?: IntFieldUpdateOperationsInput | number
-    sold?: IntFieldUpdateOperationsInput | number
+    sold?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     orderOrderId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -32209,7 +32350,8 @@ export namespace Prisma {
     color?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
     stock?: IntFieldUpdateOperationsInput | number
-    sold?: IntFieldUpdateOperationsInput | number
+    sold?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     orderOrderId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -32225,6 +32367,7 @@ export namespace Prisma {
     viewCount?: number
     rating?: Decimal | DecimalJsLike | number | string
     available?: boolean
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -32239,6 +32382,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     available?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brand?: BrandUpdateOneRequiredWithoutProductsNestedInput
@@ -32259,6 +32403,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     available?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     reviews?: ReviewUncheckedUpdateManyWithoutProductNestedInput
@@ -32277,6 +32422,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     available?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -32291,8 +32437,9 @@ export namespace Prisma {
     color: string
     size: string
     stock?: number
-    sold?: number
-    cartId: string
+    sold?: number | null
+    isDeleted?: boolean | null
+    cartId?: string | null
   }
 
   export type OrderBrandUpdateWithoutOrderInput = {
@@ -32312,9 +32459,10 @@ export namespace Prisma {
     color?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
     stock?: IntFieldUpdateOperationsInput | number
-    sold?: IntFieldUpdateOperationsInput | number
+    sold?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     product?: ProductUpdateOneRequiredWithoutVariantsNestedInput
-    cart?: CartUpdateOneRequiredWithoutProductsNestedInput
+    cart?: CartUpdateOneWithoutProductsNestedInput
   }
 
   export type VariantUncheckedUpdateWithoutOrderInput = {
@@ -32323,8 +32471,9 @@ export namespace Prisma {
     color?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
     stock?: IntFieldUpdateOperationsInput | number
-    sold?: IntFieldUpdateOperationsInput | number
-    cartId?: StringFieldUpdateOperationsInput | string
+    sold?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cartId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type VariantUncheckedUpdateManyWithoutOrderInput = {
@@ -32333,8 +32482,9 @@ export namespace Prisma {
     color?: StringFieldUpdateOperationsInput | string
     size?: StringFieldUpdateOperationsInput | string
     stock?: IntFieldUpdateOperationsInput | number
-    sold?: IntFieldUpdateOperationsInput | number
-    cartId?: StringFieldUpdateOperationsInput | string
+    sold?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cartId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CourierCreateManyDeliveryCompanyInput = {

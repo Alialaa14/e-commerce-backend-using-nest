@@ -4,11 +4,13 @@ import { TokenModule } from '../utils/Token/token.module';
 import { CategoryController } from './category.controller';
 import { CategoryModel } from './category.model';
 import { CategoryService } from './category.service';
+import { MulterModule } from '../utils/multer/multer.module';
+import { CloudinaryModule } from '../utils/cloudinary/cloudinary.module';
 
 @Module({
-  imports: [PrismaModule, TokenModule],
+  imports: [PrismaModule, TokenModule, MulterModule, CloudinaryModule],
   controllers: [CategoryController],
   providers: [CategoryService, CategoryModel],
-  exports: [CategoryService, CategoryModel],
+  exports: [CategoryService],
 })
 export class CategoryModule {}
