@@ -228,7 +228,7 @@ model Product {
   description    String
   brandId        String    @map("brand_id") @db.Uuid
   categoryId     String    @map("category_id") @db.Uuid
-  price          Decimal   @db.Decimal(10, 2)
+  price          Int
   discount       Int?      @default(0)
   viewCount      Int       @default(0) @map("view_count")
   rating         Decimal   @default(0) @db.Decimal(2, 1)
@@ -248,18 +248,17 @@ model Product {
 }
 
 model Variant {
-  id           String   @id @default(uuid()) @db.Uuid
-  productId    String   @map("product_id") @db.Uuid
+  id           String         @id @default(uuid()) @db.Uuid
+  productId    String         @map("product_id") @db.Uuid
   color        String
   size         String
-  stock        Int      @default(0)
-  sold         Int?     @default(0)
-  isDeleted    Boolean? @default(false)
-  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  cart         Cart?    @relation(fields: [cartId], references: [id])
-  cartId       String?  @unique @db.Uuid
-  order        Order?   @relation(fields: [orderOrderId], references: [orderId])
-  orderOrderId String?  @db.Uuid
+  stock        Int            @default(0)
+  sold         Int            @default(0)
+  isDeleted    Boolean        @default(false)
+  product      Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  cartProducts CartProducts[]
+  order        Order?         @relation(fields: [orderOrderId], references: [orderId])
+  orderOrderId String?        @db.Uuid
 
   @@unique([productId, color, size])
   @@map("variants")
@@ -286,16 +285,28 @@ model Review {
 }
 
 model Cart {
-  id           String    @id @default(uuid()) @db.Uuid
-  userId       String    @unique @db.Uuid
-  user         User      @relation(fields: [userId], references: [id])
-  products     Variant[]
+  id           String         @id @default(uuid()) @db.Uuid
+  userId       String         @unique @db.Uuid
+  user         User           @relation(fields: [userId], references: [id])
+  products     CartProducts[]
   discount     Int?
   cartNote     String?
-  userLocation String
-  userNumber   String
-  price        Int
-  totalPrice   Int
+  userLocation String?
+  userNumber   String?
+  price        Int            @default(0)
+  totalPrice   Int            @default(0)
+}
+
+model CartProducts {
+  id        String  @id @unique @db.Uuid
+  cartId    String  @db.Uuid
+  variantId String  @db.Uuid
+  quantity  Int     @default(1)
+  price     Int
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  variant   Variant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@map("cart_products")
 }
 
 model wishlist {

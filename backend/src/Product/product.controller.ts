@@ -37,6 +37,7 @@ import {
   updateProductDto,
   updateProductParamDto,
 } from './dto/update-product.dto';
+import { DeleteProductPicsDto } from './dto/delete-product-pics-dto';
 
 @Controller('product')
 export class ProductController {
@@ -231,14 +232,14 @@ export class ProductController {
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('admin', 'brand')
   async deletePictures(
-    @Body() dto: { public_id: string }[],
+    @Body() dto: DeleteProductPicsDto,
     @Param('id') id: string,
   ) {
     console.log(dto.file);
     const deletedPics = await this.productService.deletePictures(dto.file, id);
     return {
       success: true,
-      message: 'Product pictures uploaded successfully',
+      message: 'Product pictures Deleted successfully',
       data: deletedPics,
     };
   }

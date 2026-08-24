@@ -152,12 +152,8 @@ export class ProductService {
       discount: data.discount,
       available: data.available,
     });
-    // Create Variants
-    const combinedVariants = data.variants.map((variant) => ({
-      ...variant,
-      productId: product.id,
-    }));
-    await this.variantService.createVariants(combinedVariants);
+
+    await this.variantService.createVariants(product.id, data.variants);
 
     return product;
   }

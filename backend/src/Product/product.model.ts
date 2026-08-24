@@ -214,6 +214,13 @@ export class ProductModel {
             name: true,
           },
         },
+        variants: {
+          select: {
+            size: true,
+            stock: true,
+            color: true,
+          },
+        },
       },
     });
   }
