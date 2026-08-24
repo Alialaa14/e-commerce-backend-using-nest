@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { ProductController } from './product.controller';
 import { ProductService } from './product.service';
 import { ProductModel } from './product.model';
@@ -13,7 +13,7 @@ import { TokenModule } from '../utils/Token/token.module';
 @Module({
   controllers: [ProductController],
   providers: [ProductService, ProductModel],
-  exports: [],
+  exports: [ProductModel],
   imports: [
     MulterModule,
     PrismaModule,
@@ -23,7 +23,6 @@ import { TokenModule } from '../utils/Token/token.module';
     CategoryModule,
     CloudinaryModule,
     TokenModule,
-    BrandModule,
   ],
 })
 export class ProductModule {}

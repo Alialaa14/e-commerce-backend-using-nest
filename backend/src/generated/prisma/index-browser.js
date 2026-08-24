@@ -235,7 +235,6 @@ exports.Prisma.VariantScalarFieldEnum = {
   stock: 'stock',
   sold: 'sold',
   isDeleted: 'isDeleted',
-  cartId: 'cartId',
   orderOrderId: 'orderOrderId'
 };
 
@@ -265,6 +264,13 @@ exports.Prisma.CartScalarFieldEnum = {
   userNumber: 'userNumber',
   price: 'price',
   totalPrice: 'totalPrice'
+};
+
+exports.Prisma.CartProductsScalarFieldEnum = {
+  cartId: 'cartId',
+  variantId: 'variantId',
+  quantity: 'quantity',
+  price: 'price'
 };
 
 exports.Prisma.WishlistScalarFieldEnum = {
@@ -414,6 +420,7 @@ exports.Prisma.ModelName = {
   Category: 'Category',
   Review: 'Review',
   Cart: 'Cart',
+  CartProducts: 'CartProducts',
   wishlist: 'wishlist',
   Order: 'Order',
   OrderBrand: 'OrderBrand',

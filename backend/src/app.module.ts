@@ -7,6 +7,8 @@ import { CacheModule } from '@nestjs/cache-manager';
 import KeyvRedis from '@keyv/redis';
 import { BullModule } from '@nestjs/bullmq';
 import { ProductModule } from './Product/product.module';
+import { VariantModule } from './Variants/variant.module';
+import { CartModule } from './Cart/cart.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -31,6 +33,8 @@ import { ProductModule } from './Product/product.module';
     BrandModule,
     CategoryModule,
     ProductModule,
+    VariantModule,
+    CartModule,
   ],
   controllers: [],
   providers: [],
