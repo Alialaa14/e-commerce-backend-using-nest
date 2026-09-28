@@ -34,6 +34,7 @@ export class CloudinaryService implements OnModuleInit {
       });
       return result;
     } catch (error: any) {
+      console.log(error);
       throw new InternalServerErrorException(
         error?.message || 'Cloudinary upload failed',
       );

@@ -136,6 +136,14 @@ export const orderStatus: {
 export type orderStatus = (typeof orderStatus)[keyof typeof orderStatus]
 
 
+export const Providers: {
+  paymob: 'paymob',
+  stripe: 'stripe'
+};
+
+export type Providers = (typeof Providers)[keyof typeof Providers]
+
+
 export const BrandVerificationTier: {
   pending: 'pending',
   basic_verification: 'basic_verification',
@@ -197,6 +205,10 @@ export const otpPurpose: typeof $Enums.otpPurpose
 export type orderStatus = $Enums.orderStatus
 
 export const orderStatus: typeof $Enums.orderStatus
+
+export type Providers = $Enums.Providers
+
+export const Providers: typeof $Enums.Providers
 
 export type BrandVerificationTier = $Enums.BrandVerificationTier
 
@@ -2910,6 +2922,8 @@ export namespace Prisma {
     refreshToken: string | null
     created_At: Date | null
     updated_At: Date | null
+    provider: $Enums.Providers | null
+    providerCustomerId: string | null
     payment_id: string | null
     passwordChangedAt: Date | null
     failedLoginAttempts: number | null
@@ -2936,6 +2950,8 @@ export namespace Prisma {
     refreshToken: string | null
     created_At: Date | null
     updated_At: Date | null
+    provider: $Enums.Providers | null
+    providerCustomerId: string | null
     payment_id: string | null
     passwordChangedAt: Date | null
     failedLoginAttempts: number | null
@@ -2962,6 +2978,8 @@ export namespace Prisma {
     refreshToken: number
     created_At: number
     updated_At: number
+    provider: number
+    providerCustomerId: number
     payment_id: number
     passwordChangedAt: number
     failedLoginAttempts: number
@@ -2998,6 +3016,8 @@ export namespace Prisma {
     refreshToken?: true
     created_At?: true
     updated_At?: true
+    provider?: true
+    providerCustomerId?: true
     payment_id?: true
     passwordChangedAt?: true
     failedLoginAttempts?: true
@@ -3024,6 +3044,8 @@ export namespace Prisma {
     refreshToken?: true
     created_At?: true
     updated_At?: true
+    provider?: true
+    providerCustomerId?: true
     payment_id?: true
     passwordChangedAt?: true
     failedLoginAttempts?: true
@@ -3050,6 +3072,8 @@ export namespace Prisma {
     refreshToken?: true
     created_At?: true
     updated_At?: true
+    provider?: true
+    providerCustomerId?: true
     payment_id?: true
     passwordChangedAt?: true
     failedLoginAttempts?: true
@@ -3163,6 +3187,8 @@ export namespace Prisma {
     refreshToken: string | null
     created_At: Date
     updated_At: Date
+    provider: $Enums.Providers | null
+    providerCustomerId: string | null
     payment_id: string | null
     passwordChangedAt: Date | null
     failedLoginAttempts: number
@@ -3208,6 +3234,8 @@ export namespace Prisma {
     refreshToken?: boolean
     created_At?: boolean
     updated_At?: boolean
+    provider?: boolean
+    providerCustomerId?: boolean
     payment_id?: boolean
     passwordChangedAt?: boolean
     failedLoginAttempts?: boolean
@@ -3242,6 +3270,8 @@ export namespace Prisma {
     refreshToken?: boolean
     created_At?: boolean
     updated_At?: boolean
+    provider?: boolean
+    providerCustomerId?: boolean
     payment_id?: boolean
     passwordChangedAt?: boolean
     failedLoginAttempts?: boolean
@@ -3268,6 +3298,8 @@ export namespace Prisma {
     refreshToken?: boolean
     created_At?: boolean
     updated_At?: boolean
+    provider?: boolean
+    providerCustomerId?: boolean
     payment_id?: boolean
     passwordChangedAt?: boolean
     failedLoginAttempts?: boolean
@@ -3294,6 +3326,8 @@ export namespace Prisma {
     refreshToken?: boolean
     created_At?: boolean
     updated_At?: boolean
+    provider?: boolean
+    providerCustomerId?: boolean
     payment_id?: boolean
     passwordChangedAt?: boolean
     failedLoginAttempts?: boolean
@@ -3303,7 +3337,7 @@ export namespace Prisma {
     wishlistUserId?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "phone" | "email" | "role" | "password" | "picture_url" | "picture_url_id" | "otp" | "otp_expiration" | "otp_purpose" | "isVerified" | "isBanned" | "refreshToken" | "created_At" | "updated_At" | "payment_id" | "passwordChangedAt" | "failedLoginAttempts" | "lockedUntil" | "isOnline" | "brandDocumentId" | "wishlistUserId", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "phone" | "email" | "role" | "password" | "picture_url" | "picture_url_id" | "otp" | "otp_expiration" | "otp_purpose" | "isVerified" | "isBanned" | "refreshToken" | "created_At" | "updated_At" | "provider" | "providerCustomerId" | "payment_id" | "passwordChangedAt" | "failedLoginAttempts" | "lockedUntil" | "isOnline" | "brandDocumentId" | "wishlistUserId", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cart?: boolean | User$cartArgs<ExtArgs>
     wishlist?: boolean | User$wishlistArgs<ExtArgs>
@@ -3345,6 +3379,8 @@ export namespace Prisma {
       refreshToken: string | null
       created_At: Date
       updated_At: Date
+      provider: $Enums.Providers | null
+      providerCustomerId: string | null
       payment_id: string | null
       passwordChangedAt: Date | null
       failedLoginAttempts: number
@@ -3798,6 +3834,8 @@ export namespace Prisma {
     readonly refreshToken: FieldRef<"User", 'String'>
     readonly created_At: FieldRef<"User", 'DateTime'>
     readonly updated_At: FieldRef<"User", 'DateTime'>
+    readonly provider: FieldRef<"User", 'Providers'>
+    readonly providerCustomerId: FieldRef<"User", 'String'>
     readonly payment_id: FieldRef<"User", 'String'>
     readonly passwordChangedAt: FieldRef<"User", 'DateTime'>
     readonly failedLoginAttempts: FieldRef<"User", 'Int'>
@@ -22935,6 +22973,8 @@ export namespace Prisma {
     refreshToken: 'refreshToken',
     created_At: 'created_At',
     updated_At: 'updated_At',
+    provider: 'provider',
+    providerCustomerId: 'providerCustomerId',
     payment_id: 'payment_id',
     passwordChangedAt: 'passwordChangedAt',
     failedLoginAttempts: 'failedLoginAttempts',
@@ -23284,6 +23324,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Providers'
+   */
+  export type EnumProvidersFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Providers'>
+    
+
+
+  /**
+   * Reference to a field of type 'Providers[]'
+   */
+  export type ListEnumProvidersFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Providers[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -23439,6 +23493,8 @@ export namespace Prisma {
     refreshToken?: StringNullableFilter<"User"> | string | null
     created_At?: DateTimeFilter<"User"> | Date | string
     updated_At?: DateTimeFilter<"User"> | Date | string
+    provider?: EnumProvidersNullableFilter<"User"> | $Enums.Providers | null
+    providerCustomerId?: StringNullableFilter<"User"> | string | null
     payment_id?: StringNullableFilter<"User"> | string | null
     passwordChangedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     failedLoginAttempts?: IntFilter<"User"> | number
@@ -23472,6 +23528,8 @@ export namespace Prisma {
     refreshToken?: SortOrderInput | SortOrder
     created_At?: SortOrder
     updated_At?: SortOrder
+    provider?: SortOrderInput | SortOrder
+    providerCustomerId?: SortOrderInput | SortOrder
     payment_id?: SortOrderInput | SortOrder
     passwordChangedAt?: SortOrderInput | SortOrder
     failedLoginAttempts?: SortOrder
@@ -23492,6 +23550,8 @@ export namespace Prisma {
     id?: string
     phone?: string
     email?: string
+    provider_id?: UserProviderIdCompoundUniqueInput
+    provider_providerCustomerId?: UserProviderProviderCustomerIdCompoundUniqueInput
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
@@ -23508,6 +23568,8 @@ export namespace Prisma {
     refreshToken?: StringNullableFilter<"User"> | string | null
     created_At?: DateTimeFilter<"User"> | Date | string
     updated_At?: DateTimeFilter<"User"> | Date | string
+    provider?: EnumProvidersNullableFilter<"User"> | $Enums.Providers | null
+    providerCustomerId?: StringNullableFilter<"User"> | string | null
     payment_id?: StringNullableFilter<"User"> | string | null
     passwordChangedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     failedLoginAttempts?: IntFilter<"User"> | number
@@ -23522,7 +23584,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentListRelationFilter
     brandFollowers?: BrandFollowerListRelationFilter
     reviews?: ReviewListRelationFilter
-  }, "id" | "id" | "phone" | "email">
+  }, "id" | "id" | "phone" | "email" | "provider_id" | "provider_providerCustomerId">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
@@ -23541,6 +23603,8 @@ export namespace Prisma {
     refreshToken?: SortOrderInput | SortOrder
     created_At?: SortOrder
     updated_At?: SortOrder
+    provider?: SortOrderInput | SortOrder
+    providerCustomerId?: SortOrderInput | SortOrder
     payment_id?: SortOrderInput | SortOrder
     passwordChangedAt?: SortOrderInput | SortOrder
     failedLoginAttempts?: SortOrder
@@ -23575,6 +23639,8 @@ export namespace Prisma {
     refreshToken?: StringNullableWithAggregatesFilter<"User"> | string | null
     created_At?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updated_At?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    provider?: EnumProvidersNullableWithAggregatesFilter<"User"> | $Enums.Providers | null
+    providerCustomerId?: StringNullableWithAggregatesFilter<"User"> | string | null
     payment_id?: StringNullableWithAggregatesFilter<"User"> | string | null
     passwordChangedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     failedLoginAttempts?: IntWithAggregatesFilter<"User"> | number
@@ -24797,6 +24863,8 @@ export namespace Prisma {
     refreshToken?: string | null
     created_At?: Date | string
     updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
     payment_id?: string | null
     passwordChangedAt?: Date | string | null
     failedLoginAttempts?: number
@@ -24830,6 +24898,8 @@ export namespace Prisma {
     refreshToken?: string | null
     created_At?: Date | string
     updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
     payment_id?: string | null
     passwordChangedAt?: Date | string | null
     failedLoginAttempts?: number
@@ -24863,6 +24933,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number
@@ -24896,6 +24968,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number
@@ -24929,6 +25003,8 @@ export namespace Prisma {
     refreshToken?: string | null
     created_At?: Date | string
     updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
     payment_id?: string | null
     passwordChangedAt?: Date | string | null
     failedLoginAttempts?: number
@@ -24955,6 +25031,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number
@@ -24981,6 +25059,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number
@@ -26323,6 +26403,13 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type EnumProvidersNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.Providers | EnumProvidersFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Providers[] | ListEnumProvidersFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Providers[] | ListEnumProvidersFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumProvidersNullableFilter<$PrismaModel> | $Enums.Providers | null
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -26406,6 +26493,16 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type UserProviderIdCompoundUniqueInput = {
+    provider: $Enums.Providers
+    id: string
+  }
+
+  export type UserProviderProviderCustomerIdCompoundUniqueInput = {
+    provider: $Enums.Providers
+    providerCustomerId: string
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     username?: SortOrder
@@ -26423,6 +26520,8 @@ export namespace Prisma {
     refreshToken?: SortOrder
     created_At?: SortOrder
     updated_At?: SortOrder
+    provider?: SortOrder
+    providerCustomerId?: SortOrder
     payment_id?: SortOrder
     passwordChangedAt?: SortOrder
     failedLoginAttempts?: SortOrder
@@ -26453,6 +26552,8 @@ export namespace Prisma {
     refreshToken?: SortOrder
     created_At?: SortOrder
     updated_At?: SortOrder
+    provider?: SortOrder
+    providerCustomerId?: SortOrder
     payment_id?: SortOrder
     passwordChangedAt?: SortOrder
     failedLoginAttempts?: SortOrder
@@ -26479,6 +26580,8 @@ export namespace Prisma {
     refreshToken?: SortOrder
     created_At?: SortOrder
     updated_At?: SortOrder
+    provider?: SortOrder
+    providerCustomerId?: SortOrder
     payment_id?: SortOrder
     passwordChangedAt?: SortOrder
     failedLoginAttempts?: SortOrder
@@ -26597,6 +26700,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type EnumProvidersNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Providers | EnumProvidersFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Providers[] | ListEnumProvidersFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Providers[] | ListEnumProvidersFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumProvidersNullableWithAggregatesFilter<$PrismaModel> | $Enums.Providers | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumProvidersNullableFilter<$PrismaModel>
+    _max?: NestedEnumProvidersNullableFilter<$PrismaModel>
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -27771,6 +27884,10 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type NullableEnumProvidersFieldUpdateOperationsInput = {
+    set?: $Enums.Providers | null
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -29151,6 +29268,13 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedEnumProvidersNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.Providers | EnumProvidersFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Providers[] | ListEnumProvidersFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Providers[] | ListEnumProvidersFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumProvidersNullableFilter<$PrismaModel> | $Enums.Providers | null
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -29286,6 +29410,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumProvidersNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Providers | EnumProvidersFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Providers[] | ListEnumProvidersFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Providers[] | ListEnumProvidersFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumProvidersNullableWithAggregatesFilter<$PrismaModel> | $Enums.Providers | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumProvidersNullableFilter<$PrismaModel>
+    _max?: NestedEnumProvidersNullableFilter<$PrismaModel>
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -29973,6 +30107,8 @@ export namespace Prisma {
     refreshToken?: string | null
     created_At?: Date | string
     updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
     payment_id?: string | null
     passwordChangedAt?: Date | string | null
     failedLoginAttempts?: number
@@ -30005,6 +30141,8 @@ export namespace Prisma {
     refreshToken?: string | null
     created_At?: Date | string
     updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
     payment_id?: string | null
     passwordChangedAt?: Date | string | null
     failedLoginAttempts?: number
@@ -30241,6 +30379,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number
@@ -30273,6 +30413,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number
@@ -30621,6 +30763,8 @@ export namespace Prisma {
     refreshToken?: string | null
     created_At?: Date | string
     updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
     payment_id?: string | null
     passwordChangedAt?: Date | string | null
     failedLoginAttempts?: number
@@ -30653,6 +30797,8 @@ export namespace Prisma {
     refreshToken?: string | null
     created_At?: Date | string
     updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
     payment_id?: string | null
     passwordChangedAt?: Date | string | null
     failedLoginAttempts?: number
@@ -30758,6 +30904,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number
@@ -30790,6 +30938,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number
@@ -30981,6 +31131,8 @@ export namespace Prisma {
     refreshToken?: string | null
     created_At?: Date | string
     updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
     payment_id?: string | null
     passwordChangedAt?: Date | string | null
     failedLoginAttempts?: number
@@ -31013,6 +31165,8 @@ export namespace Prisma {
     refreshToken?: string | null
     created_At?: Date | string
     updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
     payment_id?: string | null
     passwordChangedAt?: Date | string | null
     failedLoginAttempts?: number
@@ -31118,6 +31272,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number
@@ -31150,6 +31306,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number
@@ -31801,6 +31959,8 @@ export namespace Prisma {
     refreshToken?: string | null
     created_At?: Date | string
     updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
     payment_id?: string | null
     passwordChangedAt?: Date | string | null
     failedLoginAttempts?: number
@@ -31833,6 +31993,8 @@ export namespace Prisma {
     refreshToken?: string | null
     created_At?: Date | string
     updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
     payment_id?: string | null
     passwordChangedAt?: Date | string | null
     failedLoginAttempts?: number
@@ -31930,6 +32092,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number
@@ -31962,6 +32126,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number
@@ -31994,6 +32160,8 @@ export namespace Prisma {
     refreshToken?: string | null
     created_At?: Date | string
     updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
     payment_id?: string | null
     passwordChangedAt?: Date | string | null
     failedLoginAttempts?: number
@@ -32026,6 +32194,8 @@ export namespace Prisma {
     refreshToken?: string | null
     created_At?: Date | string
     updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
     payment_id?: string | null
     passwordChangedAt?: Date | string | null
     failedLoginAttempts?: number
@@ -32096,6 +32266,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number
@@ -32128,6 +32300,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number
@@ -32296,6 +32470,8 @@ export namespace Prisma {
     refreshToken?: string | null
     created_At?: Date | string
     updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
     payment_id?: string | null
     passwordChangedAt?: Date | string | null
     failedLoginAttempts?: number
@@ -32328,6 +32504,8 @@ export namespace Prisma {
     refreshToken?: string | null
     created_At?: Date | string
     updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
     payment_id?: string | null
     passwordChangedAt?: Date | string | null
     failedLoginAttempts?: number
@@ -32424,6 +32602,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number
@@ -32456,6 +32636,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number
@@ -32504,6 +32686,8 @@ export namespace Prisma {
     refreshToken?: string | null
     created_At?: Date | string
     updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
     payment_id?: string | null
     passwordChangedAt?: Date | string | null
     failedLoginAttempts?: number
@@ -32536,6 +32720,8 @@ export namespace Prisma {
     refreshToken?: string | null
     created_At?: Date | string
     updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
     payment_id?: string | null
     passwordChangedAt?: Date | string | null
     failedLoginAttempts?: number
@@ -32690,6 +32876,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number
@@ -32722,6 +32910,8 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     created_At?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     failedLoginAttempts?: IntFieldUpdateOperationsInput | number

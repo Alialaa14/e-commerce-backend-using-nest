@@ -31,26 +31,33 @@ enum orderStatus {
   returned
 }
 
+enum Providers {
+  paymob
+  stripe
+}
+
 model User {
-  id             String      @id @unique @default(uuid()) @db.Uuid
-  username       String
-  phone          String?     @unique
-  email          String      @unique
-  role           Role        @default(user)
-  password       String
-  picture_url    String?
-  picture_url_id String?
-  otp            String?
-  otp_expiration DateTime?
-  otp_purpose    otpPurpose?
-  isVerified     Boolean     @default(false)
-  isBanned       Boolean     @default(false)
-  refreshToken   String?
-  created_At     DateTime    @default(now())
-  updated_At     DateTime    @default(now())
-  cart           Cart?
-  wishlist       wishlist?
-  orders         Order[]
+  id                 String      @id @unique @default(uuid()) @db.Uuid
+  username           String
+  phone              String?     @unique
+  email              String      @unique
+  role               Role        @default(user)
+  password           String
+  picture_url        String?
+  picture_url_id     String?
+  otp                String?
+  otp_expiration     DateTime?
+  otp_purpose        otpPurpose?
+  isVerified         Boolean     @default(false)
+  isBanned           Boolean     @default(false)
+  refreshToken       String?
+  created_At         DateTime    @default(now())
+  updated_At         DateTime    @default(now())
+  cart               Cart?
+  wishlist           wishlist?
+  orders             Order[]
+  provider           Providers?
+  providerCustomerId String?
 
   brand               Brand?
   reviewedBrandDocs   BrandDocument[] @relation("BrandDocumentReviewer")
@@ -63,6 +70,9 @@ model User {
   brandFollowers      BrandFollower[]
   reviews             Review[]
   wishlistUserId      String?         @db.Uuid
+
+  @@unique([provider, id])
+  @@unique([provider, providerCustomerId])
 }
 
 model Brand {
@@ -128,7 +138,8 @@ model BrandBranch {
   postalCode          String?  @map("postal_code")
   locationGranularity String?  @map("location_granularity") // ROOFTOP, GEOMETRIC_CENTER, APPROXIMATE, etc.
 
-  isMain   Boolean @default(false) @map("is_main")
+  isMain Boolean @default(false) @map("is_main")
+
   isActive Boolean @default(true) @map("is_active")
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
