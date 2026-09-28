@@ -9,6 +9,7 @@ import { BullModule } from '@nestjs/bullmq';
 import { ProductModule } from './Product/product.module';
 import { VariantModule } from './Variants/variant.module';
 import { CartModule } from './Cart/cart.module';
+import { PaymentModule } from './Payment/payment.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -35,6 +36,7 @@ import { CartModule } from './Cart/cart.module';
     ProductModule,
     VariantModule,
     CartModule,
+    PaymentModule,
   ],
   controllers: [],
   providers: [],

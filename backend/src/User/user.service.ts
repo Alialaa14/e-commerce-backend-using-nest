@@ -63,12 +63,16 @@ export class UserService {
 
     if (filePath) {
       // const isRemoteUrl = /^https?:\/\//i.test(filePath); fo
-
-      const result = await this.cloudinaryService.uploadToCloudinary(
-        filePath,
-        'users',
-      );
-      picture = { url: result.secure_url, id: result.public_id };
+      try {
+        const result = await this.cloudinaryService.uploadToCloudinary(
+          filePath,
+          'users',
+        );
+        picture = { url: result.secure_url, id: result.public_id };
+      } catch (error) {
+        console.log(error);
+        throw new BadRequestException('File upload failed');
+      }
     }
 
     const generatedOtp = this.otpService.generateOtp(10);
@@ -88,6 +92,7 @@ export class UserService {
         }),
       );
     } catch (error) {
+      console.log(error);
       if (picture?.id) {
         await this.cloudinaryService.deleteFromCloudinary(picture.id);
       }

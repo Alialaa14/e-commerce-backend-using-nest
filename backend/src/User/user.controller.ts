@@ -76,20 +76,16 @@ export class UserController {
     @Body() body: RegisterDto,
   ) {
     let filePath: string | undefined;
-    try {
-      filePath = await this.uploadService.saveToDisk(picture, `users`);
-      return this.userService.register(
-        body.username,
-        body.email,
-        body.password,
-        filePath,
-      );
-    } catch (error) {
-      console.log(error);
-      throw new BadRequestException('File upload failed');
-    } finally {
-      await this.uploadService.deleteFile(filePath);
+
+    if (picture) {
+      filePath = await this.uploadService.saveToDisk(picture, 'users');
     }
+    return await this.userService.register(
+      body.username,
+      body.email,
+      body.password,
+      filePath,
+    );
   }
   @Post('register-verify-otp')
   async verifyRegisterOtp(@Body() body: VerifyOtpDto) {

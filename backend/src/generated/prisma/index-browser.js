@@ -137,6 +137,8 @@ exports.Prisma.UserScalarFieldEnum = {
   refreshToken: 'refreshToken',
   created_At: 'created_At',
   updated_At: 'updated_At',
+  provider: 'provider',
+  providerCustomerId: 'providerCustomerId',
   payment_id: 'payment_id',
   passwordChangedAt: 'passwordChangedAt',
   failedLoginAttempts: 'failedLoginAttempts',
@@ -358,6 +360,11 @@ exports.Role = exports.$Enums.Role = {
 exports.otpPurpose = exports.$Enums.otpPurpose = {
   resetpassword: 'resetpassword',
   signup: 'signup'
+};
+
+exports.Providers = exports.$Enums.Providers = {
+  paymob: 'paymob',
+  stripe: 'stripe'
 };
 
 exports.BrandVerificationTier = exports.$Enums.BrandVerificationTier = {

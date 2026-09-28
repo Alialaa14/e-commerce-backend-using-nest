@@ -66,13 +66,14 @@ export class MulterService {
     }
 
     const dir = this.ensureDirectory(subfolder);
-    const fileName = this.buildFileName(file.filename || 'upload');
+    const fileName = this.buildFileName(file.filename || 'uploads');
     const filePath = join(dir, fileName);
 
     try {
       await writeFile(filePath, file.buffer);
       return filePath;
     } catch (error) {
+      console.log(`Write file error: ${(error as Error).message}`);
       throw new InternalServerErrorException(
         `Failed to save uploaded file: ${(error as Error).message}`,
       );
