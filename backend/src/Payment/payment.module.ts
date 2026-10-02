@@ -4,6 +4,7 @@ import { CustomerModule } from './customer/customer.module';
 import { SetupIntentModule } from './setupIntent/setupIntent.module';
 import { AccountModule } from './account/account.module';
 import { TransferModule } from './transfer/transfer.module';
+import { PayoutModule } from './payout/payout.module';
 @Module({
   exports: [],
   imports: [
@@ -12,6 +13,7 @@ import { TransferModule } from './transfer/transfer.module';
     SetupIntentModule,
     AccountModule,
     TransferModule,
+    PayoutModule,
   ],
   providers: [],
   controllers: [],
