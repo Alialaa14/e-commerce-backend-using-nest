@@ -139,6 +139,7 @@ exports.Prisma.UserScalarFieldEnum = {
   updated_At: 'updated_At',
   provider: 'provider',
   providerCustomerId: 'providerCustomerId',
+  accountId: 'accountId',
   payment_id: 'payment_id',
   passwordChangedAt: 'passwordChangedAt',
   failedLoginAttempts: 'failedLoginAttempts',
@@ -290,7 +291,10 @@ exports.Prisma.OrderScalarFieldEnum = {
   address: 'address',
   phoneNumber: 'phoneNumber',
   deliveryCId: 'deliveryCId',
-  courierId: 'courierId'
+  courierId: 'courierId',
+  checkoutId: 'checkoutId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.OrderBrandScalarFieldEnum = {
