@@ -10,21 +10,21 @@ export class AccountController {
   constructor(private readonly accountService: AccountService) {}
   @Post()
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('brand', 'delievryC', 'user')
+  @Roles('brand', 'BRAND_ADMIN', 'delievryC', 'user')
   async createAccount(@getCurrentUser() user: { sub: string }) {
     return this.accountService.createAccount(user.sub);
   }
 
   @Patch()
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('brand', 'delievryC', 'user')
+  @Roles('brand', 'BRAND_ADMIN', 'delievryC', 'user')
   async updateAccount(@getCurrentUser() user: { sub: string }) {
     return this.accountService.updateAccount(user.sub);
   }
 
   @Post('/close')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('brand', 'delievryC', 'user')
+  @Roles('brand', 'BRAND_ADMIN', 'delievryC', 'user')
   async closeAccount(@getCurrentUser() user: { sub: string }) {
     return this.accountService.closeAccount(user.sub);
   }
@@ -38,7 +38,7 @@ export class AccountController {
 
   @Get('/me')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('brand', 'delievryC', 'user')
+  @Roles('brand', 'BRAND_ADMIN', 'delievryC', 'user')
   async getAccount(@getCurrentUser() user: { sub: string }) {
     return this.accountService.getAccount(user.sub);
   }

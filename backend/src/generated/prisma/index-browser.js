@@ -140,6 +140,8 @@ exports.Prisma.UserScalarFieldEnum = {
   provider: 'provider',
   providerCustomerId: 'providerCustomerId',
   accountId: 'accountId',
+  brandId: 'brandId',
+  branchId: 'branchId',
   payment_id: 'payment_id',
   passwordChangedAt: 'passwordChangedAt',
   failedLoginAttempts: 'failedLoginAttempts',
@@ -153,6 +155,8 @@ exports.Prisma.BrandScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   name: 'name',
+  slug: 'slug',
+  description: 'description',
   verificationStatus: 'verificationStatus',
   rating: 'rating',
   logoUrl: 'logoUrl',
@@ -183,6 +187,7 @@ exports.Prisma.BrandBranchScalarFieldEnum = {
   id: 'id',
   brandId: 'brandId',
   name: 'name',
+  code: 'code',
   latitude: 'latitude',
   longitude: 'longitude',
   placeId: 'placeId',
@@ -193,8 +198,11 @@ exports.Prisma.BrandBranchScalarFieldEnum = {
   country: 'country',
   postalCode: 'postalCode',
   locationGranularity: 'locationGranularity',
+  phone: 'phone',
+  openingHours: 'openingHours',
   isMain: 'isMain',
   isActive: 'isActive',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -230,7 +238,11 @@ exports.Prisma.ProductScalarFieldEnum = {
   media: 'media',
   description: 'description',
   brandId: 'brandId',
+  branchId: 'branchId',
   categoryId: 'categoryId',
+  slug: 'slug',
+  status: 'status',
+  deletedAt: 'deletedAt',
   price: 'price',
   discount: 'discount',
   viewCount: 'viewCount',
@@ -245,12 +257,29 @@ exports.Prisma.ProductScalarFieldEnum = {
 exports.Prisma.VariantScalarFieldEnum = {
   id: 'id',
   productId: 'productId',
+  sku: 'sku',
+  basePrice: 'basePrice',
+  barcode: 'barcode',
+  options: 'options',
+  isActive: 'isActive',
+  deletedAt: 'deletedAt',
   color: 'color',
   size: 'size',
   stock: 'stock',
   sold: 'sold',
   isDeleted: 'isDeleted',
   orderOrderId: 'orderOrderId'
+};
+
+exports.Prisma.BranchVariantScalarFieldEnum = {
+  id: 'id',
+  branchId: 'branchId',
+  variantId: 'variantId',
+  price: 'price',
+  stockQuantity: 'stockQuantity',
+  reservedQuantity: 'reservedQuantity',
+  isAvailable: 'isAvailable',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {
@@ -273,6 +302,7 @@ exports.Prisma.ReviewScalarFieldEnum = {
 exports.Prisma.CartScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  branchId: 'branchId',
   discount: 'discount',
   cartNote: 'cartNote',
   userLocation: 'userLocation',
@@ -295,6 +325,7 @@ exports.Prisma.WishlistScalarFieldEnum = {
 exports.Prisma.OrderScalarFieldEnum = {
   orderId: 'orderId',
   userId: 'userId',
+  branchId: 'branchId',
   discount: 'discount',
   status: 'status',
   otp: 'otp',
@@ -308,6 +339,16 @@ exports.Prisma.OrderScalarFieldEnum = {
   checkoutId: 'checkoutId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OrderItemScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  variantId: 'variantId',
+  nameSnapshot: 'nameSnapshot',
+  skuSnapshot: 'skuSnapshot',
+  priceSnapshot: 'priceSnapshot',
+  quantity: 'quantity'
 };
 
 exports.Prisma.OrderBrandScalarFieldEnum = {
@@ -383,7 +424,10 @@ exports.Role = exports.$Enums.Role = {
   brand: 'brand',
   admin: 'admin',
   delievryC: 'delievryC',
-  courier: 'courier'
+  courier: 'courier',
+  BRAND_ADMIN: 'BRAND_ADMIN',
+  BRANCH_MANAGER: 'BRANCH_MANAGER',
+  CUSTOMER: 'CUSTOMER'
 };
 
 exports.otpPurpose = exports.$Enums.otpPurpose = {
@@ -438,6 +482,13 @@ exports.BrandDocRejectionReason = exports.$Enums.BrandDocRejectionReason = {
   other: 'other'
 };
 
+exports.ProductStatus = exports.$Enums.ProductStatus = {
+  draft: 'draft',
+  pending: 'pending',
+  active: 'active',
+  archived: 'archived'
+};
+
 exports.orderStatus = exports.$Enums.orderStatus = {
   pending: 'pending',
   accepted: 'accepted',
@@ -478,12 +529,14 @@ exports.Prisma.ModelName = {
   BrandFollower: 'BrandFollower',
   Product: 'Product',
   Variant: 'Variant',
+  BranchVariant: 'BranchVariant',
   Category: 'Category',
   Review: 'Review',
   Cart: 'Cart',
   CartProducts: 'CartProducts',
   wishlist: 'wishlist',
   Order: 'Order',
+  OrderItem: 'OrderItem',
   OrderBrand: 'OrderBrand',
   D_Company: 'D_Company',
   DeliveryCompanyTransaction: 'DeliveryCompanyTransaction',

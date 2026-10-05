@@ -1,9 +1,141 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadGatewayException,
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
+
+export interface Coordinates {
+  latitude: number;
+  longitude: number;
+}
+
+export interface LocationDetails extends Coordinates {
+  placeId: string;
+  formattedAddress: string;
+  addressLine: string;
+  city: string;
+  state: string;
+  country: string;
+  postalCode: string;
+  locationGranularity: string;
+}
+
+interface GoogleGeocodeResult {
+  location?: Coordinates;
+  placeId?: string;
+  formattedAddress?: string;
+  granularity?: string;
+  addressComponents?: {
+    longText?: string;
+    shortText?: string;
+    types?: string[];
+  }[];
+  postalAddress?: {
+    addressLines?: string[];
+    locality?: string;
+    administrativeArea?: string;
+    postalCode?: string;
+    regionCode?: string;
+  };
+}
 
 @Injectable()
 export class LocationService {
-  constructor() {}
+  constructor(private readonly configService: ConfigService) {}
+
+  async reverseGeocode(coordinates: Coordinates): Promise<LocationDetails> {
+    if (
+      !coordinates ||
+      !Number.isFinite(coordinates.latitude) ||
+      coordinates.latitude < -90 ||
+      coordinates.latitude > 90 ||
+      !Number.isFinite(coordinates.longitude) ||
+      coordinates.longitude < -180 ||
+      coordinates.longitude > 180
+    ) {
+      throw new BadRequestException('Invalid latitude or longitude');
+    }
+
+    const apiKey = this.configService.get<string>('GOOGLE_MAPS_KEY');
+    if (!apiKey) {
+      throw new InternalServerErrorException(
+        'Google Maps API key is not configured',
+      );
+    }
+
+    let response;
+    try {
+      response = await axios.get<{ results?: GoogleGeocodeResult[] }>(
+        'https://geocode.googleapis.com/v4/geocode/location',
+        {
+          params: {
+            'location.latitude': coordinates.latitude,
+            'location.longitude': coordinates.longitude,
+            key: apiKey,
+          },
+        },
+      );
+    } catch {
+      throw new BadGatewayException(
+        'Failed to retrieve location details from Google Maps',
+      );
+    }
+
+    const result = response.data.results?.[0];
+    if (!result) {
+      throw new NotFoundException('No address found for these coordinates');
+    }
+    if (!result.location) {
+      throw new BadGatewayException(
+        'Google Maps returned an invalid location response',
+      );
+    }
+
+    const getAddressComponent = (...types: string[]) =>
+      result.addressComponents?.find((component) =>
+        component.types?.some((type) => types.includes(type)),
+      )?.longText;
+    const streetAddress = [
+      getAddressComponent('street_number'),
+      getAddressComponent('route'),
+    ]
+      .filter(Boolean)
+      .join(' ');
+
+    return {
+      latitude: result.location.latitude,
+      longitude: result.location.longitude,
+      placeId: result.placeId ?? '',
+      formattedAddress: result.formattedAddress ?? '',
+      addressLine:
+        result.postalAddress?.addressLines?.join(', ') ||
+        streetAddress ||
+        result.formattedAddress ||
+        '',
+      city:
+        getAddressComponent('locality', 'postal_town', 'sublocality_level_1') ||
+        result.postalAddress?.locality ||
+        '',
+      state:
+        getAddressComponent('administrative_area_level_1') ||
+        result.postalAddress?.administrativeArea ||
+        '',
+      country:
+        getAddressComponent('country') ||
+        result.postalAddress?.regionCode ||
+        '',
+      postalCode:
+        getAddressComponent('postal_code') ||
+        result.postalAddress?.postalCode ||
+        '',
+      locationGranularity: result.granularity ?? '',
+    };
+  }
+
   calculateDistance(
     userLocation: { latitude: number; longitude: number },
     storeLocation: { latitude: number; longitude: number },

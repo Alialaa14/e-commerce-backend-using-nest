@@ -24,6 +24,8 @@ export class UserModel {
         otp_expiration: true,
         otp_purpose: true,
         passwordChangedAt: true,
+        brandId: true,
+        branchId: true,
       },
     });
   }
@@ -145,6 +147,8 @@ export class UserModel {
       picture_url_id?: string | null;
       isVerified?: boolean;
       role?: Role;
+      brandId?: string | null;
+      branchId?: string | null;
     },
   ) {
     return this.prismaService.prisma.user.update({

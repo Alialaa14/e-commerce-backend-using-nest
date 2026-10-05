@@ -28,7 +28,6 @@ export class RolesGuard implements CanActivate {
     if (!user) {
       throw new UnauthorizedException('Authentication required');
     }
-    console.log(user);
 
     const userRole = user.role;
 

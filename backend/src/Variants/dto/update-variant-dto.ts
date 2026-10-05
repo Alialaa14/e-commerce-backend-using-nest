@@ -1,31 +1,56 @@
 import {
+  IsBoolean,
   IsNotEmpty,
   IsNumber,
+  IsObject,
+  IsOptional,
   IsString,
-  isUUID,
   IsUUID,
   MaxLength,
+  Max,
   Min,
-  MinLength,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class updateVariantDto {
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(3)
-  @MaxLength(20)
-  color!: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(1)
-  @MaxLength(3)
-  size!: string;
-
+  @IsOptional()
   @IsUUID()
-  @IsNotEmpty()
+  productId?: string;
+
+  @IsOptional()
   @IsString()
-  productId!: string;
+  @MaxLength(20)
+  color?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(3)
+  size?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(100)
+  sku?: string;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(0)
+  @Max(99999999.99)
+  basePrice?: number;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(100)
+  barcode?: string;
+
+  @IsOptional()
+  @IsObject()
+  options?: Record<string, string | number | boolean>;
+
+  @IsOptional()
+  @IsBoolean()
+  isActive?: boolean;
 }
 
 export class updateVariantParamDto {

@@ -13,6 +13,18 @@ enum Role {
   admin
   delievryC
   courier
+  BRAND_ADMIN
+  BRANCH_MANAGER
+  CUSTOMER
+}
+
+enum ProductStatus {
+  draft
+  pending
+  active
+  archived
+
+  @@map("product_status")
 }
 
 enum otpPurpose {
@@ -85,6 +97,10 @@ model User {
   accountId          String?     @unique
 
   brand               Brand?
+  brandId             String?         @map("brand_id") @db.Uuid
+  branchId            String?         @map("branch_id") @db.Uuid
+  brandTenant         Brand?          @relation("BrandUsers", fields: [brandId], references: [id], onDelete: SetNull)
+  branchTenant        BrandBranch?    @relation("BranchUsers", fields: [branchId], references: [id], onDelete: SetNull)
   reviewedBrandDocs   BrandDocument[] @relation("BrandDocumentReviewer")
   payment_id          String?
   passwordChangedAt   DateTime?
@@ -98,12 +114,16 @@ model User {
 
   @@unique([provider, id])
   @@unique([provider, providerCustomerId])
+  @@index([brandId])
+  @@index([branchId])
 }
 
 model Brand {
   id                 String                @id @default(uuid()) @db.Uuid
   userId             String                @unique @map("user_id") @db.Uuid
   name               String                @map("brand_name")
+  slug               String                @unique
+  description        String?
   //ownerNationalId    String?                @map("owner_national_id")  We Could Decide Later to use it 
   verificationStatus BrandVerificationTier @default(pending) @map("verification_status")
   rating             Decimal               @default(0) @db.Decimal(2, 1)
@@ -124,6 +144,7 @@ model Brand {
   followers    BrandFollower[]
   products     Product[]
   branches     BrandBranch[]
+  brandUsers   User[]             @relation("BrandUsers")
   transactions BrandTransaction[]
   // reviews            Review[]
   // chatThreads        ChatThread[]
@@ -152,9 +173,10 @@ model BrandTransaction {
 }
 
 model BrandBranch {
-  id      String  @id @default(uuid()) @db.Uuid
-  brandId String  @map("brand_id") @db.Uuid
-  name    String? @map("branch_name") // e.g. "Downtown Branch" — nullable, single-location brands may not need one
+  id      String @id @default(uuid()) @db.Uuid
+  brandId String @map("brand_id") @db.Uuid
+  name    String @map("branch_name")
+  code    String @map("branch_code")
 
   latitude            Decimal? @db.Decimal(9, 6)
   longitude           Decimal? @db.Decimal(9, 6)
@@ -166,16 +188,25 @@ model BrandBranch {
   country             String?
   postalCode          String?  @map("postal_code")
   locationGranularity String?  @map("location_granularity") // ROOFTOP, GEOMETRIC_CENTER, APPROXIMATE, etc.
+  phone               String?
+  openingHours        Json?    @map("opening_hours")
 
   isMain Boolean @default(false) @map("is_main")
 
-  isActive Boolean @default(true) @map("is_active")
+  isActive  Boolean   @default(true) @map("is_active")
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz
 
-  brand Brand @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  brand    Brand           @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  users    User[]          @relation("BranchUsers")
+  products Product[]
+  variants BranchVariant[]
+  carts    Cart[]
+  orders   Order[]
 
+  @@unique([brandId, code])
   @@index([brandId])
   @@map("brand_branches")
 }
@@ -262,46 +293,80 @@ model BrandFollower {
 }
 
 model Product {
-  id             String    @id @default(uuid()) @db.Uuid
+  id             String        @id @default(uuid()) @db.Uuid
   name           String
   media          Json[]
   description    String
-  brandId        String    @map("brand_id") @db.Uuid
-  categoryId     String    @map("category_id") @db.Uuid
+  brandId        String        @map("brand_id") @db.Uuid
+  branchId       String?       @map("branch_id") @db.Uuid
+  categoryId     String        @map("category_id") @db.Uuid
+  slug           String
+  status         ProductStatus @default(active)
+  deletedAt      DateTime?     @map("deleted_at") @db.Timestamptz
   price          Int
-  discount       Int?      @default(0)
-  viewCount      Int       @default(0) @map("view_count")
-  rating         Decimal   @default(0) @db.Decimal(2, 1)
-  available      Boolean   @default(true)
-  isDeleted      Boolean   @default(false)
-  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt      DateTime  @default(now()) @map("updated_at") @db.Timestamptz
-  brand          Brand     @relation(fields: [brandId], references: [id])
-  category       Category  @relation(fields: [categoryId], references: [id])
+  discount       Int?          @default(0)
+  viewCount      Int           @default(0) @map("view_count")
+  rating         Decimal       @default(0) @db.Decimal(2, 1)
+  available      Boolean       @default(true)
+  isDeleted      Boolean       @default(false)
+  createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime      @default(now()) @map("updated_at") @db.Timestamptz
+  brand          Brand         @relation(fields: [brandId], references: [id])
+  branch         BrandBranch?  @relation(fields: [branchId], references: [id], onDelete: SetNull)
+  category       Category      @relation(fields: [categoryId], references: [id])
   reviews        Review[]
   variants       Variant[]
-  wishlist       wishlist? @relation(fields: [wishlistUserId], references: [userId])
-  wishlistUserId String?   @db.Uuid
+  wishlist       wishlist?     @relation(fields: [wishlistUserId], references: [userId])
+  wishlistUserId String?       @db.Uuid
 
+  @@unique([brandId, slug])
+  @@index([brandId, status])
+  @@index([branchId])
   @@index([isDeleted])
   @@map("products")
 }
 
 model Variant {
-  id           String         @id @default(uuid()) @db.Uuid
-  productId    String         @map("product_id") @db.Uuid
+  id           String          @id @default(uuid()) @db.Uuid
+  productId    String          @map("product_id") @db.Uuid
+  sku          String          @unique
+  basePrice    Decimal         @map("base_price") @db.Decimal(10, 2)
+  barcode      String?
+  options      Json            @default("{}")
+  isActive     Boolean         @default(true) @map("is_active")
+  deletedAt    DateTime?       @map("deleted_at") @db.Timestamptz
   color        String
   size         String
-  stock        Int            @default(0)
-  sold         Int            @default(0)
-  isDeleted    Boolean        @default(false)
-  product      Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  stock        Int             @default(0)
+  sold         Int             @default(0)
+  isDeleted    Boolean         @default(false)
+  product      Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
   cartProducts CartProducts[]
-  order        Order?         @relation(fields: [orderOrderId], references: [orderId])
-  orderOrderId String?        @db.Uuid
+  order        Order?          @relation(fields: [orderOrderId], references: [orderId])
+  orderOrderId String?         @db.Uuid
+  branchOffers BranchVariant[]
+  orderItems   OrderItem[]
 
   @@unique([productId, color, size])
+  @@index([productId])
   @@map("variants")
+}
+
+model BranchVariant {
+  id               String      @id @default(uuid()) @db.Uuid
+  branchId         String      @map("branch_id") @db.Uuid
+  variantId        String      @map("variant_id") @db.Uuid
+  price            Decimal?    @db.Decimal(10, 2)
+  stockQuantity    Int         @default(0) @map("stock_quantity")
+  reservedQuantity Int         @default(0) @map("reserved_quantity")
+  isAvailable      Boolean     @default(true) @map("is_available")
+  updatedAt        DateTime    @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+  branch           BrandBranch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  variant          Variant     @relation(fields: [variantId], references: [id], onDelete: Restrict)
+
+  @@unique([branchId, variantId])
+  @@index([variantId])
+  @@map("branch_variants")
 }
 
 model Category {
@@ -327,7 +392,9 @@ model Review {
 model Cart {
   id           String         @id @default(uuid()) @db.Uuid
   userId       String         @unique @db.Uuid
+  branchId     String?        @map("branch_id") @db.Uuid
   user         User           @relation(fields: [userId], references: [id])
+  branch       BrandBranch?   @relation(fields: [branchId], references: [id], onDelete: SetNull)
   products     CartProducts[]
   discount     Int?
   cartNote     String?
@@ -335,6 +402,8 @@ model Cart {
   userNumber   String?
   price        Int            @default(0)
   totalPrice   Int            @default(0)
+
+  @@index([branchId])
 }
 
 model CartProducts {
@@ -358,7 +427,10 @@ model wishlist {
 model Order {
   orderId         String       @id @default(uuid()) @db.Uuid
   userId          String       @db.Uuid
+  branchId        String?      @map("branch_id") @db.Uuid
   user            User         @relation(fields: [userId], references: [id])
+  branch          BrandBranch? @relation(fields: [branchId], references: [id], onDelete: SetNull)
+  items           OrderItem[]
   brands          OrderBrand[]
   products        Variant[]
   discount        Int?
@@ -376,6 +448,23 @@ model Order {
   checkoutId      String       @unique
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @default(now())
+
+  @@index([branchId])
+}
+
+model OrderItem {
+  id            String  @id @default(uuid()) @db.Uuid
+  orderId       String  @map("order_id") @db.Uuid
+  variantId     String  @map("variant_id") @db.Uuid
+  nameSnapshot  String  @map("name_snapshot")
+  skuSnapshot   String  @map("sku_snapshot")
+  priceSnapshot Decimal @map("price_snapshot") @db.Decimal(10, 2)
+  quantity      Int
+  order         Order   @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
+  variant       Variant @relation(fields: [variantId], references: [id], onDelete: Restrict)
+
+  @@index([orderId])
+  @@map("order_items")
 }
 
 // This model for one to many relation that fit splitting the Order into many brands
