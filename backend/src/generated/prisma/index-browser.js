@@ -167,6 +167,18 @@ exports.Prisma.BrandScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.BrandTransactionScalarFieldEnum = {
+  id: 'id',
+  brandId: 'brandId',
+  amount: 'amount',
+  currency: 'currency',
+  direction: 'direction',
+  source: 'source',
+  stripeReferenceId: 'stripeReferenceId',
+  description: 'description',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.BrandBranchScalarFieldEnum = {
   id: 'id',
   brandId: 'brandId',
@@ -287,6 +299,7 @@ exports.Prisma.OrderScalarFieldEnum = {
   status: 'status',
   otp: 'otp',
   price: 'price',
+  deliveryPrice: 'deliveryPrice',
   totalPrice: 'totalPrice',
   address: 'address',
   phoneNumber: 'phoneNumber',
@@ -310,6 +323,18 @@ exports.Prisma.D_CompanyScalarFieldEnum = {
   isVerified: 'isVerified',
   isBanned: 'isBanned',
   balance: 'balance'
+};
+
+exports.Prisma.DeliveryCompanyTransactionScalarFieldEnum = {
+  id: 'id',
+  deliveryCompanyId: 'deliveryCompanyId',
+  amount: 'amount',
+  currency: 'currency',
+  direction: 'direction',
+  source: 'source',
+  stripeReferenceId: 'stripeReferenceId',
+  description: 'description',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.CourierScalarFieldEnum = {
@@ -378,6 +403,18 @@ exports.BrandVerificationTier = exports.$Enums.BrandVerificationTier = {
   suspended: 'suspended'
 };
 
+exports.BrandTransactionDirection = exports.$Enums.BrandTransactionDirection = {
+  credit: 'credit',
+  debit: 'debit'
+};
+
+exports.BrandTransactionSource = exports.$Enums.BrandTransactionSource = {
+  stripe_payment: 'stripe_payment',
+  stripe_transfer: 'stripe_transfer',
+  refund: 'refund',
+  adjustment: 'adjustment'
+};
+
 exports.BrandDocType = exports.$Enums.BrandDocType = {
   trademark_certificate: 'trademark_certificate',
   business_registration: 'business_registration',
@@ -412,6 +449,18 @@ exports.orderStatus = exports.$Enums.orderStatus = {
   returned: 'returned'
 };
 
+exports.DeliveryCompanyTransactionDirection = exports.$Enums.DeliveryCompanyTransactionDirection = {
+  credit: 'credit',
+  debit: 'debit'
+};
+
+exports.DeliveryCompanyTransactionSource = exports.$Enums.DeliveryCompanyTransactionSource = {
+  stripe_payment: 'stripe_payment',
+  stripe_transfer: 'stripe_transfer',
+  refund: 'refund',
+  adjustment: 'adjustment'
+};
+
 exports.courierDocuments = exports.$Enums.courierDocuments = {
   nationalId: 'nationalId',
   drivingLicense: 'drivingLicense',
@@ -422,6 +471,7 @@ exports.courierDocuments = exports.$Enums.courierDocuments = {
 exports.Prisma.ModelName = {
   User: 'User',
   Brand: 'Brand',
+  BrandTransaction: 'BrandTransaction',
   BrandBranch: 'BrandBranch',
   BrandDocument: 'BrandDocument',
   BrandSocialLink: 'BrandSocialLink',
@@ -436,6 +486,7 @@ exports.Prisma.ModelName = {
   Order: 'Order',
   OrderBrand: 'OrderBrand',
   D_Company: 'D_Company',
+  DeliveryCompanyTransaction: 'DeliveryCompanyTransaction',
   Courier: 'Courier'
 };
 

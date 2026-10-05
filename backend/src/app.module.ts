@@ -10,6 +10,9 @@ import { ProductModule } from './Product/product.module';
 import { VariantModule } from './Variants/variant.module';
 import { CartModule } from './Cart/cart.module';
 import { PaymentModule } from './Payment/payment.module';
+import { WebhookModule } from './webhooks/webhook.module';
+import { StripeModule } from './Payment/stripe/stripe.module';
+import { LocationModule } from './Location/location.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -37,6 +40,9 @@ import { PaymentModule } from './Payment/payment.module';
     VariantModule,
     CartModule,
     PaymentModule,
+    StripeModule,
+    WebhookModule,
+    LocationModule,
   ],
   controllers: [],
   providers: [],

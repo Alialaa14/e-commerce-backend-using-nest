@@ -24,6 +24,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type Brand = $Result.DefaultSelection<Prisma.$BrandPayload>
 /**
+ * Model BrandTransaction
+ * 
+ */
+export type BrandTransaction = $Result.DefaultSelection<Prisma.$BrandTransactionPayload>
+/**
  * Model BrandBranch
  * 
  */
@@ -94,6 +99,11 @@ export type OrderBrand = $Result.DefaultSelection<Prisma.$OrderBrandPayload>
  */
 export type D_Company = $Result.DefaultSelection<Prisma.$D_CompanyPayload>
 /**
+ * Model DeliveryCompanyTransaction
+ * 
+ */
+export type DeliveryCompanyTransaction = $Result.DefaultSelection<Prisma.$DeliveryCompanyTransactionPayload>
+/**
  * Model Courier
  * 
  */
@@ -142,6 +152,42 @@ export const Providers: {
 };
 
 export type Providers = (typeof Providers)[keyof typeof Providers]
+
+
+export const BrandTransactionDirection: {
+  credit: 'credit',
+  debit: 'debit'
+};
+
+export type BrandTransactionDirection = (typeof BrandTransactionDirection)[keyof typeof BrandTransactionDirection]
+
+
+export const BrandTransactionSource: {
+  stripe_payment: 'stripe_payment',
+  stripe_transfer: 'stripe_transfer',
+  refund: 'refund',
+  adjustment: 'adjustment'
+};
+
+export type BrandTransactionSource = (typeof BrandTransactionSource)[keyof typeof BrandTransactionSource]
+
+
+export const DeliveryCompanyTransactionDirection: {
+  credit: 'credit',
+  debit: 'debit'
+};
+
+export type DeliveryCompanyTransactionDirection = (typeof DeliveryCompanyTransactionDirection)[keyof typeof DeliveryCompanyTransactionDirection]
+
+
+export const DeliveryCompanyTransactionSource: {
+  stripe_payment: 'stripe_payment',
+  stripe_transfer: 'stripe_transfer',
+  refund: 'refund',
+  adjustment: 'adjustment'
+};
+
+export type DeliveryCompanyTransactionSource = (typeof DeliveryCompanyTransactionSource)[keyof typeof DeliveryCompanyTransactionSource]
 
 
 export const BrandVerificationTier: {
@@ -209,6 +255,22 @@ export const orderStatus: typeof $Enums.orderStatus
 export type Providers = $Enums.Providers
 
 export const Providers: typeof $Enums.Providers
+
+export type BrandTransactionDirection = $Enums.BrandTransactionDirection
+
+export const BrandTransactionDirection: typeof $Enums.BrandTransactionDirection
+
+export type BrandTransactionSource = $Enums.BrandTransactionSource
+
+export const BrandTransactionSource: typeof $Enums.BrandTransactionSource
+
+export type DeliveryCompanyTransactionDirection = $Enums.DeliveryCompanyTransactionDirection
+
+export const DeliveryCompanyTransactionDirection: typeof $Enums.DeliveryCompanyTransactionDirection
+
+export type DeliveryCompanyTransactionSource = $Enums.DeliveryCompanyTransactionSource
+
+export const DeliveryCompanyTransactionSource: typeof $Enums.DeliveryCompanyTransactionSource
 
 export type BrandVerificationTier = $Enums.BrandVerificationTier
 
@@ -368,6 +430,16 @@ export class PrismaClient<
   get brand(): Prisma.BrandDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.brandTransaction`: Exposes CRUD operations for the **BrandTransaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BrandTransactions
+    * const brandTransactions = await prisma.brandTransaction.findMany()
+    * ```
+    */
+  get brandTransaction(): Prisma.BrandTransactionDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.brandBranch`: Exposes CRUD operations for the **BrandBranch** model.
     * Example usage:
     * ```ts
@@ -506,6 +578,16 @@ export class PrismaClient<
     * ```
     */
   get d_Company(): Prisma.D_CompanyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.deliveryCompanyTransaction`: Exposes CRUD operations for the **DeliveryCompanyTransaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DeliveryCompanyTransactions
+    * const deliveryCompanyTransactions = await prisma.deliveryCompanyTransaction.findMany()
+    * ```
+    */
+  get deliveryCompanyTransaction(): Prisma.DeliveryCompanyTransactionDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.courier`: Exposes CRUD operations for the **Courier** model.
@@ -965,6 +1047,7 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Brand: 'Brand',
+    BrandTransaction: 'BrandTransaction',
     BrandBranch: 'BrandBranch',
     BrandDocument: 'BrandDocument',
     BrandSocialLink: 'BrandSocialLink',
@@ -979,6 +1062,7 @@ export namespace Prisma {
     Order: 'Order',
     OrderBrand: 'OrderBrand',
     D_Company: 'D_Company',
+    DeliveryCompanyTransaction: 'DeliveryCompanyTransaction',
     Courier: 'Courier'
   };
 
@@ -995,7 +1079,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "brand" | "brandBranch" | "brandDocument" | "brandSocialLink" | "brandFollower" | "product" | "variant" | "category" | "review" | "cart" | "cartProducts" | "wishlist" | "order" | "orderBrand" | "d_Company" | "courier"
+      modelProps: "user" | "brand" | "brandTransaction" | "brandBranch" | "brandDocument" | "brandSocialLink" | "brandFollower" | "product" | "variant" | "category" | "review" | "cart" | "cartProducts" | "wishlist" | "order" | "orderBrand" | "d_Company" | "deliveryCompanyTransaction" | "courier"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1144,6 +1228,80 @@ export namespace Prisma {
           count: {
             args: Prisma.BrandCountArgs<ExtArgs>
             result: $Utils.Optional<BrandCountAggregateOutputType> | number
+          }
+        }
+      }
+      BrandTransaction: {
+        payload: Prisma.$BrandTransactionPayload<ExtArgs>
+        fields: Prisma.BrandTransactionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BrandTransactionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandTransactionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BrandTransactionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandTransactionPayload>
+          }
+          findFirst: {
+            args: Prisma.BrandTransactionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandTransactionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BrandTransactionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandTransactionPayload>
+          }
+          findMany: {
+            args: Prisma.BrandTransactionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandTransactionPayload>[]
+          }
+          create: {
+            args: Prisma.BrandTransactionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandTransactionPayload>
+          }
+          createMany: {
+            args: Prisma.BrandTransactionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BrandTransactionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandTransactionPayload>[]
+          }
+          delete: {
+            args: Prisma.BrandTransactionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandTransactionPayload>
+          }
+          update: {
+            args: Prisma.BrandTransactionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandTransactionPayload>
+          }
+          deleteMany: {
+            args: Prisma.BrandTransactionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BrandTransactionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.BrandTransactionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandTransactionPayload>[]
+          }
+          upsert: {
+            args: Prisma.BrandTransactionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandTransactionPayload>
+          }
+          aggregate: {
+            args: Prisma.BrandTransactionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBrandTransaction>
+          }
+          groupBy: {
+            args: Prisma.BrandTransactionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BrandTransactionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BrandTransactionCountArgs<ExtArgs>
+            result: $Utils.Optional<BrandTransactionCountAggregateOutputType> | number
           }
         }
       }
@@ -2183,6 +2341,80 @@ export namespace Prisma {
           }
         }
       }
+      DeliveryCompanyTransaction: {
+        payload: Prisma.$DeliveryCompanyTransactionPayload<ExtArgs>
+        fields: Prisma.DeliveryCompanyTransactionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DeliveryCompanyTransactionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryCompanyTransactionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DeliveryCompanyTransactionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryCompanyTransactionPayload>
+          }
+          findFirst: {
+            args: Prisma.DeliveryCompanyTransactionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryCompanyTransactionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DeliveryCompanyTransactionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryCompanyTransactionPayload>
+          }
+          findMany: {
+            args: Prisma.DeliveryCompanyTransactionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryCompanyTransactionPayload>[]
+          }
+          create: {
+            args: Prisma.DeliveryCompanyTransactionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryCompanyTransactionPayload>
+          }
+          createMany: {
+            args: Prisma.DeliveryCompanyTransactionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DeliveryCompanyTransactionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryCompanyTransactionPayload>[]
+          }
+          delete: {
+            args: Prisma.DeliveryCompanyTransactionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryCompanyTransactionPayload>
+          }
+          update: {
+            args: Prisma.DeliveryCompanyTransactionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryCompanyTransactionPayload>
+          }
+          deleteMany: {
+            args: Prisma.DeliveryCompanyTransactionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DeliveryCompanyTransactionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DeliveryCompanyTransactionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryCompanyTransactionPayload>[]
+          }
+          upsert: {
+            args: Prisma.DeliveryCompanyTransactionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryCompanyTransactionPayload>
+          }
+          aggregate: {
+            args: Prisma.DeliveryCompanyTransactionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDeliveryCompanyTransaction>
+          }
+          groupBy: {
+            args: Prisma.DeliveryCompanyTransactionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DeliveryCompanyTransactionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DeliveryCompanyTransactionCountArgs<ExtArgs>
+            result: $Utils.Optional<DeliveryCompanyTransactionCountAggregateOutputType> | number
+          }
+        }
+      }
       Courier: {
         payload: Prisma.$CourierPayload<ExtArgs>
         fields: Prisma.CourierFieldRefs
@@ -2382,6 +2614,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     brand?: BrandOmit
+    brandTransaction?: BrandTransactionOmit
     brandBranch?: BrandBranchOmit
     brandDocument?: BrandDocumentOmit
     brandSocialLink?: BrandSocialLinkOmit
@@ -2396,6 +2629,7 @@ export namespace Prisma {
     order?: OrderOmit
     orderBrand?: OrderBrandOmit
     d_Company?: D_CompanyOmit
+    deliveryCompanyTransaction?: DeliveryCompanyTransactionOmit
     courier?: CourierOmit
   }
 
@@ -2540,6 +2774,7 @@ export namespace Prisma {
     followers: number
     products: number
     branches: number
+    transactions: number
     orderBrands: number
   }
 
@@ -2549,6 +2784,7 @@ export namespace Prisma {
     followers?: boolean | BrandCountOutputTypeCountFollowersArgs
     products?: boolean | BrandCountOutputTypeCountProductsArgs
     branches?: boolean | BrandCountOutputTypeCountBranchesArgs
+    transactions?: boolean | BrandCountOutputTypeCountTransactionsArgs
     orderBrands?: boolean | BrandCountOutputTypeCountOrderBrandsArgs
   }
 
@@ -2596,6 +2832,13 @@ export namespace Prisma {
    */
   export type BrandCountOutputTypeCountBranchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BrandBranchWhereInput
+  }
+
+  /**
+   * BrandCountOutputType without action
+   */
+  export type BrandCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BrandTransactionWhereInput
   }
 
   /**
@@ -2817,11 +3060,13 @@ export namespace Prisma {
   export type D_CompanyCountOutputType = {
     couriers: number
     orders: number
+    transactions: number
   }
 
   export type D_CompanyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     couriers?: boolean | D_CompanyCountOutputTypeCountCouriersArgs
     orders?: boolean | D_CompanyCountOutputTypeCountOrdersArgs
+    transactions?: boolean | D_CompanyCountOutputTypeCountTransactionsArgs
   }
 
   // Custom InputTypes
@@ -2847,6 +3092,13 @@ export namespace Prisma {
    */
   export type D_CompanyCountOutputTypeCountOrdersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OrderWhereInput
+  }
+
+  /**
+   * D_CompanyCountOutputType without action
+   */
+  export type D_CompanyCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeliveryCompanyTransactionWhereInput
   }
 
 
@@ -4712,6 +4964,7 @@ export namespace Prisma {
     followers?: boolean | Brand$followersArgs<ExtArgs>
     products?: boolean | Brand$productsArgs<ExtArgs>
     branches?: boolean | Brand$branchesArgs<ExtArgs>
+    transactions?: boolean | Brand$transactionsArgs<ExtArgs>
     orderBrands?: boolean | Brand$orderBrandsArgs<ExtArgs>
     _count?: boolean | BrandCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["brand"]>
@@ -4780,6 +5033,7 @@ export namespace Prisma {
     followers?: boolean | Brand$followersArgs<ExtArgs>
     products?: boolean | Brand$productsArgs<ExtArgs>
     branches?: boolean | Brand$branchesArgs<ExtArgs>
+    transactions?: boolean | Brand$transactionsArgs<ExtArgs>
     orderBrands?: boolean | Brand$orderBrandsArgs<ExtArgs>
     _count?: boolean | BrandCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -4799,6 +5053,7 @@ export namespace Prisma {
       followers: Prisma.$BrandFollowerPayload<ExtArgs>[]
       products: Prisma.$ProductPayload<ExtArgs>[]
       branches: Prisma.$BrandBranchPayload<ExtArgs>[]
+      transactions: Prisma.$BrandTransactionPayload<ExtArgs>[]
       orderBrands: Prisma.$OrderBrandPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -5217,6 +5472,7 @@ export namespace Prisma {
     followers<T extends Brand$followersArgs<ExtArgs> = {}>(args?: Subset<T, Brand$followersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandFollowerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     products<T extends Brand$productsArgs<ExtArgs> = {}>(args?: Subset<T, Brand$productsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     branches<T extends Brand$branchesArgs<ExtArgs> = {}>(args?: Subset<T, Brand$branchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandBranchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    transactions<T extends Brand$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Brand$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     orderBrands<T extends Brand$orderBrandsArgs<ExtArgs> = {}>(args?: Subset<T, Brand$orderBrandsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderBrandPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5783,6 +6039,30 @@ export namespace Prisma {
   }
 
   /**
+   * Brand.transactions
+   */
+  export type Brand$transactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandTransaction
+     */
+    select?: BrandTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandTransaction
+     */
+    omit?: BrandTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandTransactionInclude<ExtArgs> | null
+    where?: BrandTransactionWhereInput
+    orderBy?: BrandTransactionOrderByWithRelationInput | BrandTransactionOrderByWithRelationInput[]
+    cursor?: BrandTransactionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BrandTransactionScalarFieldEnum | BrandTransactionScalarFieldEnum[]
+  }
+
+  /**
    * Brand.orderBrands
    */
   export type Brand$orderBrandsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5822,6 +6102,1155 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: BrandInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model BrandTransaction
+   */
+
+  export type AggregateBrandTransaction = {
+    _count: BrandTransactionCountAggregateOutputType | null
+    _avg: BrandTransactionAvgAggregateOutputType | null
+    _sum: BrandTransactionSumAggregateOutputType | null
+    _min: BrandTransactionMinAggregateOutputType | null
+    _max: BrandTransactionMaxAggregateOutputType | null
+  }
+
+  export type BrandTransactionAvgAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type BrandTransactionSumAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type BrandTransactionMinAggregateOutputType = {
+    id: string | null
+    brandId: string | null
+    amount: number | null
+    currency: string | null
+    direction: $Enums.BrandTransactionDirection | null
+    source: $Enums.BrandTransactionSource | null
+    stripeReferenceId: string | null
+    description: string | null
+    createdAt: Date | null
+  }
+
+  export type BrandTransactionMaxAggregateOutputType = {
+    id: string | null
+    brandId: string | null
+    amount: number | null
+    currency: string | null
+    direction: $Enums.BrandTransactionDirection | null
+    source: $Enums.BrandTransactionSource | null
+    stripeReferenceId: string | null
+    description: string | null
+    createdAt: Date | null
+  }
+
+  export type BrandTransactionCountAggregateOutputType = {
+    id: number
+    brandId: number
+    amount: number
+    currency: number
+    direction: number
+    source: number
+    stripeReferenceId: number
+    description: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type BrandTransactionAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type BrandTransactionSumAggregateInputType = {
+    amount?: true
+  }
+
+  export type BrandTransactionMinAggregateInputType = {
+    id?: true
+    brandId?: true
+    amount?: true
+    currency?: true
+    direction?: true
+    source?: true
+    stripeReferenceId?: true
+    description?: true
+    createdAt?: true
+  }
+
+  export type BrandTransactionMaxAggregateInputType = {
+    id?: true
+    brandId?: true
+    amount?: true
+    currency?: true
+    direction?: true
+    source?: true
+    stripeReferenceId?: true
+    description?: true
+    createdAt?: true
+  }
+
+  export type BrandTransactionCountAggregateInputType = {
+    id?: true
+    brandId?: true
+    amount?: true
+    currency?: true
+    direction?: true
+    source?: true
+    stripeReferenceId?: true
+    description?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type BrandTransactionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BrandTransaction to aggregate.
+     */
+    where?: BrandTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrandTransactions to fetch.
+     */
+    orderBy?: BrandTransactionOrderByWithRelationInput | BrandTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BrandTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrandTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrandTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BrandTransactions
+    **/
+    _count?: true | BrandTransactionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BrandTransactionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BrandTransactionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BrandTransactionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BrandTransactionMaxAggregateInputType
+  }
+
+  export type GetBrandTransactionAggregateType<T extends BrandTransactionAggregateArgs> = {
+        [P in keyof T & keyof AggregateBrandTransaction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBrandTransaction[P]>
+      : GetScalarType<T[P], AggregateBrandTransaction[P]>
+  }
+
+
+
+
+  export type BrandTransactionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BrandTransactionWhereInput
+    orderBy?: BrandTransactionOrderByWithAggregationInput | BrandTransactionOrderByWithAggregationInput[]
+    by: BrandTransactionScalarFieldEnum[] | BrandTransactionScalarFieldEnum
+    having?: BrandTransactionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BrandTransactionCountAggregateInputType | true
+    _avg?: BrandTransactionAvgAggregateInputType
+    _sum?: BrandTransactionSumAggregateInputType
+    _min?: BrandTransactionMinAggregateInputType
+    _max?: BrandTransactionMaxAggregateInputType
+  }
+
+  export type BrandTransactionGroupByOutputType = {
+    id: string
+    brandId: string
+    amount: number
+    currency: string
+    direction: $Enums.BrandTransactionDirection
+    source: $Enums.BrandTransactionSource
+    stripeReferenceId: string | null
+    description: string | null
+    createdAt: Date
+    _count: BrandTransactionCountAggregateOutputType | null
+    _avg: BrandTransactionAvgAggregateOutputType | null
+    _sum: BrandTransactionSumAggregateOutputType | null
+    _min: BrandTransactionMinAggregateOutputType | null
+    _max: BrandTransactionMaxAggregateOutputType | null
+  }
+
+  type GetBrandTransactionGroupByPayload<T extends BrandTransactionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BrandTransactionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BrandTransactionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BrandTransactionGroupByOutputType[P]>
+            : GetScalarType<T[P], BrandTransactionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BrandTransactionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    brandId?: boolean
+    amount?: boolean
+    currency?: boolean
+    direction?: boolean
+    source?: boolean
+    stripeReferenceId?: boolean
+    description?: boolean
+    createdAt?: boolean
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["brandTransaction"]>
+
+  export type BrandTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    brandId?: boolean
+    amount?: boolean
+    currency?: boolean
+    direction?: boolean
+    source?: boolean
+    stripeReferenceId?: boolean
+    description?: boolean
+    createdAt?: boolean
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["brandTransaction"]>
+
+  export type BrandTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    brandId?: boolean
+    amount?: boolean
+    currency?: boolean
+    direction?: boolean
+    source?: boolean
+    stripeReferenceId?: boolean
+    description?: boolean
+    createdAt?: boolean
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["brandTransaction"]>
+
+  export type BrandTransactionSelectScalar = {
+    id?: boolean
+    brandId?: boolean
+    amount?: boolean
+    currency?: boolean
+    direction?: boolean
+    source?: boolean
+    stripeReferenceId?: boolean
+    description?: boolean
+    createdAt?: boolean
+  }
+
+  export type BrandTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "brandId" | "amount" | "currency" | "direction" | "source" | "stripeReferenceId" | "description" | "createdAt", ExtArgs["result"]["brandTransaction"]>
+  export type BrandTransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }
+  export type BrandTransactionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }
+  export type BrandTransactionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }
+
+  export type $BrandTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BrandTransaction"
+    objects: {
+      brand: Prisma.$BrandPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      brandId: string
+      amount: number
+      currency: string
+      direction: $Enums.BrandTransactionDirection
+      source: $Enums.BrandTransactionSource
+      stripeReferenceId: string | null
+      description: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["brandTransaction"]>
+    composites: {}
+  }
+
+  type BrandTransactionGetPayload<S extends boolean | null | undefined | BrandTransactionDefaultArgs> = $Result.GetResult<Prisma.$BrandTransactionPayload, S>
+
+  type BrandTransactionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BrandTransactionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BrandTransactionCountAggregateInputType | true
+    }
+
+  export interface BrandTransactionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BrandTransaction'], meta: { name: 'BrandTransaction' } }
+    /**
+     * Find zero or one BrandTransaction that matches the filter.
+     * @param {BrandTransactionFindUniqueArgs} args - Arguments to find a BrandTransaction
+     * @example
+     * // Get one BrandTransaction
+     * const brandTransaction = await prisma.brandTransaction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BrandTransactionFindUniqueArgs>(args: SelectSubset<T, BrandTransactionFindUniqueArgs<ExtArgs>>): Prisma__BrandTransactionClient<$Result.GetResult<Prisma.$BrandTransactionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BrandTransaction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BrandTransactionFindUniqueOrThrowArgs} args - Arguments to find a BrandTransaction
+     * @example
+     * // Get one BrandTransaction
+     * const brandTransaction = await prisma.brandTransaction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BrandTransactionFindUniqueOrThrowArgs>(args: SelectSubset<T, BrandTransactionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BrandTransactionClient<$Result.GetResult<Prisma.$BrandTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BrandTransaction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandTransactionFindFirstArgs} args - Arguments to find a BrandTransaction
+     * @example
+     * // Get one BrandTransaction
+     * const brandTransaction = await prisma.brandTransaction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BrandTransactionFindFirstArgs>(args?: SelectSubset<T, BrandTransactionFindFirstArgs<ExtArgs>>): Prisma__BrandTransactionClient<$Result.GetResult<Prisma.$BrandTransactionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BrandTransaction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandTransactionFindFirstOrThrowArgs} args - Arguments to find a BrandTransaction
+     * @example
+     * // Get one BrandTransaction
+     * const brandTransaction = await prisma.brandTransaction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BrandTransactionFindFirstOrThrowArgs>(args?: SelectSubset<T, BrandTransactionFindFirstOrThrowArgs<ExtArgs>>): Prisma__BrandTransactionClient<$Result.GetResult<Prisma.$BrandTransactionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BrandTransactions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandTransactionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BrandTransactions
+     * const brandTransactions = await prisma.brandTransaction.findMany()
+     * 
+     * // Get first 10 BrandTransactions
+     * const brandTransactions = await prisma.brandTransaction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const brandTransactionWithIdOnly = await prisma.brandTransaction.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BrandTransactionFindManyArgs>(args?: SelectSubset<T, BrandTransactionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BrandTransaction.
+     * @param {BrandTransactionCreateArgs} args - Arguments to create a BrandTransaction.
+     * @example
+     * // Create one BrandTransaction
+     * const BrandTransaction = await prisma.brandTransaction.create({
+     *   data: {
+     *     // ... data to create a BrandTransaction
+     *   }
+     * })
+     * 
+     */
+    create<T extends BrandTransactionCreateArgs>(args: SelectSubset<T, BrandTransactionCreateArgs<ExtArgs>>): Prisma__BrandTransactionClient<$Result.GetResult<Prisma.$BrandTransactionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BrandTransactions.
+     * @param {BrandTransactionCreateManyArgs} args - Arguments to create many BrandTransactions.
+     * @example
+     * // Create many BrandTransactions
+     * const brandTransaction = await prisma.brandTransaction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BrandTransactionCreateManyArgs>(args?: SelectSubset<T, BrandTransactionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many BrandTransactions and returns the data saved in the database.
+     * @param {BrandTransactionCreateManyAndReturnArgs} args - Arguments to create many BrandTransactions.
+     * @example
+     * // Create many BrandTransactions
+     * const brandTransaction = await prisma.brandTransaction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many BrandTransactions and only return the `id`
+     * const brandTransactionWithIdOnly = await prisma.brandTransaction.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BrandTransactionCreateManyAndReturnArgs>(args?: SelectSubset<T, BrandTransactionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandTransactionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a BrandTransaction.
+     * @param {BrandTransactionDeleteArgs} args - Arguments to delete one BrandTransaction.
+     * @example
+     * // Delete one BrandTransaction
+     * const BrandTransaction = await prisma.brandTransaction.delete({
+     *   where: {
+     *     // ... filter to delete one BrandTransaction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BrandTransactionDeleteArgs>(args: SelectSubset<T, BrandTransactionDeleteArgs<ExtArgs>>): Prisma__BrandTransactionClient<$Result.GetResult<Prisma.$BrandTransactionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BrandTransaction.
+     * @param {BrandTransactionUpdateArgs} args - Arguments to update one BrandTransaction.
+     * @example
+     * // Update one BrandTransaction
+     * const brandTransaction = await prisma.brandTransaction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BrandTransactionUpdateArgs>(args: SelectSubset<T, BrandTransactionUpdateArgs<ExtArgs>>): Prisma__BrandTransactionClient<$Result.GetResult<Prisma.$BrandTransactionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BrandTransactions.
+     * @param {BrandTransactionDeleteManyArgs} args - Arguments to filter BrandTransactions to delete.
+     * @example
+     * // Delete a few BrandTransactions
+     * const { count } = await prisma.brandTransaction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BrandTransactionDeleteManyArgs>(args?: SelectSubset<T, BrandTransactionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BrandTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandTransactionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BrandTransactions
+     * const brandTransaction = await prisma.brandTransaction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BrandTransactionUpdateManyArgs>(args: SelectSubset<T, BrandTransactionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BrandTransactions and returns the data updated in the database.
+     * @param {BrandTransactionUpdateManyAndReturnArgs} args - Arguments to update many BrandTransactions.
+     * @example
+     * // Update many BrandTransactions
+     * const brandTransaction = await prisma.brandTransaction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more BrandTransactions and only return the `id`
+     * const brandTransactionWithIdOnly = await prisma.brandTransaction.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends BrandTransactionUpdateManyAndReturnArgs>(args: SelectSubset<T, BrandTransactionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandTransactionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one BrandTransaction.
+     * @param {BrandTransactionUpsertArgs} args - Arguments to update or create a BrandTransaction.
+     * @example
+     * // Update or create a BrandTransaction
+     * const brandTransaction = await prisma.brandTransaction.upsert({
+     *   create: {
+     *     // ... data to create a BrandTransaction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BrandTransaction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BrandTransactionUpsertArgs>(args: SelectSubset<T, BrandTransactionUpsertArgs<ExtArgs>>): Prisma__BrandTransactionClient<$Result.GetResult<Prisma.$BrandTransactionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of BrandTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandTransactionCountArgs} args - Arguments to filter BrandTransactions to count.
+     * @example
+     * // Count the number of BrandTransactions
+     * const count = await prisma.brandTransaction.count({
+     *   where: {
+     *     // ... the filter for the BrandTransactions we want to count
+     *   }
+     * })
+    **/
+    count<T extends BrandTransactionCountArgs>(
+      args?: Subset<T, BrandTransactionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BrandTransactionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BrandTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandTransactionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BrandTransactionAggregateArgs>(args: Subset<T, BrandTransactionAggregateArgs>): Prisma.PrismaPromise<GetBrandTransactionAggregateType<T>>
+
+    /**
+     * Group by BrandTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandTransactionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BrandTransactionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BrandTransactionGroupByArgs['orderBy'] }
+        : { orderBy?: BrandTransactionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BrandTransactionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBrandTransactionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BrandTransaction model
+   */
+  readonly fields: BrandTransactionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BrandTransaction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BrandTransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    brand<T extends BrandDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BrandDefaultArgs<ExtArgs>>): Prisma__BrandClient<$Result.GetResult<Prisma.$BrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BrandTransaction model
+   */
+  interface BrandTransactionFieldRefs {
+    readonly id: FieldRef<"BrandTransaction", 'String'>
+    readonly brandId: FieldRef<"BrandTransaction", 'String'>
+    readonly amount: FieldRef<"BrandTransaction", 'Int'>
+    readonly currency: FieldRef<"BrandTransaction", 'String'>
+    readonly direction: FieldRef<"BrandTransaction", 'BrandTransactionDirection'>
+    readonly source: FieldRef<"BrandTransaction", 'BrandTransactionSource'>
+    readonly stripeReferenceId: FieldRef<"BrandTransaction", 'String'>
+    readonly description: FieldRef<"BrandTransaction", 'String'>
+    readonly createdAt: FieldRef<"BrandTransaction", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BrandTransaction findUnique
+   */
+  export type BrandTransactionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandTransaction
+     */
+    select?: BrandTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandTransaction
+     */
+    omit?: BrandTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandTransaction to fetch.
+     */
+    where: BrandTransactionWhereUniqueInput
+  }
+
+  /**
+   * BrandTransaction findUniqueOrThrow
+   */
+  export type BrandTransactionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandTransaction
+     */
+    select?: BrandTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandTransaction
+     */
+    omit?: BrandTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandTransaction to fetch.
+     */
+    where: BrandTransactionWhereUniqueInput
+  }
+
+  /**
+   * BrandTransaction findFirst
+   */
+  export type BrandTransactionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandTransaction
+     */
+    select?: BrandTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandTransaction
+     */
+    omit?: BrandTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandTransaction to fetch.
+     */
+    where?: BrandTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrandTransactions to fetch.
+     */
+    orderBy?: BrandTransactionOrderByWithRelationInput | BrandTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BrandTransactions.
+     */
+    cursor?: BrandTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrandTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrandTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BrandTransactions.
+     */
+    distinct?: BrandTransactionScalarFieldEnum | BrandTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * BrandTransaction findFirstOrThrow
+   */
+  export type BrandTransactionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandTransaction
+     */
+    select?: BrandTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandTransaction
+     */
+    omit?: BrandTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandTransaction to fetch.
+     */
+    where?: BrandTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrandTransactions to fetch.
+     */
+    orderBy?: BrandTransactionOrderByWithRelationInput | BrandTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BrandTransactions.
+     */
+    cursor?: BrandTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrandTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrandTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BrandTransactions.
+     */
+    distinct?: BrandTransactionScalarFieldEnum | BrandTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * BrandTransaction findMany
+   */
+  export type BrandTransactionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandTransaction
+     */
+    select?: BrandTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandTransaction
+     */
+    omit?: BrandTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandTransactions to fetch.
+     */
+    where?: BrandTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrandTransactions to fetch.
+     */
+    orderBy?: BrandTransactionOrderByWithRelationInput | BrandTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BrandTransactions.
+     */
+    cursor?: BrandTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrandTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrandTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BrandTransactions.
+     */
+    distinct?: BrandTransactionScalarFieldEnum | BrandTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * BrandTransaction create
+   */
+  export type BrandTransactionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandTransaction
+     */
+    select?: BrandTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandTransaction
+     */
+    omit?: BrandTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandTransactionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a BrandTransaction.
+     */
+    data: XOR<BrandTransactionCreateInput, BrandTransactionUncheckedCreateInput>
+  }
+
+  /**
+   * BrandTransaction createMany
+   */
+  export type BrandTransactionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BrandTransactions.
+     */
+    data: BrandTransactionCreateManyInput | BrandTransactionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * BrandTransaction createManyAndReturn
+   */
+  export type BrandTransactionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandTransaction
+     */
+    select?: BrandTransactionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandTransaction
+     */
+    omit?: BrandTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to create many BrandTransactions.
+     */
+    data: BrandTransactionCreateManyInput | BrandTransactionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandTransactionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BrandTransaction update
+   */
+  export type BrandTransactionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandTransaction
+     */
+    select?: BrandTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandTransaction
+     */
+    omit?: BrandTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandTransactionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a BrandTransaction.
+     */
+    data: XOR<BrandTransactionUpdateInput, BrandTransactionUncheckedUpdateInput>
+    /**
+     * Choose, which BrandTransaction to update.
+     */
+    where: BrandTransactionWhereUniqueInput
+  }
+
+  /**
+   * BrandTransaction updateMany
+   */
+  export type BrandTransactionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BrandTransactions.
+     */
+    data: XOR<BrandTransactionUpdateManyMutationInput, BrandTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which BrandTransactions to update
+     */
+    where?: BrandTransactionWhereInput
+    /**
+     * Limit how many BrandTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BrandTransaction updateManyAndReturn
+   */
+  export type BrandTransactionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandTransaction
+     */
+    select?: BrandTransactionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandTransaction
+     */
+    omit?: BrandTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to update BrandTransactions.
+     */
+    data: XOR<BrandTransactionUpdateManyMutationInput, BrandTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which BrandTransactions to update
+     */
+    where?: BrandTransactionWhereInput
+    /**
+     * Limit how many BrandTransactions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandTransactionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BrandTransaction upsert
+   */
+  export type BrandTransactionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandTransaction
+     */
+    select?: BrandTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandTransaction
+     */
+    omit?: BrandTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandTransactionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the BrandTransaction to update in case it exists.
+     */
+    where: BrandTransactionWhereUniqueInput
+    /**
+     * In case the BrandTransaction found by the `where` argument doesn't exist, create a new BrandTransaction with this data.
+     */
+    create: XOR<BrandTransactionCreateInput, BrandTransactionUncheckedCreateInput>
+    /**
+     * In case the BrandTransaction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BrandTransactionUpdateInput, BrandTransactionUncheckedUpdateInput>
+  }
+
+  /**
+   * BrandTransaction delete
+   */
+  export type BrandTransactionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandTransaction
+     */
+    select?: BrandTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandTransaction
+     */
+    omit?: BrandTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandTransactionInclude<ExtArgs> | null
+    /**
+     * Filter which BrandTransaction to delete.
+     */
+    where: BrandTransactionWhereUniqueInput
+  }
+
+  /**
+   * BrandTransaction deleteMany
+   */
+  export type BrandTransactionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BrandTransactions to delete
+     */
+    where?: BrandTransactionWhereInput
+    /**
+     * Limit how many BrandTransactions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * BrandTransaction without action
+   */
+  export type BrandTransactionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandTransaction
+     */
+    select?: BrandTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandTransaction
+     */
+    omit?: BrandTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandTransactionInclude<ExtArgs> | null
   }
 
 
@@ -18344,12 +19773,14 @@ export namespace Prisma {
   export type OrderAvgAggregateOutputType = {
     discount: number | null
     price: number | null
+    deliveryPrice: number | null
     totalPrice: number | null
   }
 
   export type OrderSumAggregateOutputType = {
     discount: number | null
     price: number | null
+    deliveryPrice: number | null
     totalPrice: number | null
   }
 
@@ -18360,6 +19791,7 @@ export namespace Prisma {
     status: $Enums.orderStatus | null
     otp: string | null
     price: number | null
+    deliveryPrice: number | null
     totalPrice: number | null
     address: string | null
     phoneNumber: string | null
@@ -18377,6 +19809,7 @@ export namespace Prisma {
     status: $Enums.orderStatus | null
     otp: string | null
     price: number | null
+    deliveryPrice: number | null
     totalPrice: number | null
     address: string | null
     phoneNumber: string | null
@@ -18394,6 +19827,7 @@ export namespace Prisma {
     status: number
     otp: number
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: number
     phoneNumber: number
@@ -18409,12 +19843,14 @@ export namespace Prisma {
   export type OrderAvgAggregateInputType = {
     discount?: true
     price?: true
+    deliveryPrice?: true
     totalPrice?: true
   }
 
   export type OrderSumAggregateInputType = {
     discount?: true
     price?: true
+    deliveryPrice?: true
     totalPrice?: true
   }
 
@@ -18425,6 +19861,7 @@ export namespace Prisma {
     status?: true
     otp?: true
     price?: true
+    deliveryPrice?: true
     totalPrice?: true
     address?: true
     phoneNumber?: true
@@ -18442,6 +19879,7 @@ export namespace Prisma {
     status?: true
     otp?: true
     price?: true
+    deliveryPrice?: true
     totalPrice?: true
     address?: true
     phoneNumber?: true
@@ -18459,6 +19897,7 @@ export namespace Prisma {
     status?: true
     otp?: true
     price?: true
+    deliveryPrice?: true
     totalPrice?: true
     address?: true
     phoneNumber?: true
@@ -18563,6 +20002,7 @@ export namespace Prisma {
     status: $Enums.orderStatus
     otp: string
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: string
     phoneNumber: string
@@ -18599,6 +20039,7 @@ export namespace Prisma {
     status?: boolean
     otp?: boolean
     price?: boolean
+    deliveryPrice?: boolean
     totalPrice?: boolean
     address?: boolean
     phoneNumber?: boolean
@@ -18622,6 +20063,7 @@ export namespace Prisma {
     status?: boolean
     otp?: boolean
     price?: boolean
+    deliveryPrice?: boolean
     totalPrice?: boolean
     address?: boolean
     phoneNumber?: boolean
@@ -18642,6 +20084,7 @@ export namespace Prisma {
     status?: boolean
     otp?: boolean
     price?: boolean
+    deliveryPrice?: boolean
     totalPrice?: boolean
     address?: boolean
     phoneNumber?: boolean
@@ -18662,6 +20105,7 @@ export namespace Prisma {
     status?: boolean
     otp?: boolean
     price?: boolean
+    deliveryPrice?: boolean
     totalPrice?: boolean
     address?: boolean
     phoneNumber?: boolean
@@ -18672,7 +20116,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"orderId" | "userId" | "discount" | "status" | "otp" | "price" | "totalPrice" | "address" | "phoneNumber" | "deliveryCId" | "courierId" | "checkoutId" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"orderId" | "userId" | "discount" | "status" | "otp" | "price" | "deliveryPrice" | "totalPrice" | "address" | "phoneNumber" | "deliveryCId" | "courierId" | "checkoutId" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     brands?: boolean | Order$brandsArgs<ExtArgs>
@@ -18708,6 +20152,7 @@ export namespace Prisma {
       status: $Enums.orderStatus
       otp: string
       price: number
+      deliveryPrice: number
       totalPrice: number
       address: string
       phoneNumber: string
@@ -19150,6 +20595,7 @@ export namespace Prisma {
     readonly status: FieldRef<"Order", 'orderStatus'>
     readonly otp: FieldRef<"Order", 'String'>
     readonly price: FieldRef<"Order", 'Int'>
+    readonly deliveryPrice: FieldRef<"Order", 'Int'>
     readonly totalPrice: FieldRef<"Order", 'Int'>
     readonly address: FieldRef<"Order", 'String'>
     readonly phoneNumber: FieldRef<"Order", 'String'>
@@ -20892,6 +22338,7 @@ export namespace Prisma {
     balance?: boolean
     couriers?: boolean | D_Company$couriersArgs<ExtArgs>
     orders?: boolean | D_Company$ordersArgs<ExtArgs>
+    transactions?: boolean | D_Company$transactionsArgs<ExtArgs>
     _count?: boolean | D_CompanyCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["d_Company"]>
 
@@ -20929,6 +22376,7 @@ export namespace Prisma {
   export type D_CompanyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     couriers?: boolean | D_Company$couriersArgs<ExtArgs>
     orders?: boolean | D_Company$ordersArgs<ExtArgs>
+    transactions?: boolean | D_Company$transactionsArgs<ExtArgs>
     _count?: boolean | D_CompanyCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type D_CompanyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -20939,6 +22387,7 @@ export namespace Prisma {
     objects: {
       couriers: Prisma.$CourierPayload<ExtArgs>[]
       orders: Prisma.$OrderPayload<ExtArgs>[]
+      transactions: Prisma.$DeliveryCompanyTransactionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       deliveryCompany: string
@@ -21344,6 +22793,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     couriers<T extends D_Company$couriersArgs<ExtArgs> = {}>(args?: Subset<T, D_Company$couriersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CourierPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     orders<T extends D_Company$ordersArgs<ExtArgs> = {}>(args?: Subset<T, D_Company$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    transactions<T extends D_Company$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, D_Company$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliveryCompanyTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -21821,6 +23271,30 @@ export namespace Prisma {
   }
 
   /**
+   * D_Company.transactions
+   */
+  export type D_Company$transactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryCompanyTransaction
+     */
+    select?: DeliveryCompanyTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryCompanyTransaction
+     */
+    omit?: DeliveryCompanyTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryCompanyTransactionInclude<ExtArgs> | null
+    where?: DeliveryCompanyTransactionWhereInput
+    orderBy?: DeliveryCompanyTransactionOrderByWithRelationInput | DeliveryCompanyTransactionOrderByWithRelationInput[]
+    cursor?: DeliveryCompanyTransactionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DeliveryCompanyTransactionScalarFieldEnum | DeliveryCompanyTransactionScalarFieldEnum[]
+  }
+
+  /**
    * D_Company without action
    */
   export type D_CompanyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -21836,6 +23310,1155 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: D_CompanyInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DeliveryCompanyTransaction
+   */
+
+  export type AggregateDeliveryCompanyTransaction = {
+    _count: DeliveryCompanyTransactionCountAggregateOutputType | null
+    _avg: DeliveryCompanyTransactionAvgAggregateOutputType | null
+    _sum: DeliveryCompanyTransactionSumAggregateOutputType | null
+    _min: DeliveryCompanyTransactionMinAggregateOutputType | null
+    _max: DeliveryCompanyTransactionMaxAggregateOutputType | null
+  }
+
+  export type DeliveryCompanyTransactionAvgAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type DeliveryCompanyTransactionSumAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type DeliveryCompanyTransactionMinAggregateOutputType = {
+    id: string | null
+    deliveryCompanyId: string | null
+    amount: number | null
+    currency: string | null
+    direction: $Enums.DeliveryCompanyTransactionDirection | null
+    source: $Enums.DeliveryCompanyTransactionSource | null
+    stripeReferenceId: string | null
+    description: string | null
+    createdAt: Date | null
+  }
+
+  export type DeliveryCompanyTransactionMaxAggregateOutputType = {
+    id: string | null
+    deliveryCompanyId: string | null
+    amount: number | null
+    currency: string | null
+    direction: $Enums.DeliveryCompanyTransactionDirection | null
+    source: $Enums.DeliveryCompanyTransactionSource | null
+    stripeReferenceId: string | null
+    description: string | null
+    createdAt: Date | null
+  }
+
+  export type DeliveryCompanyTransactionCountAggregateOutputType = {
+    id: number
+    deliveryCompanyId: number
+    amount: number
+    currency: number
+    direction: number
+    source: number
+    stripeReferenceId: number
+    description: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type DeliveryCompanyTransactionAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type DeliveryCompanyTransactionSumAggregateInputType = {
+    amount?: true
+  }
+
+  export type DeliveryCompanyTransactionMinAggregateInputType = {
+    id?: true
+    deliveryCompanyId?: true
+    amount?: true
+    currency?: true
+    direction?: true
+    source?: true
+    stripeReferenceId?: true
+    description?: true
+    createdAt?: true
+  }
+
+  export type DeliveryCompanyTransactionMaxAggregateInputType = {
+    id?: true
+    deliveryCompanyId?: true
+    amount?: true
+    currency?: true
+    direction?: true
+    source?: true
+    stripeReferenceId?: true
+    description?: true
+    createdAt?: true
+  }
+
+  export type DeliveryCompanyTransactionCountAggregateInputType = {
+    id?: true
+    deliveryCompanyId?: true
+    amount?: true
+    currency?: true
+    direction?: true
+    source?: true
+    stripeReferenceId?: true
+    description?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type DeliveryCompanyTransactionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DeliveryCompanyTransaction to aggregate.
+     */
+    where?: DeliveryCompanyTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeliveryCompanyTransactions to fetch.
+     */
+    orderBy?: DeliveryCompanyTransactionOrderByWithRelationInput | DeliveryCompanyTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DeliveryCompanyTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeliveryCompanyTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeliveryCompanyTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DeliveryCompanyTransactions
+    **/
+    _count?: true | DeliveryCompanyTransactionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DeliveryCompanyTransactionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DeliveryCompanyTransactionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DeliveryCompanyTransactionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DeliveryCompanyTransactionMaxAggregateInputType
+  }
+
+  export type GetDeliveryCompanyTransactionAggregateType<T extends DeliveryCompanyTransactionAggregateArgs> = {
+        [P in keyof T & keyof AggregateDeliveryCompanyTransaction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDeliveryCompanyTransaction[P]>
+      : GetScalarType<T[P], AggregateDeliveryCompanyTransaction[P]>
+  }
+
+
+
+
+  export type DeliveryCompanyTransactionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeliveryCompanyTransactionWhereInput
+    orderBy?: DeliveryCompanyTransactionOrderByWithAggregationInput | DeliveryCompanyTransactionOrderByWithAggregationInput[]
+    by: DeliveryCompanyTransactionScalarFieldEnum[] | DeliveryCompanyTransactionScalarFieldEnum
+    having?: DeliveryCompanyTransactionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DeliveryCompanyTransactionCountAggregateInputType | true
+    _avg?: DeliveryCompanyTransactionAvgAggregateInputType
+    _sum?: DeliveryCompanyTransactionSumAggregateInputType
+    _min?: DeliveryCompanyTransactionMinAggregateInputType
+    _max?: DeliveryCompanyTransactionMaxAggregateInputType
+  }
+
+  export type DeliveryCompanyTransactionGroupByOutputType = {
+    id: string
+    deliveryCompanyId: string
+    amount: number
+    currency: string
+    direction: $Enums.DeliveryCompanyTransactionDirection
+    source: $Enums.DeliveryCompanyTransactionSource
+    stripeReferenceId: string | null
+    description: string | null
+    createdAt: Date
+    _count: DeliveryCompanyTransactionCountAggregateOutputType | null
+    _avg: DeliveryCompanyTransactionAvgAggregateOutputType | null
+    _sum: DeliveryCompanyTransactionSumAggregateOutputType | null
+    _min: DeliveryCompanyTransactionMinAggregateOutputType | null
+    _max: DeliveryCompanyTransactionMaxAggregateOutputType | null
+  }
+
+  type GetDeliveryCompanyTransactionGroupByPayload<T extends DeliveryCompanyTransactionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DeliveryCompanyTransactionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DeliveryCompanyTransactionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DeliveryCompanyTransactionGroupByOutputType[P]>
+            : GetScalarType<T[P], DeliveryCompanyTransactionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DeliveryCompanyTransactionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    deliveryCompanyId?: boolean
+    amount?: boolean
+    currency?: boolean
+    direction?: boolean
+    source?: boolean
+    stripeReferenceId?: boolean
+    description?: boolean
+    createdAt?: boolean
+    deliveryCompany?: boolean | D_CompanyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deliveryCompanyTransaction"]>
+
+  export type DeliveryCompanyTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    deliveryCompanyId?: boolean
+    amount?: boolean
+    currency?: boolean
+    direction?: boolean
+    source?: boolean
+    stripeReferenceId?: boolean
+    description?: boolean
+    createdAt?: boolean
+    deliveryCompany?: boolean | D_CompanyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deliveryCompanyTransaction"]>
+
+  export type DeliveryCompanyTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    deliveryCompanyId?: boolean
+    amount?: boolean
+    currency?: boolean
+    direction?: boolean
+    source?: boolean
+    stripeReferenceId?: boolean
+    description?: boolean
+    createdAt?: boolean
+    deliveryCompany?: boolean | D_CompanyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deliveryCompanyTransaction"]>
+
+  export type DeliveryCompanyTransactionSelectScalar = {
+    id?: boolean
+    deliveryCompanyId?: boolean
+    amount?: boolean
+    currency?: boolean
+    direction?: boolean
+    source?: boolean
+    stripeReferenceId?: boolean
+    description?: boolean
+    createdAt?: boolean
+  }
+
+  export type DeliveryCompanyTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "deliveryCompanyId" | "amount" | "currency" | "direction" | "source" | "stripeReferenceId" | "description" | "createdAt", ExtArgs["result"]["deliveryCompanyTransaction"]>
+  export type DeliveryCompanyTransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    deliveryCompany?: boolean | D_CompanyDefaultArgs<ExtArgs>
+  }
+  export type DeliveryCompanyTransactionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    deliveryCompany?: boolean | D_CompanyDefaultArgs<ExtArgs>
+  }
+  export type DeliveryCompanyTransactionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    deliveryCompany?: boolean | D_CompanyDefaultArgs<ExtArgs>
+  }
+
+  export type $DeliveryCompanyTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DeliveryCompanyTransaction"
+    objects: {
+      deliveryCompany: Prisma.$D_CompanyPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      deliveryCompanyId: string
+      amount: number
+      currency: string
+      direction: $Enums.DeliveryCompanyTransactionDirection
+      source: $Enums.DeliveryCompanyTransactionSource
+      stripeReferenceId: string | null
+      description: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["deliveryCompanyTransaction"]>
+    composites: {}
+  }
+
+  type DeliveryCompanyTransactionGetPayload<S extends boolean | null | undefined | DeliveryCompanyTransactionDefaultArgs> = $Result.GetResult<Prisma.$DeliveryCompanyTransactionPayload, S>
+
+  type DeliveryCompanyTransactionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DeliveryCompanyTransactionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DeliveryCompanyTransactionCountAggregateInputType | true
+    }
+
+  export interface DeliveryCompanyTransactionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DeliveryCompanyTransaction'], meta: { name: 'DeliveryCompanyTransaction' } }
+    /**
+     * Find zero or one DeliveryCompanyTransaction that matches the filter.
+     * @param {DeliveryCompanyTransactionFindUniqueArgs} args - Arguments to find a DeliveryCompanyTransaction
+     * @example
+     * // Get one DeliveryCompanyTransaction
+     * const deliveryCompanyTransaction = await prisma.deliveryCompanyTransaction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DeliveryCompanyTransactionFindUniqueArgs>(args: SelectSubset<T, DeliveryCompanyTransactionFindUniqueArgs<ExtArgs>>): Prisma__DeliveryCompanyTransactionClient<$Result.GetResult<Prisma.$DeliveryCompanyTransactionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DeliveryCompanyTransaction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DeliveryCompanyTransactionFindUniqueOrThrowArgs} args - Arguments to find a DeliveryCompanyTransaction
+     * @example
+     * // Get one DeliveryCompanyTransaction
+     * const deliveryCompanyTransaction = await prisma.deliveryCompanyTransaction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DeliveryCompanyTransactionFindUniqueOrThrowArgs>(args: SelectSubset<T, DeliveryCompanyTransactionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DeliveryCompanyTransactionClient<$Result.GetResult<Prisma.$DeliveryCompanyTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DeliveryCompanyTransaction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryCompanyTransactionFindFirstArgs} args - Arguments to find a DeliveryCompanyTransaction
+     * @example
+     * // Get one DeliveryCompanyTransaction
+     * const deliveryCompanyTransaction = await prisma.deliveryCompanyTransaction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DeliveryCompanyTransactionFindFirstArgs>(args?: SelectSubset<T, DeliveryCompanyTransactionFindFirstArgs<ExtArgs>>): Prisma__DeliveryCompanyTransactionClient<$Result.GetResult<Prisma.$DeliveryCompanyTransactionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DeliveryCompanyTransaction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryCompanyTransactionFindFirstOrThrowArgs} args - Arguments to find a DeliveryCompanyTransaction
+     * @example
+     * // Get one DeliveryCompanyTransaction
+     * const deliveryCompanyTransaction = await prisma.deliveryCompanyTransaction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DeliveryCompanyTransactionFindFirstOrThrowArgs>(args?: SelectSubset<T, DeliveryCompanyTransactionFindFirstOrThrowArgs<ExtArgs>>): Prisma__DeliveryCompanyTransactionClient<$Result.GetResult<Prisma.$DeliveryCompanyTransactionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DeliveryCompanyTransactions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryCompanyTransactionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DeliveryCompanyTransactions
+     * const deliveryCompanyTransactions = await prisma.deliveryCompanyTransaction.findMany()
+     * 
+     * // Get first 10 DeliveryCompanyTransactions
+     * const deliveryCompanyTransactions = await prisma.deliveryCompanyTransaction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const deliveryCompanyTransactionWithIdOnly = await prisma.deliveryCompanyTransaction.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DeliveryCompanyTransactionFindManyArgs>(args?: SelectSubset<T, DeliveryCompanyTransactionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliveryCompanyTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DeliveryCompanyTransaction.
+     * @param {DeliveryCompanyTransactionCreateArgs} args - Arguments to create a DeliveryCompanyTransaction.
+     * @example
+     * // Create one DeliveryCompanyTransaction
+     * const DeliveryCompanyTransaction = await prisma.deliveryCompanyTransaction.create({
+     *   data: {
+     *     // ... data to create a DeliveryCompanyTransaction
+     *   }
+     * })
+     * 
+     */
+    create<T extends DeliveryCompanyTransactionCreateArgs>(args: SelectSubset<T, DeliveryCompanyTransactionCreateArgs<ExtArgs>>): Prisma__DeliveryCompanyTransactionClient<$Result.GetResult<Prisma.$DeliveryCompanyTransactionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DeliveryCompanyTransactions.
+     * @param {DeliveryCompanyTransactionCreateManyArgs} args - Arguments to create many DeliveryCompanyTransactions.
+     * @example
+     * // Create many DeliveryCompanyTransactions
+     * const deliveryCompanyTransaction = await prisma.deliveryCompanyTransaction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DeliveryCompanyTransactionCreateManyArgs>(args?: SelectSubset<T, DeliveryCompanyTransactionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DeliveryCompanyTransactions and returns the data saved in the database.
+     * @param {DeliveryCompanyTransactionCreateManyAndReturnArgs} args - Arguments to create many DeliveryCompanyTransactions.
+     * @example
+     * // Create many DeliveryCompanyTransactions
+     * const deliveryCompanyTransaction = await prisma.deliveryCompanyTransaction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DeliveryCompanyTransactions and only return the `id`
+     * const deliveryCompanyTransactionWithIdOnly = await prisma.deliveryCompanyTransaction.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DeliveryCompanyTransactionCreateManyAndReturnArgs>(args?: SelectSubset<T, DeliveryCompanyTransactionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliveryCompanyTransactionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DeliveryCompanyTransaction.
+     * @param {DeliveryCompanyTransactionDeleteArgs} args - Arguments to delete one DeliveryCompanyTransaction.
+     * @example
+     * // Delete one DeliveryCompanyTransaction
+     * const DeliveryCompanyTransaction = await prisma.deliveryCompanyTransaction.delete({
+     *   where: {
+     *     // ... filter to delete one DeliveryCompanyTransaction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DeliveryCompanyTransactionDeleteArgs>(args: SelectSubset<T, DeliveryCompanyTransactionDeleteArgs<ExtArgs>>): Prisma__DeliveryCompanyTransactionClient<$Result.GetResult<Prisma.$DeliveryCompanyTransactionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DeliveryCompanyTransaction.
+     * @param {DeliveryCompanyTransactionUpdateArgs} args - Arguments to update one DeliveryCompanyTransaction.
+     * @example
+     * // Update one DeliveryCompanyTransaction
+     * const deliveryCompanyTransaction = await prisma.deliveryCompanyTransaction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DeliveryCompanyTransactionUpdateArgs>(args: SelectSubset<T, DeliveryCompanyTransactionUpdateArgs<ExtArgs>>): Prisma__DeliveryCompanyTransactionClient<$Result.GetResult<Prisma.$DeliveryCompanyTransactionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DeliveryCompanyTransactions.
+     * @param {DeliveryCompanyTransactionDeleteManyArgs} args - Arguments to filter DeliveryCompanyTransactions to delete.
+     * @example
+     * // Delete a few DeliveryCompanyTransactions
+     * const { count } = await prisma.deliveryCompanyTransaction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DeliveryCompanyTransactionDeleteManyArgs>(args?: SelectSubset<T, DeliveryCompanyTransactionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DeliveryCompanyTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryCompanyTransactionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DeliveryCompanyTransactions
+     * const deliveryCompanyTransaction = await prisma.deliveryCompanyTransaction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DeliveryCompanyTransactionUpdateManyArgs>(args: SelectSubset<T, DeliveryCompanyTransactionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DeliveryCompanyTransactions and returns the data updated in the database.
+     * @param {DeliveryCompanyTransactionUpdateManyAndReturnArgs} args - Arguments to update many DeliveryCompanyTransactions.
+     * @example
+     * // Update many DeliveryCompanyTransactions
+     * const deliveryCompanyTransaction = await prisma.deliveryCompanyTransaction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DeliveryCompanyTransactions and only return the `id`
+     * const deliveryCompanyTransactionWithIdOnly = await prisma.deliveryCompanyTransaction.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DeliveryCompanyTransactionUpdateManyAndReturnArgs>(args: SelectSubset<T, DeliveryCompanyTransactionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliveryCompanyTransactionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DeliveryCompanyTransaction.
+     * @param {DeliveryCompanyTransactionUpsertArgs} args - Arguments to update or create a DeliveryCompanyTransaction.
+     * @example
+     * // Update or create a DeliveryCompanyTransaction
+     * const deliveryCompanyTransaction = await prisma.deliveryCompanyTransaction.upsert({
+     *   create: {
+     *     // ... data to create a DeliveryCompanyTransaction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DeliveryCompanyTransaction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DeliveryCompanyTransactionUpsertArgs>(args: SelectSubset<T, DeliveryCompanyTransactionUpsertArgs<ExtArgs>>): Prisma__DeliveryCompanyTransactionClient<$Result.GetResult<Prisma.$DeliveryCompanyTransactionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DeliveryCompanyTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryCompanyTransactionCountArgs} args - Arguments to filter DeliveryCompanyTransactions to count.
+     * @example
+     * // Count the number of DeliveryCompanyTransactions
+     * const count = await prisma.deliveryCompanyTransaction.count({
+     *   where: {
+     *     // ... the filter for the DeliveryCompanyTransactions we want to count
+     *   }
+     * })
+    **/
+    count<T extends DeliveryCompanyTransactionCountArgs>(
+      args?: Subset<T, DeliveryCompanyTransactionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DeliveryCompanyTransactionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DeliveryCompanyTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryCompanyTransactionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DeliveryCompanyTransactionAggregateArgs>(args: Subset<T, DeliveryCompanyTransactionAggregateArgs>): Prisma.PrismaPromise<GetDeliveryCompanyTransactionAggregateType<T>>
+
+    /**
+     * Group by DeliveryCompanyTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryCompanyTransactionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DeliveryCompanyTransactionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DeliveryCompanyTransactionGroupByArgs['orderBy'] }
+        : { orderBy?: DeliveryCompanyTransactionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DeliveryCompanyTransactionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDeliveryCompanyTransactionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DeliveryCompanyTransaction model
+   */
+  readonly fields: DeliveryCompanyTransactionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DeliveryCompanyTransaction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DeliveryCompanyTransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    deliveryCompany<T extends D_CompanyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, D_CompanyDefaultArgs<ExtArgs>>): Prisma__D_CompanyClient<$Result.GetResult<Prisma.$D_CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DeliveryCompanyTransaction model
+   */
+  interface DeliveryCompanyTransactionFieldRefs {
+    readonly id: FieldRef<"DeliveryCompanyTransaction", 'String'>
+    readonly deliveryCompanyId: FieldRef<"DeliveryCompanyTransaction", 'String'>
+    readonly amount: FieldRef<"DeliveryCompanyTransaction", 'Int'>
+    readonly currency: FieldRef<"DeliveryCompanyTransaction", 'String'>
+    readonly direction: FieldRef<"DeliveryCompanyTransaction", 'DeliveryCompanyTransactionDirection'>
+    readonly source: FieldRef<"DeliveryCompanyTransaction", 'DeliveryCompanyTransactionSource'>
+    readonly stripeReferenceId: FieldRef<"DeliveryCompanyTransaction", 'String'>
+    readonly description: FieldRef<"DeliveryCompanyTransaction", 'String'>
+    readonly createdAt: FieldRef<"DeliveryCompanyTransaction", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DeliveryCompanyTransaction findUnique
+   */
+  export type DeliveryCompanyTransactionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryCompanyTransaction
+     */
+    select?: DeliveryCompanyTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryCompanyTransaction
+     */
+    omit?: DeliveryCompanyTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryCompanyTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which DeliveryCompanyTransaction to fetch.
+     */
+    where: DeliveryCompanyTransactionWhereUniqueInput
+  }
+
+  /**
+   * DeliveryCompanyTransaction findUniqueOrThrow
+   */
+  export type DeliveryCompanyTransactionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryCompanyTransaction
+     */
+    select?: DeliveryCompanyTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryCompanyTransaction
+     */
+    omit?: DeliveryCompanyTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryCompanyTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which DeliveryCompanyTransaction to fetch.
+     */
+    where: DeliveryCompanyTransactionWhereUniqueInput
+  }
+
+  /**
+   * DeliveryCompanyTransaction findFirst
+   */
+  export type DeliveryCompanyTransactionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryCompanyTransaction
+     */
+    select?: DeliveryCompanyTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryCompanyTransaction
+     */
+    omit?: DeliveryCompanyTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryCompanyTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which DeliveryCompanyTransaction to fetch.
+     */
+    where?: DeliveryCompanyTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeliveryCompanyTransactions to fetch.
+     */
+    orderBy?: DeliveryCompanyTransactionOrderByWithRelationInput | DeliveryCompanyTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DeliveryCompanyTransactions.
+     */
+    cursor?: DeliveryCompanyTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeliveryCompanyTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeliveryCompanyTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DeliveryCompanyTransactions.
+     */
+    distinct?: DeliveryCompanyTransactionScalarFieldEnum | DeliveryCompanyTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * DeliveryCompanyTransaction findFirstOrThrow
+   */
+  export type DeliveryCompanyTransactionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryCompanyTransaction
+     */
+    select?: DeliveryCompanyTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryCompanyTransaction
+     */
+    omit?: DeliveryCompanyTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryCompanyTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which DeliveryCompanyTransaction to fetch.
+     */
+    where?: DeliveryCompanyTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeliveryCompanyTransactions to fetch.
+     */
+    orderBy?: DeliveryCompanyTransactionOrderByWithRelationInput | DeliveryCompanyTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DeliveryCompanyTransactions.
+     */
+    cursor?: DeliveryCompanyTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeliveryCompanyTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeliveryCompanyTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DeliveryCompanyTransactions.
+     */
+    distinct?: DeliveryCompanyTransactionScalarFieldEnum | DeliveryCompanyTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * DeliveryCompanyTransaction findMany
+   */
+  export type DeliveryCompanyTransactionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryCompanyTransaction
+     */
+    select?: DeliveryCompanyTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryCompanyTransaction
+     */
+    omit?: DeliveryCompanyTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryCompanyTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which DeliveryCompanyTransactions to fetch.
+     */
+    where?: DeliveryCompanyTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeliveryCompanyTransactions to fetch.
+     */
+    orderBy?: DeliveryCompanyTransactionOrderByWithRelationInput | DeliveryCompanyTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DeliveryCompanyTransactions.
+     */
+    cursor?: DeliveryCompanyTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeliveryCompanyTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeliveryCompanyTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DeliveryCompanyTransactions.
+     */
+    distinct?: DeliveryCompanyTransactionScalarFieldEnum | DeliveryCompanyTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * DeliveryCompanyTransaction create
+   */
+  export type DeliveryCompanyTransactionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryCompanyTransaction
+     */
+    select?: DeliveryCompanyTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryCompanyTransaction
+     */
+    omit?: DeliveryCompanyTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryCompanyTransactionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DeliveryCompanyTransaction.
+     */
+    data: XOR<DeliveryCompanyTransactionCreateInput, DeliveryCompanyTransactionUncheckedCreateInput>
+  }
+
+  /**
+   * DeliveryCompanyTransaction createMany
+   */
+  export type DeliveryCompanyTransactionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DeliveryCompanyTransactions.
+     */
+    data: DeliveryCompanyTransactionCreateManyInput | DeliveryCompanyTransactionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DeliveryCompanyTransaction createManyAndReturn
+   */
+  export type DeliveryCompanyTransactionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryCompanyTransaction
+     */
+    select?: DeliveryCompanyTransactionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryCompanyTransaction
+     */
+    omit?: DeliveryCompanyTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to create many DeliveryCompanyTransactions.
+     */
+    data: DeliveryCompanyTransactionCreateManyInput | DeliveryCompanyTransactionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryCompanyTransactionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DeliveryCompanyTransaction update
+   */
+  export type DeliveryCompanyTransactionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryCompanyTransaction
+     */
+    select?: DeliveryCompanyTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryCompanyTransaction
+     */
+    omit?: DeliveryCompanyTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryCompanyTransactionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DeliveryCompanyTransaction.
+     */
+    data: XOR<DeliveryCompanyTransactionUpdateInput, DeliveryCompanyTransactionUncheckedUpdateInput>
+    /**
+     * Choose, which DeliveryCompanyTransaction to update.
+     */
+    where: DeliveryCompanyTransactionWhereUniqueInput
+  }
+
+  /**
+   * DeliveryCompanyTransaction updateMany
+   */
+  export type DeliveryCompanyTransactionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DeliveryCompanyTransactions.
+     */
+    data: XOR<DeliveryCompanyTransactionUpdateManyMutationInput, DeliveryCompanyTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which DeliveryCompanyTransactions to update
+     */
+    where?: DeliveryCompanyTransactionWhereInput
+    /**
+     * Limit how many DeliveryCompanyTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DeliveryCompanyTransaction updateManyAndReturn
+   */
+  export type DeliveryCompanyTransactionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryCompanyTransaction
+     */
+    select?: DeliveryCompanyTransactionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryCompanyTransaction
+     */
+    omit?: DeliveryCompanyTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to update DeliveryCompanyTransactions.
+     */
+    data: XOR<DeliveryCompanyTransactionUpdateManyMutationInput, DeliveryCompanyTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which DeliveryCompanyTransactions to update
+     */
+    where?: DeliveryCompanyTransactionWhereInput
+    /**
+     * Limit how many DeliveryCompanyTransactions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryCompanyTransactionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DeliveryCompanyTransaction upsert
+   */
+  export type DeliveryCompanyTransactionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryCompanyTransaction
+     */
+    select?: DeliveryCompanyTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryCompanyTransaction
+     */
+    omit?: DeliveryCompanyTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryCompanyTransactionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DeliveryCompanyTransaction to update in case it exists.
+     */
+    where: DeliveryCompanyTransactionWhereUniqueInput
+    /**
+     * In case the DeliveryCompanyTransaction found by the `where` argument doesn't exist, create a new DeliveryCompanyTransaction with this data.
+     */
+    create: XOR<DeliveryCompanyTransactionCreateInput, DeliveryCompanyTransactionUncheckedCreateInput>
+    /**
+     * In case the DeliveryCompanyTransaction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DeliveryCompanyTransactionUpdateInput, DeliveryCompanyTransactionUncheckedUpdateInput>
+  }
+
+  /**
+   * DeliveryCompanyTransaction delete
+   */
+  export type DeliveryCompanyTransactionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryCompanyTransaction
+     */
+    select?: DeliveryCompanyTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryCompanyTransaction
+     */
+    omit?: DeliveryCompanyTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryCompanyTransactionInclude<ExtArgs> | null
+    /**
+     * Filter which DeliveryCompanyTransaction to delete.
+     */
+    where: DeliveryCompanyTransactionWhereUniqueInput
+  }
+
+  /**
+   * DeliveryCompanyTransaction deleteMany
+   */
+  export type DeliveryCompanyTransactionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DeliveryCompanyTransactions to delete
+     */
+    where?: DeliveryCompanyTransactionWhereInput
+    /**
+     * Limit how many DeliveryCompanyTransactions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DeliveryCompanyTransaction without action
+   */
+  export type DeliveryCompanyTransactionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryCompanyTransaction
+     */
+    select?: DeliveryCompanyTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryCompanyTransaction
+     */
+    omit?: DeliveryCompanyTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryCompanyTransactionInclude<ExtArgs> | null
   }
 
 
@@ -23047,6 +25670,21 @@ export namespace Prisma {
   export type BrandScalarFieldEnum = (typeof BrandScalarFieldEnum)[keyof typeof BrandScalarFieldEnum]
 
 
+  export const BrandTransactionScalarFieldEnum: {
+    id: 'id',
+    brandId: 'brandId',
+    amount: 'amount',
+    currency: 'currency',
+    direction: 'direction',
+    source: 'source',
+    stripeReferenceId: 'stripeReferenceId',
+    description: 'description',
+    createdAt: 'createdAt'
+  };
+
+  export type BrandTransactionScalarFieldEnum = (typeof BrandTransactionScalarFieldEnum)[keyof typeof BrandTransactionScalarFieldEnum]
+
+
   export const BrandBranchScalarFieldEnum: {
     id: 'id',
     brandId: 'brandId',
@@ -23200,6 +25838,7 @@ export namespace Prisma {
     status: 'status',
     otp: 'otp',
     price: 'price',
+    deliveryPrice: 'deliveryPrice',
     totalPrice: 'totalPrice',
     address: 'address',
     phoneNumber: 'phoneNumber',
@@ -23232,6 +25871,21 @@ export namespace Prisma {
   };
 
   export type D_CompanyScalarFieldEnum = (typeof D_CompanyScalarFieldEnum)[keyof typeof D_CompanyScalarFieldEnum]
+
+
+  export const DeliveryCompanyTransactionScalarFieldEnum: {
+    id: 'id',
+    deliveryCompanyId: 'deliveryCompanyId',
+    amount: 'amount',
+    currency: 'currency',
+    direction: 'direction',
+    source: 'source',
+    stripeReferenceId: 'stripeReferenceId',
+    description: 'description',
+    createdAt: 'createdAt'
+  };
+
+  export type DeliveryCompanyTransactionScalarFieldEnum = (typeof DeliveryCompanyTransactionScalarFieldEnum)[keyof typeof DeliveryCompanyTransactionScalarFieldEnum]
 
 
   export const CourierScalarFieldEnum: {
@@ -23436,6 +26090,34 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'BrandTransactionDirection'
+   */
+  export type EnumBrandTransactionDirectionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BrandTransactionDirection'>
+    
+
+
+  /**
+   * Reference to a field of type 'BrandTransactionDirection[]'
+   */
+  export type ListEnumBrandTransactionDirectionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BrandTransactionDirection[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'BrandTransactionSource'
+   */
+  export type EnumBrandTransactionSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BrandTransactionSource'>
+    
+
+
+  /**
+   * Reference to a field of type 'BrandTransactionSource[]'
+   */
+  export type ListEnumBrandTransactionSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BrandTransactionSource[]'>
+    
+
+
+  /**
    * Reference to a field of type 'BrandDocType'
    */
   export type EnumBrandDocTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BrandDocType'>
@@ -23481,6 +26163,34 @@ export namespace Prisma {
    * Reference to a field of type 'orderStatus[]'
    */
   export type ListEnumorderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'orderStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DeliveryCompanyTransactionDirection'
+   */
+  export type EnumDeliveryCompanyTransactionDirectionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DeliveryCompanyTransactionDirection'>
+    
+
+
+  /**
+   * Reference to a field of type 'DeliveryCompanyTransactionDirection[]'
+   */
+  export type ListEnumDeliveryCompanyTransactionDirectionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DeliveryCompanyTransactionDirection[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DeliveryCompanyTransactionSource'
+   */
+  export type EnumDeliveryCompanyTransactionSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DeliveryCompanyTransactionSource'>
+    
+
+
+  /**
+   * Reference to a field of type 'DeliveryCompanyTransactionSource[]'
+   */
+  export type ListEnumDeliveryCompanyTransactionSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DeliveryCompanyTransactionSource[]'>
     
 
 
@@ -23722,6 +26432,7 @@ export namespace Prisma {
     followers?: BrandFollowerListRelationFilter
     products?: ProductListRelationFilter
     branches?: BrandBranchListRelationFilter
+    transactions?: BrandTransactionListRelationFilter
     orderBrands?: OrderBrandListRelationFilter
   }
 
@@ -23747,6 +26458,7 @@ export namespace Prisma {
     followers?: BrandFollowerOrderByRelationAggregateInput
     products?: ProductOrderByRelationAggregateInput
     branches?: BrandBranchOrderByRelationAggregateInput
+    transactions?: BrandTransactionOrderByRelationAggregateInput
     orderBrands?: OrderBrandOrderByRelationAggregateInput
   }
 
@@ -23775,6 +26487,7 @@ export namespace Prisma {
     followers?: BrandFollowerListRelationFilter
     products?: ProductListRelationFilter
     branches?: BrandBranchListRelationFilter
+    transactions?: BrandTransactionListRelationFilter
     orderBrands?: OrderBrandListRelationFilter
   }, "id" | "userId">
 
@@ -23820,6 +26533,83 @@ export namespace Prisma {
     paymentDetails?: JsonNullableWithAggregatesFilter<"Brand">
     createdAt?: DateTimeWithAggregatesFilter<"Brand"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Brand"> | Date | string
+  }
+
+  export type BrandTransactionWhereInput = {
+    AND?: BrandTransactionWhereInput | BrandTransactionWhereInput[]
+    OR?: BrandTransactionWhereInput[]
+    NOT?: BrandTransactionWhereInput | BrandTransactionWhereInput[]
+    id?: UuidFilter<"BrandTransaction"> | string
+    brandId?: UuidFilter<"BrandTransaction"> | string
+    amount?: IntFilter<"BrandTransaction"> | number
+    currency?: StringFilter<"BrandTransaction"> | string
+    direction?: EnumBrandTransactionDirectionFilter<"BrandTransaction"> | $Enums.BrandTransactionDirection
+    source?: EnumBrandTransactionSourceFilter<"BrandTransaction"> | $Enums.BrandTransactionSource
+    stripeReferenceId?: StringNullableFilter<"BrandTransaction"> | string | null
+    description?: StringNullableFilter<"BrandTransaction"> | string | null
+    createdAt?: DateTimeFilter<"BrandTransaction"> | Date | string
+    brand?: XOR<BrandScalarRelationFilter, BrandWhereInput>
+  }
+
+  export type BrandTransactionOrderByWithRelationInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    direction?: SortOrder
+    source?: SortOrder
+    stripeReferenceId?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    brand?: BrandOrderByWithRelationInput
+  }
+
+  export type BrandTransactionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    stripeReferenceId?: string
+    AND?: BrandTransactionWhereInput | BrandTransactionWhereInput[]
+    OR?: BrandTransactionWhereInput[]
+    NOT?: BrandTransactionWhereInput | BrandTransactionWhereInput[]
+    brandId?: UuidFilter<"BrandTransaction"> | string
+    amount?: IntFilter<"BrandTransaction"> | number
+    currency?: StringFilter<"BrandTransaction"> | string
+    direction?: EnumBrandTransactionDirectionFilter<"BrandTransaction"> | $Enums.BrandTransactionDirection
+    source?: EnumBrandTransactionSourceFilter<"BrandTransaction"> | $Enums.BrandTransactionSource
+    description?: StringNullableFilter<"BrandTransaction"> | string | null
+    createdAt?: DateTimeFilter<"BrandTransaction"> | Date | string
+    brand?: XOR<BrandScalarRelationFilter, BrandWhereInput>
+  }, "id" | "stripeReferenceId">
+
+  export type BrandTransactionOrderByWithAggregationInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    direction?: SortOrder
+    source?: SortOrder
+    stripeReferenceId?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: BrandTransactionCountOrderByAggregateInput
+    _avg?: BrandTransactionAvgOrderByAggregateInput
+    _max?: BrandTransactionMaxOrderByAggregateInput
+    _min?: BrandTransactionMinOrderByAggregateInput
+    _sum?: BrandTransactionSumOrderByAggregateInput
+  }
+
+  export type BrandTransactionScalarWhereWithAggregatesInput = {
+    AND?: BrandTransactionScalarWhereWithAggregatesInput | BrandTransactionScalarWhereWithAggregatesInput[]
+    OR?: BrandTransactionScalarWhereWithAggregatesInput[]
+    NOT?: BrandTransactionScalarWhereWithAggregatesInput | BrandTransactionScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"BrandTransaction"> | string
+    brandId?: UuidWithAggregatesFilter<"BrandTransaction"> | string
+    amount?: IntWithAggregatesFilter<"BrandTransaction"> | number
+    currency?: StringWithAggregatesFilter<"BrandTransaction"> | string
+    direction?: EnumBrandTransactionDirectionWithAggregatesFilter<"BrandTransaction"> | $Enums.BrandTransactionDirection
+    source?: EnumBrandTransactionSourceWithAggregatesFilter<"BrandTransaction"> | $Enums.BrandTransactionSource
+    stripeReferenceId?: StringNullableWithAggregatesFilter<"BrandTransaction"> | string | null
+    description?: StringNullableWithAggregatesFilter<"BrandTransaction"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"BrandTransaction"> | Date | string
   }
 
   export type BrandBranchWhereInput = {
@@ -24612,6 +27402,7 @@ export namespace Prisma {
     status?: EnumorderStatusFilter<"Order"> | $Enums.orderStatus
     otp?: StringFilter<"Order"> | string
     price?: IntFilter<"Order"> | number
+    deliveryPrice?: IntFilter<"Order"> | number
     totalPrice?: IntFilter<"Order"> | number
     address?: StringFilter<"Order"> | string
     phoneNumber?: StringFilter<"Order"> | string
@@ -24634,6 +27425,7 @@ export namespace Prisma {
     status?: SortOrder
     otp?: SortOrder
     price?: SortOrder
+    deliveryPrice?: SortOrder
     totalPrice?: SortOrder
     address?: SortOrder
     phoneNumber?: SortOrder
@@ -24661,6 +27453,7 @@ export namespace Prisma {
     status?: EnumorderStatusFilter<"Order"> | $Enums.orderStatus
     otp?: StringFilter<"Order"> | string
     price?: IntFilter<"Order"> | number
+    deliveryPrice?: IntFilter<"Order"> | number
     totalPrice?: IntFilter<"Order"> | number
     address?: StringFilter<"Order"> | string
     phoneNumber?: StringFilter<"Order"> | string
@@ -24681,6 +27474,7 @@ export namespace Prisma {
     status?: SortOrder
     otp?: SortOrder
     price?: SortOrder
+    deliveryPrice?: SortOrder
     totalPrice?: SortOrder
     address?: SortOrder
     phoneNumber?: SortOrder
@@ -24706,6 +27500,7 @@ export namespace Prisma {
     status?: EnumorderStatusWithAggregatesFilter<"Order"> | $Enums.orderStatus
     otp?: StringWithAggregatesFilter<"Order"> | string
     price?: IntWithAggregatesFilter<"Order"> | number
+    deliveryPrice?: IntWithAggregatesFilter<"Order"> | number
     totalPrice?: IntWithAggregatesFilter<"Order"> | number
     address?: StringWithAggregatesFilter<"Order"> | string
     phoneNumber?: StringWithAggregatesFilter<"Order"> | string
@@ -24773,6 +27568,7 @@ export namespace Prisma {
     balance?: IntFilter<"D_Company"> | number
     couriers?: CourierListRelationFilter
     orders?: OrderListRelationFilter
+    transactions?: DeliveryCompanyTransactionListRelationFilter
   }
 
   export type D_CompanyOrderByWithRelationInput = {
@@ -24785,6 +27581,7 @@ export namespace Prisma {
     balance?: SortOrder
     couriers?: CourierOrderByRelationAggregateInput
     orders?: OrderOrderByRelationAggregateInput
+    transactions?: DeliveryCompanyTransactionOrderByRelationAggregateInput
   }
 
   export type D_CompanyWhereUniqueInput = Prisma.AtLeast<{
@@ -24800,6 +27597,7 @@ export namespace Prisma {
     balance?: IntFilter<"D_Company"> | number
     couriers?: CourierListRelationFilter
     orders?: OrderListRelationFilter
+    transactions?: DeliveryCompanyTransactionListRelationFilter
   }, "deliveryCompany">
 
   export type D_CompanyOrderByWithAggregationInput = {
@@ -24828,6 +27626,83 @@ export namespace Prisma {
     isVerified?: BoolWithAggregatesFilter<"D_Company"> | boolean
     isBanned?: BoolWithAggregatesFilter<"D_Company"> | boolean
     balance?: IntWithAggregatesFilter<"D_Company"> | number
+  }
+
+  export type DeliveryCompanyTransactionWhereInput = {
+    AND?: DeliveryCompanyTransactionWhereInput | DeliveryCompanyTransactionWhereInput[]
+    OR?: DeliveryCompanyTransactionWhereInput[]
+    NOT?: DeliveryCompanyTransactionWhereInput | DeliveryCompanyTransactionWhereInput[]
+    id?: UuidFilter<"DeliveryCompanyTransaction"> | string
+    deliveryCompanyId?: UuidFilter<"DeliveryCompanyTransaction"> | string
+    amount?: IntFilter<"DeliveryCompanyTransaction"> | number
+    currency?: StringFilter<"DeliveryCompanyTransaction"> | string
+    direction?: EnumDeliveryCompanyTransactionDirectionFilter<"DeliveryCompanyTransaction"> | $Enums.DeliveryCompanyTransactionDirection
+    source?: EnumDeliveryCompanyTransactionSourceFilter<"DeliveryCompanyTransaction"> | $Enums.DeliveryCompanyTransactionSource
+    stripeReferenceId?: StringNullableFilter<"DeliveryCompanyTransaction"> | string | null
+    description?: StringNullableFilter<"DeliveryCompanyTransaction"> | string | null
+    createdAt?: DateTimeFilter<"DeliveryCompanyTransaction"> | Date | string
+    deliveryCompany?: XOR<D_CompanyScalarRelationFilter, D_CompanyWhereInput>
+  }
+
+  export type DeliveryCompanyTransactionOrderByWithRelationInput = {
+    id?: SortOrder
+    deliveryCompanyId?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    direction?: SortOrder
+    source?: SortOrder
+    stripeReferenceId?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    deliveryCompany?: D_CompanyOrderByWithRelationInput
+  }
+
+  export type DeliveryCompanyTransactionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    stripeReferenceId?: string
+    AND?: DeliveryCompanyTransactionWhereInput | DeliveryCompanyTransactionWhereInput[]
+    OR?: DeliveryCompanyTransactionWhereInput[]
+    NOT?: DeliveryCompanyTransactionWhereInput | DeliveryCompanyTransactionWhereInput[]
+    deliveryCompanyId?: UuidFilter<"DeliveryCompanyTransaction"> | string
+    amount?: IntFilter<"DeliveryCompanyTransaction"> | number
+    currency?: StringFilter<"DeliveryCompanyTransaction"> | string
+    direction?: EnumDeliveryCompanyTransactionDirectionFilter<"DeliveryCompanyTransaction"> | $Enums.DeliveryCompanyTransactionDirection
+    source?: EnumDeliveryCompanyTransactionSourceFilter<"DeliveryCompanyTransaction"> | $Enums.DeliveryCompanyTransactionSource
+    description?: StringNullableFilter<"DeliveryCompanyTransaction"> | string | null
+    createdAt?: DateTimeFilter<"DeliveryCompanyTransaction"> | Date | string
+    deliveryCompany?: XOR<D_CompanyScalarRelationFilter, D_CompanyWhereInput>
+  }, "id" | "stripeReferenceId">
+
+  export type DeliveryCompanyTransactionOrderByWithAggregationInput = {
+    id?: SortOrder
+    deliveryCompanyId?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    direction?: SortOrder
+    source?: SortOrder
+    stripeReferenceId?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: DeliveryCompanyTransactionCountOrderByAggregateInput
+    _avg?: DeliveryCompanyTransactionAvgOrderByAggregateInput
+    _max?: DeliveryCompanyTransactionMaxOrderByAggregateInput
+    _min?: DeliveryCompanyTransactionMinOrderByAggregateInput
+    _sum?: DeliveryCompanyTransactionSumOrderByAggregateInput
+  }
+
+  export type DeliveryCompanyTransactionScalarWhereWithAggregatesInput = {
+    AND?: DeliveryCompanyTransactionScalarWhereWithAggregatesInput | DeliveryCompanyTransactionScalarWhereWithAggregatesInput[]
+    OR?: DeliveryCompanyTransactionScalarWhereWithAggregatesInput[]
+    NOT?: DeliveryCompanyTransactionScalarWhereWithAggregatesInput | DeliveryCompanyTransactionScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"DeliveryCompanyTransaction"> | string
+    deliveryCompanyId?: UuidWithAggregatesFilter<"DeliveryCompanyTransaction"> | string
+    amount?: IntWithAggregatesFilter<"DeliveryCompanyTransaction"> | number
+    currency?: StringWithAggregatesFilter<"DeliveryCompanyTransaction"> | string
+    direction?: EnumDeliveryCompanyTransactionDirectionWithAggregatesFilter<"DeliveryCompanyTransaction"> | $Enums.DeliveryCompanyTransactionDirection
+    source?: EnumDeliveryCompanyTransactionSourceWithAggregatesFilter<"DeliveryCompanyTransaction"> | $Enums.DeliveryCompanyTransactionSource
+    stripeReferenceId?: StringNullableWithAggregatesFilter<"DeliveryCompanyTransaction"> | string | null
+    description?: StringNullableWithAggregatesFilter<"DeliveryCompanyTransaction"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"DeliveryCompanyTransaction"> | Date | string
   }
 
   export type CourierWhereInput = {
@@ -25160,6 +28035,7 @@ export namespace Prisma {
     followers?: BrandFollowerCreateNestedManyWithoutBrandInput
     products?: ProductCreateNestedManyWithoutBrandInput
     branches?: BrandBranchCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     orderBrands?: OrderBrandCreateNestedManyWithoutBrandInput
   }
 
@@ -25184,6 +28060,7 @@ export namespace Prisma {
     followers?: BrandFollowerUncheckedCreateNestedManyWithoutBrandInput
     products?: ProductUncheckedCreateNestedManyWithoutBrandInput
     branches?: BrandBranchUncheckedCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     orderBrands?: OrderBrandUncheckedCreateNestedManyWithoutBrandInput
   }
 
@@ -25208,6 +28085,7 @@ export namespace Prisma {
     followers?: BrandFollowerUpdateManyWithoutBrandNestedInput
     products?: ProductUpdateManyWithoutBrandNestedInput
     branches?: BrandBranchUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     orderBrands?: OrderBrandUpdateManyWithoutBrandNestedInput
   }
 
@@ -25232,6 +28110,7 @@ export namespace Prisma {
     followers?: BrandFollowerUncheckedUpdateManyWithoutBrandNestedInput
     products?: ProductUncheckedUpdateManyWithoutBrandNestedInput
     branches?: BrandBranchUncheckedUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     orderBrands?: OrderBrandUncheckedUpdateManyWithoutBrandNestedInput
   }
 
@@ -25286,6 +28165,89 @@ export namespace Prisma {
     paymentDetails?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrandTransactionCreateInput = {
+    id?: string
+    amount: number
+    currency?: string
+    direction: $Enums.BrandTransactionDirection
+    source: $Enums.BrandTransactionSource
+    stripeReferenceId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    brand: BrandCreateNestedOneWithoutTransactionsInput
+  }
+
+  export type BrandTransactionUncheckedCreateInput = {
+    id?: string
+    brandId: string
+    amount: number
+    currency?: string
+    direction: $Enums.BrandTransactionDirection
+    source: $Enums.BrandTransactionSource
+    stripeReferenceId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+  }
+
+  export type BrandTransactionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    direction?: EnumBrandTransactionDirectionFieldUpdateOperationsInput | $Enums.BrandTransactionDirection
+    source?: EnumBrandTransactionSourceFieldUpdateOperationsInput | $Enums.BrandTransactionSource
+    stripeReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brand?: BrandUpdateOneRequiredWithoutTransactionsNestedInput
+  }
+
+  export type BrandTransactionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    brandId?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    direction?: EnumBrandTransactionDirectionFieldUpdateOperationsInput | $Enums.BrandTransactionDirection
+    source?: EnumBrandTransactionSourceFieldUpdateOperationsInput | $Enums.BrandTransactionSource
+    stripeReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrandTransactionCreateManyInput = {
+    id?: string
+    brandId: string
+    amount: number
+    currency?: string
+    direction: $Enums.BrandTransactionDirection
+    source: $Enums.BrandTransactionSource
+    stripeReferenceId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+  }
+
+  export type BrandTransactionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    direction?: EnumBrandTransactionDirectionFieldUpdateOperationsInput | $Enums.BrandTransactionDirection
+    source?: EnumBrandTransactionSourceFieldUpdateOperationsInput | $Enums.BrandTransactionSource
+    stripeReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrandTransactionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    brandId?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    direction?: EnumBrandTransactionDirectionFieldUpdateOperationsInput | $Enums.BrandTransactionDirection
+    source?: EnumBrandTransactionSourceFieldUpdateOperationsInput | $Enums.BrandTransactionSource
+    stripeReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BrandBranchCreateInput = {
@@ -26093,6 +29055,7 @@ export namespace Prisma {
     status?: $Enums.orderStatus
     otp: string
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: string
     phoneNumber: string
@@ -26113,6 +29076,7 @@ export namespace Prisma {
     status?: $Enums.orderStatus
     otp: string
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: string
     phoneNumber: string
@@ -26131,6 +29095,7 @@ export namespace Prisma {
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
     otp?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    deliveryPrice?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -26151,6 +29116,7 @@ export namespace Prisma {
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
     otp?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    deliveryPrice?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -26170,6 +29136,7 @@ export namespace Prisma {
     status?: $Enums.orderStatus
     otp: string
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: string
     phoneNumber: string
@@ -26186,6 +29153,7 @@ export namespace Prisma {
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
     otp?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    deliveryPrice?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -26201,6 +29169,7 @@ export namespace Prisma {
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
     otp?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    deliveryPrice?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -26252,9 +29221,10 @@ export namespace Prisma {
     phoneNumber: string
     isVerified?: boolean
     isBanned?: boolean
-    balance: number
+    balance?: number
     couriers?: CourierCreateNestedManyWithoutDeliveryCompanyInput
     orders?: OrderCreateNestedManyWithoutDeliveryCompanyInput
+    transactions?: DeliveryCompanyTransactionCreateNestedManyWithoutDeliveryCompanyInput
   }
 
   export type D_CompanyUncheckedCreateInput = {
@@ -26264,9 +29234,10 @@ export namespace Prisma {
     phoneNumber: string
     isVerified?: boolean
     isBanned?: boolean
-    balance: number
+    balance?: number
     couriers?: CourierUncheckedCreateNestedManyWithoutDeliveryCompanyInput
     orders?: OrderUncheckedCreateNestedManyWithoutDeliveryCompanyInput
+    transactions?: DeliveryCompanyTransactionUncheckedCreateNestedManyWithoutDeliveryCompanyInput
   }
 
   export type D_CompanyUpdateInput = {
@@ -26279,6 +29250,7 @@ export namespace Prisma {
     balance?: IntFieldUpdateOperationsInput | number
     couriers?: CourierUpdateManyWithoutDeliveryCompanyNestedInput
     orders?: OrderUpdateManyWithoutDeliveryCompanyNestedInput
+    transactions?: DeliveryCompanyTransactionUpdateManyWithoutDeliveryCompanyNestedInput
   }
 
   export type D_CompanyUncheckedUpdateInput = {
@@ -26291,6 +29263,7 @@ export namespace Prisma {
     balance?: IntFieldUpdateOperationsInput | number
     couriers?: CourierUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
     orders?: OrderUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
+    transactions?: DeliveryCompanyTransactionUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
   }
 
   export type D_CompanyCreateManyInput = {
@@ -26300,7 +29273,7 @@ export namespace Prisma {
     phoneNumber: string
     isVerified?: boolean
     isBanned?: boolean
-    balance: number
+    balance?: number
   }
 
   export type D_CompanyUpdateManyMutationInput = {
@@ -26321,6 +29294,89 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
     balance?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DeliveryCompanyTransactionCreateInput = {
+    id?: string
+    amount: number
+    currency?: string
+    direction: $Enums.DeliveryCompanyTransactionDirection
+    source: $Enums.DeliveryCompanyTransactionSource
+    stripeReferenceId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    deliveryCompany: D_CompanyCreateNestedOneWithoutTransactionsInput
+  }
+
+  export type DeliveryCompanyTransactionUncheckedCreateInput = {
+    id?: string
+    deliveryCompanyId: string
+    amount: number
+    currency?: string
+    direction: $Enums.DeliveryCompanyTransactionDirection
+    source: $Enums.DeliveryCompanyTransactionSource
+    stripeReferenceId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+  }
+
+  export type DeliveryCompanyTransactionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    direction?: EnumDeliveryCompanyTransactionDirectionFieldUpdateOperationsInput | $Enums.DeliveryCompanyTransactionDirection
+    source?: EnumDeliveryCompanyTransactionSourceFieldUpdateOperationsInput | $Enums.DeliveryCompanyTransactionSource
+    stripeReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deliveryCompany?: D_CompanyUpdateOneRequiredWithoutTransactionsNestedInput
+  }
+
+  export type DeliveryCompanyTransactionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    deliveryCompanyId?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    direction?: EnumDeliveryCompanyTransactionDirectionFieldUpdateOperationsInput | $Enums.DeliveryCompanyTransactionDirection
+    source?: EnumDeliveryCompanyTransactionSourceFieldUpdateOperationsInput | $Enums.DeliveryCompanyTransactionSource
+    stripeReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliveryCompanyTransactionCreateManyInput = {
+    id?: string
+    deliveryCompanyId: string
+    amount: number
+    currency?: string
+    direction: $Enums.DeliveryCompanyTransactionDirection
+    source: $Enums.DeliveryCompanyTransactionSource
+    stripeReferenceId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+  }
+
+  export type DeliveryCompanyTransactionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    direction?: EnumDeliveryCompanyTransactionDirectionFieldUpdateOperationsInput | $Enums.DeliveryCompanyTransactionDirection
+    source?: EnumDeliveryCompanyTransactionSourceFieldUpdateOperationsInput | $Enums.DeliveryCompanyTransactionSource
+    stripeReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliveryCompanyTransactionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    deliveryCompanyId?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    direction?: EnumDeliveryCompanyTransactionDirectionFieldUpdateOperationsInput | $Enums.DeliveryCompanyTransactionDirection
+    source?: EnumDeliveryCompanyTransactionSourceFieldUpdateOperationsInput | $Enums.DeliveryCompanyTransactionSource
+    stripeReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CourierCreateInput = {
@@ -26900,6 +29956,12 @@ export namespace Prisma {
     none?: BrandBranchWhereInput
   }
 
+  export type BrandTransactionListRelationFilter = {
+    every?: BrandTransactionWhereInput
+    some?: BrandTransactionWhereInput
+    none?: BrandTransactionWhereInput
+  }
+
   export type OrderBrandListRelationFilter = {
     every?: OrderBrandWhereInput
     some?: OrderBrandWhereInput
@@ -26915,6 +29977,10 @@ export namespace Prisma {
   }
 
   export type BrandBranchOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BrandTransactionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -27040,6 +30106,89 @@ export namespace Prisma {
     _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
+  export type EnumBrandTransactionDirectionFilter<$PrismaModel = never> = {
+    equals?: $Enums.BrandTransactionDirection | EnumBrandTransactionDirectionFieldRefInput<$PrismaModel>
+    in?: $Enums.BrandTransactionDirection[] | ListEnumBrandTransactionDirectionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BrandTransactionDirection[] | ListEnumBrandTransactionDirectionFieldRefInput<$PrismaModel>
+    not?: NestedEnumBrandTransactionDirectionFilter<$PrismaModel> | $Enums.BrandTransactionDirection
+  }
+
+  export type EnumBrandTransactionSourceFilter<$PrismaModel = never> = {
+    equals?: $Enums.BrandTransactionSource | EnumBrandTransactionSourceFieldRefInput<$PrismaModel>
+    in?: $Enums.BrandTransactionSource[] | ListEnumBrandTransactionSourceFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BrandTransactionSource[] | ListEnumBrandTransactionSourceFieldRefInput<$PrismaModel>
+    not?: NestedEnumBrandTransactionSourceFilter<$PrismaModel> | $Enums.BrandTransactionSource
+  }
+
+  export type BrandScalarRelationFilter = {
+    is?: BrandWhereInput
+    isNot?: BrandWhereInput
+  }
+
+  export type BrandTransactionCountOrderByAggregateInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    direction?: SortOrder
+    source?: SortOrder
+    stripeReferenceId?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type BrandTransactionAvgOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type BrandTransactionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    direction?: SortOrder
+    source?: SortOrder
+    stripeReferenceId?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type BrandTransactionMinOrderByAggregateInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    direction?: SortOrder
+    source?: SortOrder
+    stripeReferenceId?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type BrandTransactionSumOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type EnumBrandTransactionDirectionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BrandTransactionDirection | EnumBrandTransactionDirectionFieldRefInput<$PrismaModel>
+    in?: $Enums.BrandTransactionDirection[] | ListEnumBrandTransactionDirectionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BrandTransactionDirection[] | ListEnumBrandTransactionDirectionFieldRefInput<$PrismaModel>
+    not?: NestedEnumBrandTransactionDirectionWithAggregatesFilter<$PrismaModel> | $Enums.BrandTransactionDirection
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBrandTransactionDirectionFilter<$PrismaModel>
+    _max?: NestedEnumBrandTransactionDirectionFilter<$PrismaModel>
+  }
+
+  export type EnumBrandTransactionSourceWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BrandTransactionSource | EnumBrandTransactionSourceFieldRefInput<$PrismaModel>
+    in?: $Enums.BrandTransactionSource[] | ListEnumBrandTransactionSourceFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BrandTransactionSource[] | ListEnumBrandTransactionSourceFieldRefInput<$PrismaModel>
+    not?: NestedEnumBrandTransactionSourceWithAggregatesFilter<$PrismaModel> | $Enums.BrandTransactionSource
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBrandTransactionSourceFilter<$PrismaModel>
+    _max?: NestedEnumBrandTransactionSourceFilter<$PrismaModel>
+  }
+
   export type DecimalNullableFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
@@ -27049,11 +30198,6 @@ export namespace Prisma {
     gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
-  }
-
-  export type BrandScalarRelationFilter = {
-    is?: BrandWhereInput
-    isNot?: BrandWhereInput
   }
 
   export type BrandBranchCountOrderByAggregateInput = {
@@ -27687,6 +30831,7 @@ export namespace Prisma {
     status?: SortOrder
     otp?: SortOrder
     price?: SortOrder
+    deliveryPrice?: SortOrder
     totalPrice?: SortOrder
     address?: SortOrder
     phoneNumber?: SortOrder
@@ -27700,6 +30845,7 @@ export namespace Prisma {
   export type OrderAvgOrderByAggregateInput = {
     discount?: SortOrder
     price?: SortOrder
+    deliveryPrice?: SortOrder
     totalPrice?: SortOrder
   }
 
@@ -27710,6 +30856,7 @@ export namespace Prisma {
     status?: SortOrder
     otp?: SortOrder
     price?: SortOrder
+    deliveryPrice?: SortOrder
     totalPrice?: SortOrder
     address?: SortOrder
     phoneNumber?: SortOrder
@@ -27727,6 +30874,7 @@ export namespace Prisma {
     status?: SortOrder
     otp?: SortOrder
     price?: SortOrder
+    deliveryPrice?: SortOrder
     totalPrice?: SortOrder
     address?: SortOrder
     phoneNumber?: SortOrder
@@ -27740,6 +30888,7 @@ export namespace Prisma {
   export type OrderSumOrderByAggregateInput = {
     discount?: SortOrder
     price?: SortOrder
+    deliveryPrice?: SortOrder
     totalPrice?: SortOrder
   }
 
@@ -27784,7 +30933,17 @@ export namespace Prisma {
     none?: CourierWhereInput
   }
 
+  export type DeliveryCompanyTransactionListRelationFilter = {
+    every?: DeliveryCompanyTransactionWhereInput
+    some?: DeliveryCompanyTransactionWhereInput
+    none?: DeliveryCompanyTransactionWhereInput
+  }
+
   export type CourierOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DeliveryCompanyTransactionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -27824,6 +30983,84 @@ export namespace Prisma {
 
   export type D_CompanySumOrderByAggregateInput = {
     balance?: SortOrder
+  }
+
+  export type EnumDeliveryCompanyTransactionDirectionFilter<$PrismaModel = never> = {
+    equals?: $Enums.DeliveryCompanyTransactionDirection | EnumDeliveryCompanyTransactionDirectionFieldRefInput<$PrismaModel>
+    in?: $Enums.DeliveryCompanyTransactionDirection[] | ListEnumDeliveryCompanyTransactionDirectionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DeliveryCompanyTransactionDirection[] | ListEnumDeliveryCompanyTransactionDirectionFieldRefInput<$PrismaModel>
+    not?: NestedEnumDeliveryCompanyTransactionDirectionFilter<$PrismaModel> | $Enums.DeliveryCompanyTransactionDirection
+  }
+
+  export type EnumDeliveryCompanyTransactionSourceFilter<$PrismaModel = never> = {
+    equals?: $Enums.DeliveryCompanyTransactionSource | EnumDeliveryCompanyTransactionSourceFieldRefInput<$PrismaModel>
+    in?: $Enums.DeliveryCompanyTransactionSource[] | ListEnumDeliveryCompanyTransactionSourceFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DeliveryCompanyTransactionSource[] | ListEnumDeliveryCompanyTransactionSourceFieldRefInput<$PrismaModel>
+    not?: NestedEnumDeliveryCompanyTransactionSourceFilter<$PrismaModel> | $Enums.DeliveryCompanyTransactionSource
+  }
+
+  export type DeliveryCompanyTransactionCountOrderByAggregateInput = {
+    id?: SortOrder
+    deliveryCompanyId?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    direction?: SortOrder
+    source?: SortOrder
+    stripeReferenceId?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DeliveryCompanyTransactionAvgOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type DeliveryCompanyTransactionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    deliveryCompanyId?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    direction?: SortOrder
+    source?: SortOrder
+    stripeReferenceId?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DeliveryCompanyTransactionMinOrderByAggregateInput = {
+    id?: SortOrder
+    deliveryCompanyId?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    direction?: SortOrder
+    source?: SortOrder
+    stripeReferenceId?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DeliveryCompanyTransactionSumOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type EnumDeliveryCompanyTransactionDirectionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DeliveryCompanyTransactionDirection | EnumDeliveryCompanyTransactionDirectionFieldRefInput<$PrismaModel>
+    in?: $Enums.DeliveryCompanyTransactionDirection[] | ListEnumDeliveryCompanyTransactionDirectionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DeliveryCompanyTransactionDirection[] | ListEnumDeliveryCompanyTransactionDirectionFieldRefInput<$PrismaModel>
+    not?: NestedEnumDeliveryCompanyTransactionDirectionWithAggregatesFilter<$PrismaModel> | $Enums.DeliveryCompanyTransactionDirection
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDeliveryCompanyTransactionDirectionFilter<$PrismaModel>
+    _max?: NestedEnumDeliveryCompanyTransactionDirectionFilter<$PrismaModel>
+  }
+
+  export type EnumDeliveryCompanyTransactionSourceWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DeliveryCompanyTransactionSource | EnumDeliveryCompanyTransactionSourceFieldRefInput<$PrismaModel>
+    in?: $Enums.DeliveryCompanyTransactionSource[] | ListEnumDeliveryCompanyTransactionSourceFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DeliveryCompanyTransactionSource[] | ListEnumDeliveryCompanyTransactionSourceFieldRefInput<$PrismaModel>
+    not?: NestedEnumDeliveryCompanyTransactionSourceWithAggregatesFilter<$PrismaModel> | $Enums.DeliveryCompanyTransactionSource
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDeliveryCompanyTransactionSourceFilter<$PrismaModel>
+    _max?: NestedEnumDeliveryCompanyTransactionSourceFilter<$PrismaModel>
   }
 
   export type EnumcourierDocumentsNullableListFilter<$PrismaModel = never> = {
@@ -28213,6 +31450,13 @@ export namespace Prisma {
     connect?: BrandBranchWhereUniqueInput | BrandBranchWhereUniqueInput[]
   }
 
+  export type BrandTransactionCreateNestedManyWithoutBrandInput = {
+    create?: XOR<BrandTransactionCreateWithoutBrandInput, BrandTransactionUncheckedCreateWithoutBrandInput> | BrandTransactionCreateWithoutBrandInput[] | BrandTransactionUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: BrandTransactionCreateOrConnectWithoutBrandInput | BrandTransactionCreateOrConnectWithoutBrandInput[]
+    createMany?: BrandTransactionCreateManyBrandInputEnvelope
+    connect?: BrandTransactionWhereUniqueInput | BrandTransactionWhereUniqueInput[]
+  }
+
   export type OrderBrandCreateNestedManyWithoutBrandInput = {
     create?: XOR<OrderBrandCreateWithoutBrandInput, OrderBrandUncheckedCreateWithoutBrandInput> | OrderBrandCreateWithoutBrandInput[] | OrderBrandUncheckedCreateWithoutBrandInput[]
     connectOrCreate?: OrderBrandCreateOrConnectWithoutBrandInput | OrderBrandCreateOrConnectWithoutBrandInput[]
@@ -28253,6 +31497,13 @@ export namespace Prisma {
     connectOrCreate?: BrandBranchCreateOrConnectWithoutBrandInput | BrandBranchCreateOrConnectWithoutBrandInput[]
     createMany?: BrandBranchCreateManyBrandInputEnvelope
     connect?: BrandBranchWhereUniqueInput | BrandBranchWhereUniqueInput[]
+  }
+
+  export type BrandTransactionUncheckedCreateNestedManyWithoutBrandInput = {
+    create?: XOR<BrandTransactionCreateWithoutBrandInput, BrandTransactionUncheckedCreateWithoutBrandInput> | BrandTransactionCreateWithoutBrandInput[] | BrandTransactionUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: BrandTransactionCreateOrConnectWithoutBrandInput | BrandTransactionCreateOrConnectWithoutBrandInput[]
+    createMany?: BrandTransactionCreateManyBrandInputEnvelope
+    connect?: BrandTransactionWhereUniqueInput | BrandTransactionWhereUniqueInput[]
   }
 
   export type OrderBrandUncheckedCreateNestedManyWithoutBrandInput = {
@@ -28352,6 +31603,20 @@ export namespace Prisma {
     deleteMany?: BrandBranchScalarWhereInput | BrandBranchScalarWhereInput[]
   }
 
+  export type BrandTransactionUpdateManyWithoutBrandNestedInput = {
+    create?: XOR<BrandTransactionCreateWithoutBrandInput, BrandTransactionUncheckedCreateWithoutBrandInput> | BrandTransactionCreateWithoutBrandInput[] | BrandTransactionUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: BrandTransactionCreateOrConnectWithoutBrandInput | BrandTransactionCreateOrConnectWithoutBrandInput[]
+    upsert?: BrandTransactionUpsertWithWhereUniqueWithoutBrandInput | BrandTransactionUpsertWithWhereUniqueWithoutBrandInput[]
+    createMany?: BrandTransactionCreateManyBrandInputEnvelope
+    set?: BrandTransactionWhereUniqueInput | BrandTransactionWhereUniqueInput[]
+    disconnect?: BrandTransactionWhereUniqueInput | BrandTransactionWhereUniqueInput[]
+    delete?: BrandTransactionWhereUniqueInput | BrandTransactionWhereUniqueInput[]
+    connect?: BrandTransactionWhereUniqueInput | BrandTransactionWhereUniqueInput[]
+    update?: BrandTransactionUpdateWithWhereUniqueWithoutBrandInput | BrandTransactionUpdateWithWhereUniqueWithoutBrandInput[]
+    updateMany?: BrandTransactionUpdateManyWithWhereWithoutBrandInput | BrandTransactionUpdateManyWithWhereWithoutBrandInput[]
+    deleteMany?: BrandTransactionScalarWhereInput | BrandTransactionScalarWhereInput[]
+  }
+
   export type OrderBrandUpdateManyWithoutBrandNestedInput = {
     create?: XOR<OrderBrandCreateWithoutBrandInput, OrderBrandUncheckedCreateWithoutBrandInput> | OrderBrandCreateWithoutBrandInput[] | OrderBrandUncheckedCreateWithoutBrandInput[]
     connectOrCreate?: OrderBrandCreateOrConnectWithoutBrandInput | OrderBrandCreateOrConnectWithoutBrandInput[]
@@ -28436,6 +31701,20 @@ export namespace Prisma {
     deleteMany?: BrandBranchScalarWhereInput | BrandBranchScalarWhereInput[]
   }
 
+  export type BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput = {
+    create?: XOR<BrandTransactionCreateWithoutBrandInput, BrandTransactionUncheckedCreateWithoutBrandInput> | BrandTransactionCreateWithoutBrandInput[] | BrandTransactionUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: BrandTransactionCreateOrConnectWithoutBrandInput | BrandTransactionCreateOrConnectWithoutBrandInput[]
+    upsert?: BrandTransactionUpsertWithWhereUniqueWithoutBrandInput | BrandTransactionUpsertWithWhereUniqueWithoutBrandInput[]
+    createMany?: BrandTransactionCreateManyBrandInputEnvelope
+    set?: BrandTransactionWhereUniqueInput | BrandTransactionWhereUniqueInput[]
+    disconnect?: BrandTransactionWhereUniqueInput | BrandTransactionWhereUniqueInput[]
+    delete?: BrandTransactionWhereUniqueInput | BrandTransactionWhereUniqueInput[]
+    connect?: BrandTransactionWhereUniqueInput | BrandTransactionWhereUniqueInput[]
+    update?: BrandTransactionUpdateWithWhereUniqueWithoutBrandInput | BrandTransactionUpdateWithWhereUniqueWithoutBrandInput[]
+    updateMany?: BrandTransactionUpdateManyWithWhereWithoutBrandInput | BrandTransactionUpdateManyWithWhereWithoutBrandInput[]
+    deleteMany?: BrandTransactionScalarWhereInput | BrandTransactionScalarWhereInput[]
+  }
+
   export type OrderBrandUncheckedUpdateManyWithoutBrandNestedInput = {
     create?: XOR<OrderBrandCreateWithoutBrandInput, OrderBrandUncheckedCreateWithoutBrandInput> | OrderBrandCreateWithoutBrandInput[] | OrderBrandUncheckedCreateWithoutBrandInput[]
     connectOrCreate?: OrderBrandCreateOrConnectWithoutBrandInput | OrderBrandCreateOrConnectWithoutBrandInput[]
@@ -28448,6 +31727,28 @@ export namespace Prisma {
     update?: OrderBrandUpdateWithWhereUniqueWithoutBrandInput | OrderBrandUpdateWithWhereUniqueWithoutBrandInput[]
     updateMany?: OrderBrandUpdateManyWithWhereWithoutBrandInput | OrderBrandUpdateManyWithWhereWithoutBrandInput[]
     deleteMany?: OrderBrandScalarWhereInput | OrderBrandScalarWhereInput[]
+  }
+
+  export type BrandCreateNestedOneWithoutTransactionsInput = {
+    create?: XOR<BrandCreateWithoutTransactionsInput, BrandUncheckedCreateWithoutTransactionsInput>
+    connectOrCreate?: BrandCreateOrConnectWithoutTransactionsInput
+    connect?: BrandWhereUniqueInput
+  }
+
+  export type EnumBrandTransactionDirectionFieldUpdateOperationsInput = {
+    set?: $Enums.BrandTransactionDirection
+  }
+
+  export type EnumBrandTransactionSourceFieldUpdateOperationsInput = {
+    set?: $Enums.BrandTransactionSource
+  }
+
+  export type BrandUpdateOneRequiredWithoutTransactionsNestedInput = {
+    create?: XOR<BrandCreateWithoutTransactionsInput, BrandUncheckedCreateWithoutTransactionsInput>
+    connectOrCreate?: BrandCreateOrConnectWithoutTransactionsInput
+    upsert?: BrandUpsertWithoutTransactionsInput
+    connect?: BrandWhereUniqueInput
+    update?: XOR<XOR<BrandUpdateToOneWithWhereWithoutTransactionsInput, BrandUpdateWithoutTransactionsInput>, BrandUncheckedUpdateWithoutTransactionsInput>
   }
 
   export type BrandCreateNestedOneWithoutBranchesInput = {
@@ -29155,6 +32456,13 @@ export namespace Prisma {
     connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
   }
 
+  export type DeliveryCompanyTransactionCreateNestedManyWithoutDeliveryCompanyInput = {
+    create?: XOR<DeliveryCompanyTransactionCreateWithoutDeliveryCompanyInput, DeliveryCompanyTransactionUncheckedCreateWithoutDeliveryCompanyInput> | DeliveryCompanyTransactionCreateWithoutDeliveryCompanyInput[] | DeliveryCompanyTransactionUncheckedCreateWithoutDeliveryCompanyInput[]
+    connectOrCreate?: DeliveryCompanyTransactionCreateOrConnectWithoutDeliveryCompanyInput | DeliveryCompanyTransactionCreateOrConnectWithoutDeliveryCompanyInput[]
+    createMany?: DeliveryCompanyTransactionCreateManyDeliveryCompanyInputEnvelope
+    connect?: DeliveryCompanyTransactionWhereUniqueInput | DeliveryCompanyTransactionWhereUniqueInput[]
+  }
+
   export type CourierUncheckedCreateNestedManyWithoutDeliveryCompanyInput = {
     create?: XOR<CourierCreateWithoutDeliveryCompanyInput, CourierUncheckedCreateWithoutDeliveryCompanyInput> | CourierCreateWithoutDeliveryCompanyInput[] | CourierUncheckedCreateWithoutDeliveryCompanyInput[]
     connectOrCreate?: CourierCreateOrConnectWithoutDeliveryCompanyInput | CourierCreateOrConnectWithoutDeliveryCompanyInput[]
@@ -29167,6 +32475,13 @@ export namespace Prisma {
     connectOrCreate?: OrderCreateOrConnectWithoutDeliveryCompanyInput | OrderCreateOrConnectWithoutDeliveryCompanyInput[]
     createMany?: OrderCreateManyDeliveryCompanyInputEnvelope
     connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+  }
+
+  export type DeliveryCompanyTransactionUncheckedCreateNestedManyWithoutDeliveryCompanyInput = {
+    create?: XOR<DeliveryCompanyTransactionCreateWithoutDeliveryCompanyInput, DeliveryCompanyTransactionUncheckedCreateWithoutDeliveryCompanyInput> | DeliveryCompanyTransactionCreateWithoutDeliveryCompanyInput[] | DeliveryCompanyTransactionUncheckedCreateWithoutDeliveryCompanyInput[]
+    connectOrCreate?: DeliveryCompanyTransactionCreateOrConnectWithoutDeliveryCompanyInput | DeliveryCompanyTransactionCreateOrConnectWithoutDeliveryCompanyInput[]
+    createMany?: DeliveryCompanyTransactionCreateManyDeliveryCompanyInputEnvelope
+    connect?: DeliveryCompanyTransactionWhereUniqueInput | DeliveryCompanyTransactionWhereUniqueInput[]
   }
 
   export type CourierUpdateManyWithoutDeliveryCompanyNestedInput = {
@@ -29197,6 +32512,20 @@ export namespace Prisma {
     deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
   }
 
+  export type DeliveryCompanyTransactionUpdateManyWithoutDeliveryCompanyNestedInput = {
+    create?: XOR<DeliveryCompanyTransactionCreateWithoutDeliveryCompanyInput, DeliveryCompanyTransactionUncheckedCreateWithoutDeliveryCompanyInput> | DeliveryCompanyTransactionCreateWithoutDeliveryCompanyInput[] | DeliveryCompanyTransactionUncheckedCreateWithoutDeliveryCompanyInput[]
+    connectOrCreate?: DeliveryCompanyTransactionCreateOrConnectWithoutDeliveryCompanyInput | DeliveryCompanyTransactionCreateOrConnectWithoutDeliveryCompanyInput[]
+    upsert?: DeliveryCompanyTransactionUpsertWithWhereUniqueWithoutDeliveryCompanyInput | DeliveryCompanyTransactionUpsertWithWhereUniqueWithoutDeliveryCompanyInput[]
+    createMany?: DeliveryCompanyTransactionCreateManyDeliveryCompanyInputEnvelope
+    set?: DeliveryCompanyTransactionWhereUniqueInput | DeliveryCompanyTransactionWhereUniqueInput[]
+    disconnect?: DeliveryCompanyTransactionWhereUniqueInput | DeliveryCompanyTransactionWhereUniqueInput[]
+    delete?: DeliveryCompanyTransactionWhereUniqueInput | DeliveryCompanyTransactionWhereUniqueInput[]
+    connect?: DeliveryCompanyTransactionWhereUniqueInput | DeliveryCompanyTransactionWhereUniqueInput[]
+    update?: DeliveryCompanyTransactionUpdateWithWhereUniqueWithoutDeliveryCompanyInput | DeliveryCompanyTransactionUpdateWithWhereUniqueWithoutDeliveryCompanyInput[]
+    updateMany?: DeliveryCompanyTransactionUpdateManyWithWhereWithoutDeliveryCompanyInput | DeliveryCompanyTransactionUpdateManyWithWhereWithoutDeliveryCompanyInput[]
+    deleteMany?: DeliveryCompanyTransactionScalarWhereInput | DeliveryCompanyTransactionScalarWhereInput[]
+  }
+
   export type CourierUncheckedUpdateManyWithoutDeliveryCompanyNestedInput = {
     create?: XOR<CourierCreateWithoutDeliveryCompanyInput, CourierUncheckedCreateWithoutDeliveryCompanyInput> | CourierCreateWithoutDeliveryCompanyInput[] | CourierUncheckedCreateWithoutDeliveryCompanyInput[]
     connectOrCreate?: CourierCreateOrConnectWithoutDeliveryCompanyInput | CourierCreateOrConnectWithoutDeliveryCompanyInput[]
@@ -29223,6 +32552,42 @@ export namespace Prisma {
     update?: OrderUpdateWithWhereUniqueWithoutDeliveryCompanyInput | OrderUpdateWithWhereUniqueWithoutDeliveryCompanyInput[]
     updateMany?: OrderUpdateManyWithWhereWithoutDeliveryCompanyInput | OrderUpdateManyWithWhereWithoutDeliveryCompanyInput[]
     deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
+  }
+
+  export type DeliveryCompanyTransactionUncheckedUpdateManyWithoutDeliveryCompanyNestedInput = {
+    create?: XOR<DeliveryCompanyTransactionCreateWithoutDeliveryCompanyInput, DeliveryCompanyTransactionUncheckedCreateWithoutDeliveryCompanyInput> | DeliveryCompanyTransactionCreateWithoutDeliveryCompanyInput[] | DeliveryCompanyTransactionUncheckedCreateWithoutDeliveryCompanyInput[]
+    connectOrCreate?: DeliveryCompanyTransactionCreateOrConnectWithoutDeliveryCompanyInput | DeliveryCompanyTransactionCreateOrConnectWithoutDeliveryCompanyInput[]
+    upsert?: DeliveryCompanyTransactionUpsertWithWhereUniqueWithoutDeliveryCompanyInput | DeliveryCompanyTransactionUpsertWithWhereUniqueWithoutDeliveryCompanyInput[]
+    createMany?: DeliveryCompanyTransactionCreateManyDeliveryCompanyInputEnvelope
+    set?: DeliveryCompanyTransactionWhereUniqueInput | DeliveryCompanyTransactionWhereUniqueInput[]
+    disconnect?: DeliveryCompanyTransactionWhereUniqueInput | DeliveryCompanyTransactionWhereUniqueInput[]
+    delete?: DeliveryCompanyTransactionWhereUniqueInput | DeliveryCompanyTransactionWhereUniqueInput[]
+    connect?: DeliveryCompanyTransactionWhereUniqueInput | DeliveryCompanyTransactionWhereUniqueInput[]
+    update?: DeliveryCompanyTransactionUpdateWithWhereUniqueWithoutDeliveryCompanyInput | DeliveryCompanyTransactionUpdateWithWhereUniqueWithoutDeliveryCompanyInput[]
+    updateMany?: DeliveryCompanyTransactionUpdateManyWithWhereWithoutDeliveryCompanyInput | DeliveryCompanyTransactionUpdateManyWithWhereWithoutDeliveryCompanyInput[]
+    deleteMany?: DeliveryCompanyTransactionScalarWhereInput | DeliveryCompanyTransactionScalarWhereInput[]
+  }
+
+  export type D_CompanyCreateNestedOneWithoutTransactionsInput = {
+    create?: XOR<D_CompanyCreateWithoutTransactionsInput, D_CompanyUncheckedCreateWithoutTransactionsInput>
+    connectOrCreate?: D_CompanyCreateOrConnectWithoutTransactionsInput
+    connect?: D_CompanyWhereUniqueInput
+  }
+
+  export type EnumDeliveryCompanyTransactionDirectionFieldUpdateOperationsInput = {
+    set?: $Enums.DeliveryCompanyTransactionDirection
+  }
+
+  export type EnumDeliveryCompanyTransactionSourceFieldUpdateOperationsInput = {
+    set?: $Enums.DeliveryCompanyTransactionSource
+  }
+
+  export type D_CompanyUpdateOneRequiredWithoutTransactionsNestedInput = {
+    create?: XOR<D_CompanyCreateWithoutTransactionsInput, D_CompanyUncheckedCreateWithoutTransactionsInput>
+    connectOrCreate?: D_CompanyCreateOrConnectWithoutTransactionsInput
+    upsert?: D_CompanyUpsertWithoutTransactionsInput
+    connect?: D_CompanyWhereUniqueInput
+    update?: XOR<XOR<D_CompanyUpdateToOneWithWhereWithoutTransactionsInput, D_CompanyUpdateWithoutTransactionsInput>, D_CompanyUncheckedUpdateWithoutTransactionsInput>
   }
 
   export type CourierCreatedocumentsInput = {
@@ -29632,6 +32997,40 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type NestedEnumBrandTransactionDirectionFilter<$PrismaModel = never> = {
+    equals?: $Enums.BrandTransactionDirection | EnumBrandTransactionDirectionFieldRefInput<$PrismaModel>
+    in?: $Enums.BrandTransactionDirection[] | ListEnumBrandTransactionDirectionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BrandTransactionDirection[] | ListEnumBrandTransactionDirectionFieldRefInput<$PrismaModel>
+    not?: NestedEnumBrandTransactionDirectionFilter<$PrismaModel> | $Enums.BrandTransactionDirection
+  }
+
+  export type NestedEnumBrandTransactionSourceFilter<$PrismaModel = never> = {
+    equals?: $Enums.BrandTransactionSource | EnumBrandTransactionSourceFieldRefInput<$PrismaModel>
+    in?: $Enums.BrandTransactionSource[] | ListEnumBrandTransactionSourceFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BrandTransactionSource[] | ListEnumBrandTransactionSourceFieldRefInput<$PrismaModel>
+    not?: NestedEnumBrandTransactionSourceFilter<$PrismaModel> | $Enums.BrandTransactionSource
+  }
+
+  export type NestedEnumBrandTransactionDirectionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BrandTransactionDirection | EnumBrandTransactionDirectionFieldRefInput<$PrismaModel>
+    in?: $Enums.BrandTransactionDirection[] | ListEnumBrandTransactionDirectionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BrandTransactionDirection[] | ListEnumBrandTransactionDirectionFieldRefInput<$PrismaModel>
+    not?: NestedEnumBrandTransactionDirectionWithAggregatesFilter<$PrismaModel> | $Enums.BrandTransactionDirection
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBrandTransactionDirectionFilter<$PrismaModel>
+    _max?: NestedEnumBrandTransactionDirectionFilter<$PrismaModel>
+  }
+
+  export type NestedEnumBrandTransactionSourceWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BrandTransactionSource | EnumBrandTransactionSourceFieldRefInput<$PrismaModel>
+    in?: $Enums.BrandTransactionSource[] | ListEnumBrandTransactionSourceFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BrandTransactionSource[] | ListEnumBrandTransactionSourceFieldRefInput<$PrismaModel>
+    not?: NestedEnumBrandTransactionSourceWithAggregatesFilter<$PrismaModel> | $Enums.BrandTransactionSource
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBrandTransactionSourceFilter<$PrismaModel>
+    _max?: NestedEnumBrandTransactionSourceFilter<$PrismaModel>
+  }
+
   export type NestedDecimalNullableFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
@@ -29760,6 +33159,40 @@ export namespace Prisma {
     _max?: NestedEnumorderStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumDeliveryCompanyTransactionDirectionFilter<$PrismaModel = never> = {
+    equals?: $Enums.DeliveryCompanyTransactionDirection | EnumDeliveryCompanyTransactionDirectionFieldRefInput<$PrismaModel>
+    in?: $Enums.DeliveryCompanyTransactionDirection[] | ListEnumDeliveryCompanyTransactionDirectionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DeliveryCompanyTransactionDirection[] | ListEnumDeliveryCompanyTransactionDirectionFieldRefInput<$PrismaModel>
+    not?: NestedEnumDeliveryCompanyTransactionDirectionFilter<$PrismaModel> | $Enums.DeliveryCompanyTransactionDirection
+  }
+
+  export type NestedEnumDeliveryCompanyTransactionSourceFilter<$PrismaModel = never> = {
+    equals?: $Enums.DeliveryCompanyTransactionSource | EnumDeliveryCompanyTransactionSourceFieldRefInput<$PrismaModel>
+    in?: $Enums.DeliveryCompanyTransactionSource[] | ListEnumDeliveryCompanyTransactionSourceFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DeliveryCompanyTransactionSource[] | ListEnumDeliveryCompanyTransactionSourceFieldRefInput<$PrismaModel>
+    not?: NestedEnumDeliveryCompanyTransactionSourceFilter<$PrismaModel> | $Enums.DeliveryCompanyTransactionSource
+  }
+
+  export type NestedEnumDeliveryCompanyTransactionDirectionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DeliveryCompanyTransactionDirection | EnumDeliveryCompanyTransactionDirectionFieldRefInput<$PrismaModel>
+    in?: $Enums.DeliveryCompanyTransactionDirection[] | ListEnumDeliveryCompanyTransactionDirectionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DeliveryCompanyTransactionDirection[] | ListEnumDeliveryCompanyTransactionDirectionFieldRefInput<$PrismaModel>
+    not?: NestedEnumDeliveryCompanyTransactionDirectionWithAggregatesFilter<$PrismaModel> | $Enums.DeliveryCompanyTransactionDirection
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDeliveryCompanyTransactionDirectionFilter<$PrismaModel>
+    _max?: NestedEnumDeliveryCompanyTransactionDirectionFilter<$PrismaModel>
+  }
+
+  export type NestedEnumDeliveryCompanyTransactionSourceWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DeliveryCompanyTransactionSource | EnumDeliveryCompanyTransactionSourceFieldRefInput<$PrismaModel>
+    in?: $Enums.DeliveryCompanyTransactionSource[] | ListEnumDeliveryCompanyTransactionSourceFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DeliveryCompanyTransactionSource[] | ListEnumDeliveryCompanyTransactionSourceFieldRefInput<$PrismaModel>
+    not?: NestedEnumDeliveryCompanyTransactionSourceWithAggregatesFilter<$PrismaModel> | $Enums.DeliveryCompanyTransactionSource
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDeliveryCompanyTransactionSourceFilter<$PrismaModel>
+    _max?: NestedEnumDeliveryCompanyTransactionSourceFilter<$PrismaModel>
+  }
+
   export type CartCreateWithoutUserInput = {
     id?: string
     discount?: number | null
@@ -29806,6 +33239,7 @@ export namespace Prisma {
     status?: $Enums.orderStatus
     otp: string
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: string
     phoneNumber: string
@@ -29824,6 +33258,7 @@ export namespace Prisma {
     status?: $Enums.orderStatus
     otp: string
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: string
     phoneNumber: string
@@ -29866,6 +33301,7 @@ export namespace Prisma {
     followers?: BrandFollowerCreateNestedManyWithoutBrandInput
     products?: ProductCreateNestedManyWithoutBrandInput
     branches?: BrandBranchCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     orderBrands?: OrderBrandCreateNestedManyWithoutBrandInput
   }
 
@@ -29889,6 +33325,7 @@ export namespace Prisma {
     followers?: BrandFollowerUncheckedCreateNestedManyWithoutBrandInput
     products?: ProductUncheckedCreateNestedManyWithoutBrandInput
     branches?: BrandBranchUncheckedCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     orderBrands?: OrderBrandUncheckedCreateNestedManyWithoutBrandInput
   }
 
@@ -30051,6 +33488,7 @@ export namespace Prisma {
     status?: EnumorderStatusFilter<"Order"> | $Enums.orderStatus
     otp?: StringFilter<"Order"> | string
     price?: IntFilter<"Order"> | number
+    deliveryPrice?: IntFilter<"Order"> | number
     totalPrice?: IntFilter<"Order"> | number
     address?: StringFilter<"Order"> | string
     phoneNumber?: StringFilter<"Order"> | string
@@ -30092,6 +33530,7 @@ export namespace Prisma {
     followers?: BrandFollowerUpdateManyWithoutBrandNestedInput
     products?: ProductUpdateManyWithoutBrandNestedInput
     branches?: BrandBranchUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     orderBrands?: OrderBrandUpdateManyWithoutBrandNestedInput
   }
 
@@ -30115,6 +33554,7 @@ export namespace Prisma {
     followers?: BrandFollowerUncheckedUpdateManyWithoutBrandNestedInput
     products?: ProductUncheckedUpdateManyWithoutBrandNestedInput
     branches?: BrandBranchUncheckedUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     orderBrands?: OrderBrandUncheckedUpdateManyWithoutBrandNestedInput
   }
 
@@ -30446,6 +33886,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type BrandTransactionCreateWithoutBrandInput = {
+    id?: string
+    amount: number
+    currency?: string
+    direction: $Enums.BrandTransactionDirection
+    source: $Enums.BrandTransactionSource
+    stripeReferenceId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+  }
+
+  export type BrandTransactionUncheckedCreateWithoutBrandInput = {
+    id?: string
+    amount: number
+    currency?: string
+    direction: $Enums.BrandTransactionDirection
+    source: $Enums.BrandTransactionSource
+    stripeReferenceId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+  }
+
+  export type BrandTransactionCreateOrConnectWithoutBrandInput = {
+    where: BrandTransactionWhereUniqueInput
+    create: XOR<BrandTransactionCreateWithoutBrandInput, BrandTransactionUncheckedCreateWithoutBrandInput>
+  }
+
+  export type BrandTransactionCreateManyBrandInputEnvelope = {
+    data: BrandTransactionCreateManyBrandInput | BrandTransactionCreateManyBrandInput[]
+    skipDuplicates?: boolean
+  }
+
   export type OrderBrandCreateWithoutBrandInput = {
     order: OrderCreateNestedOneWithoutBrandsInput
   }
@@ -30678,6 +34150,37 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"BrandBranch"> | Date | string
   }
 
+  export type BrandTransactionUpsertWithWhereUniqueWithoutBrandInput = {
+    where: BrandTransactionWhereUniqueInput
+    update: XOR<BrandTransactionUpdateWithoutBrandInput, BrandTransactionUncheckedUpdateWithoutBrandInput>
+    create: XOR<BrandTransactionCreateWithoutBrandInput, BrandTransactionUncheckedCreateWithoutBrandInput>
+  }
+
+  export type BrandTransactionUpdateWithWhereUniqueWithoutBrandInput = {
+    where: BrandTransactionWhereUniqueInput
+    data: XOR<BrandTransactionUpdateWithoutBrandInput, BrandTransactionUncheckedUpdateWithoutBrandInput>
+  }
+
+  export type BrandTransactionUpdateManyWithWhereWithoutBrandInput = {
+    where: BrandTransactionScalarWhereInput
+    data: XOR<BrandTransactionUpdateManyMutationInput, BrandTransactionUncheckedUpdateManyWithoutBrandInput>
+  }
+
+  export type BrandTransactionScalarWhereInput = {
+    AND?: BrandTransactionScalarWhereInput | BrandTransactionScalarWhereInput[]
+    OR?: BrandTransactionScalarWhereInput[]
+    NOT?: BrandTransactionScalarWhereInput | BrandTransactionScalarWhereInput[]
+    id?: UuidFilter<"BrandTransaction"> | string
+    brandId?: UuidFilter<"BrandTransaction"> | string
+    amount?: IntFilter<"BrandTransaction"> | number
+    currency?: StringFilter<"BrandTransaction"> | string
+    direction?: EnumBrandTransactionDirectionFilter<"BrandTransaction"> | $Enums.BrandTransactionDirection
+    source?: EnumBrandTransactionSourceFilter<"BrandTransaction"> | $Enums.BrandTransactionSource
+    stripeReferenceId?: StringNullableFilter<"BrandTransaction"> | string | null
+    description?: StringNullableFilter<"BrandTransaction"> | string | null
+    createdAt?: DateTimeFilter<"BrandTransaction"> | Date | string
+  }
+
   export type OrderBrandUpsertWithWhereUniqueWithoutBrandInput = {
     where: OrderBrandWhereUniqueInput
     update: XOR<OrderBrandUpdateWithoutBrandInput, OrderBrandUncheckedUpdateWithoutBrandInput>
@@ -30702,6 +34205,118 @@ export namespace Prisma {
     brandId?: UuidFilter<"OrderBrand"> | string
   }
 
+  export type BrandCreateWithoutTransactionsInput = {
+    id?: string
+    name: string
+    verificationStatus?: $Enums.BrandVerificationTier
+    rating?: Decimal | DecimalJsLike | number | string
+    logoUrl?: string | null
+    logoUrl_id?: string | null
+    followersCount?: number
+    viewedTimes?: number
+    isPromoted?: boolean
+    isActive?: boolean
+    balance?: Decimal | DecimalJsLike | number | string
+    paymentDetails?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutBrandInput
+    documents?: BrandDocumentCreateNestedManyWithoutBrandInput
+    socialLinks?: BrandSocialLinkCreateNestedManyWithoutBrandInput
+    followers?: BrandFollowerCreateNestedManyWithoutBrandInput
+    products?: ProductCreateNestedManyWithoutBrandInput
+    branches?: BrandBranchCreateNestedManyWithoutBrandInput
+    orderBrands?: OrderBrandCreateNestedManyWithoutBrandInput
+  }
+
+  export type BrandUncheckedCreateWithoutTransactionsInput = {
+    id?: string
+    userId: string
+    name: string
+    verificationStatus?: $Enums.BrandVerificationTier
+    rating?: Decimal | DecimalJsLike | number | string
+    logoUrl?: string | null
+    logoUrl_id?: string | null
+    followersCount?: number
+    viewedTimes?: number
+    isPromoted?: boolean
+    isActive?: boolean
+    balance?: Decimal | DecimalJsLike | number | string
+    paymentDetails?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    documents?: BrandDocumentUncheckedCreateNestedManyWithoutBrandInput
+    socialLinks?: BrandSocialLinkUncheckedCreateNestedManyWithoutBrandInput
+    followers?: BrandFollowerUncheckedCreateNestedManyWithoutBrandInput
+    products?: ProductUncheckedCreateNestedManyWithoutBrandInput
+    branches?: BrandBranchUncheckedCreateNestedManyWithoutBrandInput
+    orderBrands?: OrderBrandUncheckedCreateNestedManyWithoutBrandInput
+  }
+
+  export type BrandCreateOrConnectWithoutTransactionsInput = {
+    where: BrandWhereUniqueInput
+    create: XOR<BrandCreateWithoutTransactionsInput, BrandUncheckedCreateWithoutTransactionsInput>
+  }
+
+  export type BrandUpsertWithoutTransactionsInput = {
+    update: XOR<BrandUpdateWithoutTransactionsInput, BrandUncheckedUpdateWithoutTransactionsInput>
+    create: XOR<BrandCreateWithoutTransactionsInput, BrandUncheckedCreateWithoutTransactionsInput>
+    where?: BrandWhereInput
+  }
+
+  export type BrandUpdateToOneWithWhereWithoutTransactionsInput = {
+    where?: BrandWhereInput
+    data: XOR<BrandUpdateWithoutTransactionsInput, BrandUncheckedUpdateWithoutTransactionsInput>
+  }
+
+  export type BrandUpdateWithoutTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    verificationStatus?: EnumBrandVerificationTierFieldUpdateOperationsInput | $Enums.BrandVerificationTier
+    rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl_id?: NullableStringFieldUpdateOperationsInput | string | null
+    followersCount?: IntFieldUpdateOperationsInput | number
+    viewedTimes?: IntFieldUpdateOperationsInput | number
+    isPromoted?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    paymentDetails?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBrandNestedInput
+    documents?: BrandDocumentUpdateManyWithoutBrandNestedInput
+    socialLinks?: BrandSocialLinkUpdateManyWithoutBrandNestedInput
+    followers?: BrandFollowerUpdateManyWithoutBrandNestedInput
+    products?: ProductUpdateManyWithoutBrandNestedInput
+    branches?: BrandBranchUpdateManyWithoutBrandNestedInput
+    orderBrands?: OrderBrandUpdateManyWithoutBrandNestedInput
+  }
+
+  export type BrandUncheckedUpdateWithoutTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    verificationStatus?: EnumBrandVerificationTierFieldUpdateOperationsInput | $Enums.BrandVerificationTier
+    rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl_id?: NullableStringFieldUpdateOperationsInput | string | null
+    followersCount?: IntFieldUpdateOperationsInput | number
+    viewedTimes?: IntFieldUpdateOperationsInput | number
+    isPromoted?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    paymentDetails?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    documents?: BrandDocumentUncheckedUpdateManyWithoutBrandNestedInput
+    socialLinks?: BrandSocialLinkUncheckedUpdateManyWithoutBrandNestedInput
+    followers?: BrandFollowerUncheckedUpdateManyWithoutBrandNestedInput
+    products?: ProductUncheckedUpdateManyWithoutBrandNestedInput
+    branches?: BrandBranchUncheckedUpdateManyWithoutBrandNestedInput
+    orderBrands?: OrderBrandUncheckedUpdateManyWithoutBrandNestedInput
+  }
+
   export type BrandCreateWithoutBranchesInput = {
     id?: string
     name: string
@@ -30722,6 +34337,7 @@ export namespace Prisma {
     socialLinks?: BrandSocialLinkCreateNestedManyWithoutBrandInput
     followers?: BrandFollowerCreateNestedManyWithoutBrandInput
     products?: ProductCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     orderBrands?: OrderBrandCreateNestedManyWithoutBrandInput
   }
 
@@ -30745,6 +34361,7 @@ export namespace Prisma {
     socialLinks?: BrandSocialLinkUncheckedCreateNestedManyWithoutBrandInput
     followers?: BrandFollowerUncheckedCreateNestedManyWithoutBrandInput
     products?: ProductUncheckedCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     orderBrands?: OrderBrandUncheckedCreateNestedManyWithoutBrandInput
   }
 
@@ -30784,6 +34401,7 @@ export namespace Prisma {
     socialLinks?: BrandSocialLinkUpdateManyWithoutBrandNestedInput
     followers?: BrandFollowerUpdateManyWithoutBrandNestedInput
     products?: ProductUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     orderBrands?: OrderBrandUpdateManyWithoutBrandNestedInput
   }
 
@@ -30807,6 +34425,7 @@ export namespace Prisma {
     socialLinks?: BrandSocialLinkUncheckedUpdateManyWithoutBrandNestedInput
     followers?: BrandFollowerUncheckedUpdateManyWithoutBrandNestedInput
     products?: ProductUncheckedUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     orderBrands?: OrderBrandUncheckedUpdateManyWithoutBrandNestedInput
   }
 
@@ -30830,6 +34449,7 @@ export namespace Prisma {
     followers?: BrandFollowerCreateNestedManyWithoutBrandInput
     products?: ProductCreateNestedManyWithoutBrandInput
     branches?: BrandBranchCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     orderBrands?: OrderBrandCreateNestedManyWithoutBrandInput
   }
 
@@ -30853,6 +34473,7 @@ export namespace Prisma {
     followers?: BrandFollowerUncheckedCreateNestedManyWithoutBrandInput
     products?: ProductUncheckedCreateNestedManyWithoutBrandInput
     branches?: BrandBranchUncheckedCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     orderBrands?: OrderBrandUncheckedCreateNestedManyWithoutBrandInput
   }
 
@@ -30967,6 +34588,7 @@ export namespace Prisma {
     followers?: BrandFollowerUpdateManyWithoutBrandNestedInput
     products?: ProductUpdateManyWithoutBrandNestedInput
     branches?: BrandBranchUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     orderBrands?: OrderBrandUpdateManyWithoutBrandNestedInput
   }
 
@@ -30990,6 +34612,7 @@ export namespace Prisma {
     followers?: BrandFollowerUncheckedUpdateManyWithoutBrandNestedInput
     products?: ProductUncheckedUpdateManyWithoutBrandNestedInput
     branches?: BrandBranchUncheckedUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     orderBrands?: OrderBrandUncheckedUpdateManyWithoutBrandNestedInput
   }
 
@@ -31094,6 +34717,7 @@ export namespace Prisma {
     followers?: BrandFollowerCreateNestedManyWithoutBrandInput
     products?: ProductCreateNestedManyWithoutBrandInput
     branches?: BrandBranchCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     orderBrands?: OrderBrandCreateNestedManyWithoutBrandInput
   }
 
@@ -31117,6 +34741,7 @@ export namespace Prisma {
     followers?: BrandFollowerUncheckedCreateNestedManyWithoutBrandInput
     products?: ProductUncheckedCreateNestedManyWithoutBrandInput
     branches?: BrandBranchUncheckedCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     orderBrands?: OrderBrandUncheckedCreateNestedManyWithoutBrandInput
   }
 
@@ -31156,6 +34781,7 @@ export namespace Prisma {
     followers?: BrandFollowerUpdateManyWithoutBrandNestedInput
     products?: ProductUpdateManyWithoutBrandNestedInput
     branches?: BrandBranchUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     orderBrands?: OrderBrandUpdateManyWithoutBrandNestedInput
   }
 
@@ -31179,6 +34805,7 @@ export namespace Prisma {
     followers?: BrandFollowerUncheckedUpdateManyWithoutBrandNestedInput
     products?: ProductUncheckedUpdateManyWithoutBrandNestedInput
     branches?: BrandBranchUncheckedUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     orderBrands?: OrderBrandUncheckedUpdateManyWithoutBrandNestedInput
   }
 
@@ -31202,6 +34829,7 @@ export namespace Prisma {
     socialLinks?: BrandSocialLinkCreateNestedManyWithoutBrandInput
     products?: ProductCreateNestedManyWithoutBrandInput
     branches?: BrandBranchCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     orderBrands?: OrderBrandCreateNestedManyWithoutBrandInput
   }
 
@@ -31225,6 +34853,7 @@ export namespace Prisma {
     socialLinks?: BrandSocialLinkUncheckedCreateNestedManyWithoutBrandInput
     products?: ProductUncheckedCreateNestedManyWithoutBrandInput
     branches?: BrandBranchUncheckedCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     orderBrands?: OrderBrandUncheckedCreateNestedManyWithoutBrandInput
   }
 
@@ -31339,6 +34968,7 @@ export namespace Prisma {
     socialLinks?: BrandSocialLinkUpdateManyWithoutBrandNestedInput
     products?: ProductUpdateManyWithoutBrandNestedInput
     branches?: BrandBranchUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     orderBrands?: OrderBrandUpdateManyWithoutBrandNestedInput
   }
 
@@ -31362,6 +34992,7 @@ export namespace Prisma {
     socialLinks?: BrandSocialLinkUncheckedUpdateManyWithoutBrandNestedInput
     products?: ProductUncheckedUpdateManyWithoutBrandNestedInput
     branches?: BrandBranchUncheckedUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     orderBrands?: OrderBrandUncheckedUpdateManyWithoutBrandNestedInput
   }
 
@@ -31466,6 +35097,7 @@ export namespace Prisma {
     socialLinks?: BrandSocialLinkCreateNestedManyWithoutBrandInput
     followers?: BrandFollowerCreateNestedManyWithoutBrandInput
     branches?: BrandBranchCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     orderBrands?: OrderBrandCreateNestedManyWithoutBrandInput
   }
 
@@ -31489,6 +35121,7 @@ export namespace Prisma {
     socialLinks?: BrandSocialLinkUncheckedCreateNestedManyWithoutBrandInput
     followers?: BrandFollowerUncheckedCreateNestedManyWithoutBrandInput
     branches?: BrandBranchUncheckedCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     orderBrands?: OrderBrandUncheckedCreateNestedManyWithoutBrandInput
   }
 
@@ -31620,6 +35253,7 @@ export namespace Prisma {
     socialLinks?: BrandSocialLinkUpdateManyWithoutBrandNestedInput
     followers?: BrandFollowerUpdateManyWithoutBrandNestedInput
     branches?: BrandBranchUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     orderBrands?: OrderBrandUpdateManyWithoutBrandNestedInput
   }
 
@@ -31643,6 +35277,7 @@ export namespace Prisma {
     socialLinks?: BrandSocialLinkUncheckedUpdateManyWithoutBrandNestedInput
     followers?: BrandFollowerUncheckedUpdateManyWithoutBrandNestedInput
     branches?: BrandBranchUncheckedUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     orderBrands?: OrderBrandUncheckedUpdateManyWithoutBrandNestedInput
   }
 
@@ -31813,6 +35448,7 @@ export namespace Prisma {
     status?: $Enums.orderStatus
     otp: string
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: string
     phoneNumber: string
@@ -31832,6 +35468,7 @@ export namespace Prisma {
     status?: $Enums.orderStatus
     otp: string
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: string
     phoneNumber: string
@@ -31940,6 +35577,7 @@ export namespace Prisma {
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
     otp?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    deliveryPrice?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -31959,6 +35597,7 @@ export namespace Prisma {
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
     otp?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    deliveryPrice?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -32948,8 +36587,9 @@ export namespace Prisma {
     phoneNumber: string
     isVerified?: boolean
     isBanned?: boolean
-    balance: number
+    balance?: number
     couriers?: CourierCreateNestedManyWithoutDeliveryCompanyInput
+    transactions?: DeliveryCompanyTransactionCreateNestedManyWithoutDeliveryCompanyInput
   }
 
   export type D_CompanyUncheckedCreateWithoutOrdersInput = {
@@ -32959,8 +36599,9 @@ export namespace Prisma {
     phoneNumber: string
     isVerified?: boolean
     isBanned?: boolean
-    balance: number
+    balance?: number
     couriers?: CourierUncheckedCreateNestedManyWithoutDeliveryCompanyInput
+    transactions?: DeliveryCompanyTransactionUncheckedCreateNestedManyWithoutDeliveryCompanyInput
   }
 
   export type D_CompanyCreateOrConnectWithoutOrdersInput = {
@@ -33130,6 +36771,7 @@ export namespace Prisma {
     isBanned?: BoolFieldUpdateOperationsInput | boolean
     balance?: IntFieldUpdateOperationsInput | number
     couriers?: CourierUpdateManyWithoutDeliveryCompanyNestedInput
+    transactions?: DeliveryCompanyTransactionUpdateManyWithoutDeliveryCompanyNestedInput
   }
 
   export type D_CompanyUncheckedUpdateWithoutOrdersInput = {
@@ -33141,6 +36783,7 @@ export namespace Prisma {
     isBanned?: BoolFieldUpdateOperationsInput | boolean
     balance?: IntFieldUpdateOperationsInput | number
     couriers?: CourierUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
+    transactions?: DeliveryCompanyTransactionUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
   }
 
   export type CourierUpsertWithoutOrdersInput = {
@@ -33184,6 +36827,7 @@ export namespace Prisma {
     status?: $Enums.orderStatus
     otp: string
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: string
     phoneNumber: string
@@ -33203,6 +36847,7 @@ export namespace Prisma {
     status?: $Enums.orderStatus
     otp: string
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: string
     phoneNumber: string
@@ -33240,6 +36885,7 @@ export namespace Prisma {
     followers?: BrandFollowerCreateNestedManyWithoutBrandInput
     products?: ProductCreateNestedManyWithoutBrandInput
     branches?: BrandBranchCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutOrderBrandsInput = {
@@ -33263,6 +36909,7 @@ export namespace Prisma {
     followers?: BrandFollowerUncheckedCreateNestedManyWithoutBrandInput
     products?: ProductUncheckedCreateNestedManyWithoutBrandInput
     branches?: BrandBranchUncheckedCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutOrderBrandsInput = {
@@ -33287,6 +36934,7 @@ export namespace Prisma {
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
     otp?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    deliveryPrice?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -33306,6 +36954,7 @@ export namespace Prisma {
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
     otp?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    deliveryPrice?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -33349,6 +36998,7 @@ export namespace Prisma {
     followers?: BrandFollowerUpdateManyWithoutBrandNestedInput
     products?: ProductUpdateManyWithoutBrandNestedInput
     branches?: BrandBranchUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutOrderBrandsInput = {
@@ -33372,6 +37022,7 @@ export namespace Prisma {
     followers?: BrandFollowerUncheckedUpdateManyWithoutBrandNestedInput
     products?: ProductUncheckedUpdateManyWithoutBrandNestedInput
     branches?: BrandBranchUncheckedUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type CourierCreateWithoutDeliveryCompanyInput = {
@@ -33414,6 +37065,7 @@ export namespace Prisma {
     status?: $Enums.orderStatus
     otp: string
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: string
     phoneNumber: string
@@ -33433,6 +37085,7 @@ export namespace Prisma {
     status?: $Enums.orderStatus
     otp: string
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: string
     phoneNumber: string
@@ -33451,6 +37104,38 @@ export namespace Prisma {
 
   export type OrderCreateManyDeliveryCompanyInputEnvelope = {
     data: OrderCreateManyDeliveryCompanyInput | OrderCreateManyDeliveryCompanyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DeliveryCompanyTransactionCreateWithoutDeliveryCompanyInput = {
+    id?: string
+    amount: number
+    currency?: string
+    direction: $Enums.DeliveryCompanyTransactionDirection
+    source: $Enums.DeliveryCompanyTransactionSource
+    stripeReferenceId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+  }
+
+  export type DeliveryCompanyTransactionUncheckedCreateWithoutDeliveryCompanyInput = {
+    id?: string
+    amount: number
+    currency?: string
+    direction: $Enums.DeliveryCompanyTransactionDirection
+    source: $Enums.DeliveryCompanyTransactionSource
+    stripeReferenceId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+  }
+
+  export type DeliveryCompanyTransactionCreateOrConnectWithoutDeliveryCompanyInput = {
+    where: DeliveryCompanyTransactionWhereUniqueInput
+    create: XOR<DeliveryCompanyTransactionCreateWithoutDeliveryCompanyInput, DeliveryCompanyTransactionUncheckedCreateWithoutDeliveryCompanyInput>
+  }
+
+  export type DeliveryCompanyTransactionCreateManyDeliveryCompanyInputEnvelope = {
+    data: DeliveryCompanyTransactionCreateManyDeliveryCompanyInput | DeliveryCompanyTransactionCreateManyDeliveryCompanyInput[]
     skipDuplicates?: boolean
   }
 
@@ -33501,12 +37186,108 @@ export namespace Prisma {
     data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyWithoutDeliveryCompanyInput>
   }
 
+  export type DeliveryCompanyTransactionUpsertWithWhereUniqueWithoutDeliveryCompanyInput = {
+    where: DeliveryCompanyTransactionWhereUniqueInput
+    update: XOR<DeliveryCompanyTransactionUpdateWithoutDeliveryCompanyInput, DeliveryCompanyTransactionUncheckedUpdateWithoutDeliveryCompanyInput>
+    create: XOR<DeliveryCompanyTransactionCreateWithoutDeliveryCompanyInput, DeliveryCompanyTransactionUncheckedCreateWithoutDeliveryCompanyInput>
+  }
+
+  export type DeliveryCompanyTransactionUpdateWithWhereUniqueWithoutDeliveryCompanyInput = {
+    where: DeliveryCompanyTransactionWhereUniqueInput
+    data: XOR<DeliveryCompanyTransactionUpdateWithoutDeliveryCompanyInput, DeliveryCompanyTransactionUncheckedUpdateWithoutDeliveryCompanyInput>
+  }
+
+  export type DeliveryCompanyTransactionUpdateManyWithWhereWithoutDeliveryCompanyInput = {
+    where: DeliveryCompanyTransactionScalarWhereInput
+    data: XOR<DeliveryCompanyTransactionUpdateManyMutationInput, DeliveryCompanyTransactionUncheckedUpdateManyWithoutDeliveryCompanyInput>
+  }
+
+  export type DeliveryCompanyTransactionScalarWhereInput = {
+    AND?: DeliveryCompanyTransactionScalarWhereInput | DeliveryCompanyTransactionScalarWhereInput[]
+    OR?: DeliveryCompanyTransactionScalarWhereInput[]
+    NOT?: DeliveryCompanyTransactionScalarWhereInput | DeliveryCompanyTransactionScalarWhereInput[]
+    id?: UuidFilter<"DeliveryCompanyTransaction"> | string
+    deliveryCompanyId?: UuidFilter<"DeliveryCompanyTransaction"> | string
+    amount?: IntFilter<"DeliveryCompanyTransaction"> | number
+    currency?: StringFilter<"DeliveryCompanyTransaction"> | string
+    direction?: EnumDeliveryCompanyTransactionDirectionFilter<"DeliveryCompanyTransaction"> | $Enums.DeliveryCompanyTransactionDirection
+    source?: EnumDeliveryCompanyTransactionSourceFilter<"DeliveryCompanyTransaction"> | $Enums.DeliveryCompanyTransactionSource
+    stripeReferenceId?: StringNullableFilter<"DeliveryCompanyTransaction"> | string | null
+    description?: StringNullableFilter<"DeliveryCompanyTransaction"> | string | null
+    createdAt?: DateTimeFilter<"DeliveryCompanyTransaction"> | Date | string
+  }
+
+  export type D_CompanyCreateWithoutTransactionsInput = {
+    deliveryCompany?: string
+    name: string
+    address: string
+    phoneNumber: string
+    isVerified?: boolean
+    isBanned?: boolean
+    balance?: number
+    couriers?: CourierCreateNestedManyWithoutDeliveryCompanyInput
+    orders?: OrderCreateNestedManyWithoutDeliveryCompanyInput
+  }
+
+  export type D_CompanyUncheckedCreateWithoutTransactionsInput = {
+    deliveryCompany?: string
+    name: string
+    address: string
+    phoneNumber: string
+    isVerified?: boolean
+    isBanned?: boolean
+    balance?: number
+    couriers?: CourierUncheckedCreateNestedManyWithoutDeliveryCompanyInput
+    orders?: OrderUncheckedCreateNestedManyWithoutDeliveryCompanyInput
+  }
+
+  export type D_CompanyCreateOrConnectWithoutTransactionsInput = {
+    where: D_CompanyWhereUniqueInput
+    create: XOR<D_CompanyCreateWithoutTransactionsInput, D_CompanyUncheckedCreateWithoutTransactionsInput>
+  }
+
+  export type D_CompanyUpsertWithoutTransactionsInput = {
+    update: XOR<D_CompanyUpdateWithoutTransactionsInput, D_CompanyUncheckedUpdateWithoutTransactionsInput>
+    create: XOR<D_CompanyCreateWithoutTransactionsInput, D_CompanyUncheckedCreateWithoutTransactionsInput>
+    where?: D_CompanyWhereInput
+  }
+
+  export type D_CompanyUpdateToOneWithWhereWithoutTransactionsInput = {
+    where?: D_CompanyWhereInput
+    data: XOR<D_CompanyUpdateWithoutTransactionsInput, D_CompanyUncheckedUpdateWithoutTransactionsInput>
+  }
+
+  export type D_CompanyUpdateWithoutTransactionsInput = {
+    deliveryCompany?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    balance?: IntFieldUpdateOperationsInput | number
+    couriers?: CourierUpdateManyWithoutDeliveryCompanyNestedInput
+    orders?: OrderUpdateManyWithoutDeliveryCompanyNestedInput
+  }
+
+  export type D_CompanyUncheckedUpdateWithoutTransactionsInput = {
+    deliveryCompany?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    balance?: IntFieldUpdateOperationsInput | number
+    couriers?: CourierUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
+  }
+
   export type OrderCreateWithoutCourierInput = {
     orderId?: string
     discount?: number | null
     status?: $Enums.orderStatus
     otp: string
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: string
     phoneNumber: string
@@ -33526,6 +37307,7 @@ export namespace Prisma {
     status?: $Enums.orderStatus
     otp: string
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: string
     phoneNumber: string
@@ -33554,8 +37336,9 @@ export namespace Prisma {
     phoneNumber: string
     isVerified?: boolean
     isBanned?: boolean
-    balance: number
+    balance?: number
     orders?: OrderCreateNestedManyWithoutDeliveryCompanyInput
+    transactions?: DeliveryCompanyTransactionCreateNestedManyWithoutDeliveryCompanyInput
   }
 
   export type D_CompanyUncheckedCreateWithoutCouriersInput = {
@@ -33565,8 +37348,9 @@ export namespace Prisma {
     phoneNumber: string
     isVerified?: boolean
     isBanned?: boolean
-    balance: number
+    balance?: number
     orders?: OrderUncheckedCreateNestedManyWithoutDeliveryCompanyInput
+    transactions?: DeliveryCompanyTransactionUncheckedCreateNestedManyWithoutDeliveryCompanyInput
   }
 
   export type D_CompanyCreateOrConnectWithoutCouriersInput = {
@@ -33610,6 +37394,7 @@ export namespace Prisma {
     isBanned?: BoolFieldUpdateOperationsInput | boolean
     balance?: IntFieldUpdateOperationsInput | number
     orders?: OrderUpdateManyWithoutDeliveryCompanyNestedInput
+    transactions?: DeliveryCompanyTransactionUpdateManyWithoutDeliveryCompanyNestedInput
   }
 
   export type D_CompanyUncheckedUpdateWithoutCouriersInput = {
@@ -33621,6 +37406,7 @@ export namespace Prisma {
     isBanned?: BoolFieldUpdateOperationsInput | boolean
     balance?: IntFieldUpdateOperationsInput | number
     orders?: OrderUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
+    transactions?: DeliveryCompanyTransactionUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
   }
 
   export type OrderCreateManyUserInput = {
@@ -33629,6 +37415,7 @@ export namespace Prisma {
     status?: $Enums.orderStatus
     otp: string
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: string
     phoneNumber: string
@@ -33668,6 +37455,7 @@ export namespace Prisma {
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
     otp?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    deliveryPrice?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -33686,6 +37474,7 @@ export namespace Prisma {
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
     otp?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    deliveryPrice?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -33704,6 +37493,7 @@ export namespace Prisma {
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
     otp?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    deliveryPrice?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -33839,6 +37629,17 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type BrandTransactionCreateManyBrandInput = {
+    id?: string
+    amount: number
+    currency?: string
+    direction: $Enums.BrandTransactionDirection
+    source: $Enums.BrandTransactionSource
+    stripeReferenceId?: string | null
+    description?: string | null
+    createdAt?: Date | string
   }
 
   export type OrderBrandCreateManyBrandInput = {
@@ -34021,6 +37822,39 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrandTransactionUpdateWithoutBrandInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    direction?: EnumBrandTransactionDirectionFieldUpdateOperationsInput | $Enums.BrandTransactionDirection
+    source?: EnumBrandTransactionSourceFieldUpdateOperationsInput | $Enums.BrandTransactionSource
+    stripeReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrandTransactionUncheckedUpdateWithoutBrandInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    direction?: EnumBrandTransactionDirectionFieldUpdateOperationsInput | $Enums.BrandTransactionDirection
+    source?: EnumBrandTransactionSourceFieldUpdateOperationsInput | $Enums.BrandTransactionSource
+    stripeReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrandTransactionUncheckedUpdateManyWithoutBrandInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    direction?: EnumBrandTransactionDirectionFieldUpdateOperationsInput | $Enums.BrandTransactionDirection
+    source?: EnumBrandTransactionSourceFieldUpdateOperationsInput | $Enums.BrandTransactionSource
+    stripeReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type OrderBrandUpdateWithoutBrandInput = {
@@ -34369,6 +38203,7 @@ export namespace Prisma {
     status?: $Enums.orderStatus
     otp: string
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: string
     phoneNumber: string
@@ -34376,6 +38211,17 @@ export namespace Prisma {
     checkoutId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type DeliveryCompanyTransactionCreateManyDeliveryCompanyInput = {
+    id?: string
+    amount: number
+    currency?: string
+    direction: $Enums.DeliveryCompanyTransactionDirection
+    source: $Enums.DeliveryCompanyTransactionSource
+    stripeReferenceId?: string | null
+    description?: string | null
+    createdAt?: Date | string
   }
 
   export type CourierUpdateWithoutDeliveryCompanyInput = {
@@ -34419,6 +38265,7 @@ export namespace Prisma {
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
     otp?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    deliveryPrice?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -34438,6 +38285,7 @@ export namespace Prisma {
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
     otp?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    deliveryPrice?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -34456,6 +38304,7 @@ export namespace Prisma {
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
     otp?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    deliveryPrice?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -34465,6 +38314,39 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type DeliveryCompanyTransactionUpdateWithoutDeliveryCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    direction?: EnumDeliveryCompanyTransactionDirectionFieldUpdateOperationsInput | $Enums.DeliveryCompanyTransactionDirection
+    source?: EnumDeliveryCompanyTransactionSourceFieldUpdateOperationsInput | $Enums.DeliveryCompanyTransactionSource
+    stripeReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliveryCompanyTransactionUncheckedUpdateWithoutDeliveryCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    direction?: EnumDeliveryCompanyTransactionDirectionFieldUpdateOperationsInput | $Enums.DeliveryCompanyTransactionDirection
+    source?: EnumDeliveryCompanyTransactionSourceFieldUpdateOperationsInput | $Enums.DeliveryCompanyTransactionSource
+    stripeReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliveryCompanyTransactionUncheckedUpdateManyWithoutDeliveryCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    direction?: EnumDeliveryCompanyTransactionDirectionFieldUpdateOperationsInput | $Enums.DeliveryCompanyTransactionDirection
+    source?: EnumDeliveryCompanyTransactionSourceFieldUpdateOperationsInput | $Enums.DeliveryCompanyTransactionSource
+    stripeReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type OrderCreateManyCourierInput = {
     orderId?: string
     userId: string
@@ -34472,6 +38354,7 @@ export namespace Prisma {
     status?: $Enums.orderStatus
     otp: string
     price: number
+    deliveryPrice: number
     totalPrice: number
     address: string
     phoneNumber: string
@@ -34487,6 +38370,7 @@ export namespace Prisma {
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
     otp?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    deliveryPrice?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -34506,6 +38390,7 @@ export namespace Prisma {
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
     otp?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    deliveryPrice?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -34524,6 +38409,7 @@ export namespace Prisma {
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
     otp?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
+    deliveryPrice?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string

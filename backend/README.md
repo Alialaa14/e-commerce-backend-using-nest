@@ -31,6 +31,19 @@
 $ bun install
 ```
 
+## Seed development data
+
+Set `SEED_PASSWORD` to a password of at least 12 characters, then run:
+
+```powershell
+$env:SEED_PASSWORD = "your-local-seed-password"
+bun run db:seed
+```
+
+The seed upserts sample data for all Prisma models and does not clear existing rows. It refuses to run in production and against remote database hosts unless `ALLOW_REMOTE_SEED=true` is explicitly set. Only enable that flag for a development database you intend to seed.
+
+You can also run the configured Prisma seed command with `bunx prisma db seed`.
+
 ## Compile and run the project
 
 ```bash

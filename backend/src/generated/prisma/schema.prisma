@@ -36,6 +36,30 @@ enum Providers {
   stripe
 }
 
+enum BrandTransactionDirection {
+  credit
+  debit
+}
+
+enum BrandTransactionSource {
+  stripe_payment
+  stripe_transfer
+  refund
+  adjustment
+}
+
+enum DeliveryCompanyTransactionDirection {
+  credit
+  debit
+}
+
+enum DeliveryCompanyTransactionSource {
+  stripe_payment
+  stripe_transfer
+  refund
+  adjustment
+}
+
 model User {
   id                 String      @id @unique @default(uuid()) @db.Uuid
   username           String
@@ -94,19 +118,37 @@ model Brand {
   createdAt          DateTime              @default(now()) @map("created_at") @db.Timestamptz
   updatedAt          DateTime              @default(now()) @map("updated_at") @db.Timestamptz
 
-  user        User              @relation(fields: [userId], references: [id])
-  documents   BrandDocument[]
-  socialLinks BrandSocialLink[]
-  followers   BrandFollower[]
-  products    Product[]
-  branches    BrandBranch[]
+  user         User               @relation(fields: [userId], references: [id])
+  documents    BrandDocument[]
+  socialLinks  BrandSocialLink[]
+  followers    BrandFollower[]
+  products     Product[]
+  branches     BrandBranch[]
+  transactions BrandTransaction[]
   // reviews            Review[]
   // chatThreads        ChatThread[]
   // adCampaigns        AdCampaign[]
   // rankingScore       RankingScore?
-  orderBrands OrderBrand[]
+  orderBrands  OrderBrand[]
 
   @@map("brands")
+}
+
+model BrandTransaction {
+  id                String                    @id @default(uuid()) @db.Uuid
+  brandId           String                    @map("brand_id") @db.Uuid
+  amount            Int
+  currency          String                    @default("egp") @db.VarChar(3)
+  direction         BrandTransactionDirection
+  source            BrandTransactionSource
+  stripeReferenceId String?                   @unique @map("stripe_reference_id")
+  description       String?
+  createdAt         DateTime                  @default(now()) @map("created_at") @db.Timestamptz
+
+  brand Brand @relation(fields: [brandId], references: [id], onDelete: Restrict)
+
+  @@index([brandId, createdAt])
+  @@map("brand_transactions")
 }
 
 model BrandBranch {
@@ -323,6 +365,7 @@ model Order {
   status          orderStatus  @default(pending)
   otp             String
   price           Int
+  deliveryPrice   Int
   totalPrice      Int
   address         String
   phoneNumber     String
@@ -346,15 +389,33 @@ model OrderBrand {
 }
 
 model D_Company {
-  deliveryCompany String    @id @default(uuid()) @db.Uuid
+  deliveryCompany String                       @id @default(uuid()) @db.Uuid
   name            String
   address         String
   phoneNumber     String
-  isVerified      Boolean   @default(false)
-  isBanned        Boolean   @default(false)
+  isVerified      Boolean                      @default(false)
+  isBanned        Boolean                      @default(false)
   couriers        Courier[]
   orders          Order[]
-  balance         Int
+  balance         Int                          @default(0)
+  transactions    DeliveryCompanyTransaction[]
+}
+
+model DeliveryCompanyTransaction {
+  id                String                              @id @default(uuid()) @db.Uuid
+  deliveryCompanyId String                              @map("delivery_company_id") @db.Uuid
+  amount            Int
+  currency          String                              @default("egp") @db.VarChar(3)
+  direction         DeliveryCompanyTransactionDirection
+  source            DeliveryCompanyTransactionSource
+  stripeReferenceId String?                             @unique @map("stripe_reference_id")
+  description       String?
+  createdAt         DateTime                            @default(now()) @map("created_at") @db.Timestamptz
+
+  deliveryCompany D_Company @relation(fields: [deliveryCompanyId], references: [deliveryCompany], onDelete: Restrict)
+
+  @@index([deliveryCompanyId, createdAt])
+  @@map("delivery_company_transactions")
 }
 
 model Courier {

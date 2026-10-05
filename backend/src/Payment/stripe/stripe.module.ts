@@ -2,8 +2,9 @@ import { Module } from '@nestjs/common';
 import { STRIPE_CLIENT } from './stripe-constants';
 import { ConfigService } from '@nestjs/config';
 import Stripe from 'stripe';
+import { StripeService } from './stripe.service';
 @Module({
-  exports: [STRIPE_CLIENT],
+  exports: [STRIPE_CLIENT, StripeService],
   imports: [],
   providers: [
     {
@@ -18,6 +19,7 @@ import Stripe from 'stripe';
       },
       inject: [ConfigService],
     },
+    StripeService,
   ],
   controllers: [],
 })
