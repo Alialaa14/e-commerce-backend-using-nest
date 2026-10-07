@@ -38,6 +38,7 @@ export class BrandModel {
   async createBrand(data: {
     userId: string;
     name: string;
+    slug: string;
     logoUrl?: string;
     logoUrl_id?: string;
   }) {
@@ -62,6 +63,7 @@ export class BrandModel {
   async createBranchLocation(data: {
     brandId: string;
     name: string;
+    code: string;
     latitude: number;
     longitude: number;
     placeId: string;

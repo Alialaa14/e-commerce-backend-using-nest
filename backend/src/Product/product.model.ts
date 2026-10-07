@@ -10,7 +10,7 @@ export class ProductModel {
       select: {
         id: true,
         isDeleted: true,
-        brand: { select: { userId: true, brandId: true } },
+        brand: { select: { id: true, userId: true } },
       },
     });
   }
@@ -24,6 +24,7 @@ export class ProductModel {
   }
   async createProduct(data: {
     name: string;
+    slug: string;
     description: string;
     brandId: string;
     media: {
@@ -41,6 +42,7 @@ export class ProductModel {
   async createProucts(
     data: {
       name: string;
+      slug: string;
       description: string;
       media: [
         {
@@ -219,6 +221,23 @@ export class ProductModel {
             size: true,
             stock: true,
             color: true,
+          },
+        },
+      },
+    });
+  }
+
+  async getCatalogProduct(productId: string) {
+    return this.prismaService.prisma.product.findFirst({
+      where: { id: productId, deletedAt: null, isDeleted: false },
+      select: {
+        id: true,
+        brandId: true,
+        price: true,
+        variants: {
+          select: {
+            color: true,
+            size: true,
           },
         },
       },

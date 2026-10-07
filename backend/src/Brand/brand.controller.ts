@@ -22,6 +22,8 @@ import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandProfileDto } from './dto/update-brand-profile.dto';
 import { MultipartInterceptor } from '../utils/multer/multer.interceptor';
 import { UploadedFastifyFile } from '../utils/multer/multer-file.decorator';
+import { LocationService } from '../Location/location.service';
+import { Role } from '../generated/prisma/client';
 
 @Controller('brands')
 export class BrandController {
@@ -30,6 +32,7 @@ export class BrandController {
     private readonly userModel: UserModel,
     private readonly uploadService: MulterService,
     private readonly cloudinaryService: CloudinaryService,
+    private readonly locationService: LocationService,
   ) {}
 
   @Post()
@@ -43,9 +46,9 @@ export class BrandController {
   ) {
     const user = (req as any).user;
     let localPath: string | undefined;
-
-    // Parse location from JSON string
-    let location: { latitude: number; longitude: number } | undefined;
+    const locationDetails = await this.locationService.reverseGeocode(
+      dto.location,
+    );
 
     if (picture) {
       localPath = await this.uploadService.saveToDisk(picture, 'brands');
@@ -57,21 +60,17 @@ export class BrandController {
       localPath,
     );
 
-    await this.userModel.updateUser(user.sub, { role: 'brand' });
+    await this.userModel.updateUser(user.sub, {
+      role: Role.BRAND_ADMIN,
+      brandId: brand.id,
+    });
 
-    if (location) {
-      const locationDetails = await this.brandService.getLocation(
-        location.longitude,
-        location.latitude,
-      );
-
-      await this.brandService.createBranchLocation(
-        brand.id,
-        dto.branchName || 'Main Branch',
-        locationDetails,
-        true,
-      );
-    }
+    await this.brandService.createBranchLocation(
+      brand.id,
+      dto.branchName || 'Main Branch',
+      locationDetails,
+      true,
+    );
 
     return {
       success: true,
@@ -93,7 +92,7 @@ export class BrandController {
 
   @Patch(':brandId/profile')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand')
+  @Roles('admin', 'brand', 'BRAND_ADMIN')
   async updateBrandProfile(
     @Req() req: FastifyRequest,
     @Param('brandId') brandId: string,
@@ -138,7 +137,7 @@ export class BrandController {
 
   @Get(':brandId/verification-status')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand')
+  @Roles('admin', 'brand', 'BRAND_ADMIN')
   async brandVerificationStatus(
     @Req() req: FastifyRequest,
     @Param('brandId') brandId: string,
@@ -160,7 +159,7 @@ export class BrandController {
 
   @Post(':brandId/documents')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand')
+  @Roles('admin', 'brand', 'BRAND_ADMIN')
   async createBrandDocument(
     @Req() req: FastifyRequest,
     @Param('brandId') brandId: string,

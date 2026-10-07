@@ -182,10 +182,14 @@ export class UserService {
     const accessToken = this.tokenService.signAccessToken({
       sub: user.id,
       role: user.role,
+      brandId: user.brandId,
+      branchId: user.branchId,
     });
     const refreshToken = this.tokenService.signRefreshToken({
       sub: user.id,
       role: user.role,
+      brandId: user.brandId,
+      branchId: user.branchId,
     });
     await this.userModel.updateAfterLogin(user.id, refreshToken);
 
@@ -326,10 +330,14 @@ export class UserService {
     const newAccessToken = this.tokenService.signAccessToken({
       sub: user.id,
       role: user.role,
+      brandId: user.brandId,
+      branchId: user.branchId,
     });
     const newRefreshToken = this.tokenService.signRefreshToken({
       sub: user.id,
       role: user.role,
+      brandId: user.brandId,
+      branchId: user.branchId,
     });
     await this.userModel.updateRefreshToken(user.id, newRefreshToken);
 

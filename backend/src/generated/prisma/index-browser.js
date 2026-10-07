@@ -140,6 +140,8 @@ exports.Prisma.UserScalarFieldEnum = {
   provider: 'provider',
   providerCustomerId: 'providerCustomerId',
   accountId: 'accountId',
+  brandId: 'brandId',
+  branchId: 'branchId',
   payment_id: 'payment_id',
   passwordChangedAt: 'passwordChangedAt',
   failedLoginAttempts: 'failedLoginAttempts',
@@ -153,6 +155,8 @@ exports.Prisma.BrandScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   name: 'name',
+  slug: 'slug',
+  description: 'description',
   verificationStatus: 'verificationStatus',
   rating: 'rating',
   logoUrl: 'logoUrl',
@@ -167,10 +171,23 @@ exports.Prisma.BrandScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.BrandTransactionScalarFieldEnum = {
+  id: 'id',
+  brandId: 'brandId',
+  amount: 'amount',
+  currency: 'currency',
+  direction: 'direction',
+  source: 'source',
+  stripeReferenceId: 'stripeReferenceId',
+  description: 'description',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.BrandBranchScalarFieldEnum = {
   id: 'id',
   brandId: 'brandId',
   name: 'name',
+  code: 'code',
   latitude: 'latitude',
   longitude: 'longitude',
   placeId: 'placeId',
@@ -181,8 +198,11 @@ exports.Prisma.BrandBranchScalarFieldEnum = {
   country: 'country',
   postalCode: 'postalCode',
   locationGranularity: 'locationGranularity',
+  phone: 'phone',
+  openingHours: 'openingHours',
   isMain: 'isMain',
   isActive: 'isActive',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -218,7 +238,11 @@ exports.Prisma.ProductScalarFieldEnum = {
   media: 'media',
   description: 'description',
   brandId: 'brandId',
+  branchId: 'branchId',
   categoryId: 'categoryId',
+  slug: 'slug',
+  status: 'status',
+  deletedAt: 'deletedAt',
   price: 'price',
   discount: 'discount',
   viewCount: 'viewCount',
@@ -233,12 +257,29 @@ exports.Prisma.ProductScalarFieldEnum = {
 exports.Prisma.VariantScalarFieldEnum = {
   id: 'id',
   productId: 'productId',
+  sku: 'sku',
+  basePrice: 'basePrice',
+  barcode: 'barcode',
+  options: 'options',
+  isActive: 'isActive',
+  deletedAt: 'deletedAt',
   color: 'color',
   size: 'size',
   stock: 'stock',
   sold: 'sold',
   isDeleted: 'isDeleted',
   orderOrderId: 'orderOrderId'
+};
+
+exports.Prisma.BranchVariantScalarFieldEnum = {
+  id: 'id',
+  branchId: 'branchId',
+  variantId: 'variantId',
+  price: 'price',
+  stockQuantity: 'stockQuantity',
+  reservedQuantity: 'reservedQuantity',
+  isAvailable: 'isAvailable',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {
@@ -261,6 +302,7 @@ exports.Prisma.ReviewScalarFieldEnum = {
 exports.Prisma.CartScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  branchId: 'branchId',
   discount: 'discount',
   cartNote: 'cartNote',
   userLocation: 'userLocation',
@@ -283,10 +325,12 @@ exports.Prisma.WishlistScalarFieldEnum = {
 exports.Prisma.OrderScalarFieldEnum = {
   orderId: 'orderId',
   userId: 'userId',
+  branchId: 'branchId',
   discount: 'discount',
   status: 'status',
   otp: 'otp',
   price: 'price',
+  deliveryPrice: 'deliveryPrice',
   totalPrice: 'totalPrice',
   address: 'address',
   phoneNumber: 'phoneNumber',
@@ -295,6 +339,16 @@ exports.Prisma.OrderScalarFieldEnum = {
   checkoutId: 'checkoutId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OrderItemScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  variantId: 'variantId',
+  nameSnapshot: 'nameSnapshot',
+  skuSnapshot: 'skuSnapshot',
+  priceSnapshot: 'priceSnapshot',
+  quantity: 'quantity'
 };
 
 exports.Prisma.OrderBrandScalarFieldEnum = {
@@ -310,6 +364,18 @@ exports.Prisma.D_CompanyScalarFieldEnum = {
   isVerified: 'isVerified',
   isBanned: 'isBanned',
   balance: 'balance'
+};
+
+exports.Prisma.DeliveryCompanyTransactionScalarFieldEnum = {
+  id: 'id',
+  deliveryCompanyId: 'deliveryCompanyId',
+  amount: 'amount',
+  currency: 'currency',
+  direction: 'direction',
+  source: 'source',
+  stripeReferenceId: 'stripeReferenceId',
+  description: 'description',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.CourierScalarFieldEnum = {
@@ -358,7 +424,10 @@ exports.Role = exports.$Enums.Role = {
   brand: 'brand',
   admin: 'admin',
   delievryC: 'delievryC',
-  courier: 'courier'
+  courier: 'courier',
+  BRAND_ADMIN: 'BRAND_ADMIN',
+  BRANCH_MANAGER: 'BRANCH_MANAGER',
+  CUSTOMER: 'CUSTOMER'
 };
 
 exports.otpPurpose = exports.$Enums.otpPurpose = {
@@ -376,6 +445,18 @@ exports.BrandVerificationTier = exports.$Enums.BrandVerificationTier = {
   basic_verification: 'basic_verification',
   full_verification: 'full_verification',
   suspended: 'suspended'
+};
+
+exports.BrandTransactionDirection = exports.$Enums.BrandTransactionDirection = {
+  credit: 'credit',
+  debit: 'debit'
+};
+
+exports.BrandTransactionSource = exports.$Enums.BrandTransactionSource = {
+  stripe_payment: 'stripe_payment',
+  stripe_transfer: 'stripe_transfer',
+  refund: 'refund',
+  adjustment: 'adjustment'
 };
 
 exports.BrandDocType = exports.$Enums.BrandDocType = {
@@ -401,6 +482,13 @@ exports.BrandDocRejectionReason = exports.$Enums.BrandDocRejectionReason = {
   other: 'other'
 };
 
+exports.ProductStatus = exports.$Enums.ProductStatus = {
+  draft: 'draft',
+  pending: 'pending',
+  active: 'active',
+  archived: 'archived'
+};
+
 exports.orderStatus = exports.$Enums.orderStatus = {
   pending: 'pending',
   accepted: 'accepted',
@@ -410,6 +498,18 @@ exports.orderStatus = exports.$Enums.orderStatus = {
   delivering: 'delivering',
   delivered: 'delivered',
   returned: 'returned'
+};
+
+exports.DeliveryCompanyTransactionDirection = exports.$Enums.DeliveryCompanyTransactionDirection = {
+  credit: 'credit',
+  debit: 'debit'
+};
+
+exports.DeliveryCompanyTransactionSource = exports.$Enums.DeliveryCompanyTransactionSource = {
+  stripe_payment: 'stripe_payment',
+  stripe_transfer: 'stripe_transfer',
+  refund: 'refund',
+  adjustment: 'adjustment'
 };
 
 exports.courierDocuments = exports.$Enums.courierDocuments = {
@@ -422,20 +522,24 @@ exports.courierDocuments = exports.$Enums.courierDocuments = {
 exports.Prisma.ModelName = {
   User: 'User',
   Brand: 'Brand',
+  BrandTransaction: 'BrandTransaction',
   BrandBranch: 'BrandBranch',
   BrandDocument: 'BrandDocument',
   BrandSocialLink: 'BrandSocialLink',
   BrandFollower: 'BrandFollower',
   Product: 'Product',
   Variant: 'Variant',
+  BranchVariant: 'BranchVariant',
   Category: 'Category',
   Review: 'Review',
   Cart: 'Cart',
   CartProducts: 'CartProducts',
   wishlist: 'wishlist',
   Order: 'Order',
+  OrderItem: 'OrderItem',
   OrderBrand: 'OrderBrand',
   D_Company: 'D_Company',
+  DeliveryCompanyTransaction: 'DeliveryCompanyTransaction',
   Courier: 'Courier'
 };
 

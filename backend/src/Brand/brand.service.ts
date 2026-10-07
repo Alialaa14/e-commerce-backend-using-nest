@@ -5,8 +5,10 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import axios from 'axios';
+import { randomUUID } from 'node:crypto';
 import { BrandDocType } from '../generated/prisma/client';
+import { LocationDetails } from '../Location/location.service';
+import { createUniqueSlug } from '../helpers/catalog-identifiers';
 import { CloudinaryService } from '../utils/cloudinary/cloudinary.service';
 import { PrismaService } from '../utils/prisma/prisma.service';
 import { BrandModel } from './brand.model';
@@ -48,6 +50,7 @@ export class BrandService {
     const brand = await this.brandModel.createBrand({
       userId,
       name,
+      slug: createUniqueSlug(name, randomUUID().replace(/-/g, '').slice(0, 12)),
       logoUrl,
       logoUrl_id: logoUrlId,
     });
@@ -177,51 +180,17 @@ export class BrandService {
     };
   }
 
-  async getLocation(longitude: number, latitude: number) {
-    try {
-      const response = await axios.get(
-        `https://geocode.googleapis.com/v4/geocode/location?location.latitude=${latitude}&location.longitude=${longitude}&key=${process.env.GOOGLE_MAPS_KEY}`,
-      );
-
-      const result = response.data.results[0];
-      return {
-        latitude: result.location.latitude,
-        longitude: result.location.longitude,
-        placeId: result.placeId,
-        formattedAddress: result.formattedAddress,
-        addressLine: result.addressLine,
-        city: result.city,
-        state: result.state,
-        country: result.country,
-        postalCode: result.postalCode,
-        locationGranularity: result.granularity,
-      };
-    } catch (error) {
-      throw new InternalServerErrorException('Failed to get location details');
-    }
-  }
-
   async createBranchLocation(
     brandId: string,
     branchName: string,
-    locationDetails: {
-      latitude: number;
-      longitude: number;
-      placeId: string;
-      formattedAddress: string;
-      addressLine: string;
-      city: string;
-      state: string;
-      country: string;
-      postalCode: string;
-      locationGranularity: string;
-    },
+    locationDetails: LocationDetails,
     isMain = true,
     isActive = true,
   ) {
     const branchLocation = await this.brandModel.createBranchLocation({
       brandId,
       name: branchName,
+      code: `BR-${randomUUID()}`,
       ...locationDetails,
       isMain,
       isActive,

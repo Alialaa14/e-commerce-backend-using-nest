@@ -16,7 +16,7 @@ export class CartService {
   private async checkCartExisence(userId: string) {
     const cart = await this.cartModel.getCartByUserId(userId);
     if (!cart) {
-      this.cartModel.createCart({ userId });
+      return this.cartModel.createCart({ userId });
     }
     return cart;
   }
@@ -66,6 +66,16 @@ export class CartService {
 
     // Check if the Product Is Already on cart or not if not add it if it is already on cart then increase the quantity
     const cartItems = await this.getCartProducts(cart?.id!);
+    if (
+      cartItems.some(
+        (item) =>
+          item.variant.product.brandId !== productVariant.product.brandId,
+      )
+    ) {
+      throw new BadRequestException(
+        'Cart can only contain products from the same brand',
+      );
+    }
     const cartItem = cartItems.find(
       (item) => item.variantId === productVariant.id,
     );

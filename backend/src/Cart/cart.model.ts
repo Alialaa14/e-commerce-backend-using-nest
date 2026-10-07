@@ -139,6 +139,20 @@ export class CartModel {
       where: {
         cartId,
       },
+      select: {
+        variantId: true,
+        quantity: true,
+        price: true,
+        variant: {
+          select: {
+            product: {
+              select: {
+                brandId: true,
+              },
+            },
+          },
+        },
+      },
     });
   }
 

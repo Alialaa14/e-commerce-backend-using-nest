@@ -12,6 +12,8 @@ import { BrandService } from '../Brand/brand.service';
 import { CloudinaryService } from '../utils/cloudinary/cloudinary.service';
 import { CategoryService } from '../Category/category.service';
 import { MulterService } from '../utils/multer/multer.service';
+import { randomUUID } from 'node:crypto';
+import { createUniqueSlug } from '../helpers/catalog-identifiers';
 
 @Injectable()
 export class ProductService {
@@ -144,6 +146,10 @@ export class ProductService {
     // Create Product
     const product = await this.productModel.createProduct({
       name: data.name,
+      slug: createUniqueSlug(
+        data.name,
+        randomUUID().replace(/-/g, '').slice(0, 12),
+      ),
       description: data.description,
       brandId: data.brandId,
       media: uploadMedia,
@@ -198,7 +204,7 @@ export class ProductService {
   ) {
     const product = await this.productModel.getProductById(id);
     if (!product) throw new NotFoundException('Product not found');
-    if (data.brandId !== product.brand.brandId) {
+    if (data.brandId !== product.brand.id) {
       throw new ForbiddenException(
         'You are not authorized to update this product',
       );

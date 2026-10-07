@@ -79,7 +79,7 @@ export class CategoryController {
 
   @Post()
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand', 'user')
+  @Roles('admin', 'brand', 'BRAND_ADMIN', 'user')
   @UseInterceptors(MultipartInterceptor)
   async createCategory(
     @Body() dto: Record<string, any>,

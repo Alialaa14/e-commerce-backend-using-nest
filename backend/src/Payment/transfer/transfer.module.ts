@@ -10,7 +10,7 @@ import { RolesGuard } from '../../common/guards/roles.guard';
 @Module({
   imports: [TokenModule, StripeModule, PrismaModule],
   controllers: [TransferController],
-  providers: [TransferService],
+  providers: [TransferService, AuthGuard, RolesGuard],
   exports: [],
 })
 export class TransferModule {}

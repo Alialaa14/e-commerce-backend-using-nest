@@ -24,7 +24,7 @@ import { PayoutService } from './payout.service';
 
 @Controller('payouts')
 @UseGuards(AuthGuard, RolesGuard)
-@Roles('brand', 'delievryC')
+@Roles('brand', 'BRAND_ADMIN', 'delievryC')
 export class PayoutController {
   constructor(private readonly payoutService: PayoutService) {}
 

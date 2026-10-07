@@ -8,6 +8,9 @@ export class VariantModel {
   async createVariants(
     variant: {
       productId: string;
+      sku: string;
+      basePrice: number;
+      options: { color: string; size: string };
       color: string;
       size: string;
       stock: number;
@@ -16,7 +19,22 @@ export class VariantModel {
     return this.prismaService.prisma.variant.createMany({ data: variant });
   }
 
-  async updateVariant(id: string, data: {}) {
+  async updateVariant(
+    id: string,
+    data: {
+      productId?: string;
+      sku?: string;
+      basePrice?: number;
+      barcode?: string;
+      options?: Record<string, string | number | boolean>;
+      isActive?: boolean;
+      color?: string;
+      size?: string;
+      deletedAt?: Date;
+      isDeleted?: boolean;
+      stock?: { increment?: number; decrement?: number } | number;
+    },
+  ) {
     return this.prismaService.prisma.variant.update({ where: { id }, data });
   }
 
@@ -31,6 +49,7 @@ export class VariantModel {
           select: {
             id: true,
             name: true,
+            brandId: true,
             isDeleted: true,
             price: true,
           },
@@ -48,6 +67,12 @@ export class VariantModel {
       where: { id: variantId },
       select: {
         id: true,
+        sku: true,
+        basePrice: true,
+        barcode: true,
+        options: true,
+        isActive: true,
+        deletedAt: true,
         stock: true,
         size: true,
         color: true,
@@ -57,7 +82,9 @@ export class VariantModel {
           select: {
             id: true,
             name: true,
+            brandId: true,
             isDeleted: true,
+            deletedAt: true,
             price: true,
           },
         },

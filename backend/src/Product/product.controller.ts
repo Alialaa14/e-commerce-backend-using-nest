@@ -48,7 +48,7 @@ export class ProductController {
   ) {}
   @Post('/')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand')
+  @Roles('admin', 'brand', 'BRAND_ADMIN')
   @UseInterceptors(MultipartInterceptor)
   async createProduct(
     @UploadedFastifyFile() files: any,
@@ -179,7 +179,7 @@ export class ProductController {
 
   @Delete('/:id')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand')
+  @Roles('admin', 'brand', 'BRAND_ADMIN')
   async softDeleteProduct(
     @Param() params: DeleteProductDto,
     @Req() req: FastifyRequest,
@@ -200,7 +200,7 @@ export class ProductController {
 
   @Patch('/:id')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand')
+  @Roles('admin', 'brand', 'BRAND_ADMIN')
   async updateProduct(@Param('id') id: string, @Body() data: updateProductDto) {
     const updatedProduct = await this.productService.updateProduct(id, data);
     return {
@@ -212,7 +212,7 @@ export class ProductController {
 
   @Post('/:id/pictures')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand')
+  @Roles('admin', 'brand', 'BRAND_ADMIN')
   @UseInterceptors(MultipartInterceptor)
   async uploadPictures(
     @UploadedFastifyFile() file: [any],
@@ -230,7 +230,7 @@ export class ProductController {
   }
   @Delete('/:id/pictures')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand')
+  @Roles('admin', 'brand', 'BRAND_ADMIN')
   async deletePictures(
     @Body() dto: DeleteProductPicsDto,
     @Param('id') id: string,
