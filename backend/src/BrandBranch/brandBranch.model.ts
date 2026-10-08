@@ -33,8 +33,13 @@ export class BrandBranchModel {
    * is Active => default to true
    */
 
-  async createBrandBranch(payload: BrandBranchModelInterface) {
-    return this.prismaService.prisma.brandBranch.create({ data: payload });
+  async createBrandBranch(
+    payload: BrandBranchModelInterface,
+    transaction?: Prisma.TransactionClient,
+  ) {
+    return (transaction ?? this.prismaService.prisma).brandBranch.create({
+      data: payload,
+    });
   }
 
   async updateBrandBranch(
@@ -66,7 +71,16 @@ export class BrandBranchModel {
     });
   }
 
-  async getBrandBranchByCondition(where: any) {
-    return this.prismaService.prisma.brandBranch.findFirst({ where });
+  async getBrandBranchByCondition(
+    where: Prisma.BrandBranchWhereInput & { excludeId?: string },
+    transaction?: Prisma.TransactionClient,
+  ) {
+    const { excludeId, ...filters } = where;
+    return (transaction ?? this.prismaService.prisma).brandBranch.findFirst({
+      where: {
+        ...filters,
+        ...(excludeId ? { NOT: { id: excludeId } } : {}),
+      },
+    });
   }
 }

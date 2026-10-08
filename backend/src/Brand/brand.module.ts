@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { AuthGuard } from '../common/guards/auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { CloudinaryModule } from '../utils/cloudinary/cloudinary.module';
@@ -12,6 +12,8 @@ import { BrandScopeGuard } from '../common/guards/brand-scope.guard';
 import { BrandController } from './brand.controller';
 import { BrandModel } from './brand.model';
 import { BrandService } from './brand.service';
+import { BrandDocumentService } from './brand-document.service';
+import { BrandBranchModule } from '../BrandBranch/brandBranch.module';
 
 @Module({
   imports: [
@@ -21,16 +23,18 @@ import { BrandService } from './brand.service';
     UserModule,
     TokenModule,
     LocationModule,
+    forwardRef(() => BrandBranchModule),
   ],
   controllers: [BrandController],
   providers: [
     BrandService,
+    BrandDocumentService,
     BrandModel,
     AuthGuard,
     RolesGuard,
     BranchScopeGuard,
     BrandScopeGuard,
   ],
-  exports: [BrandService],
+  exports: [BrandService, BrandModel],
 })
 export class BrandModule {}

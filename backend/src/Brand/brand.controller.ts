@@ -7,7 +7,6 @@ import {
   Post,
   Req,
   UseGuards,
-  BadRequestException,
   UseInterceptors,
 } from '@nestjs/common';
 import type { FastifyRequest } from 'fastify';
@@ -18,6 +17,7 @@ import { CloudinaryService } from '../utils/cloudinary/cloudinary.service';
 import { MulterService } from '../utils/multer/multer.service';
 import { UserModel } from '../User/user.model';
 import { BrandService } from './brand.service';
+import { BrandDocumentService } from './brand-document.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandProfileDto } from './dto/update-brand-profile.dto';
 import { MultipartInterceptor } from '../utils/multer/multer.interceptor';
@@ -29,6 +29,7 @@ import { Role } from '../generated/prisma/client';
 export class BrandController {
   constructor(
     private readonly brandService: BrandService,
+    private readonly brandDocumentService: BrandDocumentService,
     private readonly userModel: UserModel,
     private readonly uploadService: MulterService,
     private readonly cloudinaryService: CloudinaryService,
@@ -54,28 +55,27 @@ export class BrandController {
       localPath = await this.uploadService.saveToDisk(picture, 'brands');
     }
 
-    const brand = await this.brandService.createBrand(
-      user.sub,
-      dto.name,
-      localPath,
-    );
     locationDetails = dto.branchAddress
       ? {
           ...locationDetails,
           formattedAddress: dto.branchAddress,
         }
       : locationDetails;
+
+    const brand = await this.brandService.createBrand(
+      user.sub,
+      dto.name,
+      {
+        name: dto.branchName || 'Main Branch',
+        location: locationDetails,
+      },
+      localPath,
+    );
+
     await this.userModel.updateUser(user.sub, {
       role: Role.brand,
       brandId: brand.id,
     });
-
-    await this.brandService.createBranchLocation(
-      brand.id,
-      dto.branchName || 'Main Branch',
-      locationDetails,
-      true,
-    );
 
     return {
       success: true,
@@ -149,7 +149,7 @@ export class BrandController {
   ) {
     const user = (req as any).user;
 
-    const result = await this.brandService.getBrandVerificationStatus(
+    const result = await this.brandDocumentService.getBrandVerificationStatus(
       brandId,
       user.sub,
       user.role,

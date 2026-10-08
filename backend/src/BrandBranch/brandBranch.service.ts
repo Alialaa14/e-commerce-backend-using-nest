@@ -4,19 +4,21 @@ import {
   ForbiddenException,
   Injectable,
   NotFoundException,
+  Inject,
+  forwardRef,
 } from '@nestjs/common';
 import { BrandBranchModel } from './brandBranch.model';
-import { LocationService } from '../Location/location.service';
+import { LocationDetails, LocationService } from '../Location/location.service';
 import { Prisma } from '../generated/prisma';
 import { BrandService } from '../Brand/brand.service';
 import { Decimal } from '../generated/prisma/runtime/client';
 
-interface BrandBranchInput {
+export interface BrandBranchInput {
   name: string;
   code: string;
   brandId: string;
-  latitude: Decimal;
-  longitude: Decimal;
+  latitude: number | Decimal;
+  longitude: number | Decimal;
   openingHours?: Prisma.InputJsonValue;
   isActive?: boolean;
   isMain?: boolean;
@@ -27,50 +29,72 @@ export class BrandBranchService {
   constructor(
     private readonly brandBranchModel: BrandBranchModel,
     private readonly locationService: LocationService,
+    @Inject(forwardRef(() => BrandService))
     private readonly brandService: BrandService,
   ) {}
-  private async checkExistingBranch(payload: {
-    brandId?: string;
-    branchId?: string;
-    latitude?: Decimal;
-    longitude?: Decimal;
-  }) {
-    return this.brandBranchModel.getBrandBranchByCondition(payload);
+  private async checkExistingBranch(
+    payload: {
+      brandId?: string;
+      branchId?: string;
+      latitude?: number | Decimal;
+      longitude?: number | Decimal;
+    },
+    transaction?: Prisma.TransactionClient,
+  ) {
+    return this.brandBranchModel.getBrandBranchByCondition(
+      payload,
+      transaction,
+    );
   }
-  async createBrandBranch(payload: BrandBranchInput) {
+  async createBrandBranch(
+    payload: BrandBranchInput,
+    locationDetails?: LocationDetails,
+    transaction?: Prisma.TransactionClient,
+  ) {
     // first check if the brand exists
-    const brandExisted = await this.brandService.getBrandByCondition({
-      id: payload.brandId,
-    });
+    const brandExisted = await this.brandService.getBrandByCondition(
+      {
+        id: payload.brandId,
+      },
+      transaction,
+    );
     if (!brandExisted) {
       throw new BadRequestException("Brand Doesn't existed");
     }
     // second check if it has the same branch with the same latitude - longitude
-    const existedBranch = await this.checkExistingBranch({
-      brandId: payload.brandId,
-      latitude: payload.latitude,
-      longitude: payload.longitude,
-    });
+    const existedBranch = await this.checkExistingBranch(
+      {
+        brandId: payload.brandId,
+        latitude: payload.latitude,
+        longitude: payload.longitude,
+      },
+      transaction,
+    );
     if (existedBranch) {
       throw new BadRequestException('Branch already existed');
     }
     // create location
-    let location = await this.locationService.reverseGeocode({
-      latitude: payload.latitude,
-      longitude: payload.longitude,
-    });
+    const location =
+      locationDetails ??
+      (await this.locationService.reverseGeocode({
+        latitude: payload.latitude,
+        longitude: payload.longitude,
+      }));
 
     // check if the user has provided us a readable address or not
-    if (payload.formattedAddress) {
-      location.formattedAddress = payload.formattedAddress;
-    }
+    const formattedAddress =
+      payload.formattedAddress ?? location.formattedAddress;
     // create branch
-    const branchCreated = await this.brandBranchModel.createBrandBranch({
-      ...payload,
-      ...location,
-      latitude: payload.latitude,
-      longitude: payload.longitude,
-    });
+    const branchCreated = await this.brandBranchModel.createBrandBranch(
+      {
+        ...payload,
+        ...location,
+        latitude: payload.latitude,
+        longitude: payload.longitude,
+        formattedAddress,
+      },
+      transaction,
+    );
 
     if (!branchCreated) {
       throw new Error('Failed to create branch');

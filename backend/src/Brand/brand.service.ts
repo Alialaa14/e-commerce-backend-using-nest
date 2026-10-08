@@ -5,11 +5,13 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
+import { Inject, forwardRef } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
-import { BrandDocType } from '../generated/prisma/client';
 import { LocationDetails } from '../Location/location.service';
+import { Prisma } from '../generated/prisma';
 import { createUniqueSlug } from '../helpers/catalog-identifiers';
 import { CloudinaryService } from '../utils/cloudinary/cloudinary.service';
+import { BrandBranchService } from '../BrandBranch/brandBranch.service';
 import { PrismaService } from '../utils/prisma/prisma.service';
 import { BrandModel } from './brand.model';
 
@@ -19,9 +21,16 @@ export class BrandService {
     private readonly brandModel: BrandModel,
     private readonly cloudinaryService: CloudinaryService,
     private readonly prismaService: PrismaService,
+    @Inject(forwardRef(() => BrandBranchService))
+    private readonly brandBranchService: BrandBranchService,
   ) {}
 
-  async createBrand(userId: string, name: string, logoFilePath?: string) {
+  async createBrand(
+    userId: string,
+    name: string,
+    initialBranch: { name: string; location: LocationDetails },
+    logoFilePath?: string,
+  ) {
     const existingBrand = await this.brandModel.getUserBrand(userId);
     if (existingBrand) {
       throw new BadRequestException('You have already created a brand');
@@ -46,19 +55,42 @@ export class BrandService {
       logoUrlId = result.public_id;
     }
 
-    const brand = await this.brandModel.createBrand({
-      userId,
-      name,
-      slug: createUniqueSlug(name, randomUUID().replace(/-/g, '').slice(0, 12)),
-      logoUrl,
-      logoUrl_id: logoUrlId,
+    return this.prismaService.prisma.$transaction(async (transaction) => {
+      const brand = await this.brandModel.createBrand(
+        {
+          userId,
+          name,
+          slug: createUniqueSlug(
+            name,
+            randomUUID().replace(/-/g, '').slice(0, 12),
+          ),
+          logoUrl,
+          logoUrl_id: logoUrlId,
+        },
+        transaction,
+      );
+
+      if (!brand) {
+        throw new InternalServerErrorException('Brand creation failed');
+      }
+
+      await this.brandBranchService.createBrandBranch(
+        {
+          brandId: brand.id,
+          name: initialBranch.name,
+          code: `BR-${randomUUID()}`,
+          latitude: initialBranch.location.latitude,
+          longitude: initialBranch.location.longitude,
+          formattedAddress: initialBranch.location.formattedAddress,
+          isMain: true,
+          isActive: true,
+        },
+        initialBranch.location,
+        transaction,
+      );
+
+      return brand;
     });
-
-    if (!brand) {
-      throw new InternalServerErrorException('Brand creation failed');
-    }
-
-    return brand;
   }
 
   async getPublicBrandProfile(brandId: string) {
@@ -149,84 +181,10 @@ export class BrandService {
     return this.brandModel.updateBrand(brandId, updateData);
   }
 
-  async getBrandVerificationStatus(
-    brandId: string,
-    userId: string,
-    role: string,
+  async getBrandByCondition(
+    where: Prisma.BrandWhereInput,
+    transaction?: Prisma.TransactionClient,
   ) {
-    const brand = await this.brandModel.findBrandWithDocuments(brandId);
-    if (!brand) {
-      throw new NotFoundException('Brand not found');
-    }
-
-    if (brand.userId !== userId && role !== 'admin') {
-      throw new ForbiddenException('Unauthorized');
-    }
-
-    const allTypes = Object.values(BrandDocType);
-    const submitted = new Set(brand.documents.map((d) => d.docType));
-    const missing = allTypes.filter((type) => !submitted.has(type));
-
-    return {
-      verificationStatus: brand.verificationStatus,
-      submittedDocuments: brand.documents.map((d) => ({
-        docType: d.docType,
-        fileUrl: d.fileUrl,
-        status: d.status,
-        rejectionReason: (d as any).rejectionReason ?? null,
-      })),
-      missingDocuments: missing,
-    };
-  }
-
-  async createBranchLocation(
-    brandId: string,
-    branchName: string,
-    locationDetails: LocationDetails,
-    isMain = true,
-    isActive = true,
-  ) {
-    const branchLocation = await this.brandModel.createBranchLocation({
-      brandId,
-      name: branchName,
-      code: `BR-${randomUUID()}`,
-      ...locationDetails,
-      isMain,
-      isActive,
-    });
-
-    if (!branchLocation) {
-      throw new InternalServerErrorException(
-        'Failed to create branch location',
-      );
-    }
-
-    return branchLocation;
-  }
-
-  async createBrandDocuments(
-    brandId: string,
-    documents: { docType: BrandDocType; fileUrl: string; fileUrl_id: string }[],
-  ) {
-    const brand = await this.brandModel.findBrandById(brandId);
-    if (!brand) {
-      throw new NotFoundException('Brand not found');
-    }
-
-    const result = await this.brandModel.createBrandDocuments(
-      brandId,
-      documents,
-    );
-    if (!result || result.length === 0) {
-      throw new InternalServerErrorException(
-        'Failed to create brand documents',
-      );
-    }
-
-    return result;
-  }
-
-  async getBrandByCondition(where: any) {
-    return this.brandModel.getBrandByCondition(where);
+    return this.brandModel.getBrandByCondition(where, transaction);
   }
 }
