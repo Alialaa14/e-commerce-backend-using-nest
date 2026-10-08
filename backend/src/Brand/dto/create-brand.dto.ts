@@ -4,6 +4,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  MaxLength,
   MinLength,
   ValidateNested,
 } from 'class-validator';
@@ -36,4 +37,9 @@ export class CreateBrandDto {
   @IsString()
   @IsOptional()
   branchName?: string;
+
+  @IsString()
+  @IsOptional()
+  @MaxLength(50)
+  branchAddress?: string;
 }
