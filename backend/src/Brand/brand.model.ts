@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { BrandDocType } from '../generated/prisma/client';
+import { Prisma } from '../generated/prisma';
 import { PrismaService } from '../utils/prisma/prisma.service';
 
 @Injectable()
@@ -31,18 +32,26 @@ export class BrandModel {
     });
   }
 
-  async getBrandByCondition(where: any) {
-    return this.prismaService.prisma.brand.findFirst({ where });
+  async getBrandByCondition(
+    where: Prisma.BrandWhereInput,
+    transaction?: Prisma.TransactionClient,
+  ) {
+    return (transaction ?? this.prismaService.prisma).brand.findFirst({
+      where,
+    });
   }
 
-  async createBrand(data: {
-    userId: string;
-    name: string;
-    slug: string;
-    logoUrl?: string;
-    logoUrl_id?: string;
-  }) {
-    return this.prismaService.prisma.brand.create({ data });
+  async createBrand(
+    data: {
+      userId: string;
+      name: string;
+      slug: string;
+      logoUrl?: string;
+      logoUrl_id?: string;
+    },
+    transaction?: Prisma.TransactionClient,
+  ) {
+    return (transaction ?? this.prismaService.prisma).brand.create({ data });
   }
 
   async updateBrand(
@@ -58,26 +67,6 @@ export class BrandModel {
       where: { id: brandId },
       data,
     });
-  }
-
-  async createBranchLocation(data: {
-    brandId: string;
-    name: string;
-    code: string;
-    latitude: number;
-    longitude: number;
-    placeId: string;
-    formattedAddress: string;
-    addressLine: string;
-    city: string;
-    state: string;
-    country: string;
-    postalCode: string;
-    locationGranularity: string;
-    isMain?: boolean;
-    isActive?: boolean;
-  }) {
-    return this.prismaService.prisma.brandBranch.create({ data });
   }
 
   async createBrandDocuments(
