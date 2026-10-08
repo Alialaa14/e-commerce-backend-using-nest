@@ -7,15 +7,23 @@ datasource db {
   provider = "postgresql"
 }
 
+// =====================================================================
+// ENUMS
+// =====================================================================
+
 enum Role {
   user
   brand
   admin
-  delievryC
+  deliveryC // was "delievryC" (typo)
   courier
-  BRAND_ADMIN
   BRANCH_MANAGER
-  CUSTOMER
+  Branch_Sales
+}
+
+enum BranchRole {
+  manager
+  sales
 }
 
 enum ProductStatus {
@@ -33,14 +41,14 @@ enum otpPurpose {
 }
 
 enum orderStatus {
-  pending
-  accepted
-  rejected
+  ordering
   packing
+  readytoship
   shipping
   delivering
   delivered
   returned
+  cancelled
 }
 
 enum Providers {
@@ -72,149 +80,10 @@ enum DeliveryCompanyTransactionSource {
   adjustment
 }
 
-model User {
-  id                 String      @id @unique @default(uuid()) @db.Uuid
-  username           String
-  phone              String?     @unique
-  email              String      @unique
-  role               Role        @default(user)
-  password           String
-  picture_url        String?
-  picture_url_id     String?
-  otp                String?
-  otp_expiration     DateTime?
-  otp_purpose        otpPurpose?
-  isVerified         Boolean     @default(false)
-  isBanned           Boolean     @default(false)
-  refreshToken       String?
-  created_At         DateTime    @default(now())
-  updated_At         DateTime    @default(now())
-  cart               Cart?
-  wishlist           wishlist?
-  orders             Order[]
-  provider           Providers?
-  providerCustomerId String?
-  accountId          String?     @unique
-
-  brand               Brand?
-  brandId             String?         @map("brand_id") @db.Uuid
-  branchId            String?         @map("branch_id") @db.Uuid
-  brandTenant         Brand?          @relation("BrandUsers", fields: [brandId], references: [id], onDelete: SetNull)
-  branchTenant        BrandBranch?    @relation("BranchUsers", fields: [branchId], references: [id], onDelete: SetNull)
-  reviewedBrandDocs   BrandDocument[] @relation("BrandDocumentReviewer")
-  payment_id          String?
-  passwordChangedAt   DateTime?
-  failedLoginAttempts Int             @default(0)
-  lockedUntil         DateTime?
-  isOnline            Boolean         @default(false)
-  brandDocumentId     String?         @db.Uuid
-  brandFollowers      BrandFollower[]
-  reviews             Review[]
-  wishlistUserId      String?         @db.Uuid
-
-  @@unique([provider, id])
-  @@unique([provider, providerCustomerId])
-  @@index([brandId])
-  @@index([branchId])
-}
-
-model Brand {
-  id                 String                @id @default(uuid()) @db.Uuid
-  userId             String                @unique @map("user_id") @db.Uuid
-  name               String                @map("brand_name")
-  slug               String                @unique
-  description        String?
-  //ownerNationalId    String?                @map("owner_national_id")  We Could Decide Later to use it 
-  verificationStatus BrandVerificationTier @default(pending) @map("verification_status")
-  rating             Decimal               @default(0) @db.Decimal(2, 1)
-  logoUrl            String?               @map("logo_url")
-  logoUrl_id         String?               @map("logo_url_id")
-  followersCount     Int                   @default(0) @map("followers_count")
-  viewedTimes        Int                   @default(0) @map("viewed_times")
-  isPromoted         Boolean               @default(false) @map("is_promoted")
-  isActive           Boolean               @default(true) @map("is_active")
-  balance            Decimal               @default(0) @db.Decimal(12, 2)
-  paymentDetails     Json?                 @map("payment_details")
-  createdAt          DateTime              @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt          DateTime              @default(now()) @map("updated_at") @db.Timestamptz
-
-  user         User               @relation(fields: [userId], references: [id])
-  documents    BrandDocument[]
-  socialLinks  BrandSocialLink[]
-  followers    BrandFollower[]
-  products     Product[]
-  branches     BrandBranch[]
-  brandUsers   User[]             @relation("BrandUsers")
-  transactions BrandTransaction[]
-  // reviews            Review[]
-  // chatThreads        ChatThread[]
-  // adCampaigns        AdCampaign[]
-  // rankingScore       RankingScore?
-  orderBrands  OrderBrand[]
-
-  @@map("brands")
-}
-
-model BrandTransaction {
-  id                String                    @id @default(uuid()) @db.Uuid
-  brandId           String                    @map("brand_id") @db.Uuid
-  amount            Int
-  currency          String                    @default("egp") @db.VarChar(3)
-  direction         BrandTransactionDirection
-  source            BrandTransactionSource
-  stripeReferenceId String?                   @unique @map("stripe_reference_id")
-  description       String?
-  createdAt         DateTime                  @default(now()) @map("created_at") @db.Timestamptz
-
-  brand Brand @relation(fields: [brandId], references: [id], onDelete: Restrict)
-
-  @@index([brandId, createdAt])
-  @@map("brand_transactions")
-}
-
-model BrandBranch {
-  id      String @id @default(uuid()) @db.Uuid
-  brandId String @map("brand_id") @db.Uuid
-  name    String @map("branch_name")
-  code    String @map("branch_code")
-
-  latitude            Decimal? @db.Decimal(9, 6)
-  longitude           Decimal? @db.Decimal(9, 6)
-  placeId             String?  @map("place_id")
-  formattedAddress    String?  @map("formatted_address")
-  addressLine         String?  @map("address_line")
-  city                String?
-  state               String?
-  country             String?
-  postalCode          String?  @map("postal_code")
-  locationGranularity String?  @map("location_granularity") // ROOFTOP, GEOMETRIC_CENTER, APPROXIMATE, etc.
-  phone               String?
-  openingHours        Json?    @map("opening_hours")
-
-  isMain Boolean @default(false) @map("is_main")
-
-  isActive  Boolean   @default(true) @map("is_active")
-  deletedAt DateTime? @map("deleted_at") @db.Timestamptz
-
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz
-
-  brand    Brand           @relation(fields: [brandId], references: [id], onDelete: Cascade)
-  users    User[]          @relation("BranchUsers")
-  products Product[]
-  variants BranchVariant[]
-  carts    Cart[]
-  orders   Order[]
-
-  @@unique([brandId, code])
-  @@index([brandId])
-  @@map("brand_branches")
-}
-
 enum BrandVerificationTier {
   pending
-  basic_verification // When creating at least 10 products 
-  full_verification // When Verifying his identity
+  basic_verification // When creating at least 10 products
+  full_verification // When verifying his identity
   suspended
 
   @@map("brand_verification_tier")
@@ -252,6 +121,203 @@ enum BrandDocRejectionReason {
   @@map("brand_doc_rejection_reason")
 }
 
+// ----- inventory enums (new) -----
+
+enum inventoryType {
+  main // brand warehouse: supply only, never shown to customers
+  branch // sellable stock
+}
+
+enum LedgerReason {
+  receive
+  transfer_out
+  transfer_in
+  reserve
+  release
+  sale
+  return
+  adjustment
+}
+
+enum TransferStatus {
+  requested
+  approved
+  shipped
+  partially_received
+  received
+  cancelled
+}
+
+enum ReservationStatus {
+  active
+  converted
+  released
+  expired
+}
+
+// =====================================================================
+// USERS
+// =====================================================================
+
+model User {
+  id                  String      @id @default(uuid()) @db.Uuid
+  username            String
+  phone               String?     @unique
+  email               String      @unique
+  role                Role        @default(user)
+  password            String
+  picture_url         String?
+  picture_url_id      String?
+  otp                 String?
+  otp_expiration      DateTime?
+  otp_purpose         otpPurpose?
+  isVerified          Boolean     @default(false)
+  isBanned            Boolean     @default(false)
+  refreshToken        String?
+  created_At          DateTime    @default(now())
+  updated_At          DateTime    @updatedAt
+  provider            Providers?
+  providerCustomerId  String?
+  accountId           String?     @unique
+  payment_id          String?
+  passwordChangedAt   DateTime?
+  failedLoginAttempts Int         @default(0)
+  lockedUntil         DateTime?
+  isOnline            Boolean     @default(false)
+
+  // customer side
+  cart           Cart?
+  wishlist       wishlist?
+  orders         ParentOrder[]
+  reviews        Review[]
+  brandFollowers BrandFollower[]
+
+  // brand side
+  brand             Brand?          @relation("BrandOwner") // the brand this user OWNS
+  brandId           String?         @map("brand_id") @db.Uuid // the brand this user WORKS for (staff)
+  branchId          String?         @map("branch_id") @db.Uuid // the branch this user WORKS at (staff)
+  brandTenant       Brand?          @relation("BrandUsers", fields: [brandId], references: [id], onDelete: SetNull)
+  branchTenant      BrandBranch?    @relation("BranchUsers", fields: [branchId], references: [id], onDelete: SetNull)
+  reviewedBrandDocs BrandDocument[] @relation("BrandDocumentReviewer")
+  brandBranch       BrandBranch?    @relation(fields: [brandBranchId], references: [id])
+  brandBranchId     String?         @db.Uuid
+  branchStaffs      branchStaff[]
+
+  @@unique([provider, providerCustomerId])
+  @@index([brandId])
+  @@index([branchId])
+}
+
+// =====================================================================
+// BRANDS AND BRANCHES
+// =====================================================================
+
+model Brand {
+  id                 String                @id @default(uuid()) @db.Uuid
+  userId             String                @unique @map("user_id") @db.Uuid
+  name               String                @map("brand_name")
+  slug               String                @unique
+  description        String?
+  verificationStatus BrandVerificationTier @default(pending) @map("verification_status")
+  rating             Decimal               @default(0) @db.Decimal(2, 1)
+  logoUrl            String?               @map("logo_url")
+  logoUrl_id         String?               @map("logo_url_id")
+  followersCount     Int                   @default(0) @map("followers_count")
+  viewedTimes        Int                   @default(0) @map("viewed_times")
+  isPromoted         Boolean               @default(false) @map("is_promoted")
+  isActive           Boolean               @default(true) @map("is_active")
+  balance            Int                   @default(0) // integer minor units, matches BrandTransaction.amount
+  paymentDetails     Json?                 @map("payment_details")
+  createdAt          DateTime              @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt          DateTime              @updatedAt @map("updated_at") @db.Timestamptz
+
+  user         User               @relation("BrandOwner", fields: [userId], references: [id])
+  brandUsers   User[]             @relation("BrandUsers")
+  documents    BrandDocument[]
+  socialLinks  BrandSocialLink[]
+  followers    BrandFollower[]
+  products     Product[]
+  branches     BrandBranch[]
+  transactions BrandTransaction[]
+  inventories  Inventory[] // 1 main + 1 per branch
+  branchOrders BranchOrder[]
+
+  @@map("brands")
+}
+
+model BrandTransaction {
+  id                String                    @id @default(uuid()) @db.Uuid
+  brandId           String                    @map("brand_id") @db.Uuid
+  amount            Int
+  currency          String                    @default("egp") @db.VarChar(3)
+  direction         BrandTransactionDirection
+  source            BrandTransactionSource
+  stripeReferenceId String?                   @unique @map("stripe_reference_id")
+  description       String?
+  createdAt         DateTime                  @default(now()) @map("created_at") @db.Timestamptz
+
+  brand Brand @relation(fields: [brandId], references: [id], onDelete: Restrict)
+
+  @@index([brandId, createdAt])
+  @@map("brand_transactions")
+}
+
+model branchStaff {
+  branchId  String     @map("branch_id") @db.Uuid
+  userId    String     @map("user_id") @db.Uuid
+  role      BranchRole @default(sales)
+  isActive  Boolean    @default(true) @map("is_active")
+  createdAt DateTime   @default(now()) @map("created_at") @db.Timestamptz
+
+  branch BrandBranch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([branchId, userId])
+  @@index([userId])
+  @@index([branchId, role])
+  @@map("branch_staff")
+}
+
+model BrandBranch {
+  id                  String   @id @default(uuid()) @db.Uuid
+  brandId             String   @map("brand_id") @db.Uuid
+  name                String   @map("branch_name")
+  code                String   @map("branch_code")
+  StaffIds            String[] @db.Uuid
+  Staff               User[]
+  latitude            Decimal? @db.Decimal(9, 6)
+  longitude           Decimal? @db.Decimal(9, 6)
+  placeId             String?  @map("place_id")
+  formattedAddress    String?  @map("formatted_address")
+  addressLine         String?  @map("address_line")
+  city                String?
+  state               String?
+  country             String?
+  postalCode          String?  @map("postal_code")
+  locationGranularity String?  @map("location_granularity") // ROOFTOP, GEOMETRIC_CENTER, APPROXIMATE, etc.
+  phone               String?
+  openingHours        Json?    @map("opening_hours")
+
+  isMain Boolean @default(false) @map("is_main") // the brand's primary branch (NOT the warehouse; that is Inventory.type = main)
+
+  isActive  Boolean   @default(true) @map("is_active")
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  brand        Brand           @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  users        User[]          @relation("BranchUsers")
+  variants     BranchVariant[] // per-branch price override / availability flag
+  orders       BranchOrder[]
+  inventory    Inventory? // exactly one inventory per branch
+  branchStaffs branchStaff[]
+
+  @@unique([brandId, code])
+  @@index([brandId])
+  @@map("brand_branches")
+}
+
 model BrandDocument {
   id              String                   @id @default(uuid()) @map("document_id") @db.Uuid
   brandId         String                   @map("brand_id") @db.Uuid
@@ -263,8 +329,9 @@ model BrandDocument {
   status          String                   @default("pending") @db.VarChar(20)
   createdAt       DateTime                 @default(now()) @map("created_at") @db.Timestamptz
   rejectionReason BrandDocRejectionReason?
-  brand           Brand                    @relation(fields: [brandId], references: [id], onDelete: Cascade)
-  reviewer        User?                    @relation("BrandDocumentReviewer", fields: [reviewedBy], references: [id])
+
+  brand    Brand @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  reviewer User? @relation("BrandDocumentReviewer", fields: [reviewedBy], references: [id])
 
   @@map("brand_documents")
 }
@@ -292,202 +359,380 @@ model BrandFollower {
   @@map("brand_followers")
 }
 
+// =====================================================================
+// CATALOG
+// =====================================================================
+
+model Category {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String   @unique @map("category_name")
+  description String
+  media       Json
+  ishidden    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+
+  Products Product[]
+}
+
 model Product {
-  id             String        @id @default(uuid()) @db.Uuid
-  name           String
-  media          Json[]
-  description    String
-  brandId        String        @map("brand_id") @db.Uuid
-  branchId       String?       @map("branch_id") @db.Uuid
-  categoryId     String        @map("category_id") @db.Uuid
-  slug           String
-  status         ProductStatus @default(active)
-  deletedAt      DateTime?     @map("deleted_at") @db.Timestamptz
-  price          Int
-  discount       Int?          @default(0)
-  viewCount      Int           @default(0) @map("view_count")
-  rating         Decimal       @default(0) @db.Decimal(2, 1)
-  available      Boolean       @default(true)
-  isDeleted      Boolean       @default(false)
-  createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt      DateTime      @default(now()) @map("updated_at") @db.Timestamptz
-  brand          Brand         @relation(fields: [brandId], references: [id])
-  branch         BrandBranch?  @relation(fields: [branchId], references: [id], onDelete: SetNull)
-  category       Category      @relation(fields: [categoryId], references: [id])
-  reviews        Review[]
-  variants       Variant[]
-  wishlist       wishlist?     @relation(fields: [wishlistUserId], references: [userId])
-  wishlistUserId String?       @db.Uuid
+  id          String        @id @default(uuid()) @db.Uuid
+  name        String
+  media       Json[]
+  description String
+  brandId     String        @map("brand_id") @db.Uuid
+  categoryId  String        @map("category_id") @db.Uuid
+  slug        String
+  status      ProductStatus @default(active)
+  deletedAt   DateTime?     @map("deleted_at") @db.Timestamptz
+  price       Int
+  discount    Int?          @default(0)
+  viewCount   Int           @default(0) @map("view_count")
+  rating      Decimal       @default(0) @db.Decimal(2, 1)
+  isDeleted   Boolean       @default(false)
+  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime      @updatedAt @map("updated_at") @db.Timestamptz
+  // removed: branchId/branch (products belong to the brand; stock is per inventory)
+
+  brand        Brand                @relation(fields: [brandId], references: [id])
+  category     Category             @relation(fields: [categoryId], references: [id])
+  reviews      Review[]
+  variants     Variant[]
+  wishlists    wishlist[] // many-to-many
+  availability ProductAvailability?
 
   @@unique([brandId, slug])
   @@index([brandId, status])
-  @@index([branchId])
   @@index([isDeleted])
   @@map("products")
 }
 
 model Variant {
-  id           String          @id @default(uuid()) @db.Uuid
-  productId    String          @map("product_id") @db.Uuid
-  sku          String          @unique
-  basePrice    Decimal         @map("base_price") @db.Decimal(10, 2)
-  barcode      String?
-  options      Json            @default("{}")
-  isActive     Boolean         @default(true) @map("is_active")
-  deletedAt    DateTime?       @map("deleted_at") @db.Timestamptz
-  color        String
-  size         String
-  stock        Int             @default(0)
-  sold         Int             @default(0)
-  isDeleted    Boolean         @default(false)
-  product      Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
-  cartProducts CartProducts[]
-  order        Order?          @relation(fields: [orderOrderId], references: [orderId])
-  orderOrderId String?         @db.Uuid
-  branchOffers BranchVariant[]
-  orderItems   OrderItem[]
+  id        String    @id @default(uuid()) @db.Uuid
+  productId String    @map("product_id") @db.Uuid
+  sku       String    @unique
+  basePrice Int       @map("base_price") // integer minor units
+  barcode   String?
+  options   Json      @default("{}")
+  isActive  Boolean   @default(true) @map("is_active")
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz
+  color     String
+  size      String
+  isDeleted Boolean   @default(false)
+  // removed: stock, sold (stock lives in InventoryStock; sold counts come from OrderItem)
+
+  product         Product              @relation(fields: [productId], references: [id], onDelete: Cascade)
+  cartProducts    CartProducts[]
+  branchOffers    BranchVariant[]
+  orderItems      OrderItem[]
+  inventoryStocks InventoryStock[]
+  ledger          StockLedger[]
+  transferItems   StockTransferItem[]
+  reservations    Reservation[]
+  availability    VariantAvailability?
 
   @@unique([productId, color, size])
   @@index([productId])
   @@map("variants")
 }
 
+// Per-branch overrides only. Quantities are NOT stored here anymore.
 model BranchVariant {
-  id               String      @id @default(uuid()) @db.Uuid
-  branchId         String      @map("branch_id") @db.Uuid
-  variantId        String      @map("variant_id") @db.Uuid
-  price            Decimal?    @db.Decimal(10, 2)
-  stockQuantity    Int         @default(0) @map("stock_quantity")
-  reservedQuantity Int         @default(0) @map("reserved_quantity")
-  isAvailable      Boolean     @default(true) @map("is_available")
-  updatedAt        DateTime    @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
-  branch           BrandBranch @relation(fields: [branchId], references: [id], onDelete: Cascade)
-  variant          Variant     @relation(fields: [variantId], references: [id], onDelete: Restrict)
+  id          String   @id @default(uuid()) @db.Uuid
+  branchId    String   @map("branch_id") @db.Uuid
+  variantId   String   @map("variant_id") @db.Uuid
+  price       Int? // null = use Variant.basePrice
+  isAvailable Boolean  @default(true) @map("is_available")
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  branch  BrandBranch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  variant Variant     @relation(fields: [variantId], references: [id], onDelete: Restrict)
 
   @@unique([branchId, variantId])
   @@index([variantId])
   @@map("branch_variants")
 }
 
-model Category {
-  id          String    @id @default(uuid()) @db.Uuid
-  name        String    @unique @map("category_name")
-  description String
-  media       Json
-  ishidden    Boolean   @default(false)
-  Products    Product[]
-  createdAt   DateTime  @default(now())
-  updateAt    DateTime  @default(now())
+model Review {
+  id        String  @id @default(uuid()) @db.Uuid
+  productId String? @db.Uuid
+  content   String
+  userId    String  @db.Uuid
+
+  product Product? @relation(fields: [productId], references: [id])
+  user    User     @relation(fields: [userId], references: [id])
 }
 
-model Review {
-  id        String   @id @default(uuid()) @db.Uuid
-  product   Product? @relation(fields: [productId], references: [id])
-  productId String?  @db.Uuid
-  content   String
-  userId    String   @db.Uuid
-  user      User     @relation(fields: [userId], references: [id])
-}
+// =====================================================================
+// CART AND WISHLIST
+// (no branch here: the branch is chosen by the system at checkout)
+// =====================================================================
 
 model Cart {
-  id           String         @id @default(uuid()) @db.Uuid
-  userId       String         @unique @db.Uuid
-  branchId     String?        @map("branch_id") @db.Uuid
-  user         User           @relation(fields: [userId], references: [id])
-  branch       BrandBranch?   @relation(fields: [branchId], references: [id], onDelete: SetNull)
-  products     CartProducts[]
+  id           String  @id @default(uuid()) @db.Uuid
+  userId       String  @unique @db.Uuid
   discount     Int?
   cartNote     String?
   userLocation String?
   userNumber   String?
-  price        Int            @default(0)
-  totalPrice   Int            @default(0)
+  price        Int     @default(0)
+  totalPrice   Int     @default(0)
 
-  @@index([branchId])
+  user     User           @relation(fields: [userId], references: [id])
+  products CartProducts[]
 }
 
 model CartProducts {
-  cartId    String  @db.Uuid
-  variantId String  @db.Uuid
-  quantity  Int     @default(1)
-  price     Int
-  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  variant   Variant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  cartId    String @db.Uuid
+  variantId String @db.Uuid
+  quantity  Int    @default(1)
+  price     Int // last seen price only; recompute on cart load, never trust at checkout
+
+  cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  variant Variant @relation(fields: [variantId], references: [id], onDelete: Cascade)
 
   @@id([cartId, variantId])
   @@map("cart_products")
 }
 
 model wishlist {
-  userId   String    @id @unique @db.Uuid
+  userId String @id @db.Uuid
+
   user     User      @relation(fields: [userId], references: [id])
-  products Product[]
+  products Product[] // many-to-many (implicit join table)
 }
 
-model Order {
-  orderId         String       @id @default(uuid()) @db.Uuid
-  userId          String       @db.Uuid
-  branchId        String?      @map("branch_id") @db.Uuid
-  user            User         @relation(fields: [userId], references: [id])
-  branch          BrandBranch? @relation(fields: [branchId], references: [id], onDelete: SetNull)
-  items           OrderItem[]
-  brands          OrderBrand[]
-  products        Variant[]
-  discount        Int?
-  status          orderStatus  @default(pending)
-  otp             String
-  price           Int
-  deliveryPrice   Int
-  totalPrice      Int
-  address         String
-  phoneNumber     String
-  deliveryCId     String       @unique @db.Uuid
-  deliveryCompany D_Company    @relation(fields: [deliveryCId], references: [deliveryCompany])
-  courier         Courier?     @relation(fields: [courierId], references: [id])
-  courierId       String?      @db.Uuid
-  checkoutId      String       @unique
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @default(now())
+// =====================================================================
+// INVENTORY (new)
+// =====================================================================
 
-  @@index([branchId])
+// One main inventory (warehouse) per brand + one inventory per branch.
+model Inventory {
+  id        String        @id @default(uuid()) @db.Uuid
+  type      inventoryType @default(main)
+  brandId   String        @map("brand_id") @db.Uuid
+  branchId  String?       @unique @map("branch_id") @db.Uuid // null for the main inventory
+  isActive  Boolean       @default(true) @map("is_active")
+  createdAt DateTime      @default(now()) @map("created_at") @db.Timestamptz
+
+  brand        Brand            @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  branch       BrandBranch?     @relation(fields: [branchId], references: [id])
+  stocks       InventoryStock[]
+  ledger       StockLedger[]
+  reservations Reservation[]
+  transfersOut StockTransfer[]  @relation("TransferFrom")
+  transfersIn  StockTransfer[]  @relation("TransferTo")
+
+  @@index([brandId, type])
+  @@map("inventories")
+}
+
+// SOURCE OF TRUTH for stock. available = onHand - reserved (computed, never stored).
+model InventoryStock {
+  inventoryId       String   @map("inventory_id") @db.Uuid
+  variantId         String   @map("variant_id") @db.Uuid
+  onHand            Int      @default(0) @map("on_hand")
+  reserved          Int      @default(0)
+  inTransitIn       Int      @default(0) @map("in_transit_in") // on the way, not sellable
+  lowStockThreshold Int      @default(0) @map("low_stock_threshold")
+  updatedAt         DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  inventory Inventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+  variant   Variant   @relation(fields: [variantId], references: [id], onDelete: Restrict)
+
+  @@id([inventoryId, variantId])
+  @@index([variantId])
+  @@map("inventory_stocks")
+}
+
+// Append-only. Every stock change writes a row in the same transaction.
+model StockLedger {
+  id            String       @id @default(uuid()) @db.Uuid
+  inventoryId   String       @map("inventory_id") @db.Uuid
+  variantId     String       @map("variant_id") @db.Uuid
+  changeQty     Int          @map("change_qty") // positive or negative
+  reason        LedgerReason
+  referenceType String?      @map("reference_type") // TRANSFER, ORDER, RESERVATION
+  referenceId   String?      @map("reference_id")
+  userId        String?      @map("user_id") @db.Uuid
+  note          String?
+  createdAt     DateTime     @default(now()) @map("created_at") @db.Timestamptz
+
+  inventory Inventory @relation(fields: [inventoryId], references: [id])
+  variant   Variant   @relation(fields: [variantId], references: [id])
+
+  @@index([inventoryId, variantId, createdAt])
+  @@index([referenceType, referenceId])
+  @@map("stock_ledger")
+}
+
+model StockTransfer {
+  id              String         @id @default(uuid()) @db.Uuid
+  fromInventoryId String         @map("from_inventory_id") @db.Uuid
+  toInventoryId   String         @map("to_inventory_id") @db.Uuid
+  status          TransferStatus @default(requested)
+  createdBy       String?        @map("created_by") @db.Uuid
+  approvedBy      String?        @map("approved_by") @db.Uuid
+  createdAt       DateTime       @default(now()) @map("created_at") @db.Timestamptz
+  shippedAt       DateTime?      @map("shipped_at") @db.Timestamptz
+  receivedAt      DateTime?      @map("received_at") @db.Timestamptz
+
+  from  Inventory           @relation("TransferFrom", fields: [fromInventoryId], references: [id])
+  to    Inventory           @relation("TransferTo", fields: [toInventoryId], references: [id])
+  items StockTransferItem[]
+
+  @@index([fromInventoryId, status])
+  @@index([toInventoryId, status])
+  @@map("stock_transfers")
+}
+
+model StockTransferItem {
+  id           String @id @default(uuid()) @db.Uuid
+  transferId   String @map("transfer_id") @db.Uuid
+  variantId    String @map("variant_id") @db.Uuid
+  qtyRequested Int    @map("qty_requested")
+  qtyShipped   Int    @default(0) @map("qty_shipped")
+  qtyReceived  Int    @default(0) @map("qty_received")
+
+  transfer StockTransfer @relation(fields: [transferId], references: [id], onDelete: Cascade)
+  variant  Variant       @relation(fields: [variantId], references: [id])
+
+  @@unique([transferId, variantId])
+  @@map("stock_transfer_items")
+}
+
+model Reservation {
+  id          String            @id @default(uuid()) @db.Uuid
+  inventoryId String            @map("inventory_id") @db.Uuid
+  variantId   String            @map("variant_id") @db.Uuid
+  qty         Int
+  status      ReservationStatus @default(active)
+  checkoutId  String            @map("checkout_id")
+  expiresAt   DateTime          @map("expires_at") @db.Timestamptz
+  createdAt   DateTime          @default(now()) @map("created_at") @db.Timestamptz
+
+  inventory Inventory @relation(fields: [inventoryId], references: [id])
+  variant   Variant   @relation(fields: [variantId], references: [id])
+
+  @@index([status, expiresAt]) // used by the expiry job
+  @@index([checkoutId])
+  @@map("reservations")
+}
+
+// DERIVED: written only by the availability worker, rebuildable from InventoryStock.
+// totalAvailable = SUM(onHand - reserved) over ACTIVE inventories of type = branch.
+// Used for display only, never to decide a sale.
+model VariantAvailability {
+  variantId      String   @id @map("variant_id") @db.Uuid
+  hasStock       Boolean  @map("has_stock")
+  totalAvailable Int      @map("total_available")
+  isLowStock     Boolean  @default(false) @map("is_low_stock")
+  updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  variant Variant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@map("variant_availability")
+}
+
+// DERIVED: true if any variant of the product has stock.
+model ProductAvailability {
+  productId String   @id @map("product_id") @db.Uuid
+  hasStock  Boolean  @map("has_stock")
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("product_availability")
+}
+
+// =====================================================================
+// ORDERS
+// ParentOrder = what the customer bought and paid for.
+// BranchOrder = what ONE branch prepares and delivers (always created,
+//               even when a single branch fulfills everything).
+// =====================================================================
+
+model ParentOrder {
+  parentOrderId String      @id @default(uuid()) @db.Uuid
+  userId        String      @db.Uuid
+  status        orderStatus @default(ordering) // derive from children
+  otp           String // if each shipment is handed over separately, move this to BranchOrder
+  price         Int
+  deliveryPrice Int
+  totalPrice    Int
+  address       String
+  phoneNumber   String
+  checkoutId    String      @unique
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  // removed: brandId (an order can span brands), deliveryCId and courierId (they live on each BranchOrder)
+
+  user         User          @relation(fields: [userId], references: [id])
+  branchOrders BranchOrder[]
+
+  @@index([userId])
+}
+
+model BranchOrder {
+  branchOrderId     String      @id @default(uuid()) @db.Uuid
+  parentOrderId     String      @db.Uuid
+  brandId           String      @db.Uuid
+  brandBranchId     String      @db.Uuid // required: a child always has a branch
+  status            orderStatus @default(ordering)
+  subtotal          Int
+  deliveryFee       Int         @default(0)
+  discountShare     Int         @default(0)
+  total             Int
+  etaAt             DateTime?
+  deliveryCompanyId String?     @db.Uuid
+  courierId         String?     @db.Uuid
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  order           ParentOrder @relation(fields: [parentOrderId], references: [parentOrderId], onDelete: Cascade)
+  brand           Brand       @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  brandBranch     BrandBranch @relation(fields: [brandBranchId], references: [id])
+  deliveryCompany D_Company?  @relation(fields: [deliveryCompanyId], references: [deliveryCompany])
+  courier         Courier?    @relation(fields: [courierId], references: [id])
+  orderItems      OrderItem[]
+
+  @@index([parentOrderId])
+  @@index([brandBranchId, status])
+  @@index([brandId])
 }
 
 model OrderItem {
-  id            String  @id @default(uuid()) @db.Uuid
-  orderId       String  @map("order_id") @db.Uuid
-  variantId     String  @map("variant_id") @db.Uuid
-  nameSnapshot  String  @map("name_snapshot")
-  skuSnapshot   String  @map("sku_snapshot")
-  priceSnapshot Decimal @map("price_snapshot") @db.Decimal(10, 2)
+  id            String @id @default(uuid()) @db.Uuid
+  branchOrderId String @map("branch_order_id") @db.Uuid // was "brancId" (typo)
+  variantId     String @map("variant_id") @db.Uuid
+  nameSnapshot  String @map("name_snapshot")
+  skuSnapshot   String @map("sku_snapshot")
+  priceSnapshot Int    @map("price_snapshot")
   quantity      Int
-  order         Order   @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
-  variant       Variant @relation(fields: [variantId], references: [id], onDelete: Restrict)
 
-  @@index([orderId])
+  branchOrder BranchOrder @relation(fields: [branchOrderId], references: [branchOrderId], onDelete: Cascade)
+  variant     Variant     @relation(fields: [variantId], references: [id], onDelete: Restrict)
+
+  @@index([branchOrderId])
   @@map("order_items")
 }
 
-// This model for one to many relation that fit splitting the Order into many brands
-model OrderBrand {
-  orderId String @db.Uuid
-  brandId String @db.Uuid
-  order   Order  @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
-  brand   Brand  @relation(fields: [brandId], references: [id], onDelete: Cascade)
-
-  @@id([orderId, brandId])
-}
+// =====================================================================
+// DELIVERY
+// =====================================================================
 
 model D_Company {
-  deliveryCompany String                       @id @default(uuid()) @db.Uuid
+  deliveryCompany String  @id @default(uuid()) @db.Uuid
   name            String
   address         String
   phoneNumber     String
-  isVerified      Boolean                      @default(false)
-  isBanned        Boolean                      @default(false)
-  couriers        Courier[]
-  orders          Order[]
-  balance         Int                          @default(0)
-  transactions    DeliveryCompanyTransaction[]
+  isVerified      Boolean @default(false)
+  isBanned        Boolean @default(false)
+  balance         Int     @default(0)
+
+  couriers     Courier[]
+  orders       BranchOrder[]
+  transactions DeliveryCompanyTransaction[]
 }
 
 model DeliveryCompanyTransaction {
@@ -508,15 +753,18 @@ model DeliveryCompanyTransaction {
 }
 
 model Courier {
-  id              String             @id @default(uuid()) @db.Uuid
-  photo_url       String
-  photo_id        String
-  phoneNumber     String
-  documents       courierDocuments[]
-  plateNumber     String
-  isVerified      Boolean            @default(false)
-  isBanned        Boolean            @default(false)
-  orders          Order[]
-  delieveryCId    String             @unique @db.Uuid
-  deliveryCompany D_Company          @relation(fields: [delieveryCId], references: [deliveryCompany])
+  id                String             @id @default(uuid()) @db.Uuid
+  photo_url         String
+  photo_id          String
+  phoneNumber       String
+  documents         courierDocuments[]
+  plateNumber       String
+  isVerified        Boolean            @default(false)
+  isBanned          Boolean            @default(false)
+  deliveryCompanyId String             @db.Uuid // was "delieveryCId" + @unique (allowed only 1 courier per company)
+
+  deliveryCompany D_Company     @relation(fields: [deliveryCompanyId], references: [deliveryCompany])
+  orders          BranchOrder[]
+
+  @@index([deliveryCompanyId])
 }

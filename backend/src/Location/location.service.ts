@@ -7,13 +7,16 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
+import { Decimal } from '../generated/prisma/runtime/client';
 
 export interface Coordinates {
-  latitude: number;
-  longitude: number;
+  latitude: number | Decimal;
+  longitude: number | Decimal;
 }
 
-export interface LocationDetails extends Coordinates {
+export interface LocationDetails {
+  latitude: number;
+  longitude: number;
   placeId: string;
   formattedAddress: string;
   addressLine: string;
@@ -25,7 +28,7 @@ export interface LocationDetails extends Coordinates {
 }
 
 interface GoogleGeocodeResult {
-  location?: Coordinates;
+  location?: { latitude: number; longitude: number };
   placeId?: string;
   formattedAddress?: string;
   granularity?: string;
@@ -48,14 +51,16 @@ export class LocationService {
   constructor(private readonly configService: ConfigService) {}
 
   async reverseGeocode(coordinates: Coordinates): Promise<LocationDetails> {
+    const latitude = Number(coordinates?.latitude);
+    const longitude = Number(coordinates?.longitude);
     if (
       !coordinates ||
-      !Number.isFinite(coordinates.latitude) ||
-      coordinates.latitude < -90 ||
-      coordinates.latitude > 90 ||
-      !Number.isFinite(coordinates.longitude) ||
-      coordinates.longitude < -180 ||
-      coordinates.longitude > 180
+      !Number.isFinite(latitude) ||
+      latitude < -90 ||
+      latitude > 90 ||
+      !Number.isFinite(longitude) ||
+      longitude < -180 ||
+      longitude > 180
     ) {
       throw new BadRequestException('Invalid latitude or longitude');
     }
@@ -73,8 +78,8 @@ export class LocationService {
         'https://geocode.googleapis.com/v4/geocode/location',
         {
           params: {
-            'location.latitude': coordinates.latitude,
-            'location.longitude': coordinates.longitude,
+            'location.latitude': latitude,
+            'location.longitude': longitude,
             key: apiKey,
           },
         },
@@ -137,41 +142,50 @@ export class LocationService {
   }
 
   calculateDistance(
-    userLocation: { latitude: number; longitude: number },
-    storeLocation: { latitude: number; longitude: number },
+    userLocation: Coordinates,
+    storeLocation: Coordinates,
   ): number {
     if (!userLocation || !storeLocation) {
       throw new Error('Both userLocation and storeLocation must be provided');
     }
+    const userLatitude = Number(userLocation.latitude);
+    const userLongitude = Number(userLocation.longitude);
+    const storeLatitude = Number(storeLocation.latitude);
+    const storeLongitude = Number(storeLocation.longitude);
+
     if (
-      !userLocation.latitude ||
-      !userLocation.longitude ||
-      !storeLocation.latitude ||
-      !storeLocation.longitude
+      !Number.isFinite(userLatitude) ||
+      !Number.isFinite(userLongitude) ||
+      !Number.isFinite(storeLatitude) ||
+      !Number.isFinite(storeLongitude)
     ) {
       throw new Error(
         'Both userLocation and storeLocation must have latitude and longitude',
       );
     }
     if (
-      userLocation.latitude < -90 ||
-      userLocation.latitude > 90 ||
-      userLocation.longitude < -180 ||
-      userLocation.longitude > 180
+      userLatitude < -90 ||
+      userLatitude > 90 ||
+      userLongitude < -180 ||
+      userLongitude > 180 ||
+      storeLatitude < -90 ||
+      storeLatitude > 90 ||
+      storeLongitude < -180 ||
+      storeLongitude > 180
     ) {
       throw new Error(
-        'User location latitude must be between -90 and 90 and longitude must be between -180 and 180',
+        'Location latitude must be between -90 and 90 and longitude must be between -180 and 180',
       );
     }
 
     const radiusOfEarthKm = 6371; // Radius of the Earth in kilometer
     const toRadians = (degrees: number) => degrees * (Math.PI / 180);
-    const dLat = toRadians(storeLocation.latitude - userLocation.latitude);
-    const dLong = toRadians(storeLocation.longitude - userLocation.longitude);
+    const dLat = toRadians(storeLatitude - userLatitude);
+    const dLong = toRadians(storeLongitude - userLongitude);
     const a =
       Math.sin(dLat / 2) ** 2 +
-      Math.cos(toRadians(userLocation.latitude)) *
-        Math.cos(toRadians(storeLocation.latitude)) *
+      Math.cos(toRadians(userLatitude)) *
+        Math.cos(toRadians(storeLatitude)) *
         Math.sin(dLong / 2) ** 2;
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = radiusOfEarthKm * c;
@@ -203,10 +217,14 @@ export class LocationService {
   }
 
   getNearestBranches(
-    userLocation: { latitude: number; longitude: number },
-    branches: { latitude: number; longitude: number }[],
-  ): { latitude: number; longitude: number } | null {
-    if (!userLocation || !userLocation.latitude || !userLocation.longitude) {
+    userLocation: Coordinates,
+    branches: Coordinates[],
+  ): Coordinates | null {
+    if (
+      !userLocation ||
+      userLocation.latitude == null ||
+      userLocation.longitude == null
+    ) {
       throw new Error(
         'User location must be provided with latitude and longitude',
       );
@@ -227,8 +245,8 @@ export class LocationService {
 
   // implement a method to get directions from user location to store location using a mapping service like Google Maps API or OpenStreetMap API. This method can return the route, estimated time, and distance.
   async getDirections(
-    userLocation: { latitude: number; longitude: number },
-    storeLocation: { latitude: number; longitude: number },
+    userLocation: Coordinates,
+    storeLocation: Coordinates,
   ) {
     try {
       const response = await axios.post(
@@ -237,16 +255,16 @@ export class LocationService {
           origin: {
             location: {
               latLng: {
-                latitude: storeLocation.latitude,
-                longitude: storeLocation.longitude,
+                latitude: Number(storeLocation.latitude),
+                longitude: Number(storeLocation.longitude),
               },
             },
           },
           destination: {
             location: {
               latLng: {
-                latitude: userLocation.latitude,
-                longitude: userLocation.longitude,
+                latitude: Number(userLocation.latitude),
+                longitude: Number(userLocation.longitude),
               },
             },
           },

@@ -46,7 +46,7 @@ export class BrandController {
   ) {
     const user = (req as any).user;
     let localPath: string | undefined;
-    const locationDetails = await this.locationService.reverseGeocode(
+    let locationDetails = await this.locationService.reverseGeocode(
       dto.location,
     );
 
@@ -59,9 +59,14 @@ export class BrandController {
       dto.name,
       localPath,
     );
-
+    locationDetails = dto.branchAddress
+      ? {
+          ...locationDetails,
+          formattedAddress: dto.branchAddress,
+        }
+      : locationDetails;
     await this.userModel.updateUser(user.sub, {
-      role: Role.BRAND_ADMIN,
+      role: Role.brand,
       brandId: brand.id,
     });
 
@@ -92,7 +97,7 @@ export class BrandController {
 
   @Patch(':brandId/profile')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand', 'BRAND_ADMIN')
+  @Roles('admin', 'brand')
   async updateBrandProfile(
     @Req() req: FastifyRequest,
     @Param('brandId') brandId: string,
@@ -137,7 +142,7 @@ export class BrandController {
 
   @Get(':brandId/verification-status')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand', 'BRAND_ADMIN')
+  @Roles('admin', 'brand')
   async brandVerificationStatus(
     @Req() req: FastifyRequest,
     @Param('brandId') brandId: string,
@@ -159,7 +164,7 @@ export class BrandController {
 
   @Post(':brandId/documents')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand', 'BRAND_ADMIN')
+  @Roles('admin', 'brand')
   async createBrandDocument(
     @Req() req: FastifyRequest,
     @Param('brandId') brandId: string,
