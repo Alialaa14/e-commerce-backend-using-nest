@@ -52,9 +52,13 @@ export class BrandBranchModel {
     });
   }
 
-  async deleteBrandBranch(brandBranchId: string) {
-    return this.prismaService.prisma.brandBranch.delete({
+  async deleteBrandBranch(
+    brandBranchId: string,
+    transaction?: Prisma.TransactionClient,
+  ) {
+    return (transaction ?? this.prismaService.prisma).brandBranch.update({
       where: { id: brandBranchId },
+      data: { deletedAt: new Date(), isActive: false },
     });
   }
 
@@ -65,9 +69,13 @@ export class BrandBranchModel {
   }
 
   // todo : add pagination and filteration
-  async getBrandBranches(brandId: string) {
-    return this.prismaService.prisma.brandBranch.findMany({
-      where: { brandId },
+  async getBrandBranches(
+    brandId: string,
+    transaction?: Prisma.TransactionClient,
+  ) {
+    return (transaction ?? this.prismaService.prisma).brandBranch.findMany({
+      where: { brandId, deletedAt: null },
+      select: { id: true, brandId: true, name: true, isActive: true },
     });
   }
 

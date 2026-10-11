@@ -7,6 +7,7 @@ import { PrismaModule } from '../utils/prisma/prisma.module';
 import { QueueModule } from '../Queues/queue.module';
 import { VariantModule } from '../Variants/variant.module';
 import { BrandModule } from '../Brand/brand.module';
+import { BrandBranchModule } from '../BrandBranch/brandBranch.module';
 import { CategoryModule } from '../Category/category.module';
 import { CloudinaryModule } from '../utils/cloudinary/cloudinary.module';
 import { TokenModule } from '../utils/Token/token.module';
@@ -40,7 +41,8 @@ import { CatalogService } from './catalog.service';
     PrismaModule,
     QueueModule,
     VariantModule,
-    BrandModule,
+    forwardRef(() => BrandModule),
+    BrandBranchModule,
     CategoryModule,
     CloudinaryModule,
     TokenModule,

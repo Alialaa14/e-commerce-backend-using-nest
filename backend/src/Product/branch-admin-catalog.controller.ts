@@ -10,20 +10,24 @@ import type { AuthUser } from '../common/decorators/Current-user-decorator';
 import { Roles } from '../common/decorators/roles.decorator';
 import { AuthGuard } from '../common/guards/auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
-import { CatalogService } from './catalog.service';
+import { BrandBranchService } from '../BrandBranch/brandBranch.service';
 
 @Controller('branches')
 @UseGuards(AuthGuard, RolesGuard)
-@Roles('BRAND_ADMIN', 'brand')
+@Roles('brandOwner')
 export class BranchAdminCatalogController {
-  constructor(private readonly catalogService: CatalogService) {}
+  constructor(private readonly brandBranchService: BrandBranchService) {}
 
   @Delete(':branchId')
   async softDelete(
     @getCurrentUser() user: AuthUser,
     @Param('branchId', ParseUUIDPipe) branchId: string,
   ) {
-    await this.catalogService.softDeleteBranch(user.brandId, branchId);
+    await this.brandBranchService.deleteBrandBranch({
+      brandId: user.brandId,
+      branchId,
+      userId: user.sub,
+    });
     return { success: true, message: 'Branch deleted successfully' };
   }
 }

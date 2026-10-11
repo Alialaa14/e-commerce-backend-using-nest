@@ -12,6 +12,9 @@ import { LocationDetails, LocationService } from '../Location/location.service';
 import { Prisma } from '../generated/prisma';
 import { BrandService } from '../Brand/brand.service';
 import { Decimal } from '../generated/prisma/runtime/client';
+import { inventoryType } from '../generated/prisma';
+import { InventoryService } from '../Inventory/inventory.service';
+import { PrismaService } from '../utils/prisma/prisma.service';
 
 export interface BrandBranchInput {
   name: string;
@@ -31,6 +34,8 @@ export class BrandBranchService {
     private readonly locationService: LocationService,
     @Inject(forwardRef(() => BrandService))
     private readonly brandService: BrandService,
+    private readonly inventoryService: InventoryService,
+    private readonly prismaService: PrismaService,
   ) {}
   private async checkExistingBranch(
     payload: {
@@ -99,8 +104,14 @@ export class BrandBranchService {
     if (!branchCreated) {
       throw new Error('Failed to create branch');
     }
-    // create its inventory
-    //todo : i will add the service once its created
+    await this.inventoryService.createInventory(
+      {
+        brandId: payload.brandId,
+        branchId: branchCreated.id,
+        type: inventoryType.branch,
+      },
+      transaction,
+    );
 
     return branchCreated;
   }
@@ -164,34 +175,52 @@ export class BrandBranchService {
     brandId: string;
     branchId: string;
     userId: string;
-  }) {
+  }, transaction?: Prisma.TransactionClient) {
+    if (transaction) {
+      return this.deleteBrandBranchInTransaction(payload, transaction);
+    }
+
+    return this.prismaService.prisma.$transaction((tx) =>
+      this.deleteBrandBranchInTransaction(payload, tx),
+    );
+  }
+
+  private async deleteBrandBranchInTransaction(
+    payload: { brandId: string; branchId: string; userId: string },
+    transaction: Prisma.TransactionClient,
+  ) {
     // check if the brand is Existing or not
     const brandExisted = await this.brandService.getBrandByCondition({
       id: payload.brandId,
-    });
+    }, transaction);
     if (!brandExisted) {
-      throw new BadRequestException("Brand Doesn't existed");
+      throw new NotFoundException('Brand not found');
+    }
+    if (brandExisted.userId !== payload.userId) {
+      throw new ForbiddenException(
+        'You are not authorized to delete this branch',
+      );
     }
     // check if the branch is existing or not
     const branchExisted = await this.brandBranchModel.getBrandBranchByCondition(
       {
         id: payload.branchId,
         brandId: payload.brandId,
+        deletedAt: null,
       },
+      transaction,
     );
     if (!branchExisted) {
-      throw new BadRequestException("Branch Doesn't existed");
-    }
-    // check whether the user is the admin or manager of the branch
-    // todo : check if the user is one of the branch managers
-    if (brandExisted.userId !== payload.userId) {
-      throw new ForbiddenException(
-        'You are not authorized to delete this branch',
-      );
+      throw new NotFoundException('Branch not found');
     }
 
+    await this.inventoryService.deleteBranchInventory(
+      payload.branchId,
+      transaction,
+    );
     const branchDeleted = await this.brandBranchModel.deleteBrandBranch(
       payload.branchId,
+      transaction,
     );
     if (!branchDeleted) {
       throw new Error('Failed to delete branch');
@@ -200,8 +229,11 @@ export class BrandBranchService {
   }
 
   // todo : add pagination and filteration
-  async getBrandBranches(brandId: string) {
-    return this.brandBranchModel.getBrandBranches(brandId);
+  async getBrandBranches(
+    brandId: string,
+    transaction?: Prisma.TransactionClient,
+  ) {
+    return this.brandBranchModel.getBrandBranches(brandId, transaction);
   }
 
   async getBrandBranch(brandBranchId: string) {

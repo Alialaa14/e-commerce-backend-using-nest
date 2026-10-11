@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { isUUID } from 'class-validator';
 import Stripe, { type ApiList } from 'stripe';
+import { Role } from '../../generated/prisma';
 import { PrismaService } from '../../utils/prisma/prisma.service';
 import { STRIPE_CLIENT } from '../stripe/stripe-constants';
 import { CreatePayoutDto } from './dto/create-payout.dto';
@@ -84,7 +85,8 @@ export class PayoutService {
     });
 
     if (!user) throw new NotFoundException('User not found');
-    if (user.role !== 'brand' && user.role !== 'delievryC') {
+    const role = user.role as string;
+    if (role !== Role.brandOwner && role !== 'delievryC') {
       throw new ForbiddenException('This account cannot manage payouts');
     }
     if (!user.accountId) {

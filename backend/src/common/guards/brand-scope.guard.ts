@@ -19,7 +19,7 @@ export class BrandScopeGuard implements CanActivate {
     if (
       !brandId ||
       !user ||
-      (user.role !== 'BRAND_ADMIN' && user.role !== 'brand') ||
+      (user.role !== 'BRAND_ADMIN' && user.role !== 'brandOwner') ||
       user.brandId !== brandId
     ) {
       throw new NotFoundException('Brand not found');

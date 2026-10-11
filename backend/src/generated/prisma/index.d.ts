@@ -170,7 +170,7 @@ export type Courier = $Result.DefaultSelection<Prisma.$CourierPayload>
 export namespace $Enums {
   export const Role: {
   user: 'user',
-  brand: 'brand',
+  brandOwner: 'brandOwner',
   admin: 'admin',
   deliveryC: 'deliveryC',
   courier: 'courier',
