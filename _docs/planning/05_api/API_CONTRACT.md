@@ -17,7 +17,7 @@
 
 ### 1.3 Authorization Model
 
-- Roles: `admin`, `sub_admin`, `brand`, `end_user`, `delivery_company`, `courier`, `guest`
+- Roles: `admin`, `sub_admin`, `brandOwner`, `end_user`, `delivery_company`, `courier`, `guest`
 
 ### 1.4 Shared Response Envelope
 
@@ -79,7 +79,7 @@ Error response:
 - Purpose: Handle account creation, authentication, OTP verification, token refresh, and logout.
 - Description: This controller governs identity lifecycle and token management for all roles.
 - Authentication Required: No for register/login/OTP; Yes for refresh/logout.
-- Authorized Roles: `guest`, `end_user`, `brand`, `admin`, `delivery_company`, `courier`
+- Authorized Roles: `guest`, `end_user`, `brandOwner`, `admin`, `delivery_company`, `courier`
 
 ### Routes
 
@@ -287,7 +287,7 @@ Error response:
 - Endpoint: `/auth/otp/send`
 - Description: Send an OTP for verification or checkout completion.
 - Authentication Required: No
-- Authorized Roles: `guest`, `end_user`, `brand`, `delivery_company`, `courier`
+- Authorized Roles: `guest`, `end_user`, `brandOwner`, `delivery_company`, `courier`
 
 #### Request Input
 
@@ -341,7 +341,7 @@ Error response:
 - Endpoint: `/auth/otp/verify`
 - Description: Validate OTP received by the user.
 - Authentication Required: No
-- Authorized Roles: `guest`, `end_user`, `brand`, `delivery_company`, `courier`
+- Authorized Roles: `guest`, `end_user`, `brandOwner`, `delivery_company`, `courier`
 
 #### Request Input
 
@@ -493,7 +493,7 @@ Error response:
 - Purpose: Manage authenticated user profile, delivery addresses, and account-related profile data.
 - Description: This controller allows end users and other roles to view and update their own profile data.
 - Authentication Required: Yes
-- Authorized Roles: `end_user`, `brand`, `admin`, `delivery_company`, `courier`
+- Authorized Roles: `end_user`, `brandOwner`, `admin`, `delivery_company`, `courier`
 
 ### Routes
 
@@ -609,7 +609,7 @@ Error response:
 - Endpoint: `/users/me/addresses`
 - Description: Retrieve all saved addresses for the authenticated user.
 - Authentication Required: Yes
-- Authorized Roles: `end_user`, `brand`, `delivery_company`
+- Authorized Roles: `end_user`, `brandOwner`, `delivery_company`
 
 #### Request Input
 
@@ -657,7 +657,7 @@ Error response:
 - Endpoint: `/users/me/addresses`
 - Description: Add a new address.
 - Authentication Required: Yes
-- Authorized Roles: `end_user`, `brand`, `delivery_company`
+- Authorized Roles: `end_user`, `brandOwner`, `delivery_company`
 
 #### Request Input
 
@@ -713,7 +713,7 @@ Error response:
 - Endpoint: `/users/me/addresses/{addressId}`
 - Description: Update an address owned by the user.
 - Authentication Required: Yes
-- Authorized Roles: `end_user`, `brand`, `delivery_company`
+- Authorized Roles: `end_user`, `brandOwner`, `delivery_company`
 
 #### Request Input
 
@@ -755,7 +755,7 @@ Error response:
 - Endpoint: `/users/me/addresses/{addressId}`
 - Description: Remove an address.
 - Authentication Required: Yes
-- Authorized Roles: `end_user`, `brand`, `delivery_company`
+- Authorized Roles: `end_user`, `brandOwner`, `delivery_company`
 
 #### Success Response
 
@@ -789,7 +789,7 @@ Error response:
 - Purpose: Manage brand registration, profile updates, public visibility, and brand-level operations.
 - Description: Supports brand onboarding, verification workflow, profile editing, and public profile access.
 - Authentication Required: No for public registration or public profile; Yes for private operations.
-- Authorized Roles: `guest`, `brand`, `admin`
+- Authorized Roles: `guest`, `brandOwner`, `admin`
 
 ### Routes
 
@@ -857,7 +857,7 @@ Error response:
 - Endpoint: `/brands/{brandId}/documents`
 - Description: Upload verification documents for brand onboarding.
 - Authentication Required: Yes
-- Authorized Roles: `brand`
+- Authorized Roles: `brandOwner`
 
 #### Request Input
 
@@ -904,7 +904,7 @@ Error response:
 - Endpoint: `/brands/{brandId}/verification-status`
 - Description: Retrieve current brand verification tier and missing requirements.
 - Authentication Required: Yes for owner; public for approved brands if allowed by policy
-- Authorized Roles: `brand`, `admin`, `guest`
+- Authorized Roles: `brandOwner`, `admin`, `guest`
 
 #### Success Response
 
@@ -981,7 +981,7 @@ Error response:
 - Endpoint: `/brands/{brandId}`
 - Description: Update brand profile details.
 - Authentication Required: Yes
-- Authorized Roles: `brand`
+- Authorized Roles: `brandOwner`
 
 #### Request Input
 
@@ -1018,6 +1018,37 @@ Error response:
 - Update the brand profile after ownership validation.
 - Side effects: audit event.
 
+### Route 6: Delete Brand
+
+- HTTP Method: `DELETE`
+- Endpoint: `/brands/{brandId}`
+- Description: Deactivate the brand, its branches and inventories, and archive its products.
+- Authentication Required: Yes
+- Authorized Roles: `brandOwner`
+- Validation Rules: all inventory stock quantities (`onHand`, `reserved`, `inTransitIn`) must be zero
+
+#### Success Response
+
+- Status Code: `200`
+- Example JSON
+
+```json
+{
+  "success": true,
+  "message": "Brand deleted successfully",
+  "data": {
+    "id": "uuid",
+    "isActive": false
+  }
+}
+```
+
+#### Error Responses
+
+- Forbidden
+- Not Found
+- Conflict when any inventory contains nonzero stock
+
 ---
 
 ## 3.4 CategoryController
@@ -1027,7 +1058,7 @@ Error response:
 - Purpose: Manage brand categories.
 - Description: Allows brands to create, edit, and delete categories while preserving integrity.
 - Authentication Required: Yes
-- Authorized Roles: `brand`, `admin`
+- Authorized Roles: `brandOwner`, `admin`
 
 ### Routes
 
@@ -1037,7 +1068,7 @@ Error response:
 - Endpoint: `/brands/{brandId}/categories`
 - Description: List categories for a brand.
 - Authentication Required: Conditional
-- Authorized Roles: `brand`, `admin`, `guest`
+- Authorized Roles: `brandOwner`, `admin`, `guest`
 
 #### Success Response
 
@@ -1077,7 +1108,7 @@ Error response:
 - Endpoint: `/brands/{brandId}/categories`
 - Description: Create a new category.
 - Authentication Required: Yes
-- Authorized Roles: `brand`
+- Authorized Roles: `brandOwner`
 
 #### Request Input
 
@@ -1129,7 +1160,7 @@ Error response:
 - Endpoint: `/brands/{brandId}/categories/{catId}`
 - Description: Update an existing category.
 - Authentication Required: Yes
-- Authorized Roles: `brand`
+- Authorized Roles: `brandOwner`
 
 #### Request Input
 
@@ -1171,7 +1202,7 @@ Error response:
 - Endpoint: `/brands/{brandId}/categories/{catId}`
 - Description: Soft-delete a category.
 - Authentication Required: Yes
-- Authorized Roles: `brand`
+- Authorized Roles: `brandOwner`
 
 #### Success Response
 
@@ -1206,7 +1237,7 @@ Error response:
 - Purpose: Manage products, variants, and media for a brand.
 - Description: Allows catalog creation, bulk import, and low-stock tracking.
 - Authentication Required: Yes for creation/edit; No for public browsing.
-- Authorized Roles: `brand`, `admin`, `guest`, `end_user`
+- Authorized Roles: `brandOwner`, `admin`, `guest`, `end_user`
 
 ### Routes
 
@@ -1216,7 +1247,7 @@ Error response:
 - Endpoint: `/brands/{brandId}/products`
 - Description: List products for a brand.
 - Authentication Required: Conditional
-- Authorized Roles: `brand`, `admin`, `guest`, `end_user`
+- Authorized Roles: `brandOwner`, `admin`, `guest`, `end_user`
 
 #### Query Parameters
 
@@ -1268,7 +1299,7 @@ Error response:
 - Endpoint: `/brands/{brandId}/products`
 - Description: Create a new product with variants.
 - Authentication Required: Yes
-- Authorized Roles: `brand`
+- Authorized Roles: `brandOwner`
 
 #### Request Input
 
@@ -1333,7 +1364,7 @@ Error response:
 - Endpoint: `/brands/{brandId}/products/{productId}`
 - Description: Update product metadata and variants.
 - Authentication Required: Yes
-- Authorized Roles: `brand`
+- Authorized Roles: `brandOwner`
 
 #### Success Response
 
@@ -1369,7 +1400,7 @@ Error response:
 - Endpoint: `/brands/{brandId}/products/{productId}`
 - Description: Soft-delete a product.
 - Authentication Required: Yes
-- Authorized Roles: `brand`
+- Authorized Roles: `brandOwner`
 
 #### Success Response
 
@@ -1403,7 +1434,7 @@ Error response:
 - Endpoint: `/brands/{brandId}/products/bulk-import`
 - Description: Import a catalog via CSV upload.
 - Authentication Required: Yes
-- Authorized Roles: `brand`
+- Authorized Roles: `brandOwner`
 
 #### Request Input
 
@@ -1446,7 +1477,7 @@ Error response:
 - Endpoint: `/brands/{brandId}/products/low-stock`
 - Description: Retrieve variants below the stock threshold.
 - Authentication Required: Yes
-- Authorized Roles: `brand`
+- Authorized Roles: `brandOwner`
 
 #### Success Response
 
@@ -1472,6 +1503,153 @@ Error response:
 
 - Return inventory items that require replenishment.
 - Side effects: generate low-stock alert events.
+
+## 3.5.1 InventoryController
+
+### Route 1: Get Branch Inventory
+
+- HTTP Method: `GET`
+- Endpoint: `/branches/{branchId}/inventory`
+- Description: Retrieve a branch inventory with stock quantities and variant details.
+- Authentication Required: Yes
+- Authorized Roles: `brandOwner`, `BRAND_ADMIN`, `BRANCH_MANAGER`
+- Query Parameters: `page` (default 1), `limit` (default 20, maximum 100), `search` (SKU or product name), `productId`, `color`, `size`, `isActive`
+
+#### Success Response
+
+- Status Code: `200`
+- Example JSON
+
+```json
+{
+  "success": true,
+  "message": "Branch inventory retrieved successfully",
+  "data": {
+    "id": "uuid",
+    "type": "branch",
+    "brandId": "uuid",
+    "branchId": "uuid",
+    "isActive": true,
+    "createdAt": "2026-10-11T00:00:00.000Z",
+    "stocks": [
+      {
+        "variantId": "uuid",
+        "onHand": 12,
+        "reserved": 3,
+        "inTransitIn": 1,
+        "lowStockThreshold": 4,
+        "updatedAt": "2026-10-11T00:00:00.000Z",
+        "variant": {
+          "id": "uuid",
+          "sku": "SKU-1",
+          "color": "black",
+          "size": "M",
+          "basePrice": 100,
+          "options": {},
+          "isActive": true,
+          "isDeleted": false,
+          "product": {
+            "id": "uuid",
+            "name": "Everyday Shirt",
+            "slug": "everyday-shirt"
+          }
+        }
+      }
+    ],
+    "meta": {
+      "total": 5,
+      "page": 1,
+      "limit": 20,
+      "totalPages": 1
+    }
+  }
+}
+```
+
+#### Error Responses
+
+- Unauthorized
+- Branch not found or outside the authenticated user's scope
+
+## 3.5.2 BranchAdminCatalogController
+
+### Route 1: Delete Branch
+
+- HTTP Method: `DELETE`
+- Endpoint: `/branches/{branchId}`
+- Description: Deactivate a branch and its inventory after verifying all stock quantities are zero.
+- Authentication Required: Yes
+- Authorized Roles: `brandOwner`
+
+#### Error Responses
+
+- Forbidden
+- Not Found
+- Conflict when inventory contains nonzero stock
+
+## 3.5.3 StockTransferController
+
+- Base Endpoint: `/stock-transfers`
+- Authentication Required: Yes
+- Authorized Roles: `brandOwner`, `BRANCH_MANAGER`
+- Source authorization: brand owners may send from their main inventory; branch managers may send only from their assigned branch inventory.
+- Destination authorization: the destination brand owner or branch manager approves and records receipt.
+- Inventory changes and stock ledger rows are committed with each transfer state change.
+
+### Route 1: Create Transfer Request
+
+- HTTP Method: `POST`
+- Endpoint: `/stock-transfers`
+- Request Body: `fromInventoryId`, `toInventoryId`, and `items` containing `variantId` and `qtyRequested`.
+- Success: creates a `requested` transfer and its item rows; `createdBy` is taken from the authenticated user.
+- Errors: validation error, forbidden, not found, conflict for inactive inventories.
+
+### Route 2: List Transfers
+
+- HTTP Method: `GET`
+- Endpoint: `/stock-transfers`
+- Query Parameters: `page` (default 1), `limit` (default 20, maximum 100), `status`.
+- Description: lists transfers involving the authenticated owner's brand or manager's branch.
+- Success Response: paginated transfer items and `total`, `page`, `limit`, `totalPages` metadata.
+
+### Route 3: Get Transfer
+
+- HTTP Method: `GET`
+- Endpoint: `/stock-transfers/{transferId}`
+- Description: retrieves a transfer only for a user assigned to its source or destination inventory.
+- Errors: not found for transfers outside the user's inventory scope.
+
+### Route 4: Approve Transfer
+
+- HTTP Method: `POST`
+- Endpoint: `/stock-transfers/{transferId}/approve`
+- Authorized Actor: destination inventory owner/manager.
+- State Transition: `requested` to `approved`.
+
+### Route 5: Ship Transfer
+
+- HTTP Method: `POST`
+- Endpoint: `/stock-transfers/{transferId}/ship`
+- Authorized Actor: source inventory owner/manager.
+- State Transition: `approved` to `shipped`.
+- Stock Effects: deducts available source stock, increments destination `inTransitIn`, and records source `transfer_out` and destination `transfer_in` ledger entries.
+- Errors: conflict if source available stock is insufficient or the transfer state has changed.
+
+### Route 6: Receive Transfer
+
+- HTTP Method: `POST`
+- Endpoint: `/stock-transfers/{transferId}/receive`
+- Request Body: `items` containing `variantId` and `qtyReceived`; receipt may be partial.
+- Authorized Actor: destination inventory owner/manager.
+- Stock Effects: moves received quantities from `inTransitIn` to `onHand`.
+- State Transition: `shipped` to `partially_received` or `received`.
+
+### Route 7: Cancel Transfer
+
+- HTTP Method: `POST`
+- Endpoint: `/stock-transfers/{transferId}/cancel`
+- Authorized Actor: source inventory owner/manager.
+- State Transition: `requested` or `approved` to `cancelled`; shipped transfers cannot be cancelled.
 
 ---
 
@@ -2019,7 +2197,7 @@ Error response:
 - Purpose: Enable brand-side order operations.
 - Description: Allows a brand to accept, reject, or hand off incoming sub-orders.
 - Authentication Required: Yes
-- Authorized Roles: `brand`
+- Authorized Roles: `brandOwner`
 
 ### Routes
 
@@ -2029,7 +2207,7 @@ Error response:
 - Endpoint: `/brands/{brandId}/orders`
 - Description: List sub-orders for a brand.
 - Authentication Required: Yes
-- Authorized Roles: `brand`
+- Authorized Roles: `brandOwner`
 
 #### Success Response
 
@@ -2064,7 +2242,7 @@ Error response:
 - Endpoint: `/brands/{brandId}/orders/{orderId}/accept`
 - Description: Accept a sub-order.
 - Authentication Required: Yes
-- Authorized Roles: `brand`
+- Authorized Roles: `brandOwner`
 
 #### Success Response
 
@@ -2100,7 +2278,7 @@ Error response:
 - Endpoint: `/brands/{brandId}/orders/{orderId}/reject`
 - Description: Reject a sub-order.
 - Authentication Required: Yes
-- Authorized Roles: `brand`
+- Authorized Roles: `brandOwner`
 
 #### Request Input
 
@@ -2141,7 +2319,7 @@ Error response:
 - Endpoint: `/brands/{brandId}/orders/{orderId}/handoff`
 - Description: Hand off a sub-order to the delivery partner.
 - Authentication Required: Yes
-- Authorized Roles: `brand`
+- Authorized Roles: `brandOwner`
 
 #### Success Response
 
@@ -2813,7 +2991,7 @@ Error response:
 - Purpose: Track payouts and approve payouts for brands.
 - Description: Supports payout history retrieval and admin approval workflows.
 - Authentication Required: Yes
-- Authorized Roles: `brand`, `admin`
+- Authorized Roles: `brandOwner`, `admin`
 
 ### Routes
 
@@ -2823,7 +3001,7 @@ Error response:
 - Endpoint: `/brands/{brandId}/payouts`
 - Description: Retrieve payouts for a brand.
 - Authentication Required: Yes
-- Authorized Roles: `brand`, `admin`
+- Authorized Roles: `brandOwner`, `admin`
 
 #### Success Response
 
@@ -2895,7 +3073,7 @@ Error response:
 - Purpose: Manage chat threads and inbound message handling.
 - Description: Allows end users or brands to start, view, and report chat threads.
 - Authentication Required: Yes
-- Authorized Roles: `end_user`, `brand`, `admin`, `courier`
+- Authorized Roles: `end_user`, `brandOwner`, `admin`, `courier`
 
 ### Routes
 
@@ -2905,7 +3083,7 @@ Error response:
 - Endpoint: `/chats`
 - Description: Start a conversation between user and brand.
 - Authentication Required: Yes
-- Authorized Roles: `end_user`, `brand`
+- Authorized Roles: `end_user`, `brandOwner`
 
 #### Request Input
 
@@ -3357,7 +3535,7 @@ Error response:
 - Purpose: Handle generic file uploads for documents, images, and proofs.
 - Description: Accepts multipart uploads for profile pictures, brand docs, product media, and delivery proof.
 - Authentication Required: Yes
-- Authorized Roles: `brand`, `end_user`, `courier`, `admin`
+- Authorized Roles: `brandOwner`, `end_user`, `courier`, `admin`
 
 ### Routes
 
@@ -3367,7 +3545,7 @@ Error response:
 - Endpoint: `/uploads`
 - Description: Upload a file that will be stored and linked to the relevant resource.
 - Authentication Required: Yes
-- Authorized Roles: `brand`, `end_user`, `courier`, `admin`
+- Authorized Roles: `brandOwner`, `end_user`, `courier`, `admin`
 
 #### Request Input
 
