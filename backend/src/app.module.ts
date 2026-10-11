@@ -13,6 +13,7 @@ import { PaymentModule } from './Payment/payment.module';
 import { WebhookModule } from './webhooks/webhook.module';
 import { StripeModule } from './Payment/stripe/stripe.module';
 import { LocationModule } from './Location/location.module';
+import { StockTransferModule } from './StockTransfer/stock-transfer.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -43,6 +44,7 @@ import { LocationModule } from './Location/location.module';
     StripeModule,
     WebhookModule,
     LocationModule,
+    StockTransferModule,
   ],
   controllers: [],
   providers: [],
