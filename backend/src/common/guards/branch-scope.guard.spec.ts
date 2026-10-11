@@ -3,6 +3,30 @@ import { PrismaService } from '../../utils/prisma/prisma.service';
 import { BranchScopeGuard } from './branch-scope.guard';
 
 describe('BranchScopeGuard', () => {
+  it('allows a brand owner to access a branch within their brand', async () => {
+    const branchId = '00000000-0000-4000-8000-000000000001';
+    const brandId = '00000000-0000-4000-8000-000000000003';
+    const context = {
+      switchToHttp: () => ({
+        getRequest: () => ({
+          params: { branchId },
+          user: { sub: 'owner-1', role: 'brandOwner', brandId },
+        }),
+      }),
+    } as ExecutionContext;
+    const findFirst = jest.fn().mockResolvedValue({ id: branchId });
+    const prismaService = {
+      prisma: { brandBranch: { findFirst } },
+    } as unknown as PrismaService;
+    const guard = new BranchScopeGuard(prismaService);
+
+    await expect(guard.canActivate(context)).resolves.toBe(true);
+    expect(findFirst).toHaveBeenCalledWith({
+      where: { id: branchId, brandId, deletedAt: null, isActive: true },
+      select: { id: true },
+    });
+  });
+
   it('hides branches outside a branch manager assignment with 404', async () => {
     const context = {
       switchToHttp: () => ({

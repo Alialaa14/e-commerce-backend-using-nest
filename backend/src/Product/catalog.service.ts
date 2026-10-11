@@ -163,6 +163,21 @@ export class CatalogService {
     return { id: productId };
   }
 
+  async softDeleteProductsForBrand(
+    brandId: string,
+    transaction?: Prisma.TransactionClient,
+  ) {
+    return (transaction ?? this.prismaService.prisma).product.updateMany({
+      where: { brandId, deletedAt: null, isDeleted: false },
+      data: {
+        deletedAt: new Date(),
+        status: 'archived',
+        available: false,
+        isDeleted: true,
+      },
+    });
+  }
+
   async approveProduct(brandId: string | null | undefined, productId: string) {
     if (!brandId) throw new NotFoundException('Product not found');
     const result = await this.prismaService.prisma.product.updateMany({
@@ -452,16 +467,6 @@ export class CatalogService {
         : { count: 0 };
       return { copied: created.count };
     });
-  }
-
-  async softDeleteBranch(brandId: string | null | undefined, branchId: string) {
-    if (!brandId) throw new NotFoundException('Branch not found');
-    const result = await this.prismaService.prisma.brandBranch.updateMany({
-      where: { id: branchId, brandId, deletedAt: null },
-      data: { deletedAt: new Date(), isActive: false },
-    });
-    if (result.count !== 1) throw new NotFoundException('Branch not found');
-    return { id: branchId };
   }
 
   private toVariantCreateInput(variant: CatalogVariantDto, index: number) {

@@ -35,7 +35,7 @@ export class BranchScopeGuard implements CanActivate {
         throw new NotFoundException('Branch not found');
       }
       where = { id: branchId, deletedAt: null, isActive: true };
-    } else if (user.role === 'BRAND_ADMIN' || user.role === 'brand') {
+    } else if (user.role === 'BRAND_ADMIN' || user.role === 'brandOwner') {
       if (!user.brandId) {
         throw new NotFoundException('Branch not found');
       }

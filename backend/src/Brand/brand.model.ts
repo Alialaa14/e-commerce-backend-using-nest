@@ -62,8 +62,9 @@ export class BrandModel {
       logoUrl?: string | null;
       logoUrl_id?: string | null;
     },
+    transaction?: Prisma.TransactionClient,
   ) {
-    return this.prismaService.prisma.brand.update({
+    return (transaction ?? this.prismaService.prisma).brand.update({
       where: { id: brandId },
       data,
     });

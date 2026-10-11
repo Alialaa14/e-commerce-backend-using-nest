@@ -7,7 +7,7 @@ import {
 import { PrismaService } from '../../utils/prisma/prisma.service';
 import Stripe from 'stripe';
 import { STRIPE_CLIENT } from '../stripe/stripe-constants';
-import { User } from '../../generated/prisma';
+import { Role } from '../../generated/prisma';
 
 @Injectable()
 export class AccountService {
@@ -23,7 +23,8 @@ export class AccountService {
     if (!user) throw new NotFoundException('User not found');
     if (user.accountId) return { id: user.accountId }; // already created
 
-    const isSeller = user.role === 'brand' || user.role === 'delievryC';
+    const role = user.role as string;
+    const isSeller = role === Role.brandOwner || role === 'delievryC';
     const isBuyer = user.role === 'user';
     if (!isSeller && !isBuyer)
       throw new BadRequestException('Unsupported role');
@@ -83,7 +84,8 @@ export class AccountService {
     if (!user.accountId)
       throw new BadRequestException('Account not created yet');
 
-    const isSeller = user.role === 'brand' || user.role === 'delievryC';
+    const role = user.role as string;
+    const isSeller = role === Role.brandOwner || role === 'delievryC';
     const isBuyer = user.role === 'user';
     if (!isSeller && !isBuyer)
       throw new BadRequestException('Unsupported role');

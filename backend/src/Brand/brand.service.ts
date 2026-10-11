@@ -14,6 +14,9 @@ import { CloudinaryService } from '../utils/cloudinary/cloudinary.service';
 import { BrandBranchService } from '../BrandBranch/brandBranch.service';
 import { PrismaService } from '../utils/prisma/prisma.service';
 import { BrandModel } from './brand.model';
+import { InventoryService } from '../Inventory/inventory.service';
+import { inventoryType } from '../generated/prisma';
+import { CatalogService } from '../Product/catalog.service';
 
 @Injectable()
 export class BrandService {
@@ -23,6 +26,9 @@ export class BrandService {
     private readonly prismaService: PrismaService,
     @Inject(forwardRef(() => BrandBranchService))
     private readonly brandBranchService: BrandBranchService,
+    private readonly inventoryService: InventoryService,
+    @Inject(forwardRef(() => CatalogService))
+    private readonly catalogService: CatalogService,
   ) {}
 
   async createBrand(
@@ -74,6 +80,11 @@ export class BrandService {
         throw new InternalServerErrorException('Brand creation failed');
       }
 
+      await this.inventoryService.createInventory(
+        { brandId: brand.id, type: inventoryType.main },
+        transaction,
+      );
+
       await this.brandBranchService.createBrandBranch(
         {
           brandId: brand.id,
@@ -94,7 +105,10 @@ export class BrandService {
   }
 
   async getPublicBrandProfile(brandId: string) {
-    const brand = await this.brandModel.findBrandById(brandId);
+    const brand = await this.brandModel.getBrandByCondition({
+      id: brandId,
+      isActive: true,
+    });
     if (!brand) {
       throw new NotFoundException('Brand not found');
     }
@@ -118,7 +132,7 @@ export class BrandService {
     },
   ) {
     const brand = await this.brandModel.findBrandById(brandId);
-    if (!brand) {
+    if (!brand || !brand.isActive) {
       throw new NotFoundException('Brand not found');
     }
 
@@ -186,5 +200,47 @@ export class BrandService {
     transaction?: Prisma.TransactionClient,
   ) {
     return this.brandModel.getBrandByCondition(where, transaction);
+  }
+
+  async deleteBrand(userId: string, brandId: string) {
+    return this.prismaService.prisma.$transaction(async (transaction) => {
+      const brand = await this.brandModel.getBrandByCondition(
+        { id: brandId },
+        transaction,
+      );
+      if (!brand) {
+        throw new NotFoundException('Brand not found');
+      }
+      if (brand.userId !== userId) {
+        throw new ForbiddenException('Unauthorized');
+      }
+      if (!brand.isActive) {
+        throw new BadRequestException('Brand is already deleted');
+      }
+
+      const branches = await this.brandBranchService.getBrandBranches(
+        brandId,
+        transaction,
+      );
+      for (const branch of branches) {
+        await this.brandBranchService.deleteBrandBranch(
+          { brandId, branchId: branch.id, userId },
+          transaction,
+        );
+      }
+
+      await this.inventoryService.deleteMainInventory(brandId, transaction);
+      await this.catalogService.softDeleteProductsForBrand(
+        brandId,
+        transaction,
+      );
+
+      const deletedBrand = await this.brandModel.updateBrand(
+        brandId,
+        { isActive: false },
+        transaction,
+      );
+      return { id: deletedBrand.id, isActive: deletedBrand.isActive };
+    });
   }
 }
