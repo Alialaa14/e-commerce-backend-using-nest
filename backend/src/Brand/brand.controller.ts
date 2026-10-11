@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
   Req,
@@ -38,7 +40,7 @@ export class BrandController {
 
   @Post()
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'user', 'brand')
+  @Roles('admin', 'user', 'brandOwner')
   @UseInterceptors(MultipartInterceptor)
   async createBrand(
     @UploadedFastifyFile() picture: any,
@@ -73,7 +75,7 @@ export class BrandController {
     );
 
     await this.userModel.updateUser(user.sub, {
-      role: Role.brand,
+      role: Role.brandOwner,
       brandId: brand.id,
     });
 
@@ -97,7 +99,7 @@ export class BrandController {
 
   @Patch(':brandId/profile')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand')
+  @Roles('admin', 'brandOwner')
   async updateBrandProfile(
     @Req() req: FastifyRequest,
     @Param('brandId') brandId: string,
@@ -140,9 +142,26 @@ export class BrandController {
     };
   }
 
+  @Delete(':brandId')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('brandOwner')
+  async deleteBrand(
+    @Req() req: FastifyRequest,
+    @Param('brandId', ParseUUIDPipe) brandId: string,
+  ) {
+    const user = (req as any).user;
+    const brand = await this.brandService.deleteBrand(user.sub, brandId);
+
+    return {
+      success: true,
+      message: 'Brand deleted successfully',
+      data: brand,
+    };
+  }
+
   @Get(':brandId/verification-status')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand')
+  @Roles('admin', 'brandOwner')
   async brandVerificationStatus(
     @Req() req: FastifyRequest,
     @Param('brandId') brandId: string,
@@ -164,7 +183,7 @@ export class BrandController {
 
   @Post(':brandId/documents')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand')
+  @Roles('admin', 'brandOwner')
   async createBrandDocument(
     @Req() req: FastifyRequest,
     @Param('brandId') brandId: string,

@@ -13,7 +13,7 @@ datasource db {
 
 enum Role {
   user
-  brand
+  brandOwner
   admin
   deliveryC // was "delievryC" (typo)
   courier

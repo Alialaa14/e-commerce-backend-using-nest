@@ -1,6 +1,8 @@
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, ConflictException } from '@nestjs/common';
 import { LocationService } from '../Location/location.service';
 import { BrandService } from '../Brand/brand.service';
+import { InventoryService } from '../Inventory/inventory.service';
+import { PrismaService } from '../utils/prisma/prisma.service';
 import { BrandBranchModel } from './brandBranch.model';
 import { BrandBranchService } from './brandBranch.service';
 
@@ -18,10 +20,15 @@ describe('BrandBranchService', () => {
     const brandService = {
       getBrandByCondition: jest.fn().mockResolvedValue({ id: 'brand-1' }),
     } as unknown as BrandService;
+    const inventoryService = {
+      createInventory: jest.fn(),
+    } as unknown as InventoryService;
     const service = new BrandBranchService(
       brandBranchModel,
       locationService,
       brandService,
+      inventoryService,
+      {} as PrismaService,
     );
 
     await expect(
@@ -50,10 +57,15 @@ describe('BrandBranchService', () => {
     const brandService = {
       getBrandByCondition: jest.fn().mockResolvedValue({ id: 'brand-1' }),
     } as unknown as BrandService;
+    const inventoryService = {
+      createInventory: jest.fn(),
+    } as unknown as InventoryService;
     const service = new BrandBranchService(
       brandBranchModel,
       locationService,
       brandService,
+      inventoryService,
+      {} as PrismaService,
     );
     const locationDetails = {
       latitude: 30.04442,
@@ -100,5 +112,92 @@ describe('BrandBranchService', () => {
       }),
       undefined,
     );
+    expect(inventoryService.createInventory).toHaveBeenCalledWith(
+      { brandId: 'brand-1', branchId: 'branch-1', type: 'branch' },
+      undefined,
+    );
+  });
+
+  it('deletes branch inventory before soft-deleting the branch in one transaction', async () => {
+    const branchId = 'branch-1';
+    const transaction = {};
+    const brandBranchModel = {
+      getBrandBranchByCondition: jest.fn().mockResolvedValue({ id: branchId }),
+      deleteBrandBranch: jest.fn().mockResolvedValue({ id: branchId }),
+    } as unknown as BrandBranchModel;
+    const brandService = {
+      getBrandByCondition: jest
+        .fn()
+        .mockResolvedValue({ id: 'brand-1', userId: 'owner-1' }),
+    } as unknown as BrandService;
+    const inventoryService = {
+      deleteBranchInventory: jest.fn().mockResolvedValue({ isActive: false }),
+    } as unknown as InventoryService;
+    const prismaService = {
+      prisma: {
+        $transaction: jest.fn((callback) => callback(transaction)),
+      },
+    } as unknown as PrismaService;
+    const service = Reflect.construct(BrandBranchService, [
+      brandBranchModel,
+      {} as LocationService,
+      brandService,
+      inventoryService,
+      prismaService,
+    ]) as BrandBranchService;
+
+    await service.deleteBrandBranch({
+      brandId: 'brand-1',
+      branchId,
+      userId: 'owner-1',
+    });
+
+    expect(inventoryService.deleteBranchInventory).toHaveBeenCalledWith(
+      branchId,
+      transaction,
+    );
+    expect(brandBranchModel.deleteBrandBranch).toHaveBeenCalledWith(
+      branchId,
+      transaction,
+    );
+  });
+
+  it('does not delete a branch when inventory deletion is blocked by stock', async () => {
+    const branchId = 'branch-1';
+    const brandBranchModel = {
+      getBrandBranchByCondition: jest.fn().mockResolvedValue({ id: branchId }),
+      deleteBrandBranch: jest.fn(),
+    } as unknown as BrandBranchModel;
+    const brandService = {
+      getBrandByCondition: jest
+        .fn()
+        .mockResolvedValue({ id: 'brand-1', userId: 'owner-1' }),
+    } as unknown as BrandService;
+    const inventoryService = {
+      deleteBranchInventory: jest
+        .fn()
+        .mockRejectedValue(new ConflictException('Stock remains')),
+    } as unknown as InventoryService;
+    const prismaService = {
+      prisma: {
+        $transaction: jest.fn((callback) => callback({})),
+      },
+    } as unknown as PrismaService;
+    const service = Reflect.construct(BrandBranchService, [
+      brandBranchModel,
+      {} as LocationService,
+      brandService,
+      inventoryService,
+      prismaService,
+    ]) as BrandBranchService;
+
+    await expect(
+      service.deleteBrandBranch({
+        brandId: 'brand-1',
+        branchId,
+        userId: 'owner-1',
+      }),
+    ).rejects.toThrow(ConflictException);
+    expect(brandBranchModel.deleteBrandBranch).not.toHaveBeenCalled();
   });
 });

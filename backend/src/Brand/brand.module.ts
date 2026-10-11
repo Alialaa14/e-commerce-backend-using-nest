@@ -14,6 +14,8 @@ import { BrandModel } from './brand.model';
 import { BrandService } from './brand.service';
 import { BrandDocumentService } from './brand-document.service';
 import { BrandBranchModule } from '../BrandBranch/brandBranch.module';
+import { InventoryModule } from '../Inventory/inventory.module';
+import { ProductModule } from '../Product/product.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { BrandBranchModule } from '../BrandBranch/brandBranch.module';
     UserModule,
     TokenModule,
     LocationModule,
+    InventoryModule,
+    forwardRef(() => ProductModule),
     forwardRef(() => BrandBranchModule),
   ],
   controllers: [BrandController],

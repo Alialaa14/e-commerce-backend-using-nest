@@ -20,7 +20,7 @@ import { CatalogService } from './catalog.service';
 
 @Controller('products')
 @UseGuards(AuthGuard, RolesGuard)
-@Roles('BRAND_ADMIN', 'brand')
+@Roles('BRAND_ADMIN', 'brandOwner')
 export class CatalogController {
   constructor(private readonly catalogService: CatalogService) {}
 

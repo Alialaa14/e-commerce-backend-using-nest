@@ -29,7 +29,7 @@ export class VariantController {
 
   @Post('/')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand', 'BRAND_ADMIN')
+  @Roles('admin', 'brandOwner', 'BRAND_ADMIN')
   async createVariant(
     @Body() dto: createVariantDto,
     @getCurrentUser() user: AuthUser,
@@ -49,7 +49,7 @@ export class VariantController {
 
   @Patch('/:id')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand', 'BRAND_ADMIN')
+  @Roles('admin', 'brandOwner', 'BRAND_ADMIN')
   async updateVariant(
     @Body() dto: updateVariantDto,
     @Param('id') id: string,
@@ -72,7 +72,7 @@ export class VariantController {
 
   @Delete('/:id')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand', 'BRAND_ADMIN')
+  @Roles('admin', 'brandOwner', 'BRAND_ADMIN')
   async softDeleteVariant(
     @Param('id') id: string,
     @getCurrentUser() user: AuthUser,
@@ -87,7 +87,7 @@ export class VariantController {
 
   @Post('/:id/stock-movement')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand', 'BRAND_ADMIN')
+  @Roles('admin', 'brandOwner', 'BRAND_ADMIN')
   async stockMovement(
     @Body() dto: stockMovementDto,
     @Param('id') id: string,
@@ -127,7 +127,7 @@ export class VariantController {
 
   @Get('/:id')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'brand', 'BRAND_ADMIN')
+  @Roles('admin', 'brandOwner', 'BRAND_ADMIN')
   async getVariant(@Param('id') id: string, @getCurrentUser() user: AuthUser) {
     const variant = await this.variantService.getVariantByid(
       id,
