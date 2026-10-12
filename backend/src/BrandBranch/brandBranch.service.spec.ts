@@ -1,12 +1,21 @@
 import { BadRequestException, ConflictException } from '@nestjs/common';
 import { LocationService } from '../Location/location.service';
-import { BrandService } from '../Brand/brand.service';
+import { BrandModel } from '../Brand/brand.model';
 import { InventoryService } from '../Inventory/inventory.service';
 import { PrismaService } from '../utils/prisma/prisma.service';
 import { BrandBranchModel } from './brandBranch.model';
 import { BrandBranchService } from './brandBranch.service';
 
 describe('BrandBranchService', () => {
+  it('depends on the brand model instead of the brand service', () => {
+    const dependencies = Reflect.getMetadata(
+      'design:paramtypes',
+      BrandBranchService,
+    );
+
+    expect(dependencies[2]).toBe(BrandModel);
+  });
+
   it('rejects creating a branch when the brand already has the coordinates', async () => {
     const brandBranchModel = {
       getBrandBranchByCondition: jest
@@ -17,16 +26,16 @@ describe('BrandBranchService', () => {
     const locationService = {
       reverseGeocode: jest.fn(),
     } as unknown as LocationService;
-    const brandService = {
+    const brandModel = {
       getBrandByCondition: jest.fn().mockResolvedValue({ id: 'brand-1' }),
-    } as unknown as BrandService;
+    } as unknown as BrandModel;
     const inventoryService = {
       createInventory: jest.fn(),
     } as unknown as InventoryService;
     const service = new BrandBranchService(
       brandBranchModel,
       locationService,
-      brandService,
+      brandModel,
       inventoryService,
       {} as PrismaService,
     );
@@ -54,16 +63,16 @@ describe('BrandBranchService', () => {
     const locationService = {
       reverseGeocode: jest.fn(),
     } as unknown as LocationService;
-    const brandService = {
+    const brandModel = {
       getBrandByCondition: jest.fn().mockResolvedValue({ id: 'brand-1' }),
-    } as unknown as BrandService;
+    } as unknown as BrandModel;
     const inventoryService = {
       createInventory: jest.fn(),
     } as unknown as InventoryService;
     const service = new BrandBranchService(
       brandBranchModel,
       locationService,
-      brandService,
+      brandModel,
       inventoryService,
       {} as PrismaService,
     );
@@ -125,11 +134,11 @@ describe('BrandBranchService', () => {
       getBrandBranchByCondition: jest.fn().mockResolvedValue({ id: branchId }),
       deleteBrandBranch: jest.fn().mockResolvedValue({ id: branchId }),
     } as unknown as BrandBranchModel;
-    const brandService = {
+    const brandModel = {
       getBrandByCondition: jest
         .fn()
         .mockResolvedValue({ id: 'brand-1', userId: 'owner-1' }),
-    } as unknown as BrandService;
+    } as unknown as BrandModel;
     const inventoryService = {
       deleteBranchInventory: jest.fn().mockResolvedValue({ isActive: false }),
     } as unknown as InventoryService;
@@ -141,7 +150,7 @@ describe('BrandBranchService', () => {
     const service = Reflect.construct(BrandBranchService, [
       brandBranchModel,
       {} as LocationService,
-      brandService,
+      brandModel,
       inventoryService,
       prismaService,
     ]) as BrandBranchService;
@@ -168,11 +177,11 @@ describe('BrandBranchService', () => {
       getBrandBranchByCondition: jest.fn().mockResolvedValue({ id: branchId }),
       deleteBrandBranch: jest.fn(),
     } as unknown as BrandBranchModel;
-    const brandService = {
+    const brandModel = {
       getBrandByCondition: jest
         .fn()
         .mockResolvedValue({ id: 'brand-1', userId: 'owner-1' }),
-    } as unknown as BrandService;
+    } as unknown as BrandModel;
     const inventoryService = {
       deleteBranchInventory: jest
         .fn()
@@ -186,7 +195,7 @@ describe('BrandBranchService', () => {
     const service = Reflect.construct(BrandBranchService, [
       brandBranchModel,
       {} as LocationService,
-      brandService,
+      brandModel,
       inventoryService,
       prismaService,
     ]) as BrandBranchService;

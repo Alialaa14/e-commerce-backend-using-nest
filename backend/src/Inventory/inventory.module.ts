@@ -5,9 +5,10 @@ import { RolesGuard } from '../common/guards/roles.guard';
 import { PrismaModule } from '../utils/prisma/prisma.module';
 import { InventoryController } from './inventory.controller';
 import { InventoryService } from './inventory.service';
+import { TokenModule } from '../utils/Token/token.module';
 
 @Module({
-  imports: [PrismaModule],
+  imports: [PrismaModule , TokenModule],
   controllers: [InventoryController],
   providers: [
     InventoryService,

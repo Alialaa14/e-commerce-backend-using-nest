@@ -14,6 +14,7 @@ import { WebhookModule } from './webhooks/webhook.module';
 import { StripeModule } from './Payment/stripe/stripe.module';
 import { LocationModule } from './Location/location.module';
 import { StockTransferModule } from './StockTransfer/stock-transfer.module';
+import { RedisModule } from './Redis/redis.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -34,6 +35,7 @@ import { StockTransferModule } from './StockTransfer/stock-transfer.module';
         },
       }),
     }),
+    RedisModule,
     UserModule,
     BrandModule,
     CategoryModule,
