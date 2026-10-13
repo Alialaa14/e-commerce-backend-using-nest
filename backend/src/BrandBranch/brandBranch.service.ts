@@ -4,13 +4,11 @@ import {
   ForbiddenException,
   Injectable,
   NotFoundException,
-  Inject,
-  forwardRef,
 } from '@nestjs/common';
 import { BrandBranchModel } from './brandBranch.model';
 import { LocationDetails, LocationService } from '../Location/location.service';
 import { Prisma } from '../generated/prisma';
-import { BrandService } from '../Brand/brand.service';
+import { BrandModel } from '../Brand/brand.model';
 import { Decimal } from '../generated/prisma/runtime/client';
 import { inventoryType } from '../generated/prisma';
 import { InventoryService } from '../Inventory/inventory.service';
@@ -32,8 +30,7 @@ export class BrandBranchService {
   constructor(
     private readonly brandBranchModel: BrandBranchModel,
     private readonly locationService: LocationService,
-    @Inject(forwardRef(() => BrandService))
-    private readonly brandService: BrandService,
+    private readonly brandModel: BrandModel,
     private readonly inventoryService: InventoryService,
     private readonly prismaService: PrismaService,
   ) {}
@@ -57,7 +54,7 @@ export class BrandBranchService {
     transaction?: Prisma.TransactionClient,
   ) {
     // first check if the brand exists
-    const brandExisted = await this.brandService.getBrandByCondition(
+    const brandExisted = await this.brandModel.getBrandByCondition(
       {
         id: payload.brandId,
       },
@@ -121,7 +118,7 @@ export class BrandBranchService {
     branchId: string,
     userId: string,
   ) {
-    const brand = await this.brandService.getBrandByCondition({
+    const brand = await this.brandModel.getBrandByCondition({
       id: payload.brandId,
     });
     if (!brand) throw new NotFoundException('Brand not found');
@@ -190,7 +187,7 @@ export class BrandBranchService {
     transaction: Prisma.TransactionClient,
   ) {
     // check if the brand is Existing or not
-    const brandExisted = await this.brandService.getBrandByCondition({
+    const brandExisted = await this.brandModel.getBrandByCondition({
       id: payload.brandId,
     }, transaction);
     if (!brandExisted) {

@@ -1,0 +1,16 @@
+services as helpers 
+-------------------------- 
+redis services 
+abtract background proccess
+socket 
+
+
+
+--------------------------
+for brand 
+--------------------------
+ after running background proccess that handles basic verfication 
+ send request to the customer service to handle the documents (via socket with status and the reason if rejected)
+ then send notification to the brand 
+ admin who create the customer service user 
+
