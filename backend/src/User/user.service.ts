@@ -159,6 +159,8 @@ export class UserService {
       phone: user.phone,
       role: user.role,
       picture_url: user.picture_url,
+      brandId: user.brandId,
+      branchId: user.branchId,
     };
   }
 

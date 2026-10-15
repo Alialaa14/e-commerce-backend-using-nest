@@ -19,6 +19,7 @@ enum Role {
   courier
   BRANCH_MANAGER
   Branch_Sales
+  customer_Service
 }
 
 enum BranchRole {

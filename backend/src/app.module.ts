@@ -15,6 +15,7 @@ import { StripeModule } from './Payment/stripe/stripe.module';
 import { LocationModule } from './Location/location.module';
 import { StockTransferModule } from './StockTransfer/stock-transfer.module';
 import { RedisModule } from './Redis/redis.module';
+import { SocketModule } from './Socket/socket.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -47,6 +48,7 @@ import { RedisModule } from './Redis/redis.module';
     WebhookModule,
     LocationModule,
     StockTransferModule,
+    SocketModule,
   ],
   controllers: [],
   providers: [],

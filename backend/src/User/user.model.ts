@@ -46,6 +46,8 @@ export class UserModel {
         phone: true,
         role: true,
         picture_url: true,
+        branchId: true,
+        brandId: true,
       },
     });
   }
