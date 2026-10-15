@@ -13,7 +13,7 @@ import { UserService } from './user.service';
 @Module({
   controllers: [UserController],
   providers: [UserModel, UserService, AuthGuard, RolesGuard],
-  exports: [UserModel],
+  exports: [UserModel, UserService],
   imports: [
     PrismaModule,
     CloudinaryModule,

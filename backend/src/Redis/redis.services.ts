@@ -1,7 +1,7 @@
-import { Inject, Injectable, Logger } from "@nestjs/common";
-import Redis from "ioredis";
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import Redis from 'ioredis';
 
-export const REDIS_CLIENT = "RedisClient";
+export const REDIS_CLIENT = 'RedisClient';
 
 /** Domain error so callers don't depend on ioredis internals. */
 export class RedisServiceError extends Error {
@@ -10,7 +10,7 @@ export class RedisServiceError extends Error {
     public readonly originalError?: unknown,
   ) {
     super(message);
-    this.name = "RedisServiceError";
+    this.name = 'RedisServiceError';
   }
 }
 
@@ -25,7 +25,7 @@ export class RedisService {
    * Returns the new queue length. Throws RedisServiceError on failure.
    */
   async enqueue<T>(queueName: string, data: T): Promise<number> {
-    return this.execute("enqueue", queueName, () =>
+    return this.execute('enqueue', queueName, () =>
       this.redis.rpush(queueName, JSON.stringify(data)),
     );
   }
@@ -36,7 +36,7 @@ export class RedisService {
    */
   async getAll<T>(queueName: string): Promise<T[]> {
     return this.withFallback<T[]>(
-      "getAll",
+      'getAll',
       queueName,
       async () => {
         const items = await this.redis.lrange(queueName, 0, -1);
@@ -54,7 +54,7 @@ export class RedisService {
    */
   async dequeue<T>(queueName: string): Promise<T | null> {
     return this.withFallback<T | null>(
-      "dequeue",
+      'dequeue',
       queueName,
       async () => {
         const item = await this.redis.lpop(queueName);
@@ -70,18 +70,25 @@ export class RedisService {
    * Returns how many were removed. Throws RedisServiceError on failure.
    */
   async remove<T>(queueName: string, data: T): Promise<number> {
-    return this.execute("remove", queueName, () =>
+    return this.execute('remove', queueName, () =>
       this.redis.lrem(queueName, 0, JSON.stringify(data)),
     );
   }
 
-
+  async getOne<T>(queueName: string, data: string): Promise<[] | null> {
+    const item = await this.execute('getOne', queueName, async (data) => {
+      const items = await this.redis.lrange(data, 0, -1);
+      const parsed = items.map((i) => JSON.parse(i));
+      return parsed.find((i) => i[data] === data);
+    });
+    return item;
+  }
 
   /** For writes: log, then wrap and rethrow so the caller knows it failed. */
   private async execute<R>(
     operation: string,
     queueName: string,
-    action: () => Promise<R>,
+    action: (args?: any) => Promise<R>,
   ): Promise<R> {
     try {
       return await action();
