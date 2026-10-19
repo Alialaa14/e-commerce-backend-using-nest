@@ -44,6 +44,11 @@ export type BrandBranch = $Result.DefaultSelection<Prisma.$BrandBranchPayload>
  */
 export type BrandDocument = $Result.DefaultSelection<Prisma.$BrandDocumentPayload>
 /**
+ * Model StaffInvitation
+ * 
+ */
+export type StaffInvitation = $Result.DefaultSelection<Prisma.$StaffInvitationPayload>
+/**
  * Model BrandSocialLink
  * 
  */
@@ -175,7 +180,8 @@ export namespace $Enums {
   deliveryC: 'deliveryC',
   courier: 'courier',
   BRANCH_MANAGER: 'BRANCH_MANAGER',
-  Branch_Sales: 'Branch_Sales'
+  Branch_Sales: 'Branch_Sales',
+  customer_Service: 'customer_Service'
 };
 
 export type Role = (typeof Role)[keyof typeof Role]
@@ -611,6 +617,16 @@ export class PrismaClient<
     * ```
     */
   get brandDocument(): Prisma.BrandDocumentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.staffInvitation`: Exposes CRUD operations for the **StaffInvitation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more StaffInvitations
+    * const staffInvitations = await prisma.staffInvitation.findMany()
+    * ```
+    */
+  get staffInvitation(): Prisma.StaffInvitationDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.brandSocialLink`: Exposes CRUD operations for the **BrandSocialLink** model.
@@ -1304,6 +1320,7 @@ export namespace Prisma {
     branchStaff: 'branchStaff',
     BrandBranch: 'BrandBranch',
     BrandDocument: 'BrandDocument',
+    StaffInvitation: 'StaffInvitation',
     BrandSocialLink: 'BrandSocialLink',
     BrandFollower: 'BrandFollower',
     Category: 'Category',
@@ -1343,7 +1360,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "brand" | "brandTransaction" | "branchStaff" | "brandBranch" | "brandDocument" | "brandSocialLink" | "brandFollower" | "category" | "product" | "variant" | "branchVariant" | "review" | "cart" | "cartProducts" | "wishlist" | "inventory" | "inventoryStock" | "stockLedger" | "stockTransfer" | "stockTransferItem" | "reservation" | "variantAvailability" | "productAvailability" | "parentOrder" | "branchOrder" | "orderItem" | "d_Company" | "deliveryCompanyTransaction" | "courier"
+      modelProps: "user" | "brand" | "brandTransaction" | "branchStaff" | "brandBranch" | "brandDocument" | "staffInvitation" | "brandSocialLink" | "brandFollower" | "category" | "product" | "variant" | "branchVariant" | "review" | "cart" | "cartProducts" | "wishlist" | "inventory" | "inventoryStock" | "stockLedger" | "stockTransfer" | "stockTransferItem" | "reservation" | "variantAvailability" | "productAvailability" | "parentOrder" | "branchOrder" | "orderItem" | "d_Company" | "deliveryCompanyTransaction" | "courier"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1788,6 +1805,80 @@ export namespace Prisma {
           count: {
             args: Prisma.BrandDocumentCountArgs<ExtArgs>
             result: $Utils.Optional<BrandDocumentCountAggregateOutputType> | number
+          }
+        }
+      }
+      StaffInvitation: {
+        payload: Prisma.$StaffInvitationPayload<ExtArgs>
+        fields: Prisma.StaffInvitationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.StaffInvitationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StaffInvitationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.StaffInvitationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StaffInvitationPayload>
+          }
+          findFirst: {
+            args: Prisma.StaffInvitationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StaffInvitationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.StaffInvitationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StaffInvitationPayload>
+          }
+          findMany: {
+            args: Prisma.StaffInvitationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StaffInvitationPayload>[]
+          }
+          create: {
+            args: Prisma.StaffInvitationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StaffInvitationPayload>
+          }
+          createMany: {
+            args: Prisma.StaffInvitationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.StaffInvitationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StaffInvitationPayload>[]
+          }
+          delete: {
+            args: Prisma.StaffInvitationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StaffInvitationPayload>
+          }
+          update: {
+            args: Prisma.StaffInvitationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StaffInvitationPayload>
+          }
+          deleteMany: {
+            args: Prisma.StaffInvitationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.StaffInvitationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.StaffInvitationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StaffInvitationPayload>[]
+          }
+          upsert: {
+            args: Prisma.StaffInvitationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StaffInvitationPayload>
+          }
+          aggregate: {
+            args: Prisma.StaffInvitationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStaffInvitation>
+          }
+          groupBy: {
+            args: Prisma.StaffInvitationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<StaffInvitationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.StaffInvitationCountArgs<ExtArgs>
+            result: $Utils.Optional<StaffInvitationCountAggregateOutputType> | number
           }
         }
       }
@@ -3696,6 +3787,7 @@ export namespace Prisma {
     branchStaff?: branchStaffOmit
     brandBranch?: BrandBranchOmit
     brandDocument?: BrandDocumentOmit
+    staffInvitation?: StaffInvitationOmit
     brandSocialLink?: BrandSocialLinkOmit
     brandFollower?: BrandFollowerOmit
     category?: CategoryOmit
@@ -3805,6 +3897,7 @@ export namespace Prisma {
     brandFollowers: number
     reviewedBrandDocs: number
     branchStaffs: number
+    createdStaffInvitations: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3813,6 +3906,7 @@ export namespace Prisma {
     brandFollowers?: boolean | UserCountOutputTypeCountBrandFollowersArgs
     reviewedBrandDocs?: boolean | UserCountOutputTypeCountReviewedBrandDocsArgs
     branchStaffs?: boolean | UserCountOutputTypeCountBranchStaffsArgs
+    createdStaffInvitations?: boolean | UserCountOutputTypeCountCreatedStaffInvitationsArgs
   }
 
   // Custom InputTypes
@@ -3861,6 +3955,13 @@ export namespace Prisma {
     where?: branchStaffWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCreatedStaffInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StaffInvitationWhereInput
+  }
+
 
   /**
    * Count Type BrandCountOutputType
@@ -3876,6 +3977,7 @@ export namespace Prisma {
     transactions: number
     inventories: number
     branchOrders: number
+    staffInvitations: number
   }
 
   export type BrandCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3888,6 +3990,7 @@ export namespace Prisma {
     transactions?: boolean | BrandCountOutputTypeCountTransactionsArgs
     inventories?: boolean | BrandCountOutputTypeCountInventoriesArgs
     branchOrders?: boolean | BrandCountOutputTypeCountBranchOrdersArgs
+    staffInvitations?: boolean | BrandCountOutputTypeCountStaffInvitationsArgs
   }
 
   // Custom InputTypes
@@ -3964,6 +4067,13 @@ export namespace Prisma {
     where?: BranchOrderWhereInput
   }
 
+  /**
+   * BrandCountOutputType without action
+   */
+  export type BrandCountOutputTypeCountStaffInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StaffInvitationWhereInput
+  }
+
 
   /**
    * Count Type BrandBranchCountOutputType
@@ -3975,6 +4085,7 @@ export namespace Prisma {
     variants: number
     orders: number
     branchStaffs: number
+    staffInvitations: number
   }
 
   export type BrandBranchCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3983,6 +4094,7 @@ export namespace Prisma {
     variants?: boolean | BrandBranchCountOutputTypeCountVariantsArgs
     orders?: boolean | BrandBranchCountOutputTypeCountOrdersArgs
     branchStaffs?: boolean | BrandBranchCountOutputTypeCountBranchStaffsArgs
+    staffInvitations?: boolean | BrandBranchCountOutputTypeCountStaffInvitationsArgs
   }
 
   // Custom InputTypes
@@ -4029,6 +4141,13 @@ export namespace Prisma {
    */
   export type BrandBranchCountOutputTypeCountBranchStaffsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: branchStaffWhereInput
+  }
+
+  /**
+   * BrandBranchCountOutputType without action
+   */
+  export type BrandBranchCountOutputTypeCountStaffInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StaffInvitationWhereInput
   }
 
 
@@ -4888,6 +5007,7 @@ export namespace Prisma {
     reviewedBrandDocs?: boolean | User$reviewedBrandDocsArgs<ExtArgs>
     brandBranch?: boolean | User$brandBranchArgs<ExtArgs>
     branchStaffs?: boolean | User$branchStaffsArgs<ExtArgs>
+    createdStaffInvitations?: boolean | User$createdStaffInvitationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -5000,6 +5120,7 @@ export namespace Prisma {
     reviewedBrandDocs?: boolean | User$reviewedBrandDocsArgs<ExtArgs>
     brandBranch?: boolean | User$brandBranchArgs<ExtArgs>
     branchStaffs?: boolean | User$branchStaffsArgs<ExtArgs>
+    createdStaffInvitations?: boolean | User$createdStaffInvitationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5027,6 +5148,7 @@ export namespace Prisma {
       reviewedBrandDocs: Prisma.$BrandDocumentPayload<ExtArgs>[]
       brandBranch: Prisma.$BrandBranchPayload<ExtArgs> | null
       branchStaffs: Prisma.$branchStaffPayload<ExtArgs>[]
+      createdStaffInvitations: Prisma.$StaffInvitationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5461,6 +5583,7 @@ export namespace Prisma {
     reviewedBrandDocs<T extends User$reviewedBrandDocsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewedBrandDocsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     brandBranch<T extends User$brandBranchArgs<ExtArgs> = {}>(args?: Subset<T, User$brandBranchArgs<ExtArgs>>): Prisma__BrandBranchClient<$Result.GetResult<Prisma.$BrandBranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     branchStaffs<T extends User$branchStaffsArgs<ExtArgs> = {}>(args?: Subset<T, User$branchStaffsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$branchStaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    createdStaffInvitations<T extends User$createdStaffInvitationsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdStaffInvitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6152,6 +6275,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.createdStaffInvitations
+   */
+  export type User$createdStaffInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StaffInvitation
+     */
+    select?: StaffInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StaffInvitation
+     */
+    omit?: StaffInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffInvitationInclude<ExtArgs> | null
+    where?: StaffInvitationWhereInput
+    orderBy?: StaffInvitationOrderByWithRelationInput | StaffInvitationOrderByWithRelationInput[]
+    cursor?: StaffInvitationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StaffInvitationScalarFieldEnum | StaffInvitationScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6482,6 +6629,7 @@ export namespace Prisma {
     transactions?: boolean | Brand$transactionsArgs<ExtArgs>
     inventories?: boolean | Brand$inventoriesArgs<ExtArgs>
     branchOrders?: boolean | Brand$branchOrdersArgs<ExtArgs>
+    staffInvitations?: boolean | Brand$staffInvitationsArgs<ExtArgs>
     _count?: boolean | BrandCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["brand"]>
 
@@ -6559,6 +6707,7 @@ export namespace Prisma {
     transactions?: boolean | Brand$transactionsArgs<ExtArgs>
     inventories?: boolean | Brand$inventoriesArgs<ExtArgs>
     branchOrders?: boolean | Brand$branchOrdersArgs<ExtArgs>
+    staffInvitations?: boolean | Brand$staffInvitationsArgs<ExtArgs>
     _count?: boolean | BrandCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BrandIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6581,6 +6730,7 @@ export namespace Prisma {
       transactions: Prisma.$BrandTransactionPayload<ExtArgs>[]
       inventories: Prisma.$InventoryPayload<ExtArgs>[]
       branchOrders: Prisma.$BranchOrderPayload<ExtArgs>[]
+      staffInvitations: Prisma.$StaffInvitationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7004,6 +7154,7 @@ export namespace Prisma {
     transactions<T extends Brand$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Brand$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     inventories<T extends Brand$inventoriesArgs<ExtArgs> = {}>(args?: Subset<T, Brand$inventoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InventoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     branchOrders<T extends Brand$branchOrdersArgs<ExtArgs> = {}>(args?: Subset<T, Brand$branchOrdersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BranchOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    staffInvitations<T extends Brand$staffInvitationsArgs<ExtArgs> = {}>(args?: Subset<T, Brand$staffInvitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7664,6 +7815,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: BranchOrderScalarFieldEnum | BranchOrderScalarFieldEnum[]
+  }
+
+  /**
+   * Brand.staffInvitations
+   */
+  export type Brand$staffInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StaffInvitation
+     */
+    select?: StaffInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StaffInvitation
+     */
+    omit?: StaffInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffInvitationInclude<ExtArgs> | null
+    where?: StaffInvitationWhereInput
+    orderBy?: StaffInvitationOrderByWithRelationInput | StaffInvitationOrderByWithRelationInput[]
+    cursor?: StaffInvitationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StaffInvitationScalarFieldEnum | StaffInvitationScalarFieldEnum[]
   }
 
   /**
@@ -10242,6 +10417,7 @@ export namespace Prisma {
     orders?: boolean | BrandBranch$ordersArgs<ExtArgs>
     inventory?: boolean | BrandBranch$inventoryArgs<ExtArgs>
     branchStaffs?: boolean | BrandBranch$branchStaffsArgs<ExtArgs>
+    staffInvitations?: boolean | BrandBranch$staffInvitationsArgs<ExtArgs>
     _count?: boolean | BrandBranchCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["brandBranch"]>
 
@@ -10331,6 +10507,7 @@ export namespace Prisma {
     orders?: boolean | BrandBranch$ordersArgs<ExtArgs>
     inventory?: boolean | BrandBranch$inventoryArgs<ExtArgs>
     branchStaffs?: boolean | BrandBranch$branchStaffsArgs<ExtArgs>
+    staffInvitations?: boolean | BrandBranch$staffInvitationsArgs<ExtArgs>
     _count?: boolean | BrandBranchCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BrandBranchIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10350,6 +10527,7 @@ export namespace Prisma {
       orders: Prisma.$BranchOrderPayload<ExtArgs>[]
       inventory: Prisma.$InventoryPayload<ExtArgs> | null
       branchStaffs: Prisma.$branchStaffPayload<ExtArgs>[]
+      staffInvitations: Prisma.$StaffInvitationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -10775,6 +10953,7 @@ export namespace Prisma {
     orders<T extends BrandBranch$ordersArgs<ExtArgs> = {}>(args?: Subset<T, BrandBranch$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BranchOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     inventory<T extends BrandBranch$inventoryArgs<ExtArgs> = {}>(args?: Subset<T, BrandBranch$inventoryArgs<ExtArgs>>): Prisma__InventoryClient<$Result.GetResult<Prisma.$InventoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     branchStaffs<T extends BrandBranch$branchStaffsArgs<ExtArgs> = {}>(args?: Subset<T, BrandBranch$branchStaffsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$branchStaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    staffInvitations<T extends BrandBranch$staffInvitationsArgs<ExtArgs> = {}>(args?: Subset<T, BrandBranch$staffInvitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11363,6 +11542,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: BranchStaffScalarFieldEnum | BranchStaffScalarFieldEnum[]
+  }
+
+  /**
+   * BrandBranch.staffInvitations
+   */
+  export type BrandBranch$staffInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StaffInvitation
+     */
+    select?: StaffInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StaffInvitation
+     */
+    omit?: StaffInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffInvitationInclude<ExtArgs> | null
+    where?: StaffInvitationWhereInput
+    orderBy?: StaffInvitationOrderByWithRelationInput | StaffInvitationOrderByWithRelationInput[]
+    cursor?: StaffInvitationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StaffInvitationScalarFieldEnum | StaffInvitationScalarFieldEnum[]
   }
 
   /**
@@ -12536,6 +12739,1201 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: BrandDocumentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model StaffInvitation
+   */
+
+  export type AggregateStaffInvitation = {
+    _count: StaffInvitationCountAggregateOutputType | null
+    _min: StaffInvitationMinAggregateOutputType | null
+    _max: StaffInvitationMaxAggregateOutputType | null
+  }
+
+  export type StaffInvitationMinAggregateOutputType = {
+    id: string | null
+    email: string | null
+    role: $Enums.Role | null
+    brandId: string | null
+    branchId: string | null
+    tokenHash: string | null
+    expiresAt: Date | null
+    acceptedAt: Date | null
+    revokedAt: Date | null
+    createdById: string | null
+    createdAt: Date | null
+  }
+
+  export type StaffInvitationMaxAggregateOutputType = {
+    id: string | null
+    email: string | null
+    role: $Enums.Role | null
+    brandId: string | null
+    branchId: string | null
+    tokenHash: string | null
+    expiresAt: Date | null
+    acceptedAt: Date | null
+    revokedAt: Date | null
+    createdById: string | null
+    createdAt: Date | null
+  }
+
+  export type StaffInvitationCountAggregateOutputType = {
+    id: number
+    email: number
+    role: number
+    brandId: number
+    branchId: number
+    tokenHash: number
+    expiresAt: number
+    acceptedAt: number
+    revokedAt: number
+    createdById: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type StaffInvitationMinAggregateInputType = {
+    id?: true
+    email?: true
+    role?: true
+    brandId?: true
+    branchId?: true
+    tokenHash?: true
+    expiresAt?: true
+    acceptedAt?: true
+    revokedAt?: true
+    createdById?: true
+    createdAt?: true
+  }
+
+  export type StaffInvitationMaxAggregateInputType = {
+    id?: true
+    email?: true
+    role?: true
+    brandId?: true
+    branchId?: true
+    tokenHash?: true
+    expiresAt?: true
+    acceptedAt?: true
+    revokedAt?: true
+    createdById?: true
+    createdAt?: true
+  }
+
+  export type StaffInvitationCountAggregateInputType = {
+    id?: true
+    email?: true
+    role?: true
+    brandId?: true
+    branchId?: true
+    tokenHash?: true
+    expiresAt?: true
+    acceptedAt?: true
+    revokedAt?: true
+    createdById?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type StaffInvitationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StaffInvitation to aggregate.
+     */
+    where?: StaffInvitationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StaffInvitations to fetch.
+     */
+    orderBy?: StaffInvitationOrderByWithRelationInput | StaffInvitationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: StaffInvitationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StaffInvitations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StaffInvitations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned StaffInvitations
+    **/
+    _count?: true | StaffInvitationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: StaffInvitationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: StaffInvitationMaxAggregateInputType
+  }
+
+  export type GetStaffInvitationAggregateType<T extends StaffInvitationAggregateArgs> = {
+        [P in keyof T & keyof AggregateStaffInvitation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStaffInvitation[P]>
+      : GetScalarType<T[P], AggregateStaffInvitation[P]>
+  }
+
+
+
+
+  export type StaffInvitationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StaffInvitationWhereInput
+    orderBy?: StaffInvitationOrderByWithAggregationInput | StaffInvitationOrderByWithAggregationInput[]
+    by: StaffInvitationScalarFieldEnum[] | StaffInvitationScalarFieldEnum
+    having?: StaffInvitationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: StaffInvitationCountAggregateInputType | true
+    _min?: StaffInvitationMinAggregateInputType
+    _max?: StaffInvitationMaxAggregateInputType
+  }
+
+  export type StaffInvitationGroupByOutputType = {
+    id: string
+    email: string
+    role: $Enums.Role
+    brandId: string | null
+    branchId: string | null
+    tokenHash: string
+    expiresAt: Date
+    acceptedAt: Date | null
+    revokedAt: Date | null
+    createdById: string
+    createdAt: Date
+    _count: StaffInvitationCountAggregateOutputType | null
+    _min: StaffInvitationMinAggregateOutputType | null
+    _max: StaffInvitationMaxAggregateOutputType | null
+  }
+
+  type GetStaffInvitationGroupByPayload<T extends StaffInvitationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<StaffInvitationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof StaffInvitationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], StaffInvitationGroupByOutputType[P]>
+            : GetScalarType<T[P], StaffInvitationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type StaffInvitationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    role?: boolean
+    brandId?: boolean
+    branchId?: boolean
+    tokenHash?: boolean
+    expiresAt?: boolean
+    acceptedAt?: boolean
+    revokedAt?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    brand?: boolean | StaffInvitation$brandArgs<ExtArgs>
+    branch?: boolean | StaffInvitation$branchArgs<ExtArgs>
+    creator?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["staffInvitation"]>
+
+  export type StaffInvitationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    role?: boolean
+    brandId?: boolean
+    branchId?: boolean
+    tokenHash?: boolean
+    expiresAt?: boolean
+    acceptedAt?: boolean
+    revokedAt?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    brand?: boolean | StaffInvitation$brandArgs<ExtArgs>
+    branch?: boolean | StaffInvitation$branchArgs<ExtArgs>
+    creator?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["staffInvitation"]>
+
+  export type StaffInvitationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    role?: boolean
+    brandId?: boolean
+    branchId?: boolean
+    tokenHash?: boolean
+    expiresAt?: boolean
+    acceptedAt?: boolean
+    revokedAt?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    brand?: boolean | StaffInvitation$brandArgs<ExtArgs>
+    branch?: boolean | StaffInvitation$branchArgs<ExtArgs>
+    creator?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["staffInvitation"]>
+
+  export type StaffInvitationSelectScalar = {
+    id?: boolean
+    email?: boolean
+    role?: boolean
+    brandId?: boolean
+    branchId?: boolean
+    tokenHash?: boolean
+    expiresAt?: boolean
+    acceptedAt?: boolean
+    revokedAt?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+  }
+
+  export type StaffInvitationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "role" | "brandId" | "branchId" | "tokenHash" | "expiresAt" | "acceptedAt" | "revokedAt" | "createdById" | "createdAt", ExtArgs["result"]["staffInvitation"]>
+  export type StaffInvitationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brand?: boolean | StaffInvitation$brandArgs<ExtArgs>
+    branch?: boolean | StaffInvitation$branchArgs<ExtArgs>
+    creator?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type StaffInvitationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brand?: boolean | StaffInvitation$brandArgs<ExtArgs>
+    branch?: boolean | StaffInvitation$branchArgs<ExtArgs>
+    creator?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type StaffInvitationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brand?: boolean | StaffInvitation$brandArgs<ExtArgs>
+    branch?: boolean | StaffInvitation$branchArgs<ExtArgs>
+    creator?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $StaffInvitationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "StaffInvitation"
+    objects: {
+      brand: Prisma.$BrandPayload<ExtArgs> | null
+      branch: Prisma.$BrandBranchPayload<ExtArgs> | null
+      creator: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      email: string
+      role: $Enums.Role
+      brandId: string | null
+      branchId: string | null
+      tokenHash: string
+      expiresAt: Date
+      acceptedAt: Date | null
+      revokedAt: Date | null
+      createdById: string
+      createdAt: Date
+    }, ExtArgs["result"]["staffInvitation"]>
+    composites: {}
+  }
+
+  type StaffInvitationGetPayload<S extends boolean | null | undefined | StaffInvitationDefaultArgs> = $Result.GetResult<Prisma.$StaffInvitationPayload, S>
+
+  type StaffInvitationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<StaffInvitationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: StaffInvitationCountAggregateInputType | true
+    }
+
+  export interface StaffInvitationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['StaffInvitation'], meta: { name: 'StaffInvitation' } }
+    /**
+     * Find zero or one StaffInvitation that matches the filter.
+     * @param {StaffInvitationFindUniqueArgs} args - Arguments to find a StaffInvitation
+     * @example
+     * // Get one StaffInvitation
+     * const staffInvitation = await prisma.staffInvitation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends StaffInvitationFindUniqueArgs>(args: SelectSubset<T, StaffInvitationFindUniqueArgs<ExtArgs>>): Prisma__StaffInvitationClient<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one StaffInvitation that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {StaffInvitationFindUniqueOrThrowArgs} args - Arguments to find a StaffInvitation
+     * @example
+     * // Get one StaffInvitation
+     * const staffInvitation = await prisma.staffInvitation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends StaffInvitationFindUniqueOrThrowArgs>(args: SelectSubset<T, StaffInvitationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__StaffInvitationClient<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StaffInvitation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StaffInvitationFindFirstArgs} args - Arguments to find a StaffInvitation
+     * @example
+     * // Get one StaffInvitation
+     * const staffInvitation = await prisma.staffInvitation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends StaffInvitationFindFirstArgs>(args?: SelectSubset<T, StaffInvitationFindFirstArgs<ExtArgs>>): Prisma__StaffInvitationClient<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StaffInvitation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StaffInvitationFindFirstOrThrowArgs} args - Arguments to find a StaffInvitation
+     * @example
+     * // Get one StaffInvitation
+     * const staffInvitation = await prisma.staffInvitation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends StaffInvitationFindFirstOrThrowArgs>(args?: SelectSubset<T, StaffInvitationFindFirstOrThrowArgs<ExtArgs>>): Prisma__StaffInvitationClient<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more StaffInvitations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StaffInvitationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all StaffInvitations
+     * const staffInvitations = await prisma.staffInvitation.findMany()
+     * 
+     * // Get first 10 StaffInvitations
+     * const staffInvitations = await prisma.staffInvitation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const staffInvitationWithIdOnly = await prisma.staffInvitation.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends StaffInvitationFindManyArgs>(args?: SelectSubset<T, StaffInvitationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a StaffInvitation.
+     * @param {StaffInvitationCreateArgs} args - Arguments to create a StaffInvitation.
+     * @example
+     * // Create one StaffInvitation
+     * const StaffInvitation = await prisma.staffInvitation.create({
+     *   data: {
+     *     // ... data to create a StaffInvitation
+     *   }
+     * })
+     * 
+     */
+    create<T extends StaffInvitationCreateArgs>(args: SelectSubset<T, StaffInvitationCreateArgs<ExtArgs>>): Prisma__StaffInvitationClient<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many StaffInvitations.
+     * @param {StaffInvitationCreateManyArgs} args - Arguments to create many StaffInvitations.
+     * @example
+     * // Create many StaffInvitations
+     * const staffInvitation = await prisma.staffInvitation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends StaffInvitationCreateManyArgs>(args?: SelectSubset<T, StaffInvitationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many StaffInvitations and returns the data saved in the database.
+     * @param {StaffInvitationCreateManyAndReturnArgs} args - Arguments to create many StaffInvitations.
+     * @example
+     * // Create many StaffInvitations
+     * const staffInvitation = await prisma.staffInvitation.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many StaffInvitations and only return the `id`
+     * const staffInvitationWithIdOnly = await prisma.staffInvitation.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends StaffInvitationCreateManyAndReturnArgs>(args?: SelectSubset<T, StaffInvitationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a StaffInvitation.
+     * @param {StaffInvitationDeleteArgs} args - Arguments to delete one StaffInvitation.
+     * @example
+     * // Delete one StaffInvitation
+     * const StaffInvitation = await prisma.staffInvitation.delete({
+     *   where: {
+     *     // ... filter to delete one StaffInvitation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends StaffInvitationDeleteArgs>(args: SelectSubset<T, StaffInvitationDeleteArgs<ExtArgs>>): Prisma__StaffInvitationClient<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one StaffInvitation.
+     * @param {StaffInvitationUpdateArgs} args - Arguments to update one StaffInvitation.
+     * @example
+     * // Update one StaffInvitation
+     * const staffInvitation = await prisma.staffInvitation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends StaffInvitationUpdateArgs>(args: SelectSubset<T, StaffInvitationUpdateArgs<ExtArgs>>): Prisma__StaffInvitationClient<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more StaffInvitations.
+     * @param {StaffInvitationDeleteManyArgs} args - Arguments to filter StaffInvitations to delete.
+     * @example
+     * // Delete a few StaffInvitations
+     * const { count } = await prisma.staffInvitation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends StaffInvitationDeleteManyArgs>(args?: SelectSubset<T, StaffInvitationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StaffInvitations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StaffInvitationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many StaffInvitations
+     * const staffInvitation = await prisma.staffInvitation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends StaffInvitationUpdateManyArgs>(args: SelectSubset<T, StaffInvitationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StaffInvitations and returns the data updated in the database.
+     * @param {StaffInvitationUpdateManyAndReturnArgs} args - Arguments to update many StaffInvitations.
+     * @example
+     * // Update many StaffInvitations
+     * const staffInvitation = await prisma.staffInvitation.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more StaffInvitations and only return the `id`
+     * const staffInvitationWithIdOnly = await prisma.staffInvitation.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends StaffInvitationUpdateManyAndReturnArgs>(args: SelectSubset<T, StaffInvitationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one StaffInvitation.
+     * @param {StaffInvitationUpsertArgs} args - Arguments to update or create a StaffInvitation.
+     * @example
+     * // Update or create a StaffInvitation
+     * const staffInvitation = await prisma.staffInvitation.upsert({
+     *   create: {
+     *     // ... data to create a StaffInvitation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the StaffInvitation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends StaffInvitationUpsertArgs>(args: SelectSubset<T, StaffInvitationUpsertArgs<ExtArgs>>): Prisma__StaffInvitationClient<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of StaffInvitations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StaffInvitationCountArgs} args - Arguments to filter StaffInvitations to count.
+     * @example
+     * // Count the number of StaffInvitations
+     * const count = await prisma.staffInvitation.count({
+     *   where: {
+     *     // ... the filter for the StaffInvitations we want to count
+     *   }
+     * })
+    **/
+    count<T extends StaffInvitationCountArgs>(
+      args?: Subset<T, StaffInvitationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], StaffInvitationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a StaffInvitation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StaffInvitationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends StaffInvitationAggregateArgs>(args: Subset<T, StaffInvitationAggregateArgs>): Prisma.PrismaPromise<GetStaffInvitationAggregateType<T>>
+
+    /**
+     * Group by StaffInvitation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StaffInvitationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends StaffInvitationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: StaffInvitationGroupByArgs['orderBy'] }
+        : { orderBy?: StaffInvitationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, StaffInvitationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStaffInvitationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the StaffInvitation model
+   */
+  readonly fields: StaffInvitationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for StaffInvitation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__StaffInvitationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    brand<T extends StaffInvitation$brandArgs<ExtArgs> = {}>(args?: Subset<T, StaffInvitation$brandArgs<ExtArgs>>): Prisma__BrandClient<$Result.GetResult<Prisma.$BrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    branch<T extends StaffInvitation$branchArgs<ExtArgs> = {}>(args?: Subset<T, StaffInvitation$branchArgs<ExtArgs>>): Prisma__BrandBranchClient<$Result.GetResult<Prisma.$BrandBranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    creator<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the StaffInvitation model
+   */
+  interface StaffInvitationFieldRefs {
+    readonly id: FieldRef<"StaffInvitation", 'String'>
+    readonly email: FieldRef<"StaffInvitation", 'String'>
+    readonly role: FieldRef<"StaffInvitation", 'Role'>
+    readonly brandId: FieldRef<"StaffInvitation", 'String'>
+    readonly branchId: FieldRef<"StaffInvitation", 'String'>
+    readonly tokenHash: FieldRef<"StaffInvitation", 'String'>
+    readonly expiresAt: FieldRef<"StaffInvitation", 'DateTime'>
+    readonly acceptedAt: FieldRef<"StaffInvitation", 'DateTime'>
+    readonly revokedAt: FieldRef<"StaffInvitation", 'DateTime'>
+    readonly createdById: FieldRef<"StaffInvitation", 'String'>
+    readonly createdAt: FieldRef<"StaffInvitation", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * StaffInvitation findUnique
+   */
+  export type StaffInvitationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StaffInvitation
+     */
+    select?: StaffInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StaffInvitation
+     */
+    omit?: StaffInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffInvitationInclude<ExtArgs> | null
+    /**
+     * Filter, which StaffInvitation to fetch.
+     */
+    where: StaffInvitationWhereUniqueInput
+  }
+
+  /**
+   * StaffInvitation findUniqueOrThrow
+   */
+  export type StaffInvitationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StaffInvitation
+     */
+    select?: StaffInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StaffInvitation
+     */
+    omit?: StaffInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffInvitationInclude<ExtArgs> | null
+    /**
+     * Filter, which StaffInvitation to fetch.
+     */
+    where: StaffInvitationWhereUniqueInput
+  }
+
+  /**
+   * StaffInvitation findFirst
+   */
+  export type StaffInvitationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StaffInvitation
+     */
+    select?: StaffInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StaffInvitation
+     */
+    omit?: StaffInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffInvitationInclude<ExtArgs> | null
+    /**
+     * Filter, which StaffInvitation to fetch.
+     */
+    where?: StaffInvitationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StaffInvitations to fetch.
+     */
+    orderBy?: StaffInvitationOrderByWithRelationInput | StaffInvitationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StaffInvitations.
+     */
+    cursor?: StaffInvitationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StaffInvitations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StaffInvitations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StaffInvitations.
+     */
+    distinct?: StaffInvitationScalarFieldEnum | StaffInvitationScalarFieldEnum[]
+  }
+
+  /**
+   * StaffInvitation findFirstOrThrow
+   */
+  export type StaffInvitationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StaffInvitation
+     */
+    select?: StaffInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StaffInvitation
+     */
+    omit?: StaffInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffInvitationInclude<ExtArgs> | null
+    /**
+     * Filter, which StaffInvitation to fetch.
+     */
+    where?: StaffInvitationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StaffInvitations to fetch.
+     */
+    orderBy?: StaffInvitationOrderByWithRelationInput | StaffInvitationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StaffInvitations.
+     */
+    cursor?: StaffInvitationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StaffInvitations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StaffInvitations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StaffInvitations.
+     */
+    distinct?: StaffInvitationScalarFieldEnum | StaffInvitationScalarFieldEnum[]
+  }
+
+  /**
+   * StaffInvitation findMany
+   */
+  export type StaffInvitationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StaffInvitation
+     */
+    select?: StaffInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StaffInvitation
+     */
+    omit?: StaffInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffInvitationInclude<ExtArgs> | null
+    /**
+     * Filter, which StaffInvitations to fetch.
+     */
+    where?: StaffInvitationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StaffInvitations to fetch.
+     */
+    orderBy?: StaffInvitationOrderByWithRelationInput | StaffInvitationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing StaffInvitations.
+     */
+    cursor?: StaffInvitationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StaffInvitations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StaffInvitations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StaffInvitations.
+     */
+    distinct?: StaffInvitationScalarFieldEnum | StaffInvitationScalarFieldEnum[]
+  }
+
+  /**
+   * StaffInvitation create
+   */
+  export type StaffInvitationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StaffInvitation
+     */
+    select?: StaffInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StaffInvitation
+     */
+    omit?: StaffInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffInvitationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a StaffInvitation.
+     */
+    data: XOR<StaffInvitationCreateInput, StaffInvitationUncheckedCreateInput>
+  }
+
+  /**
+   * StaffInvitation createMany
+   */
+  export type StaffInvitationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many StaffInvitations.
+     */
+    data: StaffInvitationCreateManyInput | StaffInvitationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * StaffInvitation createManyAndReturn
+   */
+  export type StaffInvitationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StaffInvitation
+     */
+    select?: StaffInvitationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StaffInvitation
+     */
+    omit?: StaffInvitationOmit<ExtArgs> | null
+    /**
+     * The data used to create many StaffInvitations.
+     */
+    data: StaffInvitationCreateManyInput | StaffInvitationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffInvitationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StaffInvitation update
+   */
+  export type StaffInvitationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StaffInvitation
+     */
+    select?: StaffInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StaffInvitation
+     */
+    omit?: StaffInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffInvitationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a StaffInvitation.
+     */
+    data: XOR<StaffInvitationUpdateInput, StaffInvitationUncheckedUpdateInput>
+    /**
+     * Choose, which StaffInvitation to update.
+     */
+    where: StaffInvitationWhereUniqueInput
+  }
+
+  /**
+   * StaffInvitation updateMany
+   */
+  export type StaffInvitationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update StaffInvitations.
+     */
+    data: XOR<StaffInvitationUpdateManyMutationInput, StaffInvitationUncheckedUpdateManyInput>
+    /**
+     * Filter which StaffInvitations to update
+     */
+    where?: StaffInvitationWhereInput
+    /**
+     * Limit how many StaffInvitations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * StaffInvitation updateManyAndReturn
+   */
+  export type StaffInvitationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StaffInvitation
+     */
+    select?: StaffInvitationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StaffInvitation
+     */
+    omit?: StaffInvitationOmit<ExtArgs> | null
+    /**
+     * The data used to update StaffInvitations.
+     */
+    data: XOR<StaffInvitationUpdateManyMutationInput, StaffInvitationUncheckedUpdateManyInput>
+    /**
+     * Filter which StaffInvitations to update
+     */
+    where?: StaffInvitationWhereInput
+    /**
+     * Limit how many StaffInvitations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffInvitationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StaffInvitation upsert
+   */
+  export type StaffInvitationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StaffInvitation
+     */
+    select?: StaffInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StaffInvitation
+     */
+    omit?: StaffInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffInvitationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the StaffInvitation to update in case it exists.
+     */
+    where: StaffInvitationWhereUniqueInput
+    /**
+     * In case the StaffInvitation found by the `where` argument doesn't exist, create a new StaffInvitation with this data.
+     */
+    create: XOR<StaffInvitationCreateInput, StaffInvitationUncheckedCreateInput>
+    /**
+     * In case the StaffInvitation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<StaffInvitationUpdateInput, StaffInvitationUncheckedUpdateInput>
+  }
+
+  /**
+   * StaffInvitation delete
+   */
+  export type StaffInvitationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StaffInvitation
+     */
+    select?: StaffInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StaffInvitation
+     */
+    omit?: StaffInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffInvitationInclude<ExtArgs> | null
+    /**
+     * Filter which StaffInvitation to delete.
+     */
+    where: StaffInvitationWhereUniqueInput
+  }
+
+  /**
+   * StaffInvitation deleteMany
+   */
+  export type StaffInvitationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StaffInvitations to delete
+     */
+    where?: StaffInvitationWhereInput
+    /**
+     * Limit how many StaffInvitations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * StaffInvitation.brand
+   */
+  export type StaffInvitation$brandArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Brand
+     */
+    select?: BrandSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Brand
+     */
+    omit?: BrandOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandInclude<ExtArgs> | null
+    where?: BrandWhereInput
+  }
+
+  /**
+   * StaffInvitation.branch
+   */
+  export type StaffInvitation$branchArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandBranch
+     */
+    select?: BrandBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandBranch
+     */
+    omit?: BrandBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandBranchInclude<ExtArgs> | null
+    where?: BrandBranchWhereInput
+  }
+
+  /**
+   * StaffInvitation without action
+   */
+  export type StaffInvitationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StaffInvitation
+     */
+    select?: StaffInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StaffInvitation
+     */
+    omit?: StaffInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffInvitationInclude<ExtArgs> | null
   }
 
 
@@ -40404,6 +41802,23 @@ export namespace Prisma {
   export type BrandDocumentScalarFieldEnum = (typeof BrandDocumentScalarFieldEnum)[keyof typeof BrandDocumentScalarFieldEnum]
 
 
+  export const StaffInvitationScalarFieldEnum: {
+    id: 'id',
+    email: 'email',
+    role: 'role',
+    brandId: 'brandId',
+    branchId: 'branchId',
+    tokenHash: 'tokenHash',
+    expiresAt: 'expiresAt',
+    acceptedAt: 'acceptedAt',
+    revokedAt: 'revokedAt',
+    createdById: 'createdById',
+    createdAt: 'createdAt'
+  };
+
+  export type StaffInvitationScalarFieldEnum = (typeof StaffInvitationScalarFieldEnum)[keyof typeof StaffInvitationScalarFieldEnum]
+
+
   export const BrandSocialLinkScalarFieldEnum: {
     brandId: 'brandId',
     platform: 'platform',
@@ -41171,6 +42586,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentListRelationFilter
     brandBranch?: XOR<BrandBranchNullableScalarRelationFilter, BrandBranchWhereInput> | null
     branchStaffs?: BranchStaffListRelationFilter
+    createdStaffInvitations?: StaffInvitationListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -41212,6 +42628,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentOrderByRelationAggregateInput
     brandBranch?: BrandBranchOrderByWithRelationInput
     branchStaffs?: branchStaffOrderByRelationAggregateInput
+    createdStaffInvitations?: StaffInvitationOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -41257,6 +42674,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentListRelationFilter
     brandBranch?: XOR<BrandBranchNullableScalarRelationFilter, BrandBranchWhereInput> | null
     branchStaffs?: BranchStaffListRelationFilter
+    createdStaffInvitations?: StaffInvitationListRelationFilter
   }, "id" | "phone" | "email" | "accountId" | "provider_providerCustomerId">
 
   export type UserOrderByWithAggregationInput = {
@@ -41358,6 +42776,7 @@ export namespace Prisma {
     transactions?: BrandTransactionListRelationFilter
     inventories?: InventoryListRelationFilter
     branchOrders?: BranchOrderListRelationFilter
+    staffInvitations?: StaffInvitationListRelationFilter
   }
 
   export type BrandOrderByWithRelationInput = {
@@ -41388,6 +42807,7 @@ export namespace Prisma {
     transactions?: BrandTransactionOrderByRelationAggregateInput
     inventories?: InventoryOrderByRelationAggregateInput
     branchOrders?: BranchOrderOrderByRelationAggregateInput
+    staffInvitations?: StaffInvitationOrderByRelationAggregateInput
   }
 
   export type BrandWhereUniqueInput = Prisma.AtLeast<{
@@ -41421,6 +42841,7 @@ export namespace Prisma {
     transactions?: BrandTransactionListRelationFilter
     inventories?: InventoryListRelationFilter
     branchOrders?: BranchOrderListRelationFilter
+    staffInvitations?: StaffInvitationListRelationFilter
   }, "id" | "userId" | "slug">
 
   export type BrandOrderByWithAggregationInput = {
@@ -41640,6 +43061,7 @@ export namespace Prisma {
     orders?: BranchOrderListRelationFilter
     inventory?: XOR<InventoryNullableScalarRelationFilter, InventoryWhereInput> | null
     branchStaffs?: BranchStaffListRelationFilter
+    staffInvitations?: StaffInvitationListRelationFilter
   }
 
   export type BrandBranchOrderByWithRelationInput = {
@@ -41672,6 +43094,7 @@ export namespace Prisma {
     orders?: BranchOrderOrderByRelationAggregateInput
     inventory?: InventoryOrderByWithRelationInput
     branchStaffs?: branchStaffOrderByRelationAggregateInput
+    staffInvitations?: StaffInvitationOrderByRelationAggregateInput
   }
 
   export type BrandBranchWhereUniqueInput = Prisma.AtLeast<{
@@ -41708,6 +43131,7 @@ export namespace Prisma {
     orders?: BranchOrderListRelationFilter
     inventory?: XOR<InventoryNullableScalarRelationFilter, InventoryWhereInput> | null
     branchStaffs?: BranchStaffListRelationFilter
+    staffInvitations?: StaffInvitationListRelationFilter
   }, "id" | "brandId_code">
 
   export type BrandBranchOrderByWithAggregationInput = {
@@ -41849,6 +43273,97 @@ export namespace Prisma {
     status?: StringWithAggregatesFilter<"BrandDocument"> | string
     createdAt?: DateTimeWithAggregatesFilter<"BrandDocument"> | Date | string
     rejectionReason?: EnumBrandDocRejectionReasonNullableWithAggregatesFilter<"BrandDocument"> | $Enums.BrandDocRejectionReason | null
+  }
+
+  export type StaffInvitationWhereInput = {
+    AND?: StaffInvitationWhereInput | StaffInvitationWhereInput[]
+    OR?: StaffInvitationWhereInput[]
+    NOT?: StaffInvitationWhereInput | StaffInvitationWhereInput[]
+    id?: UuidFilter<"StaffInvitation"> | string
+    email?: StringFilter<"StaffInvitation"> | string
+    role?: EnumRoleFilter<"StaffInvitation"> | $Enums.Role
+    brandId?: UuidNullableFilter<"StaffInvitation"> | string | null
+    branchId?: UuidNullableFilter<"StaffInvitation"> | string | null
+    tokenHash?: StringFilter<"StaffInvitation"> | string
+    expiresAt?: DateTimeFilter<"StaffInvitation"> | Date | string
+    acceptedAt?: DateTimeNullableFilter<"StaffInvitation"> | Date | string | null
+    revokedAt?: DateTimeNullableFilter<"StaffInvitation"> | Date | string | null
+    createdById?: UuidFilter<"StaffInvitation"> | string
+    createdAt?: DateTimeFilter<"StaffInvitation"> | Date | string
+    brand?: XOR<BrandNullableScalarRelationFilter, BrandWhereInput> | null
+    branch?: XOR<BrandBranchNullableScalarRelationFilter, BrandBranchWhereInput> | null
+    creator?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type StaffInvitationOrderByWithRelationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    role?: SortOrder
+    brandId?: SortOrderInput | SortOrder
+    branchId?: SortOrderInput | SortOrder
+    tokenHash?: SortOrder
+    expiresAt?: SortOrder
+    acceptedAt?: SortOrderInput | SortOrder
+    revokedAt?: SortOrderInput | SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    brand?: BrandOrderByWithRelationInput
+    branch?: BrandBranchOrderByWithRelationInput
+    creator?: UserOrderByWithRelationInput
+  }
+
+  export type StaffInvitationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tokenHash?: string
+    AND?: StaffInvitationWhereInput | StaffInvitationWhereInput[]
+    OR?: StaffInvitationWhereInput[]
+    NOT?: StaffInvitationWhereInput | StaffInvitationWhereInput[]
+    email?: StringFilter<"StaffInvitation"> | string
+    role?: EnumRoleFilter<"StaffInvitation"> | $Enums.Role
+    brandId?: UuidNullableFilter<"StaffInvitation"> | string | null
+    branchId?: UuidNullableFilter<"StaffInvitation"> | string | null
+    expiresAt?: DateTimeFilter<"StaffInvitation"> | Date | string
+    acceptedAt?: DateTimeNullableFilter<"StaffInvitation"> | Date | string | null
+    revokedAt?: DateTimeNullableFilter<"StaffInvitation"> | Date | string | null
+    createdById?: UuidFilter<"StaffInvitation"> | string
+    createdAt?: DateTimeFilter<"StaffInvitation"> | Date | string
+    brand?: XOR<BrandNullableScalarRelationFilter, BrandWhereInput> | null
+    branch?: XOR<BrandBranchNullableScalarRelationFilter, BrandBranchWhereInput> | null
+    creator?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "tokenHash">
+
+  export type StaffInvitationOrderByWithAggregationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    role?: SortOrder
+    brandId?: SortOrderInput | SortOrder
+    branchId?: SortOrderInput | SortOrder
+    tokenHash?: SortOrder
+    expiresAt?: SortOrder
+    acceptedAt?: SortOrderInput | SortOrder
+    revokedAt?: SortOrderInput | SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    _count?: StaffInvitationCountOrderByAggregateInput
+    _max?: StaffInvitationMaxOrderByAggregateInput
+    _min?: StaffInvitationMinOrderByAggregateInput
+  }
+
+  export type StaffInvitationScalarWhereWithAggregatesInput = {
+    AND?: StaffInvitationScalarWhereWithAggregatesInput | StaffInvitationScalarWhereWithAggregatesInput[]
+    OR?: StaffInvitationScalarWhereWithAggregatesInput[]
+    NOT?: StaffInvitationScalarWhereWithAggregatesInput | StaffInvitationScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"StaffInvitation"> | string
+    email?: StringWithAggregatesFilter<"StaffInvitation"> | string
+    role?: EnumRoleWithAggregatesFilter<"StaffInvitation"> | $Enums.Role
+    brandId?: UuidNullableWithAggregatesFilter<"StaffInvitation"> | string | null
+    branchId?: UuidNullableWithAggregatesFilter<"StaffInvitation"> | string | null
+    tokenHash?: StringWithAggregatesFilter<"StaffInvitation"> | string
+    expiresAt?: DateTimeWithAggregatesFilter<"StaffInvitation"> | Date | string
+    acceptedAt?: DateTimeNullableWithAggregatesFilter<"StaffInvitation"> | Date | string | null
+    revokedAt?: DateTimeNullableWithAggregatesFilter<"StaffInvitation"> | Date | string | null
+    createdById?: UuidWithAggregatesFilter<"StaffInvitation"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"StaffInvitation"> | Date | string
   }
 
   export type BrandSocialLinkWhereInput = {
@@ -43643,6 +45158,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -43681,6 +45197,7 @@ export namespace Prisma {
     brand?: BrandUncheckedCreateNestedOneWithoutUserInput
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
   }
 
   export type UserUpdateInput = {
@@ -43719,6 +45236,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -43757,6 +45275,7 @@ export namespace Prisma {
     brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -43873,6 +45392,7 @@ export namespace Prisma {
     transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateInput = {
@@ -43902,6 +45422,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUpdateInput = {
@@ -43931,6 +45452,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateInput = {
@@ -43960,6 +45482,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandCreateManyInput = {
@@ -44187,6 +45710,7 @@ export namespace Prisma {
     orders?: BranchOrderCreateNestedManyWithoutBrandBranchInput
     inventory?: InventoryCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffCreateNestedManyWithoutBranchInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBranchInput
   }
 
   export type BrandBranchUncheckedCreateInput = {
@@ -44218,6 +45742,7 @@ export namespace Prisma {
     orders?: BranchOrderUncheckedCreateNestedManyWithoutBrandBranchInput
     inventory?: InventoryUncheckedCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutBranchInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBranchInput
   }
 
   export type BrandBranchUpdateInput = {
@@ -44249,6 +45774,7 @@ export namespace Prisma {
     orders?: BranchOrderUpdateManyWithoutBrandBranchNestedInput
     inventory?: InventoryUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBranchNestedInput
   }
 
   export type BrandBranchUncheckedUpdateInput = {
@@ -44280,6 +45806,7 @@ export namespace Prisma {
     orders?: BranchOrderUncheckedUpdateManyWithoutBrandBranchNestedInput
     inventory?: InventoryUncheckedUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput
   }
 
   export type BrandBranchCreateManyInput = {
@@ -44443,6 +45970,101 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     rejectionReason?: NullableEnumBrandDocRejectionReasonFieldUpdateOperationsInput | $Enums.BrandDocRejectionReason | null
+  }
+
+  export type StaffInvitationCreateInput = {
+    id?: string
+    email: string
+    role: $Enums.Role
+    tokenHash: string
+    expiresAt: Date | string
+    acceptedAt?: Date | string | null
+    revokedAt?: Date | string | null
+    createdAt?: Date | string
+    brand?: BrandCreateNestedOneWithoutStaffInvitationsInput
+    branch?: BrandBranchCreateNestedOneWithoutStaffInvitationsInput
+    creator: UserCreateNestedOneWithoutCreatedStaffInvitationsInput
+  }
+
+  export type StaffInvitationUncheckedCreateInput = {
+    id?: string
+    email: string
+    role: $Enums.Role
+    brandId?: string | null
+    branchId?: string | null
+    tokenHash: string
+    expiresAt: Date | string
+    acceptedAt?: Date | string | null
+    revokedAt?: Date | string | null
+    createdById: string
+    createdAt?: Date | string
+  }
+
+  export type StaffInvitationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brand?: BrandUpdateOneWithoutStaffInvitationsNestedInput
+    branch?: BrandBranchUpdateOneWithoutStaffInvitationsNestedInput
+    creator?: UserUpdateOneRequiredWithoutCreatedStaffInvitationsNestedInput
+  }
+
+  export type StaffInvitationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StaffInvitationCreateManyInput = {
+    id?: string
+    email: string
+    role: $Enums.Role
+    brandId?: string | null
+    branchId?: string | null
+    tokenHash: string
+    expiresAt: Date | string
+    acceptedAt?: Date | string | null
+    revokedAt?: Date | string | null
+    createdById: string
+    createdAt?: Date | string
+  }
+
+  export type StaffInvitationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StaffInvitationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BrandSocialLinkCreateInput = {
@@ -46408,6 +48030,12 @@ export namespace Prisma {
     none?: branchStaffWhereInput
   }
 
+  export type StaffInvitationListRelationFilter = {
+    every?: StaffInvitationWhereInput
+    some?: StaffInvitationWhereInput
+    none?: StaffInvitationWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -46430,6 +48058,10 @@ export namespace Prisma {
   }
 
   export type branchStaffOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type StaffInvitationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -47270,6 +48902,48 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumBrandDocRejectionReasonNullableFilter<$PrismaModel>
     _max?: NestedEnumBrandDocRejectionReasonNullableFilter<$PrismaModel>
+  }
+
+  export type StaffInvitationCountOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    role?: SortOrder
+    brandId?: SortOrder
+    branchId?: SortOrder
+    tokenHash?: SortOrder
+    expiresAt?: SortOrder
+    acceptedAt?: SortOrder
+    revokedAt?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type StaffInvitationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    role?: SortOrder
+    brandId?: SortOrder
+    branchId?: SortOrder
+    tokenHash?: SortOrder
+    expiresAt?: SortOrder
+    acceptedAt?: SortOrder
+    revokedAt?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type StaffInvitationMinOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    role?: SortOrder
+    brandId?: SortOrder
+    branchId?: SortOrder
+    tokenHash?: SortOrder
+    expiresAt?: SortOrder
+    acceptedAt?: SortOrder
+    revokedAt?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type BrandSocialLinkBrandIdPlatformCompoundUniqueInput = {
@@ -48685,6 +50359,13 @@ export namespace Prisma {
     connect?: branchStaffWhereUniqueInput | branchStaffWhereUniqueInput[]
   }
 
+  export type StaffInvitationCreateNestedManyWithoutCreatorInput = {
+    create?: XOR<StaffInvitationCreateWithoutCreatorInput, StaffInvitationUncheckedCreateWithoutCreatorInput> | StaffInvitationCreateWithoutCreatorInput[] | StaffInvitationUncheckedCreateWithoutCreatorInput[]
+    connectOrCreate?: StaffInvitationCreateOrConnectWithoutCreatorInput | StaffInvitationCreateOrConnectWithoutCreatorInput[]
+    createMany?: StaffInvitationCreateManyCreatorInputEnvelope
+    connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+  }
+
   export type CartUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<CartCreateWithoutUserInput, CartUncheckedCreateWithoutUserInput>
     connectOrCreate?: CartCreateOrConnectWithoutUserInput
@@ -48736,6 +50417,13 @@ export namespace Prisma {
     connectOrCreate?: branchStaffCreateOrConnectWithoutUserInput | branchStaffCreateOrConnectWithoutUserInput[]
     createMany?: branchStaffCreateManyUserInputEnvelope
     connect?: branchStaffWhereUniqueInput | branchStaffWhereUniqueInput[]
+  }
+
+  export type StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput = {
+    create?: XOR<StaffInvitationCreateWithoutCreatorInput, StaffInvitationUncheckedCreateWithoutCreatorInput> | StaffInvitationCreateWithoutCreatorInput[] | StaffInvitationUncheckedCreateWithoutCreatorInput[]
+    connectOrCreate?: StaffInvitationCreateOrConnectWithoutCreatorInput | StaffInvitationCreateOrConnectWithoutCreatorInput[]
+    createMany?: StaffInvitationCreateManyCreatorInputEnvelope
+    connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -48908,6 +50596,20 @@ export namespace Prisma {
     deleteMany?: branchStaffScalarWhereInput | branchStaffScalarWhereInput[]
   }
 
+  export type StaffInvitationUpdateManyWithoutCreatorNestedInput = {
+    create?: XOR<StaffInvitationCreateWithoutCreatorInput, StaffInvitationUncheckedCreateWithoutCreatorInput> | StaffInvitationCreateWithoutCreatorInput[] | StaffInvitationUncheckedCreateWithoutCreatorInput[]
+    connectOrCreate?: StaffInvitationCreateOrConnectWithoutCreatorInput | StaffInvitationCreateOrConnectWithoutCreatorInput[]
+    upsert?: StaffInvitationUpsertWithWhereUniqueWithoutCreatorInput | StaffInvitationUpsertWithWhereUniqueWithoutCreatorInput[]
+    createMany?: StaffInvitationCreateManyCreatorInputEnvelope
+    set?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    disconnect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    delete?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    update?: StaffInvitationUpdateWithWhereUniqueWithoutCreatorInput | StaffInvitationUpdateWithWhereUniqueWithoutCreatorInput[]
+    updateMany?: StaffInvitationUpdateManyWithWhereWithoutCreatorInput | StaffInvitationUpdateManyWithWhereWithoutCreatorInput[]
+    deleteMany?: StaffInvitationScalarWhereInput | StaffInvitationScalarWhereInput[]
+  }
+
   export type CartUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<CartCreateWithoutUserInput, CartUncheckedCreateWithoutUserInput>
     connectOrCreate?: CartCreateOrConnectWithoutUserInput
@@ -49008,6 +50710,20 @@ export namespace Prisma {
     deleteMany?: branchStaffScalarWhereInput | branchStaffScalarWhereInput[]
   }
 
+  export type StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput = {
+    create?: XOR<StaffInvitationCreateWithoutCreatorInput, StaffInvitationUncheckedCreateWithoutCreatorInput> | StaffInvitationCreateWithoutCreatorInput[] | StaffInvitationUncheckedCreateWithoutCreatorInput[]
+    connectOrCreate?: StaffInvitationCreateOrConnectWithoutCreatorInput | StaffInvitationCreateOrConnectWithoutCreatorInput[]
+    upsert?: StaffInvitationUpsertWithWhereUniqueWithoutCreatorInput | StaffInvitationUpsertWithWhereUniqueWithoutCreatorInput[]
+    createMany?: StaffInvitationCreateManyCreatorInputEnvelope
+    set?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    disconnect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    delete?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    update?: StaffInvitationUpdateWithWhereUniqueWithoutCreatorInput | StaffInvitationUpdateWithWhereUniqueWithoutCreatorInput[]
+    updateMany?: StaffInvitationUpdateManyWithWhereWithoutCreatorInput | StaffInvitationUpdateManyWithWhereWithoutCreatorInput[]
+    deleteMany?: StaffInvitationScalarWhereInput | StaffInvitationScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutBrandInput = {
     create?: XOR<UserCreateWithoutBrandInput, UserUncheckedCreateWithoutBrandInput>
     connectOrCreate?: UserCreateOrConnectWithoutBrandInput
@@ -49077,6 +50793,13 @@ export namespace Prisma {
     connect?: BranchOrderWhereUniqueInput | BranchOrderWhereUniqueInput[]
   }
 
+  export type StaffInvitationCreateNestedManyWithoutBrandInput = {
+    create?: XOR<StaffInvitationCreateWithoutBrandInput, StaffInvitationUncheckedCreateWithoutBrandInput> | StaffInvitationCreateWithoutBrandInput[] | StaffInvitationUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: StaffInvitationCreateOrConnectWithoutBrandInput | StaffInvitationCreateOrConnectWithoutBrandInput[]
+    createMany?: StaffInvitationCreateManyBrandInputEnvelope
+    connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutBrandTenantInput = {
     create?: XOR<UserCreateWithoutBrandTenantInput, UserUncheckedCreateWithoutBrandTenantInput> | UserCreateWithoutBrandTenantInput[] | UserUncheckedCreateWithoutBrandTenantInput[]
     connectOrCreate?: UserCreateOrConnectWithoutBrandTenantInput | UserCreateOrConnectWithoutBrandTenantInput[]
@@ -49138,6 +50861,13 @@ export namespace Prisma {
     connectOrCreate?: BranchOrderCreateOrConnectWithoutBrandInput | BranchOrderCreateOrConnectWithoutBrandInput[]
     createMany?: BranchOrderCreateManyBrandInputEnvelope
     connect?: BranchOrderWhereUniqueInput | BranchOrderWhereUniqueInput[]
+  }
+
+  export type StaffInvitationUncheckedCreateNestedManyWithoutBrandInput = {
+    create?: XOR<StaffInvitationCreateWithoutBrandInput, StaffInvitationUncheckedCreateWithoutBrandInput> | StaffInvitationCreateWithoutBrandInput[] | StaffInvitationUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: StaffInvitationCreateOrConnectWithoutBrandInput | StaffInvitationCreateOrConnectWithoutBrandInput[]
+    createMany?: StaffInvitationCreateManyBrandInputEnvelope
+    connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
   }
 
   export type EnumBrandVerificationTierFieldUpdateOperationsInput = {
@@ -49286,6 +51016,20 @@ export namespace Prisma {
     deleteMany?: BranchOrderScalarWhereInput | BranchOrderScalarWhereInput[]
   }
 
+  export type StaffInvitationUpdateManyWithoutBrandNestedInput = {
+    create?: XOR<StaffInvitationCreateWithoutBrandInput, StaffInvitationUncheckedCreateWithoutBrandInput> | StaffInvitationCreateWithoutBrandInput[] | StaffInvitationUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: StaffInvitationCreateOrConnectWithoutBrandInput | StaffInvitationCreateOrConnectWithoutBrandInput[]
+    upsert?: StaffInvitationUpsertWithWhereUniqueWithoutBrandInput | StaffInvitationUpsertWithWhereUniqueWithoutBrandInput[]
+    createMany?: StaffInvitationCreateManyBrandInputEnvelope
+    set?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    disconnect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    delete?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    update?: StaffInvitationUpdateWithWhereUniqueWithoutBrandInput | StaffInvitationUpdateWithWhereUniqueWithoutBrandInput[]
+    updateMany?: StaffInvitationUpdateManyWithWhereWithoutBrandInput | StaffInvitationUpdateManyWithWhereWithoutBrandInput[]
+    deleteMany?: StaffInvitationScalarWhereInput | StaffInvitationScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutBrandTenantNestedInput = {
     create?: XOR<UserCreateWithoutBrandTenantInput, UserUncheckedCreateWithoutBrandTenantInput> | UserCreateWithoutBrandTenantInput[] | UserUncheckedCreateWithoutBrandTenantInput[]
     connectOrCreate?: UserCreateOrConnectWithoutBrandTenantInput | UserCreateOrConnectWithoutBrandTenantInput[]
@@ -49412,6 +51156,20 @@ export namespace Prisma {
     deleteMany?: BranchOrderScalarWhereInput | BranchOrderScalarWhereInput[]
   }
 
+  export type StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput = {
+    create?: XOR<StaffInvitationCreateWithoutBrandInput, StaffInvitationUncheckedCreateWithoutBrandInput> | StaffInvitationCreateWithoutBrandInput[] | StaffInvitationUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: StaffInvitationCreateOrConnectWithoutBrandInput | StaffInvitationCreateOrConnectWithoutBrandInput[]
+    upsert?: StaffInvitationUpsertWithWhereUniqueWithoutBrandInput | StaffInvitationUpsertWithWhereUniqueWithoutBrandInput[]
+    createMany?: StaffInvitationCreateManyBrandInputEnvelope
+    set?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    disconnect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    delete?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    update?: StaffInvitationUpdateWithWhereUniqueWithoutBrandInput | StaffInvitationUpdateWithWhereUniqueWithoutBrandInput[]
+    updateMany?: StaffInvitationUpdateManyWithWhereWithoutBrandInput | StaffInvitationUpdateManyWithWhereWithoutBrandInput[]
+    deleteMany?: StaffInvitationScalarWhereInput | StaffInvitationScalarWhereInput[]
+  }
+
   export type BrandCreateNestedOneWithoutTransactionsInput = {
     create?: XOR<BrandCreateWithoutTransactionsInput, BrandUncheckedCreateWithoutTransactionsInput>
     connectOrCreate?: BrandCreateOrConnectWithoutTransactionsInput
@@ -49517,6 +51275,13 @@ export namespace Prisma {
     connect?: branchStaffWhereUniqueInput | branchStaffWhereUniqueInput[]
   }
 
+  export type StaffInvitationCreateNestedManyWithoutBranchInput = {
+    create?: XOR<StaffInvitationCreateWithoutBranchInput, StaffInvitationUncheckedCreateWithoutBranchInput> | StaffInvitationCreateWithoutBranchInput[] | StaffInvitationUncheckedCreateWithoutBranchInput[]
+    connectOrCreate?: StaffInvitationCreateOrConnectWithoutBranchInput | StaffInvitationCreateOrConnectWithoutBranchInput[]
+    createMany?: StaffInvitationCreateManyBranchInputEnvelope
+    connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutBrandBranchInput = {
     create?: XOR<UserCreateWithoutBrandBranchInput, UserUncheckedCreateWithoutBrandBranchInput> | UserCreateWithoutBrandBranchInput[] | UserUncheckedCreateWithoutBrandBranchInput[]
     connectOrCreate?: UserCreateOrConnectWithoutBrandBranchInput | UserCreateOrConnectWithoutBrandBranchInput[]
@@ -49556,6 +51321,13 @@ export namespace Prisma {
     connectOrCreate?: branchStaffCreateOrConnectWithoutBranchInput | branchStaffCreateOrConnectWithoutBranchInput[]
     createMany?: branchStaffCreateManyBranchInputEnvelope
     connect?: branchStaffWhereUniqueInput | branchStaffWhereUniqueInput[]
+  }
+
+  export type StaffInvitationUncheckedCreateNestedManyWithoutBranchInput = {
+    create?: XOR<StaffInvitationCreateWithoutBranchInput, StaffInvitationUncheckedCreateWithoutBranchInput> | StaffInvitationCreateWithoutBranchInput[] | StaffInvitationUncheckedCreateWithoutBranchInput[]
+    connectOrCreate?: StaffInvitationCreateOrConnectWithoutBranchInput | StaffInvitationCreateOrConnectWithoutBranchInput[]
+    createMany?: StaffInvitationCreateManyBranchInputEnvelope
+    connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
   }
 
   export type BrandBranchUpdateStaffIdsInput = {
@@ -49659,6 +51431,20 @@ export namespace Prisma {
     deleteMany?: branchStaffScalarWhereInput | branchStaffScalarWhereInput[]
   }
 
+  export type StaffInvitationUpdateManyWithoutBranchNestedInput = {
+    create?: XOR<StaffInvitationCreateWithoutBranchInput, StaffInvitationUncheckedCreateWithoutBranchInput> | StaffInvitationCreateWithoutBranchInput[] | StaffInvitationUncheckedCreateWithoutBranchInput[]
+    connectOrCreate?: StaffInvitationCreateOrConnectWithoutBranchInput | StaffInvitationCreateOrConnectWithoutBranchInput[]
+    upsert?: StaffInvitationUpsertWithWhereUniqueWithoutBranchInput | StaffInvitationUpsertWithWhereUniqueWithoutBranchInput[]
+    createMany?: StaffInvitationCreateManyBranchInputEnvelope
+    set?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    disconnect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    delete?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    update?: StaffInvitationUpdateWithWhereUniqueWithoutBranchInput | StaffInvitationUpdateWithWhereUniqueWithoutBranchInput[]
+    updateMany?: StaffInvitationUpdateManyWithWhereWithoutBranchInput | StaffInvitationUpdateManyWithWhereWithoutBranchInput[]
+    deleteMany?: StaffInvitationScalarWhereInput | StaffInvitationScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutBrandBranchNestedInput = {
     create?: XOR<UserCreateWithoutBrandBranchInput, UserUncheckedCreateWithoutBrandBranchInput> | UserCreateWithoutBrandBranchInput[] | UserUncheckedCreateWithoutBrandBranchInput[]
     connectOrCreate?: UserCreateOrConnectWithoutBrandBranchInput | UserCreateOrConnectWithoutBrandBranchInput[]
@@ -49739,6 +51525,20 @@ export namespace Prisma {
     deleteMany?: branchStaffScalarWhereInput | branchStaffScalarWhereInput[]
   }
 
+  export type StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput = {
+    create?: XOR<StaffInvitationCreateWithoutBranchInput, StaffInvitationUncheckedCreateWithoutBranchInput> | StaffInvitationCreateWithoutBranchInput[] | StaffInvitationUncheckedCreateWithoutBranchInput[]
+    connectOrCreate?: StaffInvitationCreateOrConnectWithoutBranchInput | StaffInvitationCreateOrConnectWithoutBranchInput[]
+    upsert?: StaffInvitationUpsertWithWhereUniqueWithoutBranchInput | StaffInvitationUpsertWithWhereUniqueWithoutBranchInput[]
+    createMany?: StaffInvitationCreateManyBranchInputEnvelope
+    set?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    disconnect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    delete?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    update?: StaffInvitationUpdateWithWhereUniqueWithoutBranchInput | StaffInvitationUpdateWithWhereUniqueWithoutBranchInput[]
+    updateMany?: StaffInvitationUpdateManyWithWhereWithoutBranchInput | StaffInvitationUpdateManyWithWhereWithoutBranchInput[]
+    deleteMany?: StaffInvitationScalarWhereInput | StaffInvitationScalarWhereInput[]
+  }
+
   export type BrandCreateNestedOneWithoutDocumentsInput = {
     create?: XOR<BrandCreateWithoutDocumentsInput, BrandUncheckedCreateWithoutDocumentsInput>
     connectOrCreate?: BrandCreateOrConnectWithoutDocumentsInput
@@ -49775,6 +51575,52 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReviewedBrandDocsInput, UserUpdateWithoutReviewedBrandDocsInput>, UserUncheckedUpdateWithoutReviewedBrandDocsInput>
+  }
+
+  export type BrandCreateNestedOneWithoutStaffInvitationsInput = {
+    create?: XOR<BrandCreateWithoutStaffInvitationsInput, BrandUncheckedCreateWithoutStaffInvitationsInput>
+    connectOrCreate?: BrandCreateOrConnectWithoutStaffInvitationsInput
+    connect?: BrandWhereUniqueInput
+  }
+
+  export type BrandBranchCreateNestedOneWithoutStaffInvitationsInput = {
+    create?: XOR<BrandBranchCreateWithoutStaffInvitationsInput, BrandBranchUncheckedCreateWithoutStaffInvitationsInput>
+    connectOrCreate?: BrandBranchCreateOrConnectWithoutStaffInvitationsInput
+    connect?: BrandBranchWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutCreatedStaffInvitationsInput = {
+    create?: XOR<UserCreateWithoutCreatedStaffInvitationsInput, UserUncheckedCreateWithoutCreatedStaffInvitationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedStaffInvitationsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BrandUpdateOneWithoutStaffInvitationsNestedInput = {
+    create?: XOR<BrandCreateWithoutStaffInvitationsInput, BrandUncheckedCreateWithoutStaffInvitationsInput>
+    connectOrCreate?: BrandCreateOrConnectWithoutStaffInvitationsInput
+    upsert?: BrandUpsertWithoutStaffInvitationsInput
+    disconnect?: BrandWhereInput | boolean
+    delete?: BrandWhereInput | boolean
+    connect?: BrandWhereUniqueInput
+    update?: XOR<XOR<BrandUpdateToOneWithWhereWithoutStaffInvitationsInput, BrandUpdateWithoutStaffInvitationsInput>, BrandUncheckedUpdateWithoutStaffInvitationsInput>
+  }
+
+  export type BrandBranchUpdateOneWithoutStaffInvitationsNestedInput = {
+    create?: XOR<BrandBranchCreateWithoutStaffInvitationsInput, BrandBranchUncheckedCreateWithoutStaffInvitationsInput>
+    connectOrCreate?: BrandBranchCreateOrConnectWithoutStaffInvitationsInput
+    upsert?: BrandBranchUpsertWithoutStaffInvitationsInput
+    disconnect?: BrandBranchWhereInput | boolean
+    delete?: BrandBranchWhereInput | boolean
+    connect?: BrandBranchWhereUniqueInput
+    update?: XOR<XOR<BrandBranchUpdateToOneWithWhereWithoutStaffInvitationsInput, BrandBranchUpdateWithoutStaffInvitationsInput>, BrandBranchUncheckedUpdateWithoutStaffInvitationsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutCreatedStaffInvitationsNestedInput = {
+    create?: XOR<UserCreateWithoutCreatedStaffInvitationsInput, UserUncheckedCreateWithoutCreatedStaffInvitationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedStaffInvitationsInput
+    upsert?: UserUpsertWithoutCreatedStaffInvitationsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCreatedStaffInvitationsInput, UserUpdateWithoutCreatedStaffInvitationsInput>, UserUncheckedUpdateWithoutCreatedStaffInvitationsInput>
   }
 
   export type BrandCreateNestedOneWithoutSocialLinksInput = {
@@ -52269,6 +54115,7 @@ export namespace Prisma {
     transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutUserInput = {
@@ -52297,6 +54144,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutUserInput = {
@@ -52330,6 +54178,7 @@ export namespace Prisma {
     transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutBrandUsersInput = {
@@ -52358,6 +54207,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutBrandUsersInput = {
@@ -52393,6 +54243,7 @@ export namespace Prisma {
     orders?: BranchOrderCreateNestedManyWithoutBrandBranchInput
     inventory?: InventoryCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffCreateNestedManyWithoutBranchInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBranchInput
   }
 
   export type BrandBranchUncheckedCreateWithoutUsersInput = {
@@ -52423,6 +54274,7 @@ export namespace Prisma {
     orders?: BranchOrderUncheckedCreateNestedManyWithoutBrandBranchInput
     inventory?: InventoryUncheckedCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutBranchInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBranchInput
   }
 
   export type BrandBranchCreateOrConnectWithoutUsersInput = {
@@ -52492,6 +54344,7 @@ export namespace Prisma {
     orders?: BranchOrderCreateNestedManyWithoutBrandBranchInput
     inventory?: InventoryCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffCreateNestedManyWithoutBranchInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBranchInput
   }
 
   export type BrandBranchUncheckedCreateWithoutStaffInput = {
@@ -52522,6 +54375,7 @@ export namespace Prisma {
     orders?: BranchOrderUncheckedCreateNestedManyWithoutBrandBranchInput
     inventory?: InventoryUncheckedCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutBranchInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBranchInput
   }
 
   export type BrandBranchCreateOrConnectWithoutStaffInput = {
@@ -52550,6 +54404,42 @@ export namespace Prisma {
 
   export type branchStaffCreateManyUserInputEnvelope = {
     data: branchStaffCreateManyUserInput | branchStaffCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type StaffInvitationCreateWithoutCreatorInput = {
+    id?: string
+    email: string
+    role: $Enums.Role
+    tokenHash: string
+    expiresAt: Date | string
+    acceptedAt?: Date | string | null
+    revokedAt?: Date | string | null
+    createdAt?: Date | string
+    brand?: BrandCreateNestedOneWithoutStaffInvitationsInput
+    branch?: BrandBranchCreateNestedOneWithoutStaffInvitationsInput
+  }
+
+  export type StaffInvitationUncheckedCreateWithoutCreatorInput = {
+    id?: string
+    email: string
+    role: $Enums.Role
+    brandId?: string | null
+    branchId?: string | null
+    tokenHash: string
+    expiresAt: Date | string
+    acceptedAt?: Date | string | null
+    revokedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type StaffInvitationCreateOrConnectWithoutCreatorInput = {
+    where: StaffInvitationWhereUniqueInput
+    create: XOR<StaffInvitationCreateWithoutCreatorInput, StaffInvitationUncheckedCreateWithoutCreatorInput>
+  }
+
+  export type StaffInvitationCreateManyCreatorInputEnvelope = {
+    data: StaffInvitationCreateManyCreatorInput | StaffInvitationCreateManyCreatorInput[]
     skipDuplicates?: boolean
   }
 
@@ -52727,6 +54617,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutUserInput = {
@@ -52755,6 +54646,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUpsertWithoutBrandUsersInput = {
@@ -52794,6 +54686,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutBrandUsersInput = {
@@ -52822,6 +54715,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandBranchUpsertWithoutUsersInput = {
@@ -52863,6 +54757,7 @@ export namespace Prisma {
     orders?: BranchOrderUpdateManyWithoutBrandBranchNestedInput
     inventory?: InventoryUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBranchNestedInput
   }
 
   export type BrandBranchUncheckedUpdateWithoutUsersInput = {
@@ -52893,6 +54788,7 @@ export namespace Prisma {
     orders?: BranchOrderUncheckedUpdateManyWithoutBrandBranchNestedInput
     inventory?: InventoryUncheckedUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput
   }
 
   export type BrandDocumentUpsertWithWhereUniqueWithoutReviewerInput = {
@@ -52966,6 +54862,7 @@ export namespace Prisma {
     orders?: BranchOrderUpdateManyWithoutBrandBranchNestedInput
     inventory?: InventoryUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBranchNestedInput
   }
 
   export type BrandBranchUncheckedUpdateWithoutStaffInput = {
@@ -52996,6 +54893,7 @@ export namespace Prisma {
     orders?: BranchOrderUncheckedUpdateManyWithoutBrandBranchNestedInput
     inventory?: InventoryUncheckedUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput
   }
 
   export type branchStaffUpsertWithWhereUniqueWithoutUserInput = {
@@ -53023,6 +54921,39 @@ export namespace Prisma {
     role?: EnumBranchRoleFilter<"branchStaff"> | $Enums.BranchRole
     isActive?: BoolFilter<"branchStaff"> | boolean
     createdAt?: DateTimeFilter<"branchStaff"> | Date | string
+  }
+
+  export type StaffInvitationUpsertWithWhereUniqueWithoutCreatorInput = {
+    where: StaffInvitationWhereUniqueInput
+    update: XOR<StaffInvitationUpdateWithoutCreatorInput, StaffInvitationUncheckedUpdateWithoutCreatorInput>
+    create: XOR<StaffInvitationCreateWithoutCreatorInput, StaffInvitationUncheckedCreateWithoutCreatorInput>
+  }
+
+  export type StaffInvitationUpdateWithWhereUniqueWithoutCreatorInput = {
+    where: StaffInvitationWhereUniqueInput
+    data: XOR<StaffInvitationUpdateWithoutCreatorInput, StaffInvitationUncheckedUpdateWithoutCreatorInput>
+  }
+
+  export type StaffInvitationUpdateManyWithWhereWithoutCreatorInput = {
+    where: StaffInvitationScalarWhereInput
+    data: XOR<StaffInvitationUpdateManyMutationInput, StaffInvitationUncheckedUpdateManyWithoutCreatorInput>
+  }
+
+  export type StaffInvitationScalarWhereInput = {
+    AND?: StaffInvitationScalarWhereInput | StaffInvitationScalarWhereInput[]
+    OR?: StaffInvitationScalarWhereInput[]
+    NOT?: StaffInvitationScalarWhereInput | StaffInvitationScalarWhereInput[]
+    id?: UuidFilter<"StaffInvitation"> | string
+    email?: StringFilter<"StaffInvitation"> | string
+    role?: EnumRoleFilter<"StaffInvitation"> | $Enums.Role
+    brandId?: UuidNullableFilter<"StaffInvitation"> | string | null
+    branchId?: UuidNullableFilter<"StaffInvitation"> | string | null
+    tokenHash?: StringFilter<"StaffInvitation"> | string
+    expiresAt?: DateTimeFilter<"StaffInvitation"> | Date | string
+    acceptedAt?: DateTimeNullableFilter<"StaffInvitation"> | Date | string | null
+    revokedAt?: DateTimeNullableFilter<"StaffInvitation"> | Date | string | null
+    createdById?: UuidFilter<"StaffInvitation"> | string
+    createdAt?: DateTimeFilter<"StaffInvitation"> | Date | string
   }
 
   export type UserCreateWithoutBrandInput = {
@@ -53060,6 +54991,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
   }
 
   export type UserUncheckedCreateWithoutBrandInput = {
@@ -53097,6 +55029,7 @@ export namespace Prisma {
     brandFollowers?: BrandFollowerUncheckedCreateNestedManyWithoutUserInput
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
   }
 
   export type UserCreateOrConnectWithoutBrandInput = {
@@ -53139,6 +55072,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
   }
 
   export type UserUncheckedCreateWithoutBrandTenantInput = {
@@ -53176,6 +55110,7 @@ export namespace Prisma {
     brand?: BrandUncheckedCreateNestedOneWithoutUserInput
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
   }
 
   export type UserCreateOrConnectWithoutBrandTenantInput = {
@@ -53344,6 +55279,7 @@ export namespace Prisma {
     orders?: BranchOrderCreateNestedManyWithoutBrandBranchInput
     inventory?: InventoryCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffCreateNestedManyWithoutBranchInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBranchInput
   }
 
   export type BrandBranchUncheckedCreateWithoutBrandInput = {
@@ -53374,6 +55310,7 @@ export namespace Prisma {
     orders?: BranchOrderUncheckedCreateNestedManyWithoutBrandBranchInput
     inventory?: InventoryUncheckedCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutBranchInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBranchInput
   }
 
   export type BrandBranchCreateOrConnectWithoutBrandInput = {
@@ -53498,6 +55435,42 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type StaffInvitationCreateWithoutBrandInput = {
+    id?: string
+    email: string
+    role: $Enums.Role
+    tokenHash: string
+    expiresAt: Date | string
+    acceptedAt?: Date | string | null
+    revokedAt?: Date | string | null
+    createdAt?: Date | string
+    branch?: BrandBranchCreateNestedOneWithoutStaffInvitationsInput
+    creator: UserCreateNestedOneWithoutCreatedStaffInvitationsInput
+  }
+
+  export type StaffInvitationUncheckedCreateWithoutBrandInput = {
+    id?: string
+    email: string
+    role: $Enums.Role
+    branchId?: string | null
+    tokenHash: string
+    expiresAt: Date | string
+    acceptedAt?: Date | string | null
+    revokedAt?: Date | string | null
+    createdById: string
+    createdAt?: Date | string
+  }
+
+  export type StaffInvitationCreateOrConnectWithoutBrandInput = {
+    where: StaffInvitationWhereUniqueInput
+    create: XOR<StaffInvitationCreateWithoutBrandInput, StaffInvitationUncheckedCreateWithoutBrandInput>
+  }
+
+  export type StaffInvitationCreateManyBrandInputEnvelope = {
+    data: StaffInvitationCreateManyBrandInput | StaffInvitationCreateManyBrandInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutBrandInput = {
     update: XOR<UserUpdateWithoutBrandInput, UserUncheckedUpdateWithoutBrandInput>
     create: XOR<UserCreateWithoutBrandInput, UserUncheckedCreateWithoutBrandInput>
@@ -53544,6 +55517,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBrandInput = {
@@ -53581,6 +55555,7 @@ export namespace Prisma {
     brandFollowers?: BrandFollowerUncheckedUpdateManyWithoutUserNestedInput
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserUpsertWithWhereUniqueWithoutBrandTenantInput = {
@@ -53866,6 +55841,22 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"BranchOrder"> | Date | string
   }
 
+  export type StaffInvitationUpsertWithWhereUniqueWithoutBrandInput = {
+    where: StaffInvitationWhereUniqueInput
+    update: XOR<StaffInvitationUpdateWithoutBrandInput, StaffInvitationUncheckedUpdateWithoutBrandInput>
+    create: XOR<StaffInvitationCreateWithoutBrandInput, StaffInvitationUncheckedCreateWithoutBrandInput>
+  }
+
+  export type StaffInvitationUpdateWithWhereUniqueWithoutBrandInput = {
+    where: StaffInvitationWhereUniqueInput
+    data: XOR<StaffInvitationUpdateWithoutBrandInput, StaffInvitationUncheckedUpdateWithoutBrandInput>
+  }
+
+  export type StaffInvitationUpdateManyWithWhereWithoutBrandInput = {
+    where: StaffInvitationScalarWhereInput
+    data: XOR<StaffInvitationUpdateManyMutationInput, StaffInvitationUncheckedUpdateManyWithoutBrandInput>
+  }
+
   export type BrandCreateWithoutTransactionsInput = {
     id?: string
     name: string
@@ -53892,6 +55883,7 @@ export namespace Prisma {
     branches?: BrandBranchCreateNestedManyWithoutBrandInput
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutTransactionsInput = {
@@ -53920,6 +55912,7 @@ export namespace Prisma {
     branches?: BrandBranchUncheckedCreateNestedManyWithoutBrandInput
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutTransactionsInput = {
@@ -53964,6 +55957,7 @@ export namespace Prisma {
     branches?: BrandBranchUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutTransactionsInput = {
@@ -53992,6 +55986,7 @@ export namespace Prisma {
     branches?: BrandBranchUncheckedUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandBranchCreateWithoutBranchStaffsInput = {
@@ -54022,6 +56017,7 @@ export namespace Prisma {
     variants?: BranchVariantCreateNestedManyWithoutBranchInput
     orders?: BranchOrderCreateNestedManyWithoutBrandBranchInput
     inventory?: InventoryCreateNestedOneWithoutBranchInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBranchInput
   }
 
   export type BrandBranchUncheckedCreateWithoutBranchStaffsInput = {
@@ -54052,6 +56048,7 @@ export namespace Prisma {
     variants?: BranchVariantUncheckedCreateNestedManyWithoutBranchInput
     orders?: BranchOrderUncheckedCreateNestedManyWithoutBrandBranchInput
     inventory?: InventoryUncheckedCreateNestedOneWithoutBranchInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBranchInput
   }
 
   export type BrandBranchCreateOrConnectWithoutBranchStaffsInput = {
@@ -54094,6 +56091,7 @@ export namespace Prisma {
     branchTenant?: BrandBranchCreateNestedOneWithoutUsersInput
     reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
+    createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
   }
 
   export type UserUncheckedCreateWithoutBranchStaffsInput = {
@@ -54131,6 +56129,7 @@ export namespace Prisma {
     brandFollowers?: BrandFollowerUncheckedCreateNestedManyWithoutUserInput
     brand?: BrandUncheckedCreateNestedOneWithoutUserInput
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
+    createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
   }
 
   export type UserCreateOrConnectWithoutBranchStaffsInput = {
@@ -54177,6 +56176,7 @@ export namespace Prisma {
     variants?: BranchVariantUpdateManyWithoutBranchNestedInput
     orders?: BranchOrderUpdateManyWithoutBrandBranchNestedInput
     inventory?: InventoryUpdateOneWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBranchNestedInput
   }
 
   export type BrandBranchUncheckedUpdateWithoutBranchStaffsInput = {
@@ -54207,6 +56207,7 @@ export namespace Prisma {
     variants?: BranchVariantUncheckedUpdateManyWithoutBranchNestedInput
     orders?: BranchOrderUncheckedUpdateManyWithoutBrandBranchNestedInput
     inventory?: InventoryUncheckedUpdateOneWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput
   }
 
   export type UserUpsertWithoutBranchStaffsInput = {
@@ -54255,6 +56256,7 @@ export namespace Prisma {
     branchTenant?: BrandBranchUpdateOneWithoutUsersNestedInput
     reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
+    createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBranchStaffsInput = {
@@ -54292,6 +56294,7 @@ export namespace Prisma {
     brandFollowers?: BrandFollowerUncheckedUpdateManyWithoutUserNestedInput
     brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
+    createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserCreateWithoutBrandBranchInput = {
@@ -54329,6 +56332,7 @@ export namespace Prisma {
     branchTenant?: BrandBranchCreateNestedOneWithoutUsersInput
     reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
   }
 
   export type UserUncheckedCreateWithoutBrandBranchInput = {
@@ -54366,6 +56370,7 @@ export namespace Prisma {
     brand?: BrandUncheckedCreateNestedOneWithoutUserInput
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
   }
 
   export type UserCreateOrConnectWithoutBrandBranchInput = {
@@ -54404,6 +56409,7 @@ export namespace Prisma {
     transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutBranchesInput = {
@@ -54432,6 +56438,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutBranchesInput = {
@@ -54474,6 +56481,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
   }
 
   export type UserUncheckedCreateWithoutBranchTenantInput = {
@@ -54511,6 +56519,7 @@ export namespace Prisma {
     brand?: BrandUncheckedCreateNestedOneWithoutUserInput
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
   }
 
   export type UserCreateOrConnectWithoutBranchTenantInput = {
@@ -54648,6 +56657,42 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type StaffInvitationCreateWithoutBranchInput = {
+    id?: string
+    email: string
+    role: $Enums.Role
+    tokenHash: string
+    expiresAt: Date | string
+    acceptedAt?: Date | string | null
+    revokedAt?: Date | string | null
+    createdAt?: Date | string
+    brand?: BrandCreateNestedOneWithoutStaffInvitationsInput
+    creator: UserCreateNestedOneWithoutCreatedStaffInvitationsInput
+  }
+
+  export type StaffInvitationUncheckedCreateWithoutBranchInput = {
+    id?: string
+    email: string
+    role: $Enums.Role
+    brandId?: string | null
+    tokenHash: string
+    expiresAt: Date | string
+    acceptedAt?: Date | string | null
+    revokedAt?: Date | string | null
+    createdById: string
+    createdAt?: Date | string
+  }
+
+  export type StaffInvitationCreateOrConnectWithoutBranchInput = {
+    where: StaffInvitationWhereUniqueInput
+    create: XOR<StaffInvitationCreateWithoutBranchInput, StaffInvitationUncheckedCreateWithoutBranchInput>
+  }
+
+  export type StaffInvitationCreateManyBranchInputEnvelope = {
+    data: StaffInvitationCreateManyBranchInput | StaffInvitationCreateManyBranchInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithWhereUniqueWithoutBrandBranchInput = {
     where: UserWhereUniqueInput
     update: XOR<UserUpdateWithoutBrandBranchInput, UserUncheckedUpdateWithoutBrandBranchInput>
@@ -54701,6 +56746,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutBranchesInput = {
@@ -54729,6 +56775,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type UserUpsertWithWhereUniqueWithoutBranchTenantInput = {
@@ -54844,6 +56891,22 @@ export namespace Prisma {
     data: XOR<branchStaffUpdateManyMutationInput, branchStaffUncheckedUpdateManyWithoutBranchInput>
   }
 
+  export type StaffInvitationUpsertWithWhereUniqueWithoutBranchInput = {
+    where: StaffInvitationWhereUniqueInput
+    update: XOR<StaffInvitationUpdateWithoutBranchInput, StaffInvitationUncheckedUpdateWithoutBranchInput>
+    create: XOR<StaffInvitationCreateWithoutBranchInput, StaffInvitationUncheckedCreateWithoutBranchInput>
+  }
+
+  export type StaffInvitationUpdateWithWhereUniqueWithoutBranchInput = {
+    where: StaffInvitationWhereUniqueInput
+    data: XOR<StaffInvitationUpdateWithoutBranchInput, StaffInvitationUncheckedUpdateWithoutBranchInput>
+  }
+
+  export type StaffInvitationUpdateManyWithWhereWithoutBranchInput = {
+    where: StaffInvitationScalarWhereInput
+    data: XOR<StaffInvitationUpdateManyMutationInput, StaffInvitationUncheckedUpdateManyWithoutBranchInput>
+  }
+
   export type BrandCreateWithoutDocumentsInput = {
     id?: string
     name: string
@@ -54870,6 +56933,7 @@ export namespace Prisma {
     transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutDocumentsInput = {
@@ -54898,6 +56962,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutDocumentsInput = {
@@ -54940,6 +57005,7 @@ export namespace Prisma {
     branchTenant?: BrandBranchCreateNestedOneWithoutUsersInput
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
   }
 
   export type UserUncheckedCreateWithoutReviewedBrandDocsInput = {
@@ -54977,6 +57043,7 @@ export namespace Prisma {
     brandFollowers?: BrandFollowerUncheckedCreateNestedManyWithoutUserInput
     brand?: BrandUncheckedCreateNestedOneWithoutUserInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
   }
 
   export type UserCreateOrConnectWithoutReviewedBrandDocsInput = {
@@ -55021,6 +57088,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutDocumentsInput = {
@@ -55049,6 +57117,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type UserUpsertWithoutReviewedBrandDocsInput = {
@@ -55097,6 +57166,7 @@ export namespace Prisma {
     branchTenant?: BrandBranchUpdateOneWithoutUsersNestedInput
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewedBrandDocsInput = {
@@ -55134,6 +57204,447 @@ export namespace Prisma {
     brandFollowers?: BrandFollowerUncheckedUpdateManyWithoutUserNestedInput
     brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type BrandCreateWithoutStaffInvitationsInput = {
+    id?: string
+    name: string
+    slug: string
+    description?: string | null
+    verificationStatus?: $Enums.BrandVerificationTier
+    rating?: Decimal | DecimalJsLike | number | string
+    logoUrl?: string | null
+    logoUrl_id?: string | null
+    followersCount?: number
+    viewedTimes?: number
+    isPromoted?: boolean
+    isActive?: boolean
+    balance?: number
+    paymentDetails?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutBrandInput
+    brandUsers?: UserCreateNestedManyWithoutBrandTenantInput
+    documents?: BrandDocumentCreateNestedManyWithoutBrandInput
+    socialLinks?: BrandSocialLinkCreateNestedManyWithoutBrandInput
+    followers?: BrandFollowerCreateNestedManyWithoutBrandInput
+    products?: ProductCreateNestedManyWithoutBrandInput
+    branches?: BrandBranchCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
+    inventories?: InventoryCreateNestedManyWithoutBrandInput
+    branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
+  }
+
+  export type BrandUncheckedCreateWithoutStaffInvitationsInput = {
+    id?: string
+    userId: string
+    name: string
+    slug: string
+    description?: string | null
+    verificationStatus?: $Enums.BrandVerificationTier
+    rating?: Decimal | DecimalJsLike | number | string
+    logoUrl?: string | null
+    logoUrl_id?: string | null
+    followersCount?: number
+    viewedTimes?: number
+    isPromoted?: boolean
+    isActive?: boolean
+    balance?: number
+    paymentDetails?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    brandUsers?: UserUncheckedCreateNestedManyWithoutBrandTenantInput
+    documents?: BrandDocumentUncheckedCreateNestedManyWithoutBrandInput
+    socialLinks?: BrandSocialLinkUncheckedCreateNestedManyWithoutBrandInput
+    followers?: BrandFollowerUncheckedCreateNestedManyWithoutBrandInput
+    products?: ProductUncheckedCreateNestedManyWithoutBrandInput
+    branches?: BrandBranchUncheckedCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
+    inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
+    branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
+  }
+
+  export type BrandCreateOrConnectWithoutStaffInvitationsInput = {
+    where: BrandWhereUniqueInput
+    create: XOR<BrandCreateWithoutStaffInvitationsInput, BrandUncheckedCreateWithoutStaffInvitationsInput>
+  }
+
+  export type BrandBranchCreateWithoutStaffInvitationsInput = {
+    id?: string
+    name: string
+    code: string
+    StaffIds?: BrandBranchCreateStaffIdsInput | string[]
+    latitude?: Decimal | DecimalJsLike | number | string | null
+    longitude?: Decimal | DecimalJsLike | number | string | null
+    placeId?: string | null
+    formattedAddress?: string | null
+    addressLine?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    postalCode?: string | null
+    locationGranularity?: string | null
+    phone?: string | null
+    openingHours?: NullableJsonNullValueInput | InputJsonValue
+    isMain?: boolean
+    isActive?: boolean
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Staff?: UserCreateNestedManyWithoutBrandBranchInput
+    brand: BrandCreateNestedOneWithoutBranchesInput
+    users?: UserCreateNestedManyWithoutBranchTenantInput
+    variants?: BranchVariantCreateNestedManyWithoutBranchInput
+    orders?: BranchOrderCreateNestedManyWithoutBrandBranchInput
+    inventory?: InventoryCreateNestedOneWithoutBranchInput
+    branchStaffs?: branchStaffCreateNestedManyWithoutBranchInput
+  }
+
+  export type BrandBranchUncheckedCreateWithoutStaffInvitationsInput = {
+    id?: string
+    brandId: string
+    name: string
+    code: string
+    StaffIds?: BrandBranchCreateStaffIdsInput | string[]
+    latitude?: Decimal | DecimalJsLike | number | string | null
+    longitude?: Decimal | DecimalJsLike | number | string | null
+    placeId?: string | null
+    formattedAddress?: string | null
+    addressLine?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    postalCode?: string | null
+    locationGranularity?: string | null
+    phone?: string | null
+    openingHours?: NullableJsonNullValueInput | InputJsonValue
+    isMain?: boolean
+    isActive?: boolean
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Staff?: UserUncheckedCreateNestedManyWithoutBrandBranchInput
+    users?: UserUncheckedCreateNestedManyWithoutBranchTenantInput
+    variants?: BranchVariantUncheckedCreateNestedManyWithoutBranchInput
+    orders?: BranchOrderUncheckedCreateNestedManyWithoutBrandBranchInput
+    inventory?: InventoryUncheckedCreateNestedOneWithoutBranchInput
+    branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutBranchInput
+  }
+
+  export type BrandBranchCreateOrConnectWithoutStaffInvitationsInput = {
+    where: BrandBranchWhereUniqueInput
+    create: XOR<BrandBranchCreateWithoutStaffInvitationsInput, BrandBranchUncheckedCreateWithoutStaffInvitationsInput>
+  }
+
+  export type UserCreateWithoutCreatedStaffInvitationsInput = {
+    id?: string
+    username: string
+    phone?: string | null
+    email: string
+    role?: $Enums.Role
+    password: string
+    picture_url?: string | null
+    picture_url_id?: string | null
+    otp?: string | null
+    otp_expiration?: Date | string | null
+    otp_purpose?: $Enums.otpPurpose | null
+    isVerified?: boolean
+    isBanned?: boolean
+    refreshToken?: string | null
+    created_At?: Date | string
+    updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
+    accountId?: string | null
+    payment_id?: string | null
+    passwordChangedAt?: Date | string | null
+    failedLoginAttempts?: number
+    lockedUntil?: Date | string | null
+    isOnline?: boolean
+    cart?: CartCreateNestedOneWithoutUserInput
+    wishlist?: wishlistCreateNestedOneWithoutUserInput
+    orders?: ParentOrderCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    brandFollowers?: BrandFollowerCreateNestedManyWithoutUserInput
+    brand?: BrandCreateNestedOneWithoutUserInput
+    brandTenant?: BrandCreateNestedOneWithoutBrandUsersInput
+    branchTenant?: BrandBranchCreateNestedOneWithoutUsersInput
+    reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
+    brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
+    branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCreatedStaffInvitationsInput = {
+    id?: string
+    username: string
+    phone?: string | null
+    email: string
+    role?: $Enums.Role
+    password: string
+    picture_url?: string | null
+    picture_url_id?: string | null
+    otp?: string | null
+    otp_expiration?: Date | string | null
+    otp_purpose?: $Enums.otpPurpose | null
+    isVerified?: boolean
+    isBanned?: boolean
+    refreshToken?: string | null
+    created_At?: Date | string
+    updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
+    accountId?: string | null
+    payment_id?: string | null
+    passwordChangedAt?: Date | string | null
+    failedLoginAttempts?: number
+    lockedUntil?: Date | string | null
+    isOnline?: boolean
+    brandId?: string | null
+    branchId?: string | null
+    brandBranchId?: string | null
+    cart?: CartUncheckedCreateNestedOneWithoutUserInput
+    wishlist?: wishlistUncheckedCreateNestedOneWithoutUserInput
+    orders?: ParentOrderUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    brandFollowers?: BrandFollowerUncheckedCreateNestedManyWithoutUserInput
+    brand?: BrandUncheckedCreateNestedOneWithoutUserInput
+    reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
+    branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCreatedStaffInvitationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCreatedStaffInvitationsInput, UserUncheckedCreateWithoutCreatedStaffInvitationsInput>
+  }
+
+  export type BrandUpsertWithoutStaffInvitationsInput = {
+    update: XOR<BrandUpdateWithoutStaffInvitationsInput, BrandUncheckedUpdateWithoutStaffInvitationsInput>
+    create: XOR<BrandCreateWithoutStaffInvitationsInput, BrandUncheckedCreateWithoutStaffInvitationsInput>
+    where?: BrandWhereInput
+  }
+
+  export type BrandUpdateToOneWithWhereWithoutStaffInvitationsInput = {
+    where?: BrandWhereInput
+    data: XOR<BrandUpdateWithoutStaffInvitationsInput, BrandUncheckedUpdateWithoutStaffInvitationsInput>
+  }
+
+  export type BrandUpdateWithoutStaffInvitationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationStatus?: EnumBrandVerificationTierFieldUpdateOperationsInput | $Enums.BrandVerificationTier
+    rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl_id?: NullableStringFieldUpdateOperationsInput | string | null
+    followersCount?: IntFieldUpdateOperationsInput | number
+    viewedTimes?: IntFieldUpdateOperationsInput | number
+    isPromoted?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    balance?: IntFieldUpdateOperationsInput | number
+    paymentDetails?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBrandNestedInput
+    brandUsers?: UserUpdateManyWithoutBrandTenantNestedInput
+    documents?: BrandDocumentUpdateManyWithoutBrandNestedInput
+    socialLinks?: BrandSocialLinkUpdateManyWithoutBrandNestedInput
+    followers?: BrandFollowerUpdateManyWithoutBrandNestedInput
+    products?: ProductUpdateManyWithoutBrandNestedInput
+    branches?: BrandBranchUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
+    inventories?: InventoryUpdateManyWithoutBrandNestedInput
+    branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
+  }
+
+  export type BrandUncheckedUpdateWithoutStaffInvitationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationStatus?: EnumBrandVerificationTierFieldUpdateOperationsInput | $Enums.BrandVerificationTier
+    rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl_id?: NullableStringFieldUpdateOperationsInput | string | null
+    followersCount?: IntFieldUpdateOperationsInput | number
+    viewedTimes?: IntFieldUpdateOperationsInput | number
+    isPromoted?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    balance?: IntFieldUpdateOperationsInput | number
+    paymentDetails?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandUsers?: UserUncheckedUpdateManyWithoutBrandTenantNestedInput
+    documents?: BrandDocumentUncheckedUpdateManyWithoutBrandNestedInput
+    socialLinks?: BrandSocialLinkUncheckedUpdateManyWithoutBrandNestedInput
+    followers?: BrandFollowerUncheckedUpdateManyWithoutBrandNestedInput
+    products?: ProductUncheckedUpdateManyWithoutBrandNestedInput
+    branches?: BrandBranchUncheckedUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
+    inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
+    branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
+  }
+
+  export type BrandBranchUpsertWithoutStaffInvitationsInput = {
+    update: XOR<BrandBranchUpdateWithoutStaffInvitationsInput, BrandBranchUncheckedUpdateWithoutStaffInvitationsInput>
+    create: XOR<BrandBranchCreateWithoutStaffInvitationsInput, BrandBranchUncheckedCreateWithoutStaffInvitationsInput>
+    where?: BrandBranchWhereInput
+  }
+
+  export type BrandBranchUpdateToOneWithWhereWithoutStaffInvitationsInput = {
+    where?: BrandBranchWhereInput
+    data: XOR<BrandBranchUpdateWithoutStaffInvitationsInput, BrandBranchUncheckedUpdateWithoutStaffInvitationsInput>
+  }
+
+  export type BrandBranchUpdateWithoutStaffInvitationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
+    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    placeId?: NullableStringFieldUpdateOperationsInput | string | null
+    formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    locationGranularity?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableJsonNullValueInput | InputJsonValue
+    isMain?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Staff?: UserUpdateManyWithoutBrandBranchNestedInput
+    brand?: BrandUpdateOneRequiredWithoutBranchesNestedInput
+    users?: UserUpdateManyWithoutBranchTenantNestedInput
+    variants?: BranchVariantUpdateManyWithoutBranchNestedInput
+    orders?: BranchOrderUpdateManyWithoutBrandBranchNestedInput
+    inventory?: InventoryUpdateOneWithoutBranchNestedInput
+    branchStaffs?: branchStaffUpdateManyWithoutBranchNestedInput
+  }
+
+  export type BrandBranchUncheckedUpdateWithoutStaffInvitationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    brandId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
+    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    placeId?: NullableStringFieldUpdateOperationsInput | string | null
+    formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    locationGranularity?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableJsonNullValueInput | InputJsonValue
+    isMain?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Staff?: UserUncheckedUpdateManyWithoutBrandBranchNestedInput
+    users?: UserUncheckedUpdateManyWithoutBranchTenantNestedInput
+    variants?: BranchVariantUncheckedUpdateManyWithoutBranchNestedInput
+    orders?: BranchOrderUncheckedUpdateManyWithoutBrandBranchNestedInput
+    inventory?: InventoryUncheckedUpdateOneWithoutBranchNestedInput
+    branchStaffs?: branchStaffUncheckedUpdateManyWithoutBranchNestedInput
+  }
+
+  export type UserUpsertWithoutCreatedStaffInvitationsInput = {
+    update: XOR<UserUpdateWithoutCreatedStaffInvitationsInput, UserUncheckedUpdateWithoutCreatedStaffInvitationsInput>
+    create: XOR<UserCreateWithoutCreatedStaffInvitationsInput, UserUncheckedCreateWithoutCreatedStaffInvitationsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCreatedStaffInvitationsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCreatedStaffInvitationsInput, UserUncheckedUpdateWithoutCreatedStaffInvitationsInput>
+  }
+
+  export type UserUpdateWithoutCreatedStaffInvitationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    password?: StringFieldUpdateOperationsInput | string
+    picture_url?: NullableStringFieldUpdateOperationsInput | string | null
+    picture_url_id?: NullableStringFieldUpdateOperationsInput | string | null
+    otp?: NullableStringFieldUpdateOperationsInput | string | null
+    otp_expiration?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    otp_purpose?: NullableEnumotpPurposeFieldUpdateOperationsInput | $Enums.otpPurpose | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    created_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    accountId?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedLoginAttempts?: IntFieldUpdateOperationsInput | number
+    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    cart?: CartUpdateOneWithoutUserNestedInput
+    wishlist?: wishlistUpdateOneWithoutUserNestedInput
+    orders?: ParentOrderUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    brandFollowers?: BrandFollowerUpdateManyWithoutUserNestedInput
+    brand?: BrandUpdateOneWithoutUserNestedInput
+    brandTenant?: BrandUpdateOneWithoutBrandUsersNestedInput
+    branchTenant?: BrandBranchUpdateOneWithoutUsersNestedInput
+    reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
+    brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
+    branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCreatedStaffInvitationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    password?: StringFieldUpdateOperationsInput | string
+    picture_url?: NullableStringFieldUpdateOperationsInput | string | null
+    picture_url_id?: NullableStringFieldUpdateOperationsInput | string | null
+    otp?: NullableStringFieldUpdateOperationsInput | string | null
+    otp_expiration?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    otp_purpose?: NullableEnumotpPurposeFieldUpdateOperationsInput | $Enums.otpPurpose | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    created_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    accountId?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedLoginAttempts?: IntFieldUpdateOperationsInput | number
+    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    brandBranchId?: NullableStringFieldUpdateOperationsInput | string | null
+    cart?: CartUncheckedUpdateOneWithoutUserNestedInput
+    wishlist?: wishlistUncheckedUpdateOneWithoutUserNestedInput
+    orders?: ParentOrderUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    brandFollowers?: BrandFollowerUncheckedUpdateManyWithoutUserNestedInput
+    brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
+    reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
+    branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BrandCreateWithoutSocialLinksInput = {
@@ -55162,6 +57673,7 @@ export namespace Prisma {
     transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutSocialLinksInput = {
@@ -55190,6 +57702,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutSocialLinksInput = {
@@ -55234,6 +57747,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutSocialLinksInput = {
@@ -55262,6 +57776,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandCreateWithoutFollowersInput = {
@@ -55290,6 +57805,7 @@ export namespace Prisma {
     transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutFollowersInput = {
@@ -55318,6 +57834,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutFollowersInput = {
@@ -55360,6 +57877,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
   }
 
   export type UserUncheckedCreateWithoutBrandFollowersInput = {
@@ -55397,6 +57915,7 @@ export namespace Prisma {
     brand?: BrandUncheckedCreateNestedOneWithoutUserInput
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
   }
 
   export type UserCreateOrConnectWithoutBrandFollowersInput = {
@@ -55441,6 +57960,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutFollowersInput = {
@@ -55469,6 +57989,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type UserUpsertWithoutBrandFollowersInput = {
@@ -55517,6 +58038,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBrandFollowersInput = {
@@ -55554,6 +58076,7 @@ export namespace Prisma {
     brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
   }
 
   export type ProductCreateWithoutCategoryInput = {
@@ -55652,6 +58175,7 @@ export namespace Prisma {
     transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutProductsInput = {
@@ -55680,6 +58204,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutProductsInput = {
@@ -55851,6 +58376,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutProductsInput = {
@@ -55879,6 +58405,7 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type CategoryUpsertWithoutProductsInput = {
@@ -56565,6 +59092,7 @@ export namespace Prisma {
     orders?: BranchOrderCreateNestedManyWithoutBrandBranchInput
     inventory?: InventoryCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffCreateNestedManyWithoutBranchInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBranchInput
   }
 
   export type BrandBranchUncheckedCreateWithoutVariantsInput = {
@@ -56595,6 +59123,7 @@ export namespace Prisma {
     orders?: BranchOrderUncheckedCreateNestedManyWithoutBrandBranchInput
     inventory?: InventoryUncheckedCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutBranchInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBranchInput
   }
 
   export type BrandBranchCreateOrConnectWithoutVariantsInput = {
@@ -56688,6 +59217,7 @@ export namespace Prisma {
     orders?: BranchOrderUpdateManyWithoutBrandBranchNestedInput
     inventory?: InventoryUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBranchNestedInput
   }
 
   export type BrandBranchUncheckedUpdateWithoutVariantsInput = {
@@ -56718,6 +59248,7 @@ export namespace Prisma {
     orders?: BranchOrderUncheckedUpdateManyWithoutBrandBranchNestedInput
     inventory?: InventoryUncheckedUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput
   }
 
   export type VariantUpsertWithoutBranchOffersInput = {
@@ -56857,6 +59388,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
   }
 
   export type UserUncheckedCreateWithoutReviewsInput = {
@@ -56894,6 +59426,7 @@ export namespace Prisma {
     brand?: BrandUncheckedCreateNestedOneWithoutUserInput
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
   }
 
   export type UserCreateOrConnectWithoutReviewsInput = {
@@ -57002,6 +59535,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -57039,6 +59573,7 @@ export namespace Prisma {
     brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserCreateWithoutCartInput = {
@@ -57076,6 +59611,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
   }
 
   export type UserUncheckedCreateWithoutCartInput = {
@@ -57113,6 +59649,7 @@ export namespace Prisma {
     brand?: BrandUncheckedCreateNestedOneWithoutUserInput
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
   }
 
   export type UserCreateOrConnectWithoutCartInput = {
@@ -57188,6 +59725,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCartInput = {
@@ -57225,6 +59763,7 @@ export namespace Prisma {
     brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
   }
 
   export type CartProductsUpsertWithWhereUniqueWithoutCartInput = {
@@ -57438,6 +59977,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
   }
 
   export type UserUncheckedCreateWithoutWishlistInput = {
@@ -57475,6 +60015,7 @@ export namespace Prisma {
     brand?: BrandUncheckedCreateNestedOneWithoutUserInput
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
   }
 
   export type UserCreateOrConnectWithoutWishlistInput = {
@@ -57577,6 +60118,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWishlistInput = {
@@ -57614,6 +60156,7 @@ export namespace Prisma {
     brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
   }
 
   export type ProductUpsertWithWhereUniqueWithoutWishlistsInput = {
@@ -57658,6 +60201,7 @@ export namespace Prisma {
     branches?: BrandBranchCreateNestedManyWithoutBrandInput
     transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutInventoriesInput = {
@@ -57686,6 +60230,7 @@ export namespace Prisma {
     branches?: BrandBranchUncheckedCreateNestedManyWithoutBrandInput
     transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutInventoriesInput = {
@@ -57721,6 +60266,7 @@ export namespace Prisma {
     variants?: BranchVariantCreateNestedManyWithoutBranchInput
     orders?: BranchOrderCreateNestedManyWithoutBrandBranchInput
     branchStaffs?: branchStaffCreateNestedManyWithoutBranchInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBranchInput
   }
 
   export type BrandBranchUncheckedCreateWithoutInventoryInput = {
@@ -57751,6 +60297,7 @@ export namespace Prisma {
     variants?: BranchVariantUncheckedCreateNestedManyWithoutBranchInput
     orders?: BranchOrderUncheckedCreateNestedManyWithoutBrandBranchInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutBranchInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBranchInput
   }
 
   export type BrandBranchCreateOrConnectWithoutInventoryInput = {
@@ -57955,6 +60502,7 @@ export namespace Prisma {
     branches?: BrandBranchUpdateManyWithoutBrandNestedInput
     transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutInventoriesInput = {
@@ -57983,6 +60531,7 @@ export namespace Prisma {
     branches?: BrandBranchUncheckedUpdateManyWithoutBrandNestedInput
     transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandBranchUpsertWithoutInventoryInput = {
@@ -58024,6 +60573,7 @@ export namespace Prisma {
     variants?: BranchVariantUpdateManyWithoutBranchNestedInput
     orders?: BranchOrderUpdateManyWithoutBrandBranchNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBranchNestedInput
   }
 
   export type BrandBranchUncheckedUpdateWithoutInventoryInput = {
@@ -58054,6 +60604,7 @@ export namespace Prisma {
     variants?: BranchVariantUncheckedUpdateManyWithoutBranchNestedInput
     orders?: BranchOrderUncheckedUpdateManyWithoutBrandBranchNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput
   }
 
   export type InventoryStockUpsertWithWhereUniqueWithoutInventoryInput = {
@@ -59236,6 +61787,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
   }
 
   export type UserUncheckedCreateWithoutOrdersInput = {
@@ -59273,6 +61825,7 @@ export namespace Prisma {
     brand?: BrandUncheckedCreateNestedOneWithoutUserInput
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
   }
 
   export type UserCreateOrConnectWithoutOrdersInput = {
@@ -59370,6 +61923,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -59407,6 +61961,7 @@ export namespace Prisma {
     brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
   }
 
   export type BranchOrderUpsertWithWhereUniqueWithoutOrderInput = {
@@ -59486,6 +62041,7 @@ export namespace Prisma {
     branches?: BrandBranchCreateNestedManyWithoutBrandInput
     transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     inventories?: InventoryCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutBranchOrdersInput = {
@@ -59514,6 +62070,7 @@ export namespace Prisma {
     branches?: BrandBranchUncheckedCreateNestedManyWithoutBrandInput
     transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutBranchOrdersInput = {
@@ -59549,6 +62106,7 @@ export namespace Prisma {
     variants?: BranchVariantCreateNestedManyWithoutBranchInput
     inventory?: InventoryCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffCreateNestedManyWithoutBranchInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBranchInput
   }
 
   export type BrandBranchUncheckedCreateWithoutOrdersInput = {
@@ -59579,6 +62137,7 @@ export namespace Prisma {
     variants?: BranchVariantUncheckedCreateNestedManyWithoutBranchInput
     inventory?: InventoryUncheckedCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutBranchInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBranchInput
   }
 
   export type BrandBranchCreateOrConnectWithoutOrdersInput = {
@@ -59750,6 +62309,7 @@ export namespace Prisma {
     branches?: BrandBranchUpdateManyWithoutBrandNestedInput
     transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutBranchOrdersInput = {
@@ -59778,6 +62338,7 @@ export namespace Prisma {
     branches?: BrandBranchUncheckedUpdateManyWithoutBrandNestedInput
     transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandBranchUpsertWithoutOrdersInput = {
@@ -59819,6 +62380,7 @@ export namespace Prisma {
     variants?: BranchVariantUpdateManyWithoutBranchNestedInput
     inventory?: InventoryUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBranchNestedInput
   }
 
   export type BrandBranchUncheckedUpdateWithoutOrdersInput = {
@@ -59849,6 +62411,7 @@ export namespace Prisma {
     variants?: BranchVariantUncheckedUpdateManyWithoutBranchNestedInput
     inventory?: InventoryUncheckedUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput
   }
 
   export type D_CompanyUpsertWithoutOrdersInput = {
@@ -60541,6 +63104,19 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type StaffInvitationCreateManyCreatorInput = {
+    id?: string
+    email: string
+    role: $Enums.Role
+    brandId?: string | null
+    branchId?: string | null
+    tokenHash: string
+    expiresAt: Date | string
+    acceptedAt?: Date | string | null
+    revokedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
   export type ParentOrderUpdateWithoutUserInput = {
     parentOrderId?: StringFieldUpdateOperationsInput | string
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
@@ -60675,6 +63251,45 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type StaffInvitationUpdateWithoutCreatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brand?: BrandUpdateOneWithoutStaffInvitationsNestedInput
+    branch?: BrandBranchUpdateOneWithoutStaffInvitationsNestedInput
+  }
+
+  export type StaffInvitationUncheckedUpdateWithoutCreatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StaffInvitationUncheckedUpdateManyWithoutCreatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateManyBrandTenantInput = {
     id?: string
     username: string
@@ -60803,6 +63418,19 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type StaffInvitationCreateManyBrandInput = {
+    id?: string
+    email: string
+    role: $Enums.Role
+    branchId?: string | null
+    tokenHash: string
+    expiresAt: Date | string
+    acceptedAt?: Date | string | null
+    revokedAt?: Date | string | null
+    createdById: string
+    createdAt?: Date | string
+  }
+
   export type UserUpdateWithoutBrandTenantInput = {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
@@ -60838,6 +63466,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBrandTenantInput = {
@@ -60875,6 +63504,7 @@ export namespace Prisma {
     brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutBrandTenantInput = {
@@ -61062,6 +63692,7 @@ export namespace Prisma {
     orders?: BranchOrderUpdateManyWithoutBrandBranchNestedInput
     inventory?: InventoryUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBranchNestedInput
   }
 
   export type BrandBranchUncheckedUpdateWithoutBrandInput = {
@@ -61092,6 +63723,7 @@ export namespace Prisma {
     orders?: BranchOrderUncheckedUpdateManyWithoutBrandBranchNestedInput
     inventory?: InventoryUncheckedUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput
   }
 
   export type BrandBranchUncheckedUpdateManyWithoutBrandInput = {
@@ -61235,6 +63867,45 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type StaffInvitationUpdateWithoutBrandInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branch?: BrandBranchUpdateOneWithoutStaffInvitationsNestedInput
+    creator?: UserUpdateOneRequiredWithoutCreatedStaffInvitationsNestedInput
+  }
+
+  export type StaffInvitationUncheckedUpdateWithoutBrandInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StaffInvitationUncheckedUpdateManyWithoutBrandInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateManyBrandBranchInput = {
     id?: string
     username: string
@@ -61324,6 +63995,19 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type StaffInvitationCreateManyBranchInput = {
+    id?: string
+    email: string
+    role: $Enums.Role
+    brandId?: string | null
+    tokenHash: string
+    expiresAt: Date | string
+    acceptedAt?: Date | string | null
+    revokedAt?: Date | string | null
+    createdById: string
+    createdAt?: Date | string
+  }
+
   export type UserUpdateWithoutBrandBranchInput = {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
@@ -61359,6 +64043,7 @@ export namespace Prisma {
     branchTenant?: BrandBranchUpdateOneWithoutUsersNestedInput
     reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBrandBranchInput = {
@@ -61396,6 +64081,7 @@ export namespace Prisma {
     brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutBrandBranchInput = {
@@ -61462,6 +64148,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBranchTenantInput = {
@@ -61499,6 +64186,7 @@ export namespace Prisma {
     brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutBranchTenantInput = {
@@ -61622,6 +64310,45 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     role?: EnumBranchRoleFieldUpdateOperationsInput | $Enums.BranchRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StaffInvitationUpdateWithoutBranchInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brand?: BrandUpdateOneWithoutStaffInvitationsNestedInput
+    creator?: UserUpdateOneRequiredWithoutCreatedStaffInvitationsNestedInput
+  }
+
+  export type StaffInvitationUncheckedUpdateWithoutBranchInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StaffInvitationUncheckedUpdateManyWithoutBranchInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

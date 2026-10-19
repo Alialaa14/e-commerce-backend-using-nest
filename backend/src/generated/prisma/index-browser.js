@@ -228,6 +228,20 @@ exports.Prisma.BrandDocumentScalarFieldEnum = {
   rejectionReason: 'rejectionReason'
 };
 
+exports.Prisma.StaffInvitationScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  role: 'role',
+  brandId: 'brandId',
+  branchId: 'branchId',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt',
+  acceptedAt: 'acceptedAt',
+  revokedAt: 'revokedAt',
+  createdById: 'createdById',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.BrandSocialLinkScalarFieldEnum = {
   brandId: 'brandId',
   platform: 'platform',
@@ -511,7 +525,8 @@ exports.Role = exports.$Enums.Role = {
   deliveryC: 'deliveryC',
   courier: 'courier',
   BRANCH_MANAGER: 'BRANCH_MANAGER',
-  Branch_Sales: 'Branch_Sales'
+  Branch_Sales: 'Branch_Sales',
+  customer_Service: 'customer_Service'
 };
 
 exports.otpPurpose = exports.$Enums.otpPurpose = {
@@ -647,6 +662,7 @@ exports.Prisma.ModelName = {
   branchStaff: 'branchStaff',
   BrandBranch: 'BrandBranch',
   BrandDocument: 'BrandDocument',
+  StaffInvitation: 'StaffInvitation',
   BrandSocialLink: 'BrandSocialLink',
   BrandFollower: 'BrandFollower',
   Category: 'Category',

@@ -9,6 +9,10 @@ import { Prisma, TransferStatus } from '../generated/prisma';
 import type { AuthUser } from '../common/decorators/Current-user-decorator';
 import { paginate } from '../helpers/paginate';
 import { PrismaService } from '../utils/prisma/prisma.service';
+import {
+  CreateStockLedgerInput,
+  StockLedgerService,
+} from '../StockLedger/stock-ledger.service';
 
 export interface CreateStockTransferInput {
   fromInventoryId: string;
@@ -28,7 +32,10 @@ interface TransferInventory {
 
 @Injectable()
 export class StockTransferService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly stockLedgerService: StockLedgerService,
+  ) {}
 
   private static readonly TRANSFER_INCLUDE = {
     items: true,
@@ -184,7 +191,7 @@ export class StockTransferService {
         }
       }
 
-      const ledgerEntries: Prisma.StockLedgerCreateManyInput[] = [];
+      const ledgerEntries: CreateStockLedgerInput[] = [];
       for (const item of transfer.items) {
         const stock = stockByVariant.get(item.variantId)!;
         const sourceUpdate = await transaction.inventoryStock.updateMany({
@@ -238,7 +245,7 @@ export class StockTransferService {
           },
         );
       }
-      await transaction.stockLedger.createMany({ data: ledgerEntries });
+      await this.stockLedgerService.createRecords(transaction, ledgerEntries);
 
       const updated = await transaction.stockTransfer.updateMany({
         where: { id: transferId, status: TransferStatus.approved },

@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../utils/prisma/prisma.service';
+import { StockLedgerService } from '../StockLedger/stock-ledger.service';
 import { StockTransferService } from './stock-transfer.service';
 
 describe('StockTransferService', () => {
@@ -44,7 +45,10 @@ describe('StockTransferService', () => {
         $transaction: jest.fn((callback) => callback(tx)),
       },
     } as unknown as PrismaService;
-    const service = new StockTransferService(prismaService);
+    const service = new StockTransferService(
+      prismaService,
+      new StockLedgerService(),
+    );
 
     await expect(
       service.createTransfer(
@@ -91,7 +95,10 @@ describe('StockTransferService', () => {
         $transaction: jest.fn((callback) => callback(tx)),
       },
     } as unknown as PrismaService;
-    const service = new StockTransferService(prismaService);
+    const service = new StockTransferService(
+      prismaService,
+      new StockLedgerService(),
+    );
 
     await expect(
       service.createTransfer(
@@ -141,7 +148,10 @@ describe('StockTransferService', () => {
     const prismaService = {
       prisma: { $transaction: jest.fn((callback) => callback(tx)) },
     } as unknown as PrismaService;
-    const service = new StockTransferService(prismaService);
+    const service = new StockTransferService(
+      prismaService,
+      new StockLedgerService(),
+    );
 
     await expect(
       service.createTransfer(
@@ -197,7 +207,10 @@ describe('StockTransferService', () => {
     const prismaService = {
       prisma: { $transaction: jest.fn((callback) => callback(tx)) },
     } as unknown as PrismaService;
-    const service = new StockTransferService(prismaService);
+    const service = new StockTransferService(
+      prismaService,
+      new StockLedgerService(),
+    );
 
     await service.approveTransfer(
       { sub: 'manager-1', role: 'BRANCH_MANAGER', branchId: 'branch-1' },
@@ -256,7 +269,10 @@ describe('StockTransferService', () => {
     const prismaService = {
       prisma: { $transaction: jest.fn((callback) => callback(tx)) },
     } as unknown as PrismaService;
-    const service = new StockTransferService(prismaService);
+    const service = new StockTransferService(
+      prismaService,
+      new StockLedgerService(),
+    );
 
     await expect(
       service.shipTransfer(
@@ -323,7 +339,10 @@ describe('StockTransferService', () => {
     const prismaService = {
       prisma: { $transaction: jest.fn((callback) => callback(tx)) },
     } as unknown as PrismaService;
-    const service = new StockTransferService(prismaService);
+    const service = new StockTransferService(
+      prismaService,
+      new StockLedgerService(),
+    );
 
     await service.shipTransfer(
       { sub: 'owner-1', role: 'brandOwner' },
@@ -418,7 +437,10 @@ describe('StockTransferService', () => {
     const prismaService = {
       prisma: { $transaction: jest.fn((callback) => callback(tx)) },
     } as unknown as PrismaService;
-    const service = new StockTransferService(prismaService);
+    const service = new StockTransferService(
+      prismaService,
+      new StockLedgerService(),
+    );
 
     await service.receiveTransfer(
       { sub: 'manager-1', role: 'BRANCH_MANAGER', branchId: 'branch-1' },
@@ -479,7 +501,10 @@ describe('StockTransferService', () => {
     const prismaService = {
       prisma: { $transaction: jest.fn((callback) => callback(tx)) },
     } as unknown as PrismaService;
-    const service = new StockTransferService(prismaService);
+    const service = new StockTransferService(
+      prismaService,
+      new StockLedgerService(),
+    );
 
     await service.cancelTransfer(
       { sub: 'owner-1', role: 'brandOwner' },
@@ -523,7 +548,10 @@ describe('StockTransferService', () => {
     const prismaService = {
       prisma: { stockTransfer: { findUnique } },
     } as unknown as PrismaService;
-    const service = new StockTransferService(prismaService);
+    const service = new StockTransferService(
+      prismaService,
+      new StockLedgerService(),
+    );
 
     await expect(
       service.getTransfer(
@@ -544,7 +572,10 @@ describe('StockTransferService', () => {
         ),
       },
     } as unknown as PrismaService;
-    const service = new StockTransferService(prismaService);
+    const service = new StockTransferService(
+      prismaService,
+      new StockLedgerService(),
+    );
 
     await expect(
       service.listTransfers(

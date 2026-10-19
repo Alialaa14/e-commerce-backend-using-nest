@@ -92,7 +92,6 @@ export class UserService {
         }),
       );
     } catch (error) {
-      console.log(error);
       if (picture?.id) {
         await this.cloudinaryService.deleteFromCloudinary(picture.id);
       }

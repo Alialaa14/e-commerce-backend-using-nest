@@ -23,16 +23,12 @@ export class MailService {
     html: string,
     text?: string,
   ): Promise<void> {
-    try {
-      await this.transporter.sendMail({
-        from: this.configService.get<string>('EMAIL'),
-        to,
-        subject,
-        text,
-        html,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    await this.transporter.sendMail({
+      from: this.configService.get<string>('EMAIL'),
+      to,
+      subject,
+      text,
+      html,
+    });
   }
 }

@@ -194,15 +194,16 @@ model User {
   brandFollowers BrandFollower[]
 
   // brand side
-  brand             Brand?          @relation("BrandOwner") // the brand this user OWNS
-  brandId           String?         @map("brand_id") @db.Uuid // the brand this user WORKS for (staff)
-  branchId          String?         @map("branch_id") @db.Uuid // the branch this user WORKS at (staff)
-  brandTenant       Brand?          @relation("BrandUsers", fields: [brandId], references: [id], onDelete: SetNull)
-  branchTenant      BrandBranch?    @relation("BranchUsers", fields: [branchId], references: [id], onDelete: SetNull)
-  reviewedBrandDocs BrandDocument[] @relation("BrandDocumentReviewer")
-  brandBranch       BrandBranch?    @relation(fields: [brandBranchId], references: [id])
-  brandBranchId     String?         @db.Uuid
-  branchStaffs      branchStaff[]
+  brand                   Brand?            @relation("BrandOwner") // the brand this user OWNS
+  brandId                 String?           @map("brand_id") @db.Uuid // the brand this user WORKS for (staff)
+  branchId                String?           @map("branch_id") @db.Uuid // the branch this user WORKS at (staff)
+  brandTenant             Brand?            @relation("BrandUsers", fields: [brandId], references: [id], onDelete: SetNull)
+  branchTenant            BrandBranch?      @relation("BranchUsers", fields: [branchId], references: [id], onDelete: SetNull)
+  reviewedBrandDocs       BrandDocument[]   @relation("BrandDocumentReviewer")
+  brandBranch             BrandBranch?      @relation(fields: [brandBranchId], references: [id])
+  brandBranchId           String?           @db.Uuid
+  branchStaffs            branchStaff[]
+  createdStaffInvitations StaffInvitation[] @relation("StaffInvitationCreator")
 
   @@unique([provider, providerCustomerId])
   @@index([brandId])
@@ -232,16 +233,17 @@ model Brand {
   createdAt          DateTime              @default(now()) @map("created_at") @db.Timestamptz
   updatedAt          DateTime              @updatedAt @map("updated_at") @db.Timestamptz
 
-  user         User               @relation("BrandOwner", fields: [userId], references: [id])
-  brandUsers   User[]             @relation("BrandUsers")
-  documents    BrandDocument[]
-  socialLinks  BrandSocialLink[]
-  followers    BrandFollower[]
-  products     Product[]
-  branches     BrandBranch[]
-  transactions BrandTransaction[]
-  inventories  Inventory[] // 1 main + 1 per branch
-  branchOrders BranchOrder[]
+  user             User               @relation("BrandOwner", fields: [userId], references: [id])
+  brandUsers       User[]             @relation("BrandUsers")
+  documents        BrandDocument[]
+  socialLinks      BrandSocialLink[]
+  followers        BrandFollower[]
+  products         Product[]
+  branches         BrandBranch[]
+  transactions     BrandTransaction[]
+  inventories      Inventory[] // 1 main + 1 per branch
+  branchOrders     BranchOrder[]
+  staffInvitations StaffInvitation[]
 
   @@map("brands")
 }
@@ -307,12 +309,13 @@ model BrandBranch {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
 
-  brand        Brand           @relation(fields: [brandId], references: [id], onDelete: Cascade)
-  users        User[]          @relation("BranchUsers")
-  variants     BranchVariant[] // per-branch price override / availability flag
-  orders       BranchOrder[]
-  inventory    Inventory? // exactly one inventory per branch
-  branchStaffs branchStaff[]
+  brand            Brand             @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  users            User[]            @relation("BranchUsers")
+  variants         BranchVariant[] // per-branch price override / availability flag
+  orders           BranchOrder[]
+  inventory        Inventory? // exactly one inventory per branch
+  branchStaffs     branchStaff[]
+  staffInvitations StaffInvitation[]
 
   @@unique([brandId, code])
   @@index([brandId])
@@ -335,6 +338,28 @@ model BrandDocument {
   reviewer User? @relation("BrandDocumentReviewer", fields: [reviewedBy], references: [id])
 
   @@map("brand_documents")
+}
+
+model StaffInvitation {
+  id          String    @id @default(uuid()) @db.Uuid
+  email       String
+  role        Role
+  brandId     String?   @map("brand_id") @db.Uuid
+  branchId    String?   @map("branch_id") @db.Uuid
+  tokenHash   String    @unique @map("token_hash")
+  expiresAt   DateTime  @map("expires_at") @db.Timestamptz
+  acceptedAt  DateTime? @map("accepted_at") @db.Timestamptz
+  revokedAt   DateTime? @map("revoked_at") @db.Timestamptz
+  createdById String    @map("created_by_id") @db.Uuid
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  brand   Brand?       @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  branch  BrandBranch? @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  creator User         @relation("StaffInvitationCreator", fields: [createdById], references: [id], onDelete: Restrict)
+
+  @@index([email, role, expiresAt])
+  @@index([brandId, branchId, role])
+  @@map("staff_invitations")
 }
 
 model BrandSocialLink {

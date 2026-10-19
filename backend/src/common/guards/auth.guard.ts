@@ -5,6 +5,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { BranchRole, Role } from '../../generated/prisma';
 import { TokenService } from '../../utils/Token/token.service';
 import { PrismaService } from '../../utils/prisma/prisma.service';
 import type { AuthUser } from '../decorators/Current-user-decorator';
@@ -57,6 +58,48 @@ export class AuthGuard implements CanActivate {
     }
     if (user.isBanned) {
       throw new ForbiddenException('Account banned');
+    }
+
+    if (user.role === Role.BRANCH_MANAGER || user.role === Role.Branch_Sales) {
+      if (!user.branchId || !user.brandId) {
+        throw new ForbiddenException('Branch staff scope is missing');
+      }
+
+      const membership = await this.prismaService.prisma.branchStaff.findUnique(
+        {
+          where: {
+            branchId_userId: {
+              branchId: user.branchId,
+              userId: user.id,
+            },
+          },
+          select: {
+            isActive: true,
+            role: true,
+            branch: {
+              select: {
+                brandId: true,
+                isActive: true,
+                deletedAt: true,
+              },
+            },
+          },
+        },
+      );
+
+      const expectedBranchRole =
+        user.role === Role.BRANCH_MANAGER
+          ? BranchRole.manager
+          : BranchRole.sales;
+      if (
+        !membership?.isActive ||
+        membership.role !== expectedBranchRole ||
+        !membership.branch.isActive ||
+        membership.branch.deletedAt ||
+        membership.branch.brandId !== user.brandId
+      ) {
+        throw new ForbiddenException('Active branch staff membership required');
+      }
     }
 
     const authenticatedUser: AuthUser = {
