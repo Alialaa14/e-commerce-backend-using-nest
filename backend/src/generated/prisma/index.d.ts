@@ -44466,6 +44466,7 @@ export namespace Prisma {
 
   export type ReservationWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    checkoutId_inventoryId_variantId?: ReservationCheckoutIdInventoryIdVariantIdCompoundUniqueInput
     AND?: ReservationWhereInput | ReservationWhereInput[]
     OR?: ReservationWhereInput[]
     NOT?: ReservationWhereInput | ReservationWhereInput[]
@@ -44478,7 +44479,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Reservation"> | Date | string
     inventory?: XOR<InventoryScalarRelationFilter, InventoryWhereInput>
     variant?: XOR<VariantScalarRelationFilter, VariantWhereInput>
-  }, "id">
+  }, "id" | "checkoutId_inventoryId_variantId">
 
   export type ReservationOrderByWithAggregationInput = {
     id?: SortOrder
@@ -49803,6 +49804,12 @@ export namespace Prisma {
     in?: $Enums.ReservationStatus[] | ListEnumReservationStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.ReservationStatus[] | ListEnumReservationStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumReservationStatusFilter<$PrismaModel> | $Enums.ReservationStatus
+  }
+
+  export type ReservationCheckoutIdInventoryIdVariantIdCompoundUniqueInput = {
+    checkoutId: string
+    inventoryId: string
+    variantId: string
   }
 
   export type ReservationCountOrderByAggregateInput = {

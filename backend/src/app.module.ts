@@ -18,6 +18,7 @@ import { RedisModule } from './Redis/redis.module';
 import { SocketModule } from './Socket/socket.module';
 import { StaffModule } from './Staff/staff.module';
 import { InventoryModule } from './Inventory/inventory.module';
+import { VariantReservationModule } from './VariantReservation/Reservation.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -53,6 +54,7 @@ import { InventoryModule } from './Inventory/inventory.module';
     SocketModule,
     StaffModule,
     InventoryModule,
+    VariantReservationModule,
   ],
   controllers: [],
   providers: [],

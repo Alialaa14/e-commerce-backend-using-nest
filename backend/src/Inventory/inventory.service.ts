@@ -171,45 +171,45 @@ export class InventoryService {
     variantId: string,
     quantity: number,
     referenceId: string,
+    transaction: Prisma.TransactionClient,
     userId?: string,
   ) {
     this.assertPositiveInteger(quantity);
-    return this.prismaService.prisma.$transaction(async (transaction) => {
-      const stock = await this.lockStock(transaction, inventoryId, variantId);
-      if (!stock) {
-        throw new NotFoundException('Stock record not found');
-      }
-      if (stock.onHand - stock.reserved < quantity) {
-        throw new BadRequestException(
-          `Insufficient available stock for variant ${variantId}`,
-        );
-      }
 
-      await this.updateLockedStock(
-        transaction,
-        inventoryId,
-        variantId,
-        { reserved: { increment: quantity } },
-        { onHand: { gte: stock.reserved + quantity } },
+    const stock = await this.lockStock(transaction, inventoryId, variantId);
+    if (!stock) {
+      throw new NotFoundException('Stock record not found');
+    }
+    if (stock.onHand - stock.reserved < quantity) {
+      throw new BadRequestException(
+        `Insufficient available stock for variant ${variantId}`,
       );
-      await this.stockLedgerService.createRecord(transaction, {
-        inventoryId,
-        variantId,
-        changeQty: quantity,
-        reason: 'reserve',
-        referenceType: 'RESERVATION',
-        referenceId,
-        ...(userId ? { userId } : {}),
-      });
-      return this.stockSummary(
-        inventoryId,
-        variantId,
-        stock.onHand,
-        stock.reserved + quantity,
-        stock.inTransitIn,
-        stock.lowStockThreshold,
-      );
+    }
+
+    await this.updateLockedStock(
+      transaction,
+      inventoryId,
+      variantId,
+      { reserved: { increment: quantity } },
+      { onHand: { gte: stock.reserved + quantity } },
+    );
+    await this.stockLedgerService.createRecord(transaction, {
+      inventoryId,
+      variantId,
+      changeQty: quantity,
+      reason: 'reserve',
+      referenceType: 'RESERVATION',
+      referenceId,
+      ...(userId ? { userId } : {}),
     });
+    return this.stockSummary(
+      inventoryId,
+      variantId,
+      stock.onHand,
+      stock.reserved + quantity,
+      stock.inTransitIn,
+      stock.lowStockThreshold,
+    );
   }
 
   async releaseStock(
@@ -217,43 +217,42 @@ export class InventoryService {
     variantId: string,
     quantity: number,
     referenceId: string,
+    transaction: Prisma.TransactionClient,
     userId?: string,
   ) {
     this.assertPositiveInteger(quantity);
-    return this.prismaService.prisma.$transaction(async (transaction) => {
-      const stock = await this.lockStock(transaction, inventoryId, variantId);
-      if (!stock) {
-        throw new NotFoundException('Stock record not found');
-      }
-      if (stock.reserved < quantity) {
-        throw new ConflictException('Cannot release more stock than reserved');
-      }
+    const stock = await this.lockStock(transaction, inventoryId, variantId);
+    if (!stock) {
+      throw new NotFoundException('Stock record not found');
+    }
+    if (stock.reserved < quantity) {
+      throw new ConflictException('Cannot release more stock than reserved');
+    }
 
-      await this.updateLockedStock(
-        transaction,
-        inventoryId,
-        variantId,
-        { reserved: { decrement: quantity } },
-        { reserved: { gte: quantity } },
-      );
-      await this.stockLedgerService.createRecord(transaction, {
-        inventoryId,
-        variantId,
-        changeQty: -quantity,
-        reason: 'release',
-        referenceType: 'RESERVATION',
-        referenceId,
-        ...(userId ? { userId } : {}),
-      });
-      return this.stockSummary(
-        inventoryId,
-        variantId,
-        stock.onHand,
-        stock.reserved - quantity,
-        stock.inTransitIn,
-        stock.lowStockThreshold,
-      );
+    await this.updateLockedStock(
+      transaction,
+      inventoryId,
+      variantId,
+      { reserved: { decrement: quantity } },
+      { reserved: { gte: quantity } },
+    );
+    await this.stockLedgerService.createRecord(transaction, {
+      inventoryId,
+      variantId,
+      changeQty: -quantity,
+      reason: 'release',
+      referenceType: 'RESERVATION',
+      referenceId,
+      ...(userId ? { userId } : {}),
     });
+    return this.stockSummary(
+      inventoryId,
+      variantId,
+      stock.onHand,
+      stock.reserved - quantity,
+      stock.inTransitIn,
+      stock.lowStockThreshold,
+    );
   }
 
   async fulfillReservedStock(
@@ -261,51 +260,50 @@ export class InventoryService {
     variantId: string,
     quantity: number,
     orderId: string,
+    transaction: Prisma.TransactionClient,
     userId?: string,
   ) {
     this.assertPositiveInteger(quantity);
-    return this.prismaService.prisma.$transaction(async (transaction) => {
-      const stock = await this.lockStock(transaction, inventoryId, variantId);
-      if (!stock) {
-        throw new NotFoundException('Stock record not found');
-      }
-      if (stock.reserved < quantity || stock.onHand < quantity) {
-        throw new ConflictException(
-          'Cannot fulfill more stock than is reserved and on hand',
-        );
-      }
+    const stock = await this.lockStock(transaction, inventoryId, variantId);
+    if (!stock) {
+      throw new NotFoundException('Stock record not found');
+    }
+    if (stock.reserved < quantity || stock.onHand < quantity) {
+      throw new ConflictException(
+        'Cannot fulfill more stock than is reserved and on hand',
+      );
+    }
 
-      await this.updateLockedStock(
-        transaction,
-        inventoryId,
-        variantId,
-        {
-          onHand: { decrement: quantity },
-          reserved: { decrement: quantity },
-        },
-        {
-          onHand: { gte: quantity },
-          reserved: { gte: quantity },
-        },
-      );
-      await this.stockLedgerService.createRecord(transaction, {
-        inventoryId,
-        variantId,
-        changeQty: -quantity,
-        reason: 'sale',
-        referenceType: 'ORDER',
-        referenceId: orderId,
-        ...(userId ? { userId } : {}),
-      });
-      return this.stockSummary(
-        inventoryId,
-        variantId,
-        stock.onHand - quantity,
-        stock.reserved - quantity,
-        stock.inTransitIn,
-        stock.lowStockThreshold,
-      );
+    await this.updateLockedStock(
+      transaction,
+      inventoryId,
+      variantId,
+      {
+        onHand: { decrement: quantity },
+        reserved: { decrement: quantity },
+      },
+      {
+        onHand: { gte: quantity },
+        reserved: { gte: quantity },
+      },
+    );
+    await this.stockLedgerService.createRecord(transaction, {
+      inventoryId,
+      variantId,
+      changeQty: -quantity,
+      reason: 'sale',
+      referenceType: 'ORDER',
+      referenceId: orderId,
+      ...(userId ? { userId } : {}),
     });
+    return this.stockSummary(
+      inventoryId,
+      variantId,
+      stock.onHand - quantity,
+      stock.reserved - quantity,
+      stock.inTransitIn,
+      stock.lowStockThreshold,
+    );
   }
 
   async createInventory(

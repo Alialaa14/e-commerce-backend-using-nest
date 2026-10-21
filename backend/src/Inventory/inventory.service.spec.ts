@@ -3,6 +3,7 @@ import {
   ConflictException,
   NotFoundException,
 } from '@nestjs/common';
+import { Prisma } from '../generated/prisma';
 import { PrismaService } from '../utils/prisma/prisma.service';
 import { StockLedgerService } from '../StockLedger/stock-ledger.service';
 import { InventoryService } from './inventory.service';
@@ -159,7 +160,13 @@ describe('InventoryService', () => {
       },
     } as unknown as PrismaService);
 
-    await service.reserveStock('inventory-1', 'variant-1', 3, 'checkout-1');
+    await service.reserveStock(
+      'inventory-1',
+      'variant-1',
+      3,
+      'checkout-1',
+      tx as unknown as Prisma.TransactionClient,
+    );
 
     expect(updateMany).toHaveBeenCalledWith({
       where: {
@@ -209,7 +216,13 @@ describe('InventoryService', () => {
     } as unknown as PrismaService);
 
     await expect(
-      service.reserveStock('inventory-1', 'variant-1', 3, 'checkout-1'),
+      service.reserveStock(
+        'inventory-1',
+        'variant-1',
+        3,
+        'checkout-1',
+        tx as unknown as Prisma.TransactionClient,
+      ),
     ).rejects.toThrow(BadRequestException);
     expect(updateMany).not.toHaveBeenCalled();
     expect(tx.stockLedger.create).not.toHaveBeenCalled();
@@ -230,7 +243,13 @@ describe('InventoryService', () => {
       },
     } as unknown as PrismaService);
 
-    await service.releaseStock('inventory-1', 'variant-1', 2, 'checkout-1');
+    await service.releaseStock(
+      'inventory-1',
+      'variant-1',
+      2,
+      'checkout-1',
+      tx as unknown as Prisma.TransactionClient,
+    );
 
     expect(updateMany).toHaveBeenCalledWith({
       where: {
@@ -284,6 +303,7 @@ describe('InventoryService', () => {
       'variant-1',
       2,
       'order-1',
+      tx as unknown as Prisma.TransactionClient,
     );
 
     expect(updateMany).toHaveBeenCalledWith({
