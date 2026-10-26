@@ -12,6 +12,7 @@ import { buildCartHash } from '../utils/buildHash';
 import { CheckoutStatus, Prisma } from '../generated/prisma';
 import { Coordinates, LocationService } from '../Location/location.service';
 import { BrandBranchService } from '../BrandBranch/brandBranch.service';
+import { InventoryService } from '../Inventory/inventory.service';
 
 const SESSION_TTL_MS = 30 * 60 * 1000;
 const Active = [CheckoutStatus.ready, CheckoutStatus.pending];
@@ -24,6 +25,7 @@ export class CheckoutService {
     private readonly prismaService: PrismaService,
     private readonly locationService: LocationService,
     private readonly brandBranchService: BrandBranchService,
+    private readonly inventoryService: InventoryService,
   ) {}
 
   // ---------------------------------------------------------------
@@ -87,6 +89,112 @@ export class CheckoutService {
       }
       throw e;
     }
+  }
+
+  private combineMatchingProducts(
+    matchingProducts: {
+      branchId: string;
+      variants: { variantId: string; quantity: number }[];
+    }[], // sorted nearest first, each entry lists only the lines that branch covers in full
+    products: { variantId: string; quantity: number }[],
+  ) {
+    // keep only branches that cover at least one ordered line
+    const branches = matchingProducts.filter((b) => b.variants.length > 0);
+
+    for (let i = 0; i < branches.length; i++) {
+      for (let j = i + 1; j < branches.length; j++) {
+        const first = branches[i]; // nearer branch
+        const second = branches[j];
+
+        const firstIds = new Set(first.variants.map((v) => v.variantId));
+        const secondIds = new Set(second.variants.map((v) => v.variantId));
+
+        // together they must cover every ordered variant
+        const coversOrder = products.every(
+          (line) =>
+            firstIds.has(line.variantId) || secondIds.has(line.variantId),
+        );
+        if (!coversOrder) continue;
+
+        // each ordered line goes to exactly one branch: the nearer one if it can cover it
+        const fromFirst = products.filter((line) =>
+          firstIds.has(line.variantId),
+        );
+        const fromSecond = products.filter(
+          (line) => !firstIds.has(line.variantId),
+        );
+
+        // both must ship something; otherwise the first branch alone has everything
+        if (fromFirst.length === 0 || fromSecond.length === 0) continue;
+
+        return [
+          { branchId: first.branchId, variants: fromFirst },
+          { branchId: second.branchId, variants: fromSecond },
+        ];
+      }
+    }
+
+    return null; // no pair of branches covers the order
+  }
+  private async getFulfilledNearestBranch(
+    nearestBranches: {
+      id: string;
+      brandId: string;
+      isActive: boolean;
+      latitude: number;
+      longitude: number;
+    }[],
+    products: { variantId: string; quantity: number }[],
+  ) {
+    // get the nearest branches that have all the products and if one has one push to array with the product that it has
+    // but after the loop if its no branch has all the products return the array thats the matches
+    // array with matching products if no branch has all the products
+    let matchingProducts: {
+      branchId: string;
+      variants: { variantId: string; quantity: number }[];
+    }[] = [];
+    let branchHasAllProducts = null;
+    for (let i = 0; i < nearestBranches.length; i++) {
+      let hasAllProducts = false;
+
+      // get the inventory of the branch
+      for (let j = 0; j < products.length; j++) {
+        const stockAvailable =
+          await this.inventoryService.getBranchVariantStock(
+            nearestBranches[i].id,
+            products[j].variantId,
+          );
+
+        if (stockAvailable.available >= products[j].quantity) {
+          hasAllProducts = true;
+          matchingProducts.filter((entry) => {
+            if (entry.branchId === nearestBranches[i].id) {
+              entry.variants.push({
+                variantId: products[j].variantId,
+                quantity: products[j].quantity,
+              });
+            }
+          });
+        } else {
+          hasAllProducts = false;
+        }
+      }
+      if (hasAllProducts) {
+        branchHasAllProducts = nearestBranches[i];
+        break;
+      }
+    }
+
+    if (!branchHasAllProducts) {
+      return this.combineMatchingProducts(matchingProducts, products);
+    }
+
+    return [
+      {
+        branchId: branchHasAllProducts.id,
+        variants: products,
+      },
+    ];
   }
 
   // ---------------------------------------------------------------
@@ -218,7 +326,10 @@ export class CheckoutService {
       const session = await db.findFirst({ where: { id: checkoutId, userId } });
       if (!session) throw new NotFoundException('Checkout session not found');
 
-      if (!Active.includes(session.status)) {
+      if (
+        session.status !== CheckoutStatus.pending &&
+        session.status !== CheckoutStatus.ready
+      ) {
         throw new ConflictException({ code: 'CHECKOUT_NOT_ACTIVE' });
       }
       if (session.expiresAt < new Date()) {
@@ -245,7 +356,7 @@ export class CheckoutService {
       }
 
       // 4. nearest branch
-      const nearestBranch = await this.locationService.getNearestBranches(
+      const nearestBranchs = await this.locationService.getNearestBranches(
         location,
         session.brandId,
       );
@@ -263,7 +374,13 @@ export class CheckoutService {
       }
 
       // next: fee/ETA, then a conditional updateMany to save
-      return { nearestBranch, addressText };
+      // now i will get the nearest branches that have all the products
+      const getBranchesThatHasProducts = await this.getFulfilledNearestBranch(
+        nearestBranchs,
+        cart.products,
+      );
+
+      return { getBranchesThatHasProducts, addressText };
     } catch (e) {
       console.log(e);
       throw e;

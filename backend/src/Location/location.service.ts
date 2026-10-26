@@ -259,12 +259,9 @@ export class LocationService {
       return distanceA - distanceB;
     });
 
-    return {
-      branchId: sortedBranches[0].id,
-      brandId: sortedBranches[0].brandId,
-      latitude: sortedBranches[0].latitude,
-      langitude: sortedBranches[0].longitude,
-    };
+    // return the nearest 3 branches
+    const nearestBranches = sortedBranches.slice(0, 3);
+    return nearestBranches;
   }
 
   // implement a method to get directions from user location to store location using a mapping service like Google Maps API or OpenStreetMap API. This method can return the route, estimated time, and distance.
