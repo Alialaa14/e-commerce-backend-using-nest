@@ -168,11 +168,14 @@ export class BrandBranchService {
     });
   }
 
-  async deleteBrandBranch(payload: {
-    brandId: string;
-    branchId: string;
-    userId: string;
-  }, transaction?: Prisma.TransactionClient) {
+  async deleteBrandBranch(
+    payload: {
+      brandId: string;
+      branchId: string;
+      userId: string;
+    },
+    transaction?: Prisma.TransactionClient,
+  ) {
     if (transaction) {
       return this.deleteBrandBranchInTransaction(payload, transaction);
     }
@@ -187,9 +190,12 @@ export class BrandBranchService {
     transaction: Prisma.TransactionClient,
   ) {
     // check if the brand is Existing or not
-    const brandExisted = await this.brandModel.getBrandByCondition({
-      id: payload.brandId,
-    }, transaction);
+    const brandExisted = await this.brandModel.getBrandByCondition(
+      {
+        id: payload.brandId,
+      },
+      transaction,
+    );
     if (!brandExisted) {
       throw new NotFoundException('Brand not found');
     }
@@ -231,6 +237,13 @@ export class BrandBranchService {
     transaction?: Prisma.TransactionClient,
   ) {
     return this.brandBranchModel.getBrandBranches(brandId, transaction);
+  }
+
+  async branchesLocations(
+    brandId: string,
+    where: Prisma.BrandBranchWhereInput,
+  ) {
+    return this.brandBranchModel.getBrandBranchesLocations(brandId, where);
   }
 
   async getBrandBranch(brandBranchId: string) {

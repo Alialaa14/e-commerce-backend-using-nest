@@ -79,6 +79,22 @@ export class BrandBranchModel {
     });
   }
 
+  async getBrandBranchesLocations(
+    brandId: string,
+    where?: Prisma.BrandBranchWhereInput,
+  ) {
+    return this.prismaService.prisma.brandBranch.findMany({
+      where: { brandId, deletedAt: null, ...where },
+      select: {
+        id: true,
+        latitude: true,
+        longitude: true,
+        isActive: true,
+        brandId: true,
+      },
+    });
+  }
+
   async getBrandBranchByCondition(
     where: Prisma.BrandBranchWhereInput & { excludeId?: string },
     transaction?: Prisma.TransactionClient,

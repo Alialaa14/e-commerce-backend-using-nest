@@ -204,6 +204,7 @@ model User {
   brandBranchId           String?           @db.Uuid
   branchStaffs            branchStaff[]
   createdStaffInvitations StaffInvitation[] @relation("StaffInvitationCreator")
+  checkoutSessions        CheckoutSession[]
 
   @@unique([provider, providerCustomerId])
   @@index([brandId])
@@ -244,6 +245,8 @@ model Brand {
   inventories      Inventory[] // 1 main + 1 per branch
   branchOrders     BranchOrder[]
   staffInvitations StaffInvitation[]
+  carts            Cart[]
+  checkoutSessions CheckoutSession[]
 
   @@map("brands")
 }
@@ -288,8 +291,8 @@ model BrandBranch {
   code                String   @map("branch_code")
   StaffIds            String[] @db.Uuid
   Staff               User[]
-  latitude            Decimal? @db.Decimal(9, 6)
-  longitude           Decimal? @db.Decimal(9, 6)
+  latitude            Decimal  @db.Decimal(9, 6)
+  longitude           Decimal  @db.Decimal(9, 6)
   placeId             String?  @map("place_id")
   formattedAddress    String?  @map("formatted_address")
   addressLine         String?  @map("address_line")
@@ -316,6 +319,7 @@ model BrandBranch {
   inventory        Inventory? // exactly one inventory per branch
   branchStaffs     branchStaff[]
   staffInvitations StaffInvitation[]
+  checkoutSessions CheckoutSession[]
 
   @@unique([brandId, code])
   @@index([brandId])
@@ -497,6 +501,7 @@ model Review {
 model Cart {
   id           String  @id @default(uuid()) @db.Uuid
   userId       String  @unique @db.Uuid
+  brandId      String? @map("brand_id") @db.Uuid
   discount     Int?
   cartNote     String?
   userLocation String?
@@ -505,7 +510,10 @@ model Cart {
   totalPrice   Int     @default(0)
 
   user     User           @relation(fields: [userId], references: [id])
+  brand    Brand?         @relation(fields: [brandId], references: [id], onDelete: SetNull)
   products CartProducts[]
+
+  @@index([brandId])
 }
 
 model CartProducts {
@@ -519,6 +527,44 @@ model CartProducts {
 
   @@id([cartId, variantId])
   @@map("cart_products")
+}
+
+enum CheckoutStatus {
+  pending // created, address not resolved yet
+  ready // address resolved, can be placed
+  placed // order created
+  expired
+  cancelled
+
+  @@map("checkout_status")
+}
+
+model CheckoutSession {
+  id             String         @id @default(uuid()) @db.Uuid // the checkoutId
+  userId         String         @map("user_id") @db.Uuid
+  status         CheckoutStatus @default(pending)
+  cartHash       String         @map("cart_hash")
+  snapshot       Json // groups, items, prices, branch, fee per group
+  addressLat     Decimal?       @map("address_lat") @db.Decimal(9, 6)
+  addressLng     Decimal?       @map("address_lng") @db.Decimal(9, 6)
+  addressText    String?        @map("address_text")
+  phoneNumber    String?        @map("phone_number")
+  deliveryFee    Int?
+  timeEstimation DateTime?
+  total          Int?
+  expiresAt      DateTime       @map("expires_at") @db.Timestamptz
+  createdAt      DateTime       @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime       @updatedAt @map("updated_at") @db.Timestamptz
+  brandId        String
+  brand          Brand          @relation(fields: [brandId], references: [id])
+  branches       BrandBranch?   @relation(fields: [brandBranchId], references: [id])
+
+  user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  brandBranchId String? @db.Uuid
+
+  @@index([userId, status])
+  @@index([status, expiresAt])
+  @@map("checkout_sessions")
 }
 
 model wishlist {

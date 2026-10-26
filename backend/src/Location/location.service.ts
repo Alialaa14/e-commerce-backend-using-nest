@@ -1,6 +1,7 @@
 import {
   BadGatewayException,
   BadRequestException,
+  ExceptionFilter,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -8,10 +9,11 @@ import {
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
 import { Decimal } from '../generated/prisma/runtime/client';
+import { BrandBranchService } from '../BrandBranch/brandBranch.service';
 
 export interface Coordinates {
-  latitude: number | Decimal;
-  longitude: number | Decimal;
+  latitude: number | Decimal | null;
+  longitude: number | Decimal | null;
 }
 
 export interface LocationDetails {
@@ -48,7 +50,10 @@ interface GoogleGeocodeResult {
 
 @Injectable()
 export class LocationService {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly branchLocations: BrandBranchService,
+  ) {}
 
   async reverseGeocode(coordinates: Coordinates): Promise<LocationDetails> {
     const latitude = Number(coordinates?.latitude);
@@ -216,10 +221,18 @@ export class LocationService {
     return cost;
   }
 
-  getNearestBranches(
+  async getNearestBranches(
     userLocation: Coordinates,
-    branches: Coordinates[],
-  ): Coordinates | null {
+    brandId: string,
+  ): Promise<any> {
+    const brancBranchesLocations = await this.branchLocations.branchesLocations(
+      brandId,
+      {
+        isActive: true,
+        deletedAt: null,
+      },
+    );
+
     if (
       !userLocation ||
       userLocation.latitude == null ||
@@ -229,25 +242,33 @@ export class LocationService {
         'User location must be provided with latitude and longitude',
       );
     }
-    if (!branches || branches.length === 0) {
-      return null; // No branches available
+    if (!brancBranchesLocations || brancBranchesLocations.length === 0) {
+      return new NotFoundException('No branches available'); // No branches available
     }
 
     // Calculate the nearest branches from nearest to farthest
-    const sortedBranches = branches.sort((a, b) => {
-      const distanceA = this.calculateDistance(userLocation, a);
-      const distanceB = this.calculateDistance(userLocation, b);
+    const sortedBranches = brancBranchesLocations.sort((a, b) => {
+      const distanceA = this.calculateDistance(userLocation, {
+        latitude: a.latitude,
+        longitude: a.longitude,
+      });
+      const distanceB = this.calculateDistance(userLocation, {
+        latitude: b.latitude,
+        longitude: b.longitude,
+      });
       return distanceA - distanceB;
     });
 
-    return sortedBranches[0]; // Return the nearest branch
+    return {
+      branchId: sortedBranches[0].id,
+      brandId: sortedBranches[0].brandId,
+      latitude: sortedBranches[0].latitude,
+      langitude: sortedBranches[0].longitude,
+    };
   }
 
   // implement a method to get directions from user location to store location using a mapping service like Google Maps API or OpenStreetMap API. This method can return the route, estimated time, and distance.
-  async getDirections(
-    userLocation: Coordinates,
-    storeLocation: Coordinates,
-  ) {
+  async getDirections(userLocation: Coordinates, storeLocation: Coordinates) {
     try {
       const response = await axios.post(
         'https://routes.googleapis.com/directions/v2:computeRoutes',

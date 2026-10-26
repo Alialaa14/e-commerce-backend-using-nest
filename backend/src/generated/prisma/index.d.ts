@@ -94,6 +94,11 @@ export type Cart = $Result.DefaultSelection<Prisma.$CartPayload>
  */
 export type CartProducts = $Result.DefaultSelection<Prisma.$CartProductsPayload>
 /**
+ * Model CheckoutSession
+ * 
+ */
+export type CheckoutSession = $Result.DefaultSelection<Prisma.$CheckoutSessionPayload>
+/**
  * Model wishlist
  * 
  */
@@ -363,6 +368,17 @@ export const ReservationStatus: {
 
 export type ReservationStatus = (typeof ReservationStatus)[keyof typeof ReservationStatus]
 
+
+export const CheckoutStatus: {
+  pending: 'pending',
+  ready: 'ready',
+  placed: 'placed',
+  expired: 'expired',
+  cancelled: 'cancelled'
+};
+
+export type CheckoutStatus = (typeof CheckoutStatus)[keyof typeof CheckoutStatus]
+
 }
 
 export type Role = $Enums.Role
@@ -436,6 +452,10 @@ export const TransferStatus: typeof $Enums.TransferStatus
 export type ReservationStatus = $Enums.ReservationStatus
 
 export const ReservationStatus: typeof $Enums.ReservationStatus
+
+export type CheckoutStatus = $Enums.CheckoutStatus
+
+export const CheckoutStatus: typeof $Enums.CheckoutStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -717,6 +737,16 @@ export class PrismaClient<
     * ```
     */
   get cartProducts(): Prisma.CartProductsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.checkoutSession`: Exposes CRUD operations for the **CheckoutSession** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CheckoutSessions
+    * const checkoutSessions = await prisma.checkoutSession.findMany()
+    * ```
+    */
+  get checkoutSession(): Prisma.CheckoutSessionDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.wishlist`: Exposes CRUD operations for the **wishlist** model.
@@ -1330,6 +1360,7 @@ export namespace Prisma {
     Review: 'Review',
     Cart: 'Cart',
     CartProducts: 'CartProducts',
+    CheckoutSession: 'CheckoutSession',
     wishlist: 'wishlist',
     Inventory: 'Inventory',
     InventoryStock: 'InventoryStock',
@@ -1360,7 +1391,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "brand" | "brandTransaction" | "branchStaff" | "brandBranch" | "brandDocument" | "staffInvitation" | "brandSocialLink" | "brandFollower" | "category" | "product" | "variant" | "branchVariant" | "review" | "cart" | "cartProducts" | "wishlist" | "inventory" | "inventoryStock" | "stockLedger" | "stockTransfer" | "stockTransferItem" | "reservation" | "variantAvailability" | "productAvailability" | "parentOrder" | "branchOrder" | "orderItem" | "d_Company" | "deliveryCompanyTransaction" | "courier"
+      modelProps: "user" | "brand" | "brandTransaction" | "branchStaff" | "brandBranch" | "brandDocument" | "staffInvitation" | "brandSocialLink" | "brandFollower" | "category" | "product" | "variant" | "branchVariant" | "review" | "cart" | "cartProducts" | "checkoutSession" | "wishlist" | "inventory" | "inventoryStock" | "stockLedger" | "stockTransfer" | "stockTransferItem" | "reservation" | "variantAvailability" | "productAvailability" | "parentOrder" | "branchOrder" | "orderItem" | "d_Company" | "deliveryCompanyTransaction" | "courier"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2545,6 +2576,80 @@ export namespace Prisma {
           count: {
             args: Prisma.CartProductsCountArgs<ExtArgs>
             result: $Utils.Optional<CartProductsCountAggregateOutputType> | number
+          }
+        }
+      }
+      CheckoutSession: {
+        payload: Prisma.$CheckoutSessionPayload<ExtArgs>
+        fields: Prisma.CheckoutSessionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CheckoutSessionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckoutSessionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CheckoutSessionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckoutSessionPayload>
+          }
+          findFirst: {
+            args: Prisma.CheckoutSessionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckoutSessionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CheckoutSessionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckoutSessionPayload>
+          }
+          findMany: {
+            args: Prisma.CheckoutSessionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckoutSessionPayload>[]
+          }
+          create: {
+            args: Prisma.CheckoutSessionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckoutSessionPayload>
+          }
+          createMany: {
+            args: Prisma.CheckoutSessionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CheckoutSessionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckoutSessionPayload>[]
+          }
+          delete: {
+            args: Prisma.CheckoutSessionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckoutSessionPayload>
+          }
+          update: {
+            args: Prisma.CheckoutSessionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckoutSessionPayload>
+          }
+          deleteMany: {
+            args: Prisma.CheckoutSessionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CheckoutSessionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CheckoutSessionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckoutSessionPayload>[]
+          }
+          upsert: {
+            args: Prisma.CheckoutSessionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckoutSessionPayload>
+          }
+          aggregate: {
+            args: Prisma.CheckoutSessionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCheckoutSession>
+          }
+          groupBy: {
+            args: Prisma.CheckoutSessionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CheckoutSessionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CheckoutSessionCountArgs<ExtArgs>
+            result: $Utils.Optional<CheckoutSessionCountAggregateOutputType> | number
           }
         }
       }
@@ -3797,6 +3902,7 @@ export namespace Prisma {
     review?: ReviewOmit
     cart?: CartOmit
     cartProducts?: CartProductsOmit
+    checkoutSession?: CheckoutSessionOmit
     wishlist?: wishlistOmit
     inventory?: InventoryOmit
     inventoryStock?: InventoryStockOmit
@@ -3898,6 +4004,7 @@ export namespace Prisma {
     reviewedBrandDocs: number
     branchStaffs: number
     createdStaffInvitations: number
+    checkoutSessions: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3907,6 +4014,7 @@ export namespace Prisma {
     reviewedBrandDocs?: boolean | UserCountOutputTypeCountReviewedBrandDocsArgs
     branchStaffs?: boolean | UserCountOutputTypeCountBranchStaffsArgs
     createdStaffInvitations?: boolean | UserCountOutputTypeCountCreatedStaffInvitationsArgs
+    checkoutSessions?: boolean | UserCountOutputTypeCountCheckoutSessionsArgs
   }
 
   // Custom InputTypes
@@ -3962,6 +4070,13 @@ export namespace Prisma {
     where?: StaffInvitationWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCheckoutSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CheckoutSessionWhereInput
+  }
+
 
   /**
    * Count Type BrandCountOutputType
@@ -3978,6 +4093,8 @@ export namespace Prisma {
     inventories: number
     branchOrders: number
     staffInvitations: number
+    carts: number
+    checkoutSessions: number
   }
 
   export type BrandCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3991,6 +4108,8 @@ export namespace Prisma {
     inventories?: boolean | BrandCountOutputTypeCountInventoriesArgs
     branchOrders?: boolean | BrandCountOutputTypeCountBranchOrdersArgs
     staffInvitations?: boolean | BrandCountOutputTypeCountStaffInvitationsArgs
+    carts?: boolean | BrandCountOutputTypeCountCartsArgs
+    checkoutSessions?: boolean | BrandCountOutputTypeCountCheckoutSessionsArgs
   }
 
   // Custom InputTypes
@@ -4074,6 +4193,20 @@ export namespace Prisma {
     where?: StaffInvitationWhereInput
   }
 
+  /**
+   * BrandCountOutputType without action
+   */
+  export type BrandCountOutputTypeCountCartsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CartWhereInput
+  }
+
+  /**
+   * BrandCountOutputType without action
+   */
+  export type BrandCountOutputTypeCountCheckoutSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CheckoutSessionWhereInput
+  }
+
 
   /**
    * Count Type BrandBranchCountOutputType
@@ -4086,6 +4219,7 @@ export namespace Prisma {
     orders: number
     branchStaffs: number
     staffInvitations: number
+    checkoutSessions: number
   }
 
   export type BrandBranchCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4095,6 +4229,7 @@ export namespace Prisma {
     orders?: boolean | BrandBranchCountOutputTypeCountOrdersArgs
     branchStaffs?: boolean | BrandBranchCountOutputTypeCountBranchStaffsArgs
     staffInvitations?: boolean | BrandBranchCountOutputTypeCountStaffInvitationsArgs
+    checkoutSessions?: boolean | BrandBranchCountOutputTypeCountCheckoutSessionsArgs
   }
 
   // Custom InputTypes
@@ -4148,6 +4283,13 @@ export namespace Prisma {
    */
   export type BrandBranchCountOutputTypeCountStaffInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: StaffInvitationWhereInput
+  }
+
+  /**
+   * BrandBranchCountOutputType without action
+   */
+  export type BrandBranchCountOutputTypeCountCheckoutSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CheckoutSessionWhereInput
   }
 
 
@@ -5008,6 +5150,7 @@ export namespace Prisma {
     brandBranch?: boolean | User$brandBranchArgs<ExtArgs>
     branchStaffs?: boolean | User$branchStaffsArgs<ExtArgs>
     createdStaffInvitations?: boolean | User$createdStaffInvitationsArgs<ExtArgs>
+    checkoutSessions?: boolean | User$checkoutSessionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -5121,6 +5264,7 @@ export namespace Prisma {
     brandBranch?: boolean | User$brandBranchArgs<ExtArgs>
     branchStaffs?: boolean | User$branchStaffsArgs<ExtArgs>
     createdStaffInvitations?: boolean | User$createdStaffInvitationsArgs<ExtArgs>
+    checkoutSessions?: boolean | User$checkoutSessionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5149,6 +5293,7 @@ export namespace Prisma {
       brandBranch: Prisma.$BrandBranchPayload<ExtArgs> | null
       branchStaffs: Prisma.$branchStaffPayload<ExtArgs>[]
       createdStaffInvitations: Prisma.$StaffInvitationPayload<ExtArgs>[]
+      checkoutSessions: Prisma.$CheckoutSessionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5584,6 +5729,7 @@ export namespace Prisma {
     brandBranch<T extends User$brandBranchArgs<ExtArgs> = {}>(args?: Subset<T, User$brandBranchArgs<ExtArgs>>): Prisma__BrandBranchClient<$Result.GetResult<Prisma.$BrandBranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     branchStaffs<T extends User$branchStaffsArgs<ExtArgs> = {}>(args?: Subset<T, User$branchStaffsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$branchStaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     createdStaffInvitations<T extends User$createdStaffInvitationsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdStaffInvitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    checkoutSessions<T extends User$checkoutSessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$checkoutSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheckoutSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6299,6 +6445,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.checkoutSessions
+   */
+  export type User$checkoutSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckoutSession
+     */
+    select?: CheckoutSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckoutSession
+     */
+    omit?: CheckoutSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckoutSessionInclude<ExtArgs> | null
+    where?: CheckoutSessionWhereInput
+    orderBy?: CheckoutSessionOrderByWithRelationInput | CheckoutSessionOrderByWithRelationInput[]
+    cursor?: CheckoutSessionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CheckoutSessionScalarFieldEnum | CheckoutSessionScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6630,6 +6800,8 @@ export namespace Prisma {
     inventories?: boolean | Brand$inventoriesArgs<ExtArgs>
     branchOrders?: boolean | Brand$branchOrdersArgs<ExtArgs>
     staffInvitations?: boolean | Brand$staffInvitationsArgs<ExtArgs>
+    carts?: boolean | Brand$cartsArgs<ExtArgs>
+    checkoutSessions?: boolean | Brand$checkoutSessionsArgs<ExtArgs>
     _count?: boolean | BrandCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["brand"]>
 
@@ -6708,6 +6880,8 @@ export namespace Prisma {
     inventories?: boolean | Brand$inventoriesArgs<ExtArgs>
     branchOrders?: boolean | Brand$branchOrdersArgs<ExtArgs>
     staffInvitations?: boolean | Brand$staffInvitationsArgs<ExtArgs>
+    carts?: boolean | Brand$cartsArgs<ExtArgs>
+    checkoutSessions?: boolean | Brand$checkoutSessionsArgs<ExtArgs>
     _count?: boolean | BrandCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BrandIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6731,6 +6905,8 @@ export namespace Prisma {
       inventories: Prisma.$InventoryPayload<ExtArgs>[]
       branchOrders: Prisma.$BranchOrderPayload<ExtArgs>[]
       staffInvitations: Prisma.$StaffInvitationPayload<ExtArgs>[]
+      carts: Prisma.$CartPayload<ExtArgs>[]
+      checkoutSessions: Prisma.$CheckoutSessionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7155,6 +7331,8 @@ export namespace Prisma {
     inventories<T extends Brand$inventoriesArgs<ExtArgs> = {}>(args?: Subset<T, Brand$inventoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InventoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     branchOrders<T extends Brand$branchOrdersArgs<ExtArgs> = {}>(args?: Subset<T, Brand$branchOrdersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BranchOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     staffInvitations<T extends Brand$staffInvitationsArgs<ExtArgs> = {}>(args?: Subset<T, Brand$staffInvitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    carts<T extends Brand$cartsArgs<ExtArgs> = {}>(args?: Subset<T, Brand$cartsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CartPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    checkoutSessions<T extends Brand$checkoutSessionsArgs<ExtArgs> = {}>(args?: Subset<T, Brand$checkoutSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheckoutSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7839,6 +8017,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: StaffInvitationScalarFieldEnum | StaffInvitationScalarFieldEnum[]
+  }
+
+  /**
+   * Brand.carts
+   */
+  export type Brand$cartsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cart
+     */
+    select?: CartSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cart
+     */
+    omit?: CartOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CartInclude<ExtArgs> | null
+    where?: CartWhereInput
+    orderBy?: CartOrderByWithRelationInput | CartOrderByWithRelationInput[]
+    cursor?: CartWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CartScalarFieldEnum | CartScalarFieldEnum[]
+  }
+
+  /**
+   * Brand.checkoutSessions
+   */
+  export type Brand$checkoutSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckoutSession
+     */
+    select?: CheckoutSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckoutSession
+     */
+    omit?: CheckoutSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckoutSessionInclude<ExtArgs> | null
+    where?: CheckoutSessionWhereInput
+    orderBy?: CheckoutSessionOrderByWithRelationInput | CheckoutSessionOrderByWithRelationInput[]
+    cursor?: CheckoutSessionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CheckoutSessionScalarFieldEnum | CheckoutSessionScalarFieldEnum[]
   }
 
   /**
@@ -10349,8 +10575,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds: string[]
-    latitude: Decimal | null
-    longitude: Decimal | null
+    latitude: Decimal
+    longitude: Decimal
     placeId: string | null
     formattedAddress: string | null
     addressLine: string | null
@@ -10418,6 +10644,7 @@ export namespace Prisma {
     inventory?: boolean | BrandBranch$inventoryArgs<ExtArgs>
     branchStaffs?: boolean | BrandBranch$branchStaffsArgs<ExtArgs>
     staffInvitations?: boolean | BrandBranch$staffInvitationsArgs<ExtArgs>
+    checkoutSessions?: boolean | BrandBranch$checkoutSessionsArgs<ExtArgs>
     _count?: boolean | BrandBranchCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["brandBranch"]>
 
@@ -10508,6 +10735,7 @@ export namespace Prisma {
     inventory?: boolean | BrandBranch$inventoryArgs<ExtArgs>
     branchStaffs?: boolean | BrandBranch$branchStaffsArgs<ExtArgs>
     staffInvitations?: boolean | BrandBranch$staffInvitationsArgs<ExtArgs>
+    checkoutSessions?: boolean | BrandBranch$checkoutSessionsArgs<ExtArgs>
     _count?: boolean | BrandBranchCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BrandBranchIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10528,6 +10756,7 @@ export namespace Prisma {
       inventory: Prisma.$InventoryPayload<ExtArgs> | null
       branchStaffs: Prisma.$branchStaffPayload<ExtArgs>[]
       staffInvitations: Prisma.$StaffInvitationPayload<ExtArgs>[]
+      checkoutSessions: Prisma.$CheckoutSessionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -10535,8 +10764,8 @@ export namespace Prisma {
       name: string
       code: string
       StaffIds: string[]
-      latitude: Prisma.Decimal | null
-      longitude: Prisma.Decimal | null
+      latitude: Prisma.Decimal
+      longitude: Prisma.Decimal
       placeId: string | null
       formattedAddress: string | null
       addressLine: string | null
@@ -10954,6 +11183,7 @@ export namespace Prisma {
     inventory<T extends BrandBranch$inventoryArgs<ExtArgs> = {}>(args?: Subset<T, BrandBranch$inventoryArgs<ExtArgs>>): Prisma__InventoryClient<$Result.GetResult<Prisma.$InventoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     branchStaffs<T extends BrandBranch$branchStaffsArgs<ExtArgs> = {}>(args?: Subset<T, BrandBranch$branchStaffsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$branchStaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     staffInvitations<T extends BrandBranch$staffInvitationsArgs<ExtArgs> = {}>(args?: Subset<T, BrandBranch$staffInvitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    checkoutSessions<T extends BrandBranch$checkoutSessionsArgs<ExtArgs> = {}>(args?: Subset<T, BrandBranch$checkoutSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheckoutSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11566,6 +11796,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: StaffInvitationScalarFieldEnum | StaffInvitationScalarFieldEnum[]
+  }
+
+  /**
+   * BrandBranch.checkoutSessions
+   */
+  export type BrandBranch$checkoutSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckoutSession
+     */
+    select?: CheckoutSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckoutSession
+     */
+    omit?: CheckoutSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckoutSessionInclude<ExtArgs> | null
+    where?: CheckoutSessionWhereInput
+    orderBy?: CheckoutSessionOrderByWithRelationInput | CheckoutSessionOrderByWithRelationInput[]
+    cursor?: CheckoutSessionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CheckoutSessionScalarFieldEnum | CheckoutSessionScalarFieldEnum[]
   }
 
   /**
@@ -22095,6 +22349,7 @@ export namespace Prisma {
   export type CartMinAggregateOutputType = {
     id: string | null
     userId: string | null
+    brandId: string | null
     discount: number | null
     cartNote: string | null
     userLocation: string | null
@@ -22106,6 +22361,7 @@ export namespace Prisma {
   export type CartMaxAggregateOutputType = {
     id: string | null
     userId: string | null
+    brandId: string | null
     discount: number | null
     cartNote: string | null
     userLocation: string | null
@@ -22117,6 +22373,7 @@ export namespace Prisma {
   export type CartCountAggregateOutputType = {
     id: number
     userId: number
+    brandId: number
     discount: number
     cartNote: number
     userLocation: number
@@ -22142,6 +22399,7 @@ export namespace Prisma {
   export type CartMinAggregateInputType = {
     id?: true
     userId?: true
+    brandId?: true
     discount?: true
     cartNote?: true
     userLocation?: true
@@ -22153,6 +22411,7 @@ export namespace Prisma {
   export type CartMaxAggregateInputType = {
     id?: true
     userId?: true
+    brandId?: true
     discount?: true
     cartNote?: true
     userLocation?: true
@@ -22164,6 +22423,7 @@ export namespace Prisma {
   export type CartCountAggregateInputType = {
     id?: true
     userId?: true
+    brandId?: true
     discount?: true
     cartNote?: true
     userLocation?: true
@@ -22262,6 +22522,7 @@ export namespace Prisma {
   export type CartGroupByOutputType = {
     id: string
     userId: string
+    brandId: string | null
     discount: number | null
     cartNote: string | null
     userLocation: string | null
@@ -22292,6 +22553,7 @@ export namespace Prisma {
   export type CartSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
+    brandId?: boolean
     discount?: boolean
     cartNote?: boolean
     userLocation?: boolean
@@ -22299,6 +22561,7 @@ export namespace Prisma {
     price?: boolean
     totalPrice?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    brand?: boolean | Cart$brandArgs<ExtArgs>
     products?: boolean | Cart$productsArgs<ExtArgs>
     _count?: boolean | CartCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["cart"]>
@@ -22306,6 +22569,7 @@ export namespace Prisma {
   export type CartSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
+    brandId?: boolean
     discount?: boolean
     cartNote?: boolean
     userLocation?: boolean
@@ -22313,11 +22577,13 @@ export namespace Prisma {
     price?: boolean
     totalPrice?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    brand?: boolean | Cart$brandArgs<ExtArgs>
   }, ExtArgs["result"]["cart"]>
 
   export type CartSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
+    brandId?: boolean
     discount?: boolean
     cartNote?: boolean
     userLocation?: boolean
@@ -22325,11 +22591,13 @@ export namespace Prisma {
     price?: boolean
     totalPrice?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    brand?: boolean | Cart$brandArgs<ExtArgs>
   }, ExtArgs["result"]["cart"]>
 
   export type CartSelectScalar = {
     id?: boolean
     userId?: boolean
+    brandId?: boolean
     discount?: boolean
     cartNote?: boolean
     userLocation?: boolean
@@ -22338,28 +22606,33 @@ export namespace Prisma {
     totalPrice?: boolean
   }
 
-  export type CartOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "discount" | "cartNote" | "userLocation" | "userNumber" | "price" | "totalPrice", ExtArgs["result"]["cart"]>
+  export type CartOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "brandId" | "discount" | "cartNote" | "userLocation" | "userNumber" | "price" | "totalPrice", ExtArgs["result"]["cart"]>
   export type CartInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    brand?: boolean | Cart$brandArgs<ExtArgs>
     products?: boolean | Cart$productsArgs<ExtArgs>
     _count?: boolean | CartCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CartIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    brand?: boolean | Cart$brandArgs<ExtArgs>
   }
   export type CartIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    brand?: boolean | Cart$brandArgs<ExtArgs>
   }
 
   export type $CartPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Cart"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
+      brand: Prisma.$BrandPayload<ExtArgs> | null
       products: Prisma.$CartProductsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string
+      brandId: string | null
       discount: number | null
       cartNote: string | null
       userLocation: string | null
@@ -22761,6 +23034,7 @@ export namespace Prisma {
   export interface Prisma__CartClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    brand<T extends Cart$brandArgs<ExtArgs> = {}>(args?: Subset<T, Cart$brandArgs<ExtArgs>>): Prisma__BrandClient<$Result.GetResult<Prisma.$BrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     products<T extends Cart$productsArgs<ExtArgs> = {}>(args?: Subset<T, Cart$productsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CartProductsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -22793,6 +23067,7 @@ export namespace Prisma {
   interface CartFieldRefs {
     readonly id: FieldRef<"Cart", 'String'>
     readonly userId: FieldRef<"Cart", 'String'>
+    readonly brandId: FieldRef<"Cart", 'String'>
     readonly discount: FieldRef<"Cart", 'Int'>
     readonly cartNote: FieldRef<"Cart", 'String'>
     readonly userLocation: FieldRef<"Cart", 'String'>
@@ -23197,6 +23472,25 @@ export namespace Prisma {
      * Limit how many Carts to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Cart.brand
+   */
+  export type Cart$brandArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Brand
+     */
+    select?: BrandSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Brand
+     */
+    omit?: BrandOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandInclude<ExtArgs> | null
+    where?: BrandWhereInput
   }
 
   /**
@@ -24335,6 +24629,1302 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: CartProductsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CheckoutSession
+   */
+
+  export type AggregateCheckoutSession = {
+    _count: CheckoutSessionCountAggregateOutputType | null
+    _avg: CheckoutSessionAvgAggregateOutputType | null
+    _sum: CheckoutSessionSumAggregateOutputType | null
+    _min: CheckoutSessionMinAggregateOutputType | null
+    _max: CheckoutSessionMaxAggregateOutputType | null
+  }
+
+  export type CheckoutSessionAvgAggregateOutputType = {
+    addressLat: Decimal | null
+    addressLng: Decimal | null
+    deliveryFee: number | null
+    total: number | null
+  }
+
+  export type CheckoutSessionSumAggregateOutputType = {
+    addressLat: Decimal | null
+    addressLng: Decimal | null
+    deliveryFee: number | null
+    total: number | null
+  }
+
+  export type CheckoutSessionMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    status: $Enums.CheckoutStatus | null
+    cartHash: string | null
+    addressLat: Decimal | null
+    addressLng: Decimal | null
+    addressText: string | null
+    phoneNumber: string | null
+    deliveryFee: number | null
+    timeEstimation: Date | null
+    total: number | null
+    expiresAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    brandId: string | null
+    brandBranchId: string | null
+  }
+
+  export type CheckoutSessionMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    status: $Enums.CheckoutStatus | null
+    cartHash: string | null
+    addressLat: Decimal | null
+    addressLng: Decimal | null
+    addressText: string | null
+    phoneNumber: string | null
+    deliveryFee: number | null
+    timeEstimation: Date | null
+    total: number | null
+    expiresAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    brandId: string | null
+    brandBranchId: string | null
+  }
+
+  export type CheckoutSessionCountAggregateOutputType = {
+    id: number
+    userId: number
+    status: number
+    cartHash: number
+    snapshot: number
+    addressLat: number
+    addressLng: number
+    addressText: number
+    phoneNumber: number
+    deliveryFee: number
+    timeEstimation: number
+    total: number
+    expiresAt: number
+    createdAt: number
+    updatedAt: number
+    brandId: number
+    brandBranchId: number
+    _all: number
+  }
+
+
+  export type CheckoutSessionAvgAggregateInputType = {
+    addressLat?: true
+    addressLng?: true
+    deliveryFee?: true
+    total?: true
+  }
+
+  export type CheckoutSessionSumAggregateInputType = {
+    addressLat?: true
+    addressLng?: true
+    deliveryFee?: true
+    total?: true
+  }
+
+  export type CheckoutSessionMinAggregateInputType = {
+    id?: true
+    userId?: true
+    status?: true
+    cartHash?: true
+    addressLat?: true
+    addressLng?: true
+    addressText?: true
+    phoneNumber?: true
+    deliveryFee?: true
+    timeEstimation?: true
+    total?: true
+    expiresAt?: true
+    createdAt?: true
+    updatedAt?: true
+    brandId?: true
+    brandBranchId?: true
+  }
+
+  export type CheckoutSessionMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    status?: true
+    cartHash?: true
+    addressLat?: true
+    addressLng?: true
+    addressText?: true
+    phoneNumber?: true
+    deliveryFee?: true
+    timeEstimation?: true
+    total?: true
+    expiresAt?: true
+    createdAt?: true
+    updatedAt?: true
+    brandId?: true
+    brandBranchId?: true
+  }
+
+  export type CheckoutSessionCountAggregateInputType = {
+    id?: true
+    userId?: true
+    status?: true
+    cartHash?: true
+    snapshot?: true
+    addressLat?: true
+    addressLng?: true
+    addressText?: true
+    phoneNumber?: true
+    deliveryFee?: true
+    timeEstimation?: true
+    total?: true
+    expiresAt?: true
+    createdAt?: true
+    updatedAt?: true
+    brandId?: true
+    brandBranchId?: true
+    _all?: true
+  }
+
+  export type CheckoutSessionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CheckoutSession to aggregate.
+     */
+    where?: CheckoutSessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CheckoutSessions to fetch.
+     */
+    orderBy?: CheckoutSessionOrderByWithRelationInput | CheckoutSessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CheckoutSessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CheckoutSessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CheckoutSessions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CheckoutSessions
+    **/
+    _count?: true | CheckoutSessionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CheckoutSessionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CheckoutSessionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CheckoutSessionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CheckoutSessionMaxAggregateInputType
+  }
+
+  export type GetCheckoutSessionAggregateType<T extends CheckoutSessionAggregateArgs> = {
+        [P in keyof T & keyof AggregateCheckoutSession]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCheckoutSession[P]>
+      : GetScalarType<T[P], AggregateCheckoutSession[P]>
+  }
+
+
+
+
+  export type CheckoutSessionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CheckoutSessionWhereInput
+    orderBy?: CheckoutSessionOrderByWithAggregationInput | CheckoutSessionOrderByWithAggregationInput[]
+    by: CheckoutSessionScalarFieldEnum[] | CheckoutSessionScalarFieldEnum
+    having?: CheckoutSessionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CheckoutSessionCountAggregateInputType | true
+    _avg?: CheckoutSessionAvgAggregateInputType
+    _sum?: CheckoutSessionSumAggregateInputType
+    _min?: CheckoutSessionMinAggregateInputType
+    _max?: CheckoutSessionMaxAggregateInputType
+  }
+
+  export type CheckoutSessionGroupByOutputType = {
+    id: string
+    userId: string
+    status: $Enums.CheckoutStatus
+    cartHash: string
+    snapshot: JsonValue
+    addressLat: Decimal | null
+    addressLng: Decimal | null
+    addressText: string | null
+    phoneNumber: string | null
+    deliveryFee: number | null
+    timeEstimation: Date | null
+    total: number | null
+    expiresAt: Date
+    createdAt: Date
+    updatedAt: Date
+    brandId: string
+    brandBranchId: string | null
+    _count: CheckoutSessionCountAggregateOutputType | null
+    _avg: CheckoutSessionAvgAggregateOutputType | null
+    _sum: CheckoutSessionSumAggregateOutputType | null
+    _min: CheckoutSessionMinAggregateOutputType | null
+    _max: CheckoutSessionMaxAggregateOutputType | null
+  }
+
+  type GetCheckoutSessionGroupByPayload<T extends CheckoutSessionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CheckoutSessionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CheckoutSessionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CheckoutSessionGroupByOutputType[P]>
+            : GetScalarType<T[P], CheckoutSessionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CheckoutSessionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    status?: boolean
+    cartHash?: boolean
+    snapshot?: boolean
+    addressLat?: boolean
+    addressLng?: boolean
+    addressText?: boolean
+    phoneNumber?: boolean
+    deliveryFee?: boolean
+    timeEstimation?: boolean
+    total?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    brandId?: boolean
+    brandBranchId?: boolean
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+    branches?: boolean | CheckoutSession$branchesArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["checkoutSession"]>
+
+  export type CheckoutSessionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    status?: boolean
+    cartHash?: boolean
+    snapshot?: boolean
+    addressLat?: boolean
+    addressLng?: boolean
+    addressText?: boolean
+    phoneNumber?: boolean
+    deliveryFee?: boolean
+    timeEstimation?: boolean
+    total?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    brandId?: boolean
+    brandBranchId?: boolean
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+    branches?: boolean | CheckoutSession$branchesArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["checkoutSession"]>
+
+  export type CheckoutSessionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    status?: boolean
+    cartHash?: boolean
+    snapshot?: boolean
+    addressLat?: boolean
+    addressLng?: boolean
+    addressText?: boolean
+    phoneNumber?: boolean
+    deliveryFee?: boolean
+    timeEstimation?: boolean
+    total?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    brandId?: boolean
+    brandBranchId?: boolean
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+    branches?: boolean | CheckoutSession$branchesArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["checkoutSession"]>
+
+  export type CheckoutSessionSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    status?: boolean
+    cartHash?: boolean
+    snapshot?: boolean
+    addressLat?: boolean
+    addressLng?: boolean
+    addressText?: boolean
+    phoneNumber?: boolean
+    deliveryFee?: boolean
+    timeEstimation?: boolean
+    total?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    brandId?: boolean
+    brandBranchId?: boolean
+  }
+
+  export type CheckoutSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "status" | "cartHash" | "snapshot" | "addressLat" | "addressLng" | "addressText" | "phoneNumber" | "deliveryFee" | "timeEstimation" | "total" | "expiresAt" | "createdAt" | "updatedAt" | "brandId" | "brandBranchId", ExtArgs["result"]["checkoutSession"]>
+  export type CheckoutSessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+    branches?: boolean | CheckoutSession$branchesArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CheckoutSessionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+    branches?: boolean | CheckoutSession$branchesArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CheckoutSessionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+    branches?: boolean | CheckoutSession$branchesArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $CheckoutSessionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CheckoutSession"
+    objects: {
+      brand: Prisma.$BrandPayload<ExtArgs>
+      branches: Prisma.$BrandBranchPayload<ExtArgs> | null
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      status: $Enums.CheckoutStatus
+      cartHash: string
+      snapshot: Prisma.JsonValue
+      addressLat: Prisma.Decimal | null
+      addressLng: Prisma.Decimal | null
+      addressText: string | null
+      phoneNumber: string | null
+      deliveryFee: number | null
+      timeEstimation: Date | null
+      total: number | null
+      expiresAt: Date
+      createdAt: Date
+      updatedAt: Date
+      brandId: string
+      brandBranchId: string | null
+    }, ExtArgs["result"]["checkoutSession"]>
+    composites: {}
+  }
+
+  type CheckoutSessionGetPayload<S extends boolean | null | undefined | CheckoutSessionDefaultArgs> = $Result.GetResult<Prisma.$CheckoutSessionPayload, S>
+
+  type CheckoutSessionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CheckoutSessionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CheckoutSessionCountAggregateInputType | true
+    }
+
+  export interface CheckoutSessionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CheckoutSession'], meta: { name: 'CheckoutSession' } }
+    /**
+     * Find zero or one CheckoutSession that matches the filter.
+     * @param {CheckoutSessionFindUniqueArgs} args - Arguments to find a CheckoutSession
+     * @example
+     * // Get one CheckoutSession
+     * const checkoutSession = await prisma.checkoutSession.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CheckoutSessionFindUniqueArgs>(args: SelectSubset<T, CheckoutSessionFindUniqueArgs<ExtArgs>>): Prisma__CheckoutSessionClient<$Result.GetResult<Prisma.$CheckoutSessionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CheckoutSession that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CheckoutSessionFindUniqueOrThrowArgs} args - Arguments to find a CheckoutSession
+     * @example
+     * // Get one CheckoutSession
+     * const checkoutSession = await prisma.checkoutSession.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CheckoutSessionFindUniqueOrThrowArgs>(args: SelectSubset<T, CheckoutSessionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CheckoutSessionClient<$Result.GetResult<Prisma.$CheckoutSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CheckoutSession that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckoutSessionFindFirstArgs} args - Arguments to find a CheckoutSession
+     * @example
+     * // Get one CheckoutSession
+     * const checkoutSession = await prisma.checkoutSession.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CheckoutSessionFindFirstArgs>(args?: SelectSubset<T, CheckoutSessionFindFirstArgs<ExtArgs>>): Prisma__CheckoutSessionClient<$Result.GetResult<Prisma.$CheckoutSessionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CheckoutSession that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckoutSessionFindFirstOrThrowArgs} args - Arguments to find a CheckoutSession
+     * @example
+     * // Get one CheckoutSession
+     * const checkoutSession = await prisma.checkoutSession.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CheckoutSessionFindFirstOrThrowArgs>(args?: SelectSubset<T, CheckoutSessionFindFirstOrThrowArgs<ExtArgs>>): Prisma__CheckoutSessionClient<$Result.GetResult<Prisma.$CheckoutSessionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CheckoutSessions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckoutSessionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CheckoutSessions
+     * const checkoutSessions = await prisma.checkoutSession.findMany()
+     * 
+     * // Get first 10 CheckoutSessions
+     * const checkoutSessions = await prisma.checkoutSession.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const checkoutSessionWithIdOnly = await prisma.checkoutSession.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CheckoutSessionFindManyArgs>(args?: SelectSubset<T, CheckoutSessionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheckoutSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CheckoutSession.
+     * @param {CheckoutSessionCreateArgs} args - Arguments to create a CheckoutSession.
+     * @example
+     * // Create one CheckoutSession
+     * const CheckoutSession = await prisma.checkoutSession.create({
+     *   data: {
+     *     // ... data to create a CheckoutSession
+     *   }
+     * })
+     * 
+     */
+    create<T extends CheckoutSessionCreateArgs>(args: SelectSubset<T, CheckoutSessionCreateArgs<ExtArgs>>): Prisma__CheckoutSessionClient<$Result.GetResult<Prisma.$CheckoutSessionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CheckoutSessions.
+     * @param {CheckoutSessionCreateManyArgs} args - Arguments to create many CheckoutSessions.
+     * @example
+     * // Create many CheckoutSessions
+     * const checkoutSession = await prisma.checkoutSession.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CheckoutSessionCreateManyArgs>(args?: SelectSubset<T, CheckoutSessionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CheckoutSessions and returns the data saved in the database.
+     * @param {CheckoutSessionCreateManyAndReturnArgs} args - Arguments to create many CheckoutSessions.
+     * @example
+     * // Create many CheckoutSessions
+     * const checkoutSession = await prisma.checkoutSession.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CheckoutSessions and only return the `id`
+     * const checkoutSessionWithIdOnly = await prisma.checkoutSession.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CheckoutSessionCreateManyAndReturnArgs>(args?: SelectSubset<T, CheckoutSessionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheckoutSessionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CheckoutSession.
+     * @param {CheckoutSessionDeleteArgs} args - Arguments to delete one CheckoutSession.
+     * @example
+     * // Delete one CheckoutSession
+     * const CheckoutSession = await prisma.checkoutSession.delete({
+     *   where: {
+     *     // ... filter to delete one CheckoutSession
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CheckoutSessionDeleteArgs>(args: SelectSubset<T, CheckoutSessionDeleteArgs<ExtArgs>>): Prisma__CheckoutSessionClient<$Result.GetResult<Prisma.$CheckoutSessionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CheckoutSession.
+     * @param {CheckoutSessionUpdateArgs} args - Arguments to update one CheckoutSession.
+     * @example
+     * // Update one CheckoutSession
+     * const checkoutSession = await prisma.checkoutSession.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CheckoutSessionUpdateArgs>(args: SelectSubset<T, CheckoutSessionUpdateArgs<ExtArgs>>): Prisma__CheckoutSessionClient<$Result.GetResult<Prisma.$CheckoutSessionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CheckoutSessions.
+     * @param {CheckoutSessionDeleteManyArgs} args - Arguments to filter CheckoutSessions to delete.
+     * @example
+     * // Delete a few CheckoutSessions
+     * const { count } = await prisma.checkoutSession.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CheckoutSessionDeleteManyArgs>(args?: SelectSubset<T, CheckoutSessionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CheckoutSessions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckoutSessionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CheckoutSessions
+     * const checkoutSession = await prisma.checkoutSession.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CheckoutSessionUpdateManyArgs>(args: SelectSubset<T, CheckoutSessionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CheckoutSessions and returns the data updated in the database.
+     * @param {CheckoutSessionUpdateManyAndReturnArgs} args - Arguments to update many CheckoutSessions.
+     * @example
+     * // Update many CheckoutSessions
+     * const checkoutSession = await prisma.checkoutSession.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CheckoutSessions and only return the `id`
+     * const checkoutSessionWithIdOnly = await prisma.checkoutSession.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CheckoutSessionUpdateManyAndReturnArgs>(args: SelectSubset<T, CheckoutSessionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheckoutSessionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CheckoutSession.
+     * @param {CheckoutSessionUpsertArgs} args - Arguments to update or create a CheckoutSession.
+     * @example
+     * // Update or create a CheckoutSession
+     * const checkoutSession = await prisma.checkoutSession.upsert({
+     *   create: {
+     *     // ... data to create a CheckoutSession
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CheckoutSession we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CheckoutSessionUpsertArgs>(args: SelectSubset<T, CheckoutSessionUpsertArgs<ExtArgs>>): Prisma__CheckoutSessionClient<$Result.GetResult<Prisma.$CheckoutSessionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CheckoutSessions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckoutSessionCountArgs} args - Arguments to filter CheckoutSessions to count.
+     * @example
+     * // Count the number of CheckoutSessions
+     * const count = await prisma.checkoutSession.count({
+     *   where: {
+     *     // ... the filter for the CheckoutSessions we want to count
+     *   }
+     * })
+    **/
+    count<T extends CheckoutSessionCountArgs>(
+      args?: Subset<T, CheckoutSessionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CheckoutSessionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CheckoutSession.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckoutSessionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CheckoutSessionAggregateArgs>(args: Subset<T, CheckoutSessionAggregateArgs>): Prisma.PrismaPromise<GetCheckoutSessionAggregateType<T>>
+
+    /**
+     * Group by CheckoutSession.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckoutSessionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CheckoutSessionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CheckoutSessionGroupByArgs['orderBy'] }
+        : { orderBy?: CheckoutSessionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CheckoutSessionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCheckoutSessionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CheckoutSession model
+   */
+  readonly fields: CheckoutSessionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CheckoutSession.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CheckoutSessionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    brand<T extends BrandDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BrandDefaultArgs<ExtArgs>>): Prisma__BrandClient<$Result.GetResult<Prisma.$BrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    branches<T extends CheckoutSession$branchesArgs<ExtArgs> = {}>(args?: Subset<T, CheckoutSession$branchesArgs<ExtArgs>>): Prisma__BrandBranchClient<$Result.GetResult<Prisma.$BrandBranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CheckoutSession model
+   */
+  interface CheckoutSessionFieldRefs {
+    readonly id: FieldRef<"CheckoutSession", 'String'>
+    readonly userId: FieldRef<"CheckoutSession", 'String'>
+    readonly status: FieldRef<"CheckoutSession", 'CheckoutStatus'>
+    readonly cartHash: FieldRef<"CheckoutSession", 'String'>
+    readonly snapshot: FieldRef<"CheckoutSession", 'Json'>
+    readonly addressLat: FieldRef<"CheckoutSession", 'Decimal'>
+    readonly addressLng: FieldRef<"CheckoutSession", 'Decimal'>
+    readonly addressText: FieldRef<"CheckoutSession", 'String'>
+    readonly phoneNumber: FieldRef<"CheckoutSession", 'String'>
+    readonly deliveryFee: FieldRef<"CheckoutSession", 'Int'>
+    readonly timeEstimation: FieldRef<"CheckoutSession", 'DateTime'>
+    readonly total: FieldRef<"CheckoutSession", 'Int'>
+    readonly expiresAt: FieldRef<"CheckoutSession", 'DateTime'>
+    readonly createdAt: FieldRef<"CheckoutSession", 'DateTime'>
+    readonly updatedAt: FieldRef<"CheckoutSession", 'DateTime'>
+    readonly brandId: FieldRef<"CheckoutSession", 'String'>
+    readonly brandBranchId: FieldRef<"CheckoutSession", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CheckoutSession findUnique
+   */
+  export type CheckoutSessionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckoutSession
+     */
+    select?: CheckoutSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckoutSession
+     */
+    omit?: CheckoutSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckoutSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which CheckoutSession to fetch.
+     */
+    where: CheckoutSessionWhereUniqueInput
+  }
+
+  /**
+   * CheckoutSession findUniqueOrThrow
+   */
+  export type CheckoutSessionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckoutSession
+     */
+    select?: CheckoutSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckoutSession
+     */
+    omit?: CheckoutSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckoutSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which CheckoutSession to fetch.
+     */
+    where: CheckoutSessionWhereUniqueInput
+  }
+
+  /**
+   * CheckoutSession findFirst
+   */
+  export type CheckoutSessionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckoutSession
+     */
+    select?: CheckoutSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckoutSession
+     */
+    omit?: CheckoutSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckoutSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which CheckoutSession to fetch.
+     */
+    where?: CheckoutSessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CheckoutSessions to fetch.
+     */
+    orderBy?: CheckoutSessionOrderByWithRelationInput | CheckoutSessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CheckoutSessions.
+     */
+    cursor?: CheckoutSessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CheckoutSessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CheckoutSessions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CheckoutSessions.
+     */
+    distinct?: CheckoutSessionScalarFieldEnum | CheckoutSessionScalarFieldEnum[]
+  }
+
+  /**
+   * CheckoutSession findFirstOrThrow
+   */
+  export type CheckoutSessionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckoutSession
+     */
+    select?: CheckoutSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckoutSession
+     */
+    omit?: CheckoutSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckoutSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which CheckoutSession to fetch.
+     */
+    where?: CheckoutSessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CheckoutSessions to fetch.
+     */
+    orderBy?: CheckoutSessionOrderByWithRelationInput | CheckoutSessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CheckoutSessions.
+     */
+    cursor?: CheckoutSessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CheckoutSessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CheckoutSessions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CheckoutSessions.
+     */
+    distinct?: CheckoutSessionScalarFieldEnum | CheckoutSessionScalarFieldEnum[]
+  }
+
+  /**
+   * CheckoutSession findMany
+   */
+  export type CheckoutSessionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckoutSession
+     */
+    select?: CheckoutSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckoutSession
+     */
+    omit?: CheckoutSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckoutSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which CheckoutSessions to fetch.
+     */
+    where?: CheckoutSessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CheckoutSessions to fetch.
+     */
+    orderBy?: CheckoutSessionOrderByWithRelationInput | CheckoutSessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CheckoutSessions.
+     */
+    cursor?: CheckoutSessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CheckoutSessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CheckoutSessions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CheckoutSessions.
+     */
+    distinct?: CheckoutSessionScalarFieldEnum | CheckoutSessionScalarFieldEnum[]
+  }
+
+  /**
+   * CheckoutSession create
+   */
+  export type CheckoutSessionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckoutSession
+     */
+    select?: CheckoutSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckoutSession
+     */
+    omit?: CheckoutSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckoutSessionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CheckoutSession.
+     */
+    data: XOR<CheckoutSessionCreateInput, CheckoutSessionUncheckedCreateInput>
+  }
+
+  /**
+   * CheckoutSession createMany
+   */
+  export type CheckoutSessionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CheckoutSessions.
+     */
+    data: CheckoutSessionCreateManyInput | CheckoutSessionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CheckoutSession createManyAndReturn
+   */
+  export type CheckoutSessionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckoutSession
+     */
+    select?: CheckoutSessionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckoutSession
+     */
+    omit?: CheckoutSessionOmit<ExtArgs> | null
+    /**
+     * The data used to create many CheckoutSessions.
+     */
+    data: CheckoutSessionCreateManyInput | CheckoutSessionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckoutSessionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CheckoutSession update
+   */
+  export type CheckoutSessionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckoutSession
+     */
+    select?: CheckoutSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckoutSession
+     */
+    omit?: CheckoutSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckoutSessionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CheckoutSession.
+     */
+    data: XOR<CheckoutSessionUpdateInput, CheckoutSessionUncheckedUpdateInput>
+    /**
+     * Choose, which CheckoutSession to update.
+     */
+    where: CheckoutSessionWhereUniqueInput
+  }
+
+  /**
+   * CheckoutSession updateMany
+   */
+  export type CheckoutSessionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CheckoutSessions.
+     */
+    data: XOR<CheckoutSessionUpdateManyMutationInput, CheckoutSessionUncheckedUpdateManyInput>
+    /**
+     * Filter which CheckoutSessions to update
+     */
+    where?: CheckoutSessionWhereInput
+    /**
+     * Limit how many CheckoutSessions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CheckoutSession updateManyAndReturn
+   */
+  export type CheckoutSessionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckoutSession
+     */
+    select?: CheckoutSessionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckoutSession
+     */
+    omit?: CheckoutSessionOmit<ExtArgs> | null
+    /**
+     * The data used to update CheckoutSessions.
+     */
+    data: XOR<CheckoutSessionUpdateManyMutationInput, CheckoutSessionUncheckedUpdateManyInput>
+    /**
+     * Filter which CheckoutSessions to update
+     */
+    where?: CheckoutSessionWhereInput
+    /**
+     * Limit how many CheckoutSessions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckoutSessionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CheckoutSession upsert
+   */
+  export type CheckoutSessionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckoutSession
+     */
+    select?: CheckoutSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckoutSession
+     */
+    omit?: CheckoutSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckoutSessionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CheckoutSession to update in case it exists.
+     */
+    where: CheckoutSessionWhereUniqueInput
+    /**
+     * In case the CheckoutSession found by the `where` argument doesn't exist, create a new CheckoutSession with this data.
+     */
+    create: XOR<CheckoutSessionCreateInput, CheckoutSessionUncheckedCreateInput>
+    /**
+     * In case the CheckoutSession was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CheckoutSessionUpdateInput, CheckoutSessionUncheckedUpdateInput>
+  }
+
+  /**
+   * CheckoutSession delete
+   */
+  export type CheckoutSessionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckoutSession
+     */
+    select?: CheckoutSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckoutSession
+     */
+    omit?: CheckoutSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckoutSessionInclude<ExtArgs> | null
+    /**
+     * Filter which CheckoutSession to delete.
+     */
+    where: CheckoutSessionWhereUniqueInput
+  }
+
+  /**
+   * CheckoutSession deleteMany
+   */
+  export type CheckoutSessionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CheckoutSessions to delete
+     */
+    where?: CheckoutSessionWhereInput
+    /**
+     * Limit how many CheckoutSessions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CheckoutSession.branches
+   */
+  export type CheckoutSession$branchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandBranch
+     */
+    select?: BrandBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandBranch
+     */
+    omit?: BrandBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandBranchInclude<ExtArgs> | null
+    where?: BrandBranchWhereInput
+  }
+
+  /**
+   * CheckoutSession without action
+   */
+  export type CheckoutSessionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckoutSession
+     */
+    select?: CheckoutSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckoutSession
+     */
+    omit?: CheckoutSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckoutSessionInclude<ExtArgs> | null
   }
 
 
@@ -41914,6 +43504,7 @@ export namespace Prisma {
   export const CartScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
+    brandId: 'brandId',
     discount: 'discount',
     cartNote: 'cartNote',
     userLocation: 'userLocation',
@@ -41933,6 +43524,29 @@ export namespace Prisma {
   };
 
   export type CartProductsScalarFieldEnum = (typeof CartProductsScalarFieldEnum)[keyof typeof CartProductsScalarFieldEnum]
+
+
+  export const CheckoutSessionScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    status: 'status',
+    cartHash: 'cartHash',
+    snapshot: 'snapshot',
+    addressLat: 'addressLat',
+    addressLng: 'addressLng',
+    addressText: 'addressText',
+    phoneNumber: 'phoneNumber',
+    deliveryFee: 'deliveryFee',
+    timeEstimation: 'timeEstimation',
+    total: 'total',
+    expiresAt: 'expiresAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    brandId: 'brandId',
+    brandBranchId: 'brandBranchId'
+  };
+
+  export type CheckoutSessionScalarFieldEnum = (typeof CheckoutSessionScalarFieldEnum)[keyof typeof CheckoutSessionScalarFieldEnum]
 
 
   export const WishlistScalarFieldEnum: {
@@ -42416,6 +44030,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'CheckoutStatus'
+   */
+  export type EnumCheckoutStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CheckoutStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'CheckoutStatus[]'
+   */
+  export type ListEnumCheckoutStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CheckoutStatus[]'>
+    
+
+
+  /**
    * Reference to a field of type 'inventoryType'
    */
   export type EnuminventoryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'inventoryType'>
@@ -42587,6 +44215,7 @@ export namespace Prisma {
     brandBranch?: XOR<BrandBranchNullableScalarRelationFilter, BrandBranchWhereInput> | null
     branchStaffs?: BranchStaffListRelationFilter
     createdStaffInvitations?: StaffInvitationListRelationFilter
+    checkoutSessions?: CheckoutSessionListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -42629,6 +44258,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchOrderByWithRelationInput
     branchStaffs?: branchStaffOrderByRelationAggregateInput
     createdStaffInvitations?: StaffInvitationOrderByRelationAggregateInput
+    checkoutSessions?: CheckoutSessionOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -42675,6 +44305,7 @@ export namespace Prisma {
     brandBranch?: XOR<BrandBranchNullableScalarRelationFilter, BrandBranchWhereInput> | null
     branchStaffs?: BranchStaffListRelationFilter
     createdStaffInvitations?: StaffInvitationListRelationFilter
+    checkoutSessions?: CheckoutSessionListRelationFilter
   }, "id" | "phone" | "email" | "accountId" | "provider_providerCustomerId">
 
   export type UserOrderByWithAggregationInput = {
@@ -42777,6 +44408,8 @@ export namespace Prisma {
     inventories?: InventoryListRelationFilter
     branchOrders?: BranchOrderListRelationFilter
     staffInvitations?: StaffInvitationListRelationFilter
+    carts?: CartListRelationFilter
+    checkoutSessions?: CheckoutSessionListRelationFilter
   }
 
   export type BrandOrderByWithRelationInput = {
@@ -42808,6 +44441,8 @@ export namespace Prisma {
     inventories?: InventoryOrderByRelationAggregateInput
     branchOrders?: BranchOrderOrderByRelationAggregateInput
     staffInvitations?: StaffInvitationOrderByRelationAggregateInput
+    carts?: CartOrderByRelationAggregateInput
+    checkoutSessions?: CheckoutSessionOrderByRelationAggregateInput
   }
 
   export type BrandWhereUniqueInput = Prisma.AtLeast<{
@@ -42842,6 +44477,8 @@ export namespace Prisma {
     inventories?: InventoryListRelationFilter
     branchOrders?: BranchOrderListRelationFilter
     staffInvitations?: StaffInvitationListRelationFilter
+    carts?: CartListRelationFilter
+    checkoutSessions?: CheckoutSessionListRelationFilter
   }, "id" | "userId" | "slug">
 
   export type BrandOrderByWithAggregationInput = {
@@ -43037,8 +44674,8 @@ export namespace Prisma {
     name?: StringFilter<"BrandBranch"> | string
     code?: StringFilter<"BrandBranch"> | string
     StaffIds?: StringNullableListFilter<"BrandBranch">
-    latitude?: DecimalNullableFilter<"BrandBranch"> | Decimal | DecimalJsLike | number | string | null
-    longitude?: DecimalNullableFilter<"BrandBranch"> | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFilter<"BrandBranch"> | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFilter<"BrandBranch"> | Decimal | DecimalJsLike | number | string
     placeId?: StringNullableFilter<"BrandBranch"> | string | null
     formattedAddress?: StringNullableFilter<"BrandBranch"> | string | null
     addressLine?: StringNullableFilter<"BrandBranch"> | string | null
@@ -43062,6 +44699,7 @@ export namespace Prisma {
     inventory?: XOR<InventoryNullableScalarRelationFilter, InventoryWhereInput> | null
     branchStaffs?: BranchStaffListRelationFilter
     staffInvitations?: StaffInvitationListRelationFilter
+    checkoutSessions?: CheckoutSessionListRelationFilter
   }
 
   export type BrandBranchOrderByWithRelationInput = {
@@ -43070,8 +44708,8 @@ export namespace Prisma {
     name?: SortOrder
     code?: SortOrder
     StaffIds?: SortOrder
-    latitude?: SortOrderInput | SortOrder
-    longitude?: SortOrderInput | SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
     placeId?: SortOrderInput | SortOrder
     formattedAddress?: SortOrderInput | SortOrder
     addressLine?: SortOrderInput | SortOrder
@@ -43095,6 +44733,7 @@ export namespace Prisma {
     inventory?: InventoryOrderByWithRelationInput
     branchStaffs?: branchStaffOrderByRelationAggregateInput
     staffInvitations?: StaffInvitationOrderByRelationAggregateInput
+    checkoutSessions?: CheckoutSessionOrderByRelationAggregateInput
   }
 
   export type BrandBranchWhereUniqueInput = Prisma.AtLeast<{
@@ -43107,8 +44746,8 @@ export namespace Prisma {
     name?: StringFilter<"BrandBranch"> | string
     code?: StringFilter<"BrandBranch"> | string
     StaffIds?: StringNullableListFilter<"BrandBranch">
-    latitude?: DecimalNullableFilter<"BrandBranch"> | Decimal | DecimalJsLike | number | string | null
-    longitude?: DecimalNullableFilter<"BrandBranch"> | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFilter<"BrandBranch"> | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFilter<"BrandBranch"> | Decimal | DecimalJsLike | number | string
     placeId?: StringNullableFilter<"BrandBranch"> | string | null
     formattedAddress?: StringNullableFilter<"BrandBranch"> | string | null
     addressLine?: StringNullableFilter<"BrandBranch"> | string | null
@@ -43132,6 +44771,7 @@ export namespace Prisma {
     inventory?: XOR<InventoryNullableScalarRelationFilter, InventoryWhereInput> | null
     branchStaffs?: BranchStaffListRelationFilter
     staffInvitations?: StaffInvitationListRelationFilter
+    checkoutSessions?: CheckoutSessionListRelationFilter
   }, "id" | "brandId_code">
 
   export type BrandBranchOrderByWithAggregationInput = {
@@ -43140,8 +44780,8 @@ export namespace Prisma {
     name?: SortOrder
     code?: SortOrder
     StaffIds?: SortOrder
-    latitude?: SortOrderInput | SortOrder
-    longitude?: SortOrderInput | SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
     placeId?: SortOrderInput | SortOrder
     formattedAddress?: SortOrderInput | SortOrder
     addressLine?: SortOrderInput | SortOrder
@@ -43173,8 +44813,8 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"BrandBranch"> | string
     code?: StringWithAggregatesFilter<"BrandBranch"> | string
     StaffIds?: StringNullableListFilter<"BrandBranch">
-    latitude?: DecimalNullableWithAggregatesFilter<"BrandBranch"> | Decimal | DecimalJsLike | number | string | null
-    longitude?: DecimalNullableWithAggregatesFilter<"BrandBranch"> | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalWithAggregatesFilter<"BrandBranch"> | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalWithAggregatesFilter<"BrandBranch"> | Decimal | DecimalJsLike | number | string
     placeId?: StringNullableWithAggregatesFilter<"BrandBranch"> | string | null
     formattedAddress?: StringNullableWithAggregatesFilter<"BrandBranch"> | string | null
     addressLine?: StringNullableWithAggregatesFilter<"BrandBranch"> | string | null
@@ -43891,6 +45531,7 @@ export namespace Prisma {
     NOT?: CartWhereInput | CartWhereInput[]
     id?: UuidFilter<"Cart"> | string
     userId?: UuidFilter<"Cart"> | string
+    brandId?: UuidNullableFilter<"Cart"> | string | null
     discount?: IntNullableFilter<"Cart"> | number | null
     cartNote?: StringNullableFilter<"Cart"> | string | null
     userLocation?: StringNullableFilter<"Cart"> | string | null
@@ -43898,12 +45539,14 @@ export namespace Prisma {
     price?: IntFilter<"Cart"> | number
     totalPrice?: IntFilter<"Cart"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    brand?: XOR<BrandNullableScalarRelationFilter, BrandWhereInput> | null
     products?: CartProductsListRelationFilter
   }
 
   export type CartOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
+    brandId?: SortOrderInput | SortOrder
     discount?: SortOrderInput | SortOrder
     cartNote?: SortOrderInput | SortOrder
     userLocation?: SortOrderInput | SortOrder
@@ -43911,6 +45554,7 @@ export namespace Prisma {
     price?: SortOrder
     totalPrice?: SortOrder
     user?: UserOrderByWithRelationInput
+    brand?: BrandOrderByWithRelationInput
     products?: CartProductsOrderByRelationAggregateInput
   }
 
@@ -43920,6 +45564,7 @@ export namespace Prisma {
     AND?: CartWhereInput | CartWhereInput[]
     OR?: CartWhereInput[]
     NOT?: CartWhereInput | CartWhereInput[]
+    brandId?: UuidNullableFilter<"Cart"> | string | null
     discount?: IntNullableFilter<"Cart"> | number | null
     cartNote?: StringNullableFilter<"Cart"> | string | null
     userLocation?: StringNullableFilter<"Cart"> | string | null
@@ -43927,12 +45572,14 @@ export namespace Prisma {
     price?: IntFilter<"Cart"> | number
     totalPrice?: IntFilter<"Cart"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    brand?: XOR<BrandNullableScalarRelationFilter, BrandWhereInput> | null
     products?: CartProductsListRelationFilter
   }, "id" | "userId">
 
   export type CartOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
+    brandId?: SortOrderInput | SortOrder
     discount?: SortOrderInput | SortOrder
     cartNote?: SortOrderInput | SortOrder
     userLocation?: SortOrderInput | SortOrder
@@ -43952,6 +45599,7 @@ export namespace Prisma {
     NOT?: CartScalarWhereWithAggregatesInput | CartScalarWhereWithAggregatesInput[]
     id?: UuidWithAggregatesFilter<"Cart"> | string
     userId?: UuidWithAggregatesFilter<"Cart"> | string
+    brandId?: UuidNullableWithAggregatesFilter<"Cart"> | string | null
     discount?: IntNullableWithAggregatesFilter<"Cart"> | number | null
     cartNote?: StringNullableWithAggregatesFilter<"Cart"> | string | null
     userLocation?: StringNullableWithAggregatesFilter<"Cart"> | string | null
@@ -44014,6 +45662,129 @@ export namespace Prisma {
     variantId?: UuidWithAggregatesFilter<"CartProducts"> | string
     quantity?: IntWithAggregatesFilter<"CartProducts"> | number
     price?: IntWithAggregatesFilter<"CartProducts"> | number
+  }
+
+  export type CheckoutSessionWhereInput = {
+    AND?: CheckoutSessionWhereInput | CheckoutSessionWhereInput[]
+    OR?: CheckoutSessionWhereInput[]
+    NOT?: CheckoutSessionWhereInput | CheckoutSessionWhereInput[]
+    id?: UuidFilter<"CheckoutSession"> | string
+    userId?: UuidFilter<"CheckoutSession"> | string
+    status?: EnumCheckoutStatusFilter<"CheckoutSession"> | $Enums.CheckoutStatus
+    cartHash?: StringFilter<"CheckoutSession"> | string
+    snapshot?: JsonFilter<"CheckoutSession">
+    addressLat?: DecimalNullableFilter<"CheckoutSession"> | Decimal | DecimalJsLike | number | string | null
+    addressLng?: DecimalNullableFilter<"CheckoutSession"> | Decimal | DecimalJsLike | number | string | null
+    addressText?: StringNullableFilter<"CheckoutSession"> | string | null
+    phoneNumber?: StringNullableFilter<"CheckoutSession"> | string | null
+    deliveryFee?: IntNullableFilter<"CheckoutSession"> | number | null
+    timeEstimation?: DateTimeNullableFilter<"CheckoutSession"> | Date | string | null
+    total?: IntNullableFilter<"CheckoutSession"> | number | null
+    expiresAt?: DateTimeFilter<"CheckoutSession"> | Date | string
+    createdAt?: DateTimeFilter<"CheckoutSession"> | Date | string
+    updatedAt?: DateTimeFilter<"CheckoutSession"> | Date | string
+    brandId?: StringFilter<"CheckoutSession"> | string
+    brandBranchId?: UuidNullableFilter<"CheckoutSession"> | string | null
+    brand?: XOR<BrandScalarRelationFilter, BrandWhereInput>
+    branches?: XOR<BrandBranchNullableScalarRelationFilter, BrandBranchWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type CheckoutSessionOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    status?: SortOrder
+    cartHash?: SortOrder
+    snapshot?: SortOrder
+    addressLat?: SortOrderInput | SortOrder
+    addressLng?: SortOrderInput | SortOrder
+    addressText?: SortOrderInput | SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+    deliveryFee?: SortOrderInput | SortOrder
+    timeEstimation?: SortOrderInput | SortOrder
+    total?: SortOrderInput | SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    brandId?: SortOrder
+    brandBranchId?: SortOrderInput | SortOrder
+    brand?: BrandOrderByWithRelationInput
+    branches?: BrandBranchOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type CheckoutSessionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CheckoutSessionWhereInput | CheckoutSessionWhereInput[]
+    OR?: CheckoutSessionWhereInput[]
+    NOT?: CheckoutSessionWhereInput | CheckoutSessionWhereInput[]
+    userId?: UuidFilter<"CheckoutSession"> | string
+    status?: EnumCheckoutStatusFilter<"CheckoutSession"> | $Enums.CheckoutStatus
+    cartHash?: StringFilter<"CheckoutSession"> | string
+    snapshot?: JsonFilter<"CheckoutSession">
+    addressLat?: DecimalNullableFilter<"CheckoutSession"> | Decimal | DecimalJsLike | number | string | null
+    addressLng?: DecimalNullableFilter<"CheckoutSession"> | Decimal | DecimalJsLike | number | string | null
+    addressText?: StringNullableFilter<"CheckoutSession"> | string | null
+    phoneNumber?: StringNullableFilter<"CheckoutSession"> | string | null
+    deliveryFee?: IntNullableFilter<"CheckoutSession"> | number | null
+    timeEstimation?: DateTimeNullableFilter<"CheckoutSession"> | Date | string | null
+    total?: IntNullableFilter<"CheckoutSession"> | number | null
+    expiresAt?: DateTimeFilter<"CheckoutSession"> | Date | string
+    createdAt?: DateTimeFilter<"CheckoutSession"> | Date | string
+    updatedAt?: DateTimeFilter<"CheckoutSession"> | Date | string
+    brandId?: StringFilter<"CheckoutSession"> | string
+    brandBranchId?: UuidNullableFilter<"CheckoutSession"> | string | null
+    brand?: XOR<BrandScalarRelationFilter, BrandWhereInput>
+    branches?: XOR<BrandBranchNullableScalarRelationFilter, BrandBranchWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type CheckoutSessionOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    status?: SortOrder
+    cartHash?: SortOrder
+    snapshot?: SortOrder
+    addressLat?: SortOrderInput | SortOrder
+    addressLng?: SortOrderInput | SortOrder
+    addressText?: SortOrderInput | SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+    deliveryFee?: SortOrderInput | SortOrder
+    timeEstimation?: SortOrderInput | SortOrder
+    total?: SortOrderInput | SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    brandId?: SortOrder
+    brandBranchId?: SortOrderInput | SortOrder
+    _count?: CheckoutSessionCountOrderByAggregateInput
+    _avg?: CheckoutSessionAvgOrderByAggregateInput
+    _max?: CheckoutSessionMaxOrderByAggregateInput
+    _min?: CheckoutSessionMinOrderByAggregateInput
+    _sum?: CheckoutSessionSumOrderByAggregateInput
+  }
+
+  export type CheckoutSessionScalarWhereWithAggregatesInput = {
+    AND?: CheckoutSessionScalarWhereWithAggregatesInput | CheckoutSessionScalarWhereWithAggregatesInput[]
+    OR?: CheckoutSessionScalarWhereWithAggregatesInput[]
+    NOT?: CheckoutSessionScalarWhereWithAggregatesInput | CheckoutSessionScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"CheckoutSession"> | string
+    userId?: UuidWithAggregatesFilter<"CheckoutSession"> | string
+    status?: EnumCheckoutStatusWithAggregatesFilter<"CheckoutSession"> | $Enums.CheckoutStatus
+    cartHash?: StringWithAggregatesFilter<"CheckoutSession"> | string
+    snapshot?: JsonWithAggregatesFilter<"CheckoutSession">
+    addressLat?: DecimalNullableWithAggregatesFilter<"CheckoutSession"> | Decimal | DecimalJsLike | number | string | null
+    addressLng?: DecimalNullableWithAggregatesFilter<"CheckoutSession"> | Decimal | DecimalJsLike | number | string | null
+    addressText?: StringNullableWithAggregatesFilter<"CheckoutSession"> | string | null
+    phoneNumber?: StringNullableWithAggregatesFilter<"CheckoutSession"> | string | null
+    deliveryFee?: IntNullableWithAggregatesFilter<"CheckoutSession"> | number | null
+    timeEstimation?: DateTimeNullableWithAggregatesFilter<"CheckoutSession"> | Date | string | null
+    total?: IntNullableWithAggregatesFilter<"CheckoutSession"> | number | null
+    expiresAt?: DateTimeWithAggregatesFilter<"CheckoutSession"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"CheckoutSession"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CheckoutSession"> | Date | string
+    brandId?: StringWithAggregatesFilter<"CheckoutSession"> | string
+    brandBranchId?: UuidNullableWithAggregatesFilter<"CheckoutSession"> | string | null
   }
 
   export type wishlistWhereInput = {
@@ -45160,6 +46931,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -45199,6 +46971,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -45238,6 +47011,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -45277,6 +47051,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -45394,6 +47169,8 @@ export namespace Prisma {
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
+    carts?: CartCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateInput = {
@@ -45424,6 +47201,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
+    carts?: CartUncheckedCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUpdateInput = {
@@ -45454,6 +47233,8 @@ export namespace Prisma {
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
+    carts?: CartUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateInput = {
@@ -45484,6 +47265,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
+    carts?: CartUncheckedUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandCreateManyInput = {
@@ -45687,8 +47470,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -45712,6 +47495,7 @@ export namespace Prisma {
     inventory?: InventoryCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffCreateNestedManyWithoutBranchInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchUncheckedCreateInput = {
@@ -45720,8 +47504,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -45744,6 +47528,7 @@ export namespace Prisma {
     inventory?: InventoryUncheckedCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutBranchInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchUpdateInput = {
@@ -45751,8 +47536,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45776,6 +47561,7 @@ export namespace Prisma {
     inventory?: InventoryUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutBranchNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBranchesNestedInput
   }
 
   export type BrandBranchUncheckedUpdateInput = {
@@ -45784,8 +47570,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45808,6 +47594,7 @@ export namespace Prisma {
     inventory?: InventoryUncheckedUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutBranchNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBranchesNestedInput
   }
 
   export type BrandBranchCreateManyInput = {
@@ -45816,8 +47603,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -45840,8 +47627,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45865,8 +47652,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46616,12 +48403,14 @@ export namespace Prisma {
     price?: number
     totalPrice?: number
     user: UserCreateNestedOneWithoutCartInput
+    brand?: BrandCreateNestedOneWithoutCartsInput
     products?: CartProductsCreateNestedManyWithoutCartInput
   }
 
   export type CartUncheckedCreateInput = {
     id?: string
     userId: string
+    brandId?: string | null
     discount?: number | null
     cartNote?: string | null
     userLocation?: string | null
@@ -46640,12 +48429,14 @@ export namespace Prisma {
     price?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutCartNestedInput
+    brand?: BrandUpdateOneWithoutCartsNestedInput
     products?: CartProductsUpdateManyWithoutCartNestedInput
   }
 
   export type CartUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
     discount?: NullableIntFieldUpdateOperationsInput | number | null
     cartNote?: NullableStringFieldUpdateOperationsInput | string | null
     userLocation?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46658,6 +48449,7 @@ export namespace Prisma {
   export type CartCreateManyInput = {
     id?: string
     userId: string
+    brandId?: string | null
     discount?: number | null
     cartNote?: string | null
     userLocation?: string | null
@@ -46679,6 +48471,7 @@ export namespace Prisma {
   export type CartUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
     discount?: NullableIntFieldUpdateOperationsInput | number | null
     cartNote?: NullableStringFieldUpdateOperationsInput | string | null
     userLocation?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46732,6 +48525,143 @@ export namespace Prisma {
     variantId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     price?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type CheckoutSessionCreateInput = {
+    id?: string
+    status?: $Enums.CheckoutStatus
+    cartHash: string
+    snapshot: JsonNullValueInput | InputJsonValue
+    addressLat?: Decimal | DecimalJsLike | number | string | null
+    addressLng?: Decimal | DecimalJsLike | number | string | null
+    addressText?: string | null
+    phoneNumber?: string | null
+    deliveryFee?: number | null
+    timeEstimation?: Date | string | null
+    total?: number | null
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    brand: BrandCreateNestedOneWithoutCheckoutSessionsInput
+    branches?: BrandBranchCreateNestedOneWithoutCheckoutSessionsInput
+    user: UserCreateNestedOneWithoutCheckoutSessionsInput
+  }
+
+  export type CheckoutSessionUncheckedCreateInput = {
+    id?: string
+    userId: string
+    status?: $Enums.CheckoutStatus
+    cartHash: string
+    snapshot: JsonNullValueInput | InputJsonValue
+    addressLat?: Decimal | DecimalJsLike | number | string | null
+    addressLng?: Decimal | DecimalJsLike | number | string | null
+    addressText?: string | null
+    phoneNumber?: string | null
+    deliveryFee?: number | null
+    timeEstimation?: Date | string | null
+    total?: number | null
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    brandId: string
+    brandBranchId?: string | null
+  }
+
+  export type CheckoutSessionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
+    cartHash?: StringFieldUpdateOperationsInput | string
+    snapshot?: JsonNullValueInput | InputJsonValue
+    addressLat?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressLng?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressText?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryFee?: NullableIntFieldUpdateOperationsInput | number | null
+    timeEstimation?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    total?: NullableIntFieldUpdateOperationsInput | number | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brand?: BrandUpdateOneRequiredWithoutCheckoutSessionsNestedInput
+    branches?: BrandBranchUpdateOneWithoutCheckoutSessionsNestedInput
+    user?: UserUpdateOneRequiredWithoutCheckoutSessionsNestedInput
+  }
+
+  export type CheckoutSessionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    status?: EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
+    cartHash?: StringFieldUpdateOperationsInput | string
+    snapshot?: JsonNullValueInput | InputJsonValue
+    addressLat?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressLng?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressText?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryFee?: NullableIntFieldUpdateOperationsInput | number | null
+    timeEstimation?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    total?: NullableIntFieldUpdateOperationsInput | number | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandId?: StringFieldUpdateOperationsInput | string
+    brandBranchId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CheckoutSessionCreateManyInput = {
+    id?: string
+    userId: string
+    status?: $Enums.CheckoutStatus
+    cartHash: string
+    snapshot: JsonNullValueInput | InputJsonValue
+    addressLat?: Decimal | DecimalJsLike | number | string | null
+    addressLng?: Decimal | DecimalJsLike | number | string | null
+    addressText?: string | null
+    phoneNumber?: string | null
+    deliveryFee?: number | null
+    timeEstimation?: Date | string | null
+    total?: number | null
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    brandId: string
+    brandBranchId?: string | null
+  }
+
+  export type CheckoutSessionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
+    cartHash?: StringFieldUpdateOperationsInput | string
+    snapshot?: JsonNullValueInput | InputJsonValue
+    addressLat?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressLng?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressText?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryFee?: NullableIntFieldUpdateOperationsInput | number | null
+    timeEstimation?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    total?: NullableIntFieldUpdateOperationsInput | number | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CheckoutSessionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    status?: EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
+    cartHash?: StringFieldUpdateOperationsInput | string
+    snapshot?: JsonNullValueInput | InputJsonValue
+    addressLat?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressLng?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressText?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryFee?: NullableIntFieldUpdateOperationsInput | number | null
+    timeEstimation?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    total?: NullableIntFieldUpdateOperationsInput | number | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandId?: StringFieldUpdateOperationsInput | string
+    brandBranchId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type wishlistCreateInput = {
@@ -48037,6 +49967,12 @@ export namespace Prisma {
     none?: StaffInvitationWhereInput
   }
 
+  export type CheckoutSessionListRelationFilter = {
+    every?: CheckoutSessionWhereInput
+    some?: CheckoutSessionWhereInput
+    none?: CheckoutSessionWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -48063,6 +49999,10 @@ export namespace Prisma {
   }
 
   export type StaffInvitationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CheckoutSessionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -48405,6 +50345,12 @@ export namespace Prisma {
     none?: BranchOrderWhereInput
   }
 
+  export type CartListRelationFilter = {
+    every?: CartWhereInput
+    some?: CartWhereInput
+    none?: CartWhereInput
+  }
+
   export type UserOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -48430,6 +50376,10 @@ export namespace Prisma {
   }
 
   export type BranchOrderOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CartOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -48699,17 +50649,6 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
-  export type DecimalNullableFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
-  }
-
   export type BranchVariantListRelationFilter = {
     every?: BranchVariantWhereInput
     some?: BranchVariantWhereInput
@@ -48809,22 +50748,6 @@ export namespace Prisma {
   export type BrandBranchSumOrderByAggregateInput = {
     latitude?: SortOrder
     longitude?: SortOrder
-  }
-
-  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedDecimalNullableFilter<$PrismaModel>
-    _sum?: NestedDecimalNullableFilter<$PrismaModel>
-    _min?: NestedDecimalNullableFilter<$PrismaModel>
-    _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
   export type EnumBrandDocTypeFilter<$PrismaModel = never> = {
@@ -49430,6 +51353,7 @@ export namespace Prisma {
   export type CartCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    brandId?: SortOrder
     discount?: SortOrder
     cartNote?: SortOrder
     userLocation?: SortOrder
@@ -49447,6 +51371,7 @@ export namespace Prisma {
   export type CartMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    brandId?: SortOrder
     discount?: SortOrder
     cartNote?: SortOrder
     userLocation?: SortOrder
@@ -49458,6 +51383,7 @@ export namespace Prisma {
   export type CartMinOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    brandId?: SortOrder
     discount?: SortOrder
     cartNote?: SortOrder
     userLocation?: SortOrder
@@ -49511,6 +51437,122 @@ export namespace Prisma {
   export type CartProductsSumOrderByAggregateInput = {
     quantity?: SortOrder
     price?: SortOrder
+  }
+
+  export type EnumCheckoutStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.CheckoutStatus | EnumCheckoutStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CheckoutStatus[] | ListEnumCheckoutStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CheckoutStatus[] | ListEnumCheckoutStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCheckoutStatusFilter<$PrismaModel> | $Enums.CheckoutStatus
+  }
+
+  export type DecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type CheckoutSessionCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    status?: SortOrder
+    cartHash?: SortOrder
+    snapshot?: SortOrder
+    addressLat?: SortOrder
+    addressLng?: SortOrder
+    addressText?: SortOrder
+    phoneNumber?: SortOrder
+    deliveryFee?: SortOrder
+    timeEstimation?: SortOrder
+    total?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    brandId?: SortOrder
+    brandBranchId?: SortOrder
+  }
+
+  export type CheckoutSessionAvgOrderByAggregateInput = {
+    addressLat?: SortOrder
+    addressLng?: SortOrder
+    deliveryFee?: SortOrder
+    total?: SortOrder
+  }
+
+  export type CheckoutSessionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    status?: SortOrder
+    cartHash?: SortOrder
+    addressLat?: SortOrder
+    addressLng?: SortOrder
+    addressText?: SortOrder
+    phoneNumber?: SortOrder
+    deliveryFee?: SortOrder
+    timeEstimation?: SortOrder
+    total?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    brandId?: SortOrder
+    brandBranchId?: SortOrder
+  }
+
+  export type CheckoutSessionMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    status?: SortOrder
+    cartHash?: SortOrder
+    addressLat?: SortOrder
+    addressLng?: SortOrder
+    addressText?: SortOrder
+    phoneNumber?: SortOrder
+    deliveryFee?: SortOrder
+    timeEstimation?: SortOrder
+    total?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    brandId?: SortOrder
+    brandBranchId?: SortOrder
+  }
+
+  export type CheckoutSessionSumOrderByAggregateInput = {
+    addressLat?: SortOrder
+    addressLng?: SortOrder
+    deliveryFee?: SortOrder
+    total?: SortOrder
+  }
+
+  export type EnumCheckoutStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CheckoutStatus | EnumCheckoutStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CheckoutStatus[] | ListEnumCheckoutStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CheckoutStatus[] | ListEnumCheckoutStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCheckoutStatusWithAggregatesFilter<$PrismaModel> | $Enums.CheckoutStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCheckoutStatusFilter<$PrismaModel>
+    _max?: NestedEnumCheckoutStatusFilter<$PrismaModel>
+  }
+
+  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
   export type wishlistCountOrderByAggregateInput = {
@@ -50373,6 +52415,13 @@ export namespace Prisma {
     connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
   }
 
+  export type CheckoutSessionCreateNestedManyWithoutUserInput = {
+    create?: XOR<CheckoutSessionCreateWithoutUserInput, CheckoutSessionUncheckedCreateWithoutUserInput> | CheckoutSessionCreateWithoutUserInput[] | CheckoutSessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CheckoutSessionCreateOrConnectWithoutUserInput | CheckoutSessionCreateOrConnectWithoutUserInput[]
+    createMany?: CheckoutSessionCreateManyUserInputEnvelope
+    connect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+  }
+
   export type CartUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<CartCreateWithoutUserInput, CartUncheckedCreateWithoutUserInput>
     connectOrCreate?: CartCreateOrConnectWithoutUserInput
@@ -50431,6 +52480,13 @@ export namespace Prisma {
     connectOrCreate?: StaffInvitationCreateOrConnectWithoutCreatorInput | StaffInvitationCreateOrConnectWithoutCreatorInput[]
     createMany?: StaffInvitationCreateManyCreatorInputEnvelope
     connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+  }
+
+  export type CheckoutSessionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<CheckoutSessionCreateWithoutUserInput, CheckoutSessionUncheckedCreateWithoutUserInput> | CheckoutSessionCreateWithoutUserInput[] | CheckoutSessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CheckoutSessionCreateOrConnectWithoutUserInput | CheckoutSessionCreateOrConnectWithoutUserInput[]
+    createMany?: CheckoutSessionCreateManyUserInputEnvelope
+    connect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -50617,6 +52673,20 @@ export namespace Prisma {
     deleteMany?: StaffInvitationScalarWhereInput | StaffInvitationScalarWhereInput[]
   }
 
+  export type CheckoutSessionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CheckoutSessionCreateWithoutUserInput, CheckoutSessionUncheckedCreateWithoutUserInput> | CheckoutSessionCreateWithoutUserInput[] | CheckoutSessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CheckoutSessionCreateOrConnectWithoutUserInput | CheckoutSessionCreateOrConnectWithoutUserInput[]
+    upsert?: CheckoutSessionUpsertWithWhereUniqueWithoutUserInput | CheckoutSessionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CheckoutSessionCreateManyUserInputEnvelope
+    set?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    disconnect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    delete?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    connect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    update?: CheckoutSessionUpdateWithWhereUniqueWithoutUserInput | CheckoutSessionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CheckoutSessionUpdateManyWithWhereWithoutUserInput | CheckoutSessionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CheckoutSessionScalarWhereInput | CheckoutSessionScalarWhereInput[]
+  }
+
   export type CartUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<CartCreateWithoutUserInput, CartUncheckedCreateWithoutUserInput>
     connectOrCreate?: CartCreateOrConnectWithoutUserInput
@@ -50731,6 +52801,20 @@ export namespace Prisma {
     deleteMany?: StaffInvitationScalarWhereInput | StaffInvitationScalarWhereInput[]
   }
 
+  export type CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CheckoutSessionCreateWithoutUserInput, CheckoutSessionUncheckedCreateWithoutUserInput> | CheckoutSessionCreateWithoutUserInput[] | CheckoutSessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CheckoutSessionCreateOrConnectWithoutUserInput | CheckoutSessionCreateOrConnectWithoutUserInput[]
+    upsert?: CheckoutSessionUpsertWithWhereUniqueWithoutUserInput | CheckoutSessionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CheckoutSessionCreateManyUserInputEnvelope
+    set?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    disconnect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    delete?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    connect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    update?: CheckoutSessionUpdateWithWhereUniqueWithoutUserInput | CheckoutSessionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CheckoutSessionUpdateManyWithWhereWithoutUserInput | CheckoutSessionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CheckoutSessionScalarWhereInput | CheckoutSessionScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutBrandInput = {
     create?: XOR<UserCreateWithoutBrandInput, UserUncheckedCreateWithoutBrandInput>
     connectOrCreate?: UserCreateOrConnectWithoutBrandInput
@@ -50807,6 +52891,20 @@ export namespace Prisma {
     connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
   }
 
+  export type CartCreateNestedManyWithoutBrandInput = {
+    create?: XOR<CartCreateWithoutBrandInput, CartUncheckedCreateWithoutBrandInput> | CartCreateWithoutBrandInput[] | CartUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: CartCreateOrConnectWithoutBrandInput | CartCreateOrConnectWithoutBrandInput[]
+    createMany?: CartCreateManyBrandInputEnvelope
+    connect?: CartWhereUniqueInput | CartWhereUniqueInput[]
+  }
+
+  export type CheckoutSessionCreateNestedManyWithoutBrandInput = {
+    create?: XOR<CheckoutSessionCreateWithoutBrandInput, CheckoutSessionUncheckedCreateWithoutBrandInput> | CheckoutSessionCreateWithoutBrandInput[] | CheckoutSessionUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: CheckoutSessionCreateOrConnectWithoutBrandInput | CheckoutSessionCreateOrConnectWithoutBrandInput[]
+    createMany?: CheckoutSessionCreateManyBrandInputEnvelope
+    connect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutBrandTenantInput = {
     create?: XOR<UserCreateWithoutBrandTenantInput, UserUncheckedCreateWithoutBrandTenantInput> | UserCreateWithoutBrandTenantInput[] | UserUncheckedCreateWithoutBrandTenantInput[]
     connectOrCreate?: UserCreateOrConnectWithoutBrandTenantInput | UserCreateOrConnectWithoutBrandTenantInput[]
@@ -50875,6 +52973,20 @@ export namespace Prisma {
     connectOrCreate?: StaffInvitationCreateOrConnectWithoutBrandInput | StaffInvitationCreateOrConnectWithoutBrandInput[]
     createMany?: StaffInvitationCreateManyBrandInputEnvelope
     connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+  }
+
+  export type CartUncheckedCreateNestedManyWithoutBrandInput = {
+    create?: XOR<CartCreateWithoutBrandInput, CartUncheckedCreateWithoutBrandInput> | CartCreateWithoutBrandInput[] | CartUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: CartCreateOrConnectWithoutBrandInput | CartCreateOrConnectWithoutBrandInput[]
+    createMany?: CartCreateManyBrandInputEnvelope
+    connect?: CartWhereUniqueInput | CartWhereUniqueInput[]
+  }
+
+  export type CheckoutSessionUncheckedCreateNestedManyWithoutBrandInput = {
+    create?: XOR<CheckoutSessionCreateWithoutBrandInput, CheckoutSessionUncheckedCreateWithoutBrandInput> | CheckoutSessionCreateWithoutBrandInput[] | CheckoutSessionUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: CheckoutSessionCreateOrConnectWithoutBrandInput | CheckoutSessionCreateOrConnectWithoutBrandInput[]
+    createMany?: CheckoutSessionCreateManyBrandInputEnvelope
+    connect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
   }
 
   export type EnumBrandVerificationTierFieldUpdateOperationsInput = {
@@ -51037,6 +53149,34 @@ export namespace Prisma {
     deleteMany?: StaffInvitationScalarWhereInput | StaffInvitationScalarWhereInput[]
   }
 
+  export type CartUpdateManyWithoutBrandNestedInput = {
+    create?: XOR<CartCreateWithoutBrandInput, CartUncheckedCreateWithoutBrandInput> | CartCreateWithoutBrandInput[] | CartUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: CartCreateOrConnectWithoutBrandInput | CartCreateOrConnectWithoutBrandInput[]
+    upsert?: CartUpsertWithWhereUniqueWithoutBrandInput | CartUpsertWithWhereUniqueWithoutBrandInput[]
+    createMany?: CartCreateManyBrandInputEnvelope
+    set?: CartWhereUniqueInput | CartWhereUniqueInput[]
+    disconnect?: CartWhereUniqueInput | CartWhereUniqueInput[]
+    delete?: CartWhereUniqueInput | CartWhereUniqueInput[]
+    connect?: CartWhereUniqueInput | CartWhereUniqueInput[]
+    update?: CartUpdateWithWhereUniqueWithoutBrandInput | CartUpdateWithWhereUniqueWithoutBrandInput[]
+    updateMany?: CartUpdateManyWithWhereWithoutBrandInput | CartUpdateManyWithWhereWithoutBrandInput[]
+    deleteMany?: CartScalarWhereInput | CartScalarWhereInput[]
+  }
+
+  export type CheckoutSessionUpdateManyWithoutBrandNestedInput = {
+    create?: XOR<CheckoutSessionCreateWithoutBrandInput, CheckoutSessionUncheckedCreateWithoutBrandInput> | CheckoutSessionCreateWithoutBrandInput[] | CheckoutSessionUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: CheckoutSessionCreateOrConnectWithoutBrandInput | CheckoutSessionCreateOrConnectWithoutBrandInput[]
+    upsert?: CheckoutSessionUpsertWithWhereUniqueWithoutBrandInput | CheckoutSessionUpsertWithWhereUniqueWithoutBrandInput[]
+    createMany?: CheckoutSessionCreateManyBrandInputEnvelope
+    set?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    disconnect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    delete?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    connect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    update?: CheckoutSessionUpdateWithWhereUniqueWithoutBrandInput | CheckoutSessionUpdateWithWhereUniqueWithoutBrandInput[]
+    updateMany?: CheckoutSessionUpdateManyWithWhereWithoutBrandInput | CheckoutSessionUpdateManyWithWhereWithoutBrandInput[]
+    deleteMany?: CheckoutSessionScalarWhereInput | CheckoutSessionScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutBrandTenantNestedInput = {
     create?: XOR<UserCreateWithoutBrandTenantInput, UserUncheckedCreateWithoutBrandTenantInput> | UserCreateWithoutBrandTenantInput[] | UserUncheckedCreateWithoutBrandTenantInput[]
     connectOrCreate?: UserCreateOrConnectWithoutBrandTenantInput | UserCreateOrConnectWithoutBrandTenantInput[]
@@ -51177,6 +53317,34 @@ export namespace Prisma {
     deleteMany?: StaffInvitationScalarWhereInput | StaffInvitationScalarWhereInput[]
   }
 
+  export type CartUncheckedUpdateManyWithoutBrandNestedInput = {
+    create?: XOR<CartCreateWithoutBrandInput, CartUncheckedCreateWithoutBrandInput> | CartCreateWithoutBrandInput[] | CartUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: CartCreateOrConnectWithoutBrandInput | CartCreateOrConnectWithoutBrandInput[]
+    upsert?: CartUpsertWithWhereUniqueWithoutBrandInput | CartUpsertWithWhereUniqueWithoutBrandInput[]
+    createMany?: CartCreateManyBrandInputEnvelope
+    set?: CartWhereUniqueInput | CartWhereUniqueInput[]
+    disconnect?: CartWhereUniqueInput | CartWhereUniqueInput[]
+    delete?: CartWhereUniqueInput | CartWhereUniqueInput[]
+    connect?: CartWhereUniqueInput | CartWhereUniqueInput[]
+    update?: CartUpdateWithWhereUniqueWithoutBrandInput | CartUpdateWithWhereUniqueWithoutBrandInput[]
+    updateMany?: CartUpdateManyWithWhereWithoutBrandInput | CartUpdateManyWithWhereWithoutBrandInput[]
+    deleteMany?: CartScalarWhereInput | CartScalarWhereInput[]
+  }
+
+  export type CheckoutSessionUncheckedUpdateManyWithoutBrandNestedInput = {
+    create?: XOR<CheckoutSessionCreateWithoutBrandInput, CheckoutSessionUncheckedCreateWithoutBrandInput> | CheckoutSessionCreateWithoutBrandInput[] | CheckoutSessionUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: CheckoutSessionCreateOrConnectWithoutBrandInput | CheckoutSessionCreateOrConnectWithoutBrandInput[]
+    upsert?: CheckoutSessionUpsertWithWhereUniqueWithoutBrandInput | CheckoutSessionUpsertWithWhereUniqueWithoutBrandInput[]
+    createMany?: CheckoutSessionCreateManyBrandInputEnvelope
+    set?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    disconnect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    delete?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    connect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    update?: CheckoutSessionUpdateWithWhereUniqueWithoutBrandInput | CheckoutSessionUpdateWithWhereUniqueWithoutBrandInput[]
+    updateMany?: CheckoutSessionUpdateManyWithWhereWithoutBrandInput | CheckoutSessionUpdateManyWithWhereWithoutBrandInput[]
+    deleteMany?: CheckoutSessionScalarWhereInput | CheckoutSessionScalarWhereInput[]
+  }
+
   export type BrandCreateNestedOneWithoutTransactionsInput = {
     create?: XOR<BrandCreateWithoutTransactionsInput, BrandUncheckedCreateWithoutTransactionsInput>
     connectOrCreate?: BrandCreateOrConnectWithoutTransactionsInput
@@ -51289,6 +53457,13 @@ export namespace Prisma {
     connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
   }
 
+  export type CheckoutSessionCreateNestedManyWithoutBranchesInput = {
+    create?: XOR<CheckoutSessionCreateWithoutBranchesInput, CheckoutSessionUncheckedCreateWithoutBranchesInput> | CheckoutSessionCreateWithoutBranchesInput[] | CheckoutSessionUncheckedCreateWithoutBranchesInput[]
+    connectOrCreate?: CheckoutSessionCreateOrConnectWithoutBranchesInput | CheckoutSessionCreateOrConnectWithoutBranchesInput[]
+    createMany?: CheckoutSessionCreateManyBranchesInputEnvelope
+    connect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutBrandBranchInput = {
     create?: XOR<UserCreateWithoutBrandBranchInput, UserUncheckedCreateWithoutBrandBranchInput> | UserCreateWithoutBrandBranchInput[] | UserUncheckedCreateWithoutBrandBranchInput[]
     connectOrCreate?: UserCreateOrConnectWithoutBrandBranchInput | UserCreateOrConnectWithoutBrandBranchInput[]
@@ -51337,17 +53512,16 @@ export namespace Prisma {
     connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
   }
 
+  export type CheckoutSessionUncheckedCreateNestedManyWithoutBranchesInput = {
+    create?: XOR<CheckoutSessionCreateWithoutBranchesInput, CheckoutSessionUncheckedCreateWithoutBranchesInput> | CheckoutSessionCreateWithoutBranchesInput[] | CheckoutSessionUncheckedCreateWithoutBranchesInput[]
+    connectOrCreate?: CheckoutSessionCreateOrConnectWithoutBranchesInput | CheckoutSessionCreateOrConnectWithoutBranchesInput[]
+    createMany?: CheckoutSessionCreateManyBranchesInputEnvelope
+    connect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+  }
+
   export type BrandBranchUpdateStaffIdsInput = {
     set?: string[]
     push?: string | string[]
-  }
-
-  export type NullableDecimalFieldUpdateOperationsInput = {
-    set?: Decimal | DecimalJsLike | number | string | null
-    increment?: Decimal | DecimalJsLike | number | string
-    decrement?: Decimal | DecimalJsLike | number | string
-    multiply?: Decimal | DecimalJsLike | number | string
-    divide?: Decimal | DecimalJsLike | number | string
   }
 
   export type UserUpdateManyWithoutBrandBranchNestedInput = {
@@ -51452,6 +53626,20 @@ export namespace Prisma {
     deleteMany?: StaffInvitationScalarWhereInput | StaffInvitationScalarWhereInput[]
   }
 
+  export type CheckoutSessionUpdateManyWithoutBranchesNestedInput = {
+    create?: XOR<CheckoutSessionCreateWithoutBranchesInput, CheckoutSessionUncheckedCreateWithoutBranchesInput> | CheckoutSessionCreateWithoutBranchesInput[] | CheckoutSessionUncheckedCreateWithoutBranchesInput[]
+    connectOrCreate?: CheckoutSessionCreateOrConnectWithoutBranchesInput | CheckoutSessionCreateOrConnectWithoutBranchesInput[]
+    upsert?: CheckoutSessionUpsertWithWhereUniqueWithoutBranchesInput | CheckoutSessionUpsertWithWhereUniqueWithoutBranchesInput[]
+    createMany?: CheckoutSessionCreateManyBranchesInputEnvelope
+    set?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    disconnect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    delete?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    connect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    update?: CheckoutSessionUpdateWithWhereUniqueWithoutBranchesInput | CheckoutSessionUpdateWithWhereUniqueWithoutBranchesInput[]
+    updateMany?: CheckoutSessionUpdateManyWithWhereWithoutBranchesInput | CheckoutSessionUpdateManyWithWhereWithoutBranchesInput[]
+    deleteMany?: CheckoutSessionScalarWhereInput | CheckoutSessionScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutBrandBranchNestedInput = {
     create?: XOR<UserCreateWithoutBrandBranchInput, UserUncheckedCreateWithoutBrandBranchInput> | UserCreateWithoutBrandBranchInput[] | UserUncheckedCreateWithoutBrandBranchInput[]
     connectOrCreate?: UserCreateOrConnectWithoutBrandBranchInput | UserCreateOrConnectWithoutBrandBranchInput[]
@@ -51544,6 +53732,20 @@ export namespace Prisma {
     update?: StaffInvitationUpdateWithWhereUniqueWithoutBranchInput | StaffInvitationUpdateWithWhereUniqueWithoutBranchInput[]
     updateMany?: StaffInvitationUpdateManyWithWhereWithoutBranchInput | StaffInvitationUpdateManyWithWhereWithoutBranchInput[]
     deleteMany?: StaffInvitationScalarWhereInput | StaffInvitationScalarWhereInput[]
+  }
+
+  export type CheckoutSessionUncheckedUpdateManyWithoutBranchesNestedInput = {
+    create?: XOR<CheckoutSessionCreateWithoutBranchesInput, CheckoutSessionUncheckedCreateWithoutBranchesInput> | CheckoutSessionCreateWithoutBranchesInput[] | CheckoutSessionUncheckedCreateWithoutBranchesInput[]
+    connectOrCreate?: CheckoutSessionCreateOrConnectWithoutBranchesInput | CheckoutSessionCreateOrConnectWithoutBranchesInput[]
+    upsert?: CheckoutSessionUpsertWithWhereUniqueWithoutBranchesInput | CheckoutSessionUpsertWithWhereUniqueWithoutBranchesInput[]
+    createMany?: CheckoutSessionCreateManyBranchesInputEnvelope
+    set?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    disconnect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    delete?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    connect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+    update?: CheckoutSessionUpdateWithWhereUniqueWithoutBranchesInput | CheckoutSessionUpdateWithWhereUniqueWithoutBranchesInput[]
+    updateMany?: CheckoutSessionUpdateManyWithWhereWithoutBranchesInput | CheckoutSessionUpdateManyWithWhereWithoutBranchesInput[]
+    deleteMany?: CheckoutSessionScalarWhereInput | CheckoutSessionScalarWhereInput[]
   }
 
   export type BrandCreateNestedOneWithoutDocumentsInput = {
@@ -52321,6 +54523,12 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type BrandCreateNestedOneWithoutCartsInput = {
+    create?: XOR<BrandCreateWithoutCartsInput, BrandUncheckedCreateWithoutCartsInput>
+    connectOrCreate?: BrandCreateOrConnectWithoutCartsInput
+    connect?: BrandWhereUniqueInput
+  }
+
   export type CartProductsCreateNestedManyWithoutCartInput = {
     create?: XOR<CartProductsCreateWithoutCartInput, CartProductsUncheckedCreateWithoutCartInput> | CartProductsCreateWithoutCartInput[] | CartProductsUncheckedCreateWithoutCartInput[]
     connectOrCreate?: CartProductsCreateOrConnectWithoutCartInput | CartProductsCreateOrConnectWithoutCartInput[]
@@ -52341,6 +54549,16 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutCartInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCartInput, UserUpdateWithoutCartInput>, UserUncheckedUpdateWithoutCartInput>
+  }
+
+  export type BrandUpdateOneWithoutCartsNestedInput = {
+    create?: XOR<BrandCreateWithoutCartsInput, BrandUncheckedCreateWithoutCartsInput>
+    connectOrCreate?: BrandCreateOrConnectWithoutCartsInput
+    upsert?: BrandUpsertWithoutCartsInput
+    disconnect?: BrandWhereInput | boolean
+    delete?: BrandWhereInput | boolean
+    connect?: BrandWhereUniqueInput
+    update?: XOR<XOR<BrandUpdateToOneWithWhereWithoutCartsInput, BrandUpdateWithoutCartsInput>, BrandUncheckedUpdateWithoutCartsInput>
   }
 
   export type CartProductsUpdateManyWithoutCartNestedInput = {
@@ -52397,6 +54615,62 @@ export namespace Prisma {
     upsert?: VariantUpsertWithoutCartProductsInput
     connect?: VariantWhereUniqueInput
     update?: XOR<XOR<VariantUpdateToOneWithWhereWithoutCartProductsInput, VariantUpdateWithoutCartProductsInput>, VariantUncheckedUpdateWithoutCartProductsInput>
+  }
+
+  export type BrandCreateNestedOneWithoutCheckoutSessionsInput = {
+    create?: XOR<BrandCreateWithoutCheckoutSessionsInput, BrandUncheckedCreateWithoutCheckoutSessionsInput>
+    connectOrCreate?: BrandCreateOrConnectWithoutCheckoutSessionsInput
+    connect?: BrandWhereUniqueInput
+  }
+
+  export type BrandBranchCreateNestedOneWithoutCheckoutSessionsInput = {
+    create?: XOR<BrandBranchCreateWithoutCheckoutSessionsInput, BrandBranchUncheckedCreateWithoutCheckoutSessionsInput>
+    connectOrCreate?: BrandBranchCreateOrConnectWithoutCheckoutSessionsInput
+    connect?: BrandBranchWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutCheckoutSessionsInput = {
+    create?: XOR<UserCreateWithoutCheckoutSessionsInput, UserUncheckedCreateWithoutCheckoutSessionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCheckoutSessionsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumCheckoutStatusFieldUpdateOperationsInput = {
+    set?: $Enums.CheckoutStatus
+  }
+
+  export type NullableDecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string | null
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type BrandUpdateOneRequiredWithoutCheckoutSessionsNestedInput = {
+    create?: XOR<BrandCreateWithoutCheckoutSessionsInput, BrandUncheckedCreateWithoutCheckoutSessionsInput>
+    connectOrCreate?: BrandCreateOrConnectWithoutCheckoutSessionsInput
+    upsert?: BrandUpsertWithoutCheckoutSessionsInput
+    connect?: BrandWhereUniqueInput
+    update?: XOR<XOR<BrandUpdateToOneWithWhereWithoutCheckoutSessionsInput, BrandUpdateWithoutCheckoutSessionsInput>, BrandUncheckedUpdateWithoutCheckoutSessionsInput>
+  }
+
+  export type BrandBranchUpdateOneWithoutCheckoutSessionsNestedInput = {
+    create?: XOR<BrandBranchCreateWithoutCheckoutSessionsInput, BrandBranchUncheckedCreateWithoutCheckoutSessionsInput>
+    connectOrCreate?: BrandBranchCreateOrConnectWithoutCheckoutSessionsInput
+    upsert?: BrandBranchUpsertWithoutCheckoutSessionsInput
+    disconnect?: BrandBranchWhereInput | boolean
+    delete?: BrandBranchWhereInput | boolean
+    connect?: BrandBranchWhereUniqueInput
+    update?: XOR<XOR<BrandBranchUpdateToOneWithWhereWithoutCheckoutSessionsInput, BrandBranchUpdateWithoutCheckoutSessionsInput>, BrandBranchUncheckedUpdateWithoutCheckoutSessionsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutCheckoutSessionsNestedInput = {
+    create?: XOR<UserCreateWithoutCheckoutSessionsInput, UserUncheckedCreateWithoutCheckoutSessionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCheckoutSessionsInput
+    upsert?: UserUpsertWithoutCheckoutSessionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCheckoutSessionsInput, UserUpdateWithoutCheckoutSessionsInput>, UserUncheckedUpdateWithoutCheckoutSessionsInput>
   }
 
   export type UserCreateNestedOneWithoutWishlistInput = {
@@ -53727,33 +56001,6 @@ export namespace Prisma {
     _max?: NestedEnumBranchRoleFilter<$PrismaModel>
   }
 
-  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
-  }
-
-  export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedDecimalNullableFilter<$PrismaModel>
-    _sum?: NestedDecimalNullableFilter<$PrismaModel>
-    _min?: NestedDecimalNullableFilter<$PrismaModel>
-    _max?: NestedDecimalNullableFilter<$PrismaModel>
-  }
-
   export type NestedEnumBrandDocTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.BrandDocType | EnumBrandDocTypeFieldRefInput<$PrismaModel>
     in?: $Enums.BrandDocType[] | ListEnumBrandDocTypeFieldRefInput<$PrismaModel>
@@ -53853,6 +56100,50 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumCheckoutStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.CheckoutStatus | EnumCheckoutStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CheckoutStatus[] | ListEnumCheckoutStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CheckoutStatus[] | ListEnumCheckoutStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCheckoutStatusFilter<$PrismaModel> | $Enums.CheckoutStatus
+  }
+
+  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type NestedEnumCheckoutStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CheckoutStatus | EnumCheckoutStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CheckoutStatus[] | ListEnumCheckoutStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CheckoutStatus[] | ListEnumCheckoutStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCheckoutStatusWithAggregatesFilter<$PrismaModel> | $Enums.CheckoutStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCheckoutStatusFilter<$PrismaModel>
+    _max?: NestedEnumCheckoutStatusFilter<$PrismaModel>
+  }
+
+  export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
   export type NestedEnuminventoryTypeFilter<$PrismaModel = never> = {
@@ -53982,11 +56273,13 @@ export namespace Prisma {
     userNumber?: string | null
     price?: number
     totalPrice?: number
+    brand?: BrandCreateNestedOneWithoutCartsInput
     products?: CartProductsCreateNestedManyWithoutCartInput
   }
 
   export type CartUncheckedCreateWithoutUserInput = {
     id?: string
+    brandId?: string | null
     discount?: number | null
     cartNote?: string | null
     userLocation?: string | null
@@ -54123,6 +56416,8 @@ export namespace Prisma {
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
+    carts?: CartCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutUserInput = {
@@ -54152,6 +56447,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
+    carts?: CartUncheckedCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutUserInput = {
@@ -54186,6 +56483,8 @@ export namespace Prisma {
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
+    carts?: CartCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutBrandUsersInput = {
@@ -54215,6 +56514,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
+    carts?: CartUncheckedCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutBrandUsersInput = {
@@ -54227,8 +56528,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -54251,6 +56552,7 @@ export namespace Prisma {
     inventory?: InventoryCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffCreateNestedManyWithoutBranchInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchUncheckedCreateWithoutUsersInput = {
@@ -54259,8 +56561,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -54282,6 +56584,7 @@ export namespace Prisma {
     inventory?: InventoryUncheckedCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutBranchInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchCreateOrConnectWithoutUsersInput = {
@@ -54328,8 +56631,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -54352,6 +56655,7 @@ export namespace Prisma {
     inventory?: InventoryCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffCreateNestedManyWithoutBranchInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchUncheckedCreateWithoutStaffInput = {
@@ -54360,8 +56664,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -54383,6 +56687,7 @@ export namespace Prisma {
     inventory?: InventoryUncheckedCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutBranchInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchCreateOrConnectWithoutStaffInput = {
@@ -54450,6 +56755,54 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CheckoutSessionCreateWithoutUserInput = {
+    id?: string
+    status?: $Enums.CheckoutStatus
+    cartHash: string
+    snapshot: JsonNullValueInput | InputJsonValue
+    addressLat?: Decimal | DecimalJsLike | number | string | null
+    addressLng?: Decimal | DecimalJsLike | number | string | null
+    addressText?: string | null
+    phoneNumber?: string | null
+    deliveryFee?: number | null
+    timeEstimation?: Date | string | null
+    total?: number | null
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    brand: BrandCreateNestedOneWithoutCheckoutSessionsInput
+    branches?: BrandBranchCreateNestedOneWithoutCheckoutSessionsInput
+  }
+
+  export type CheckoutSessionUncheckedCreateWithoutUserInput = {
+    id?: string
+    status?: $Enums.CheckoutStatus
+    cartHash: string
+    snapshot: JsonNullValueInput | InputJsonValue
+    addressLat?: Decimal | DecimalJsLike | number | string | null
+    addressLng?: Decimal | DecimalJsLike | number | string | null
+    addressText?: string | null
+    phoneNumber?: string | null
+    deliveryFee?: number | null
+    timeEstimation?: Date | string | null
+    total?: number | null
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    brandId: string
+    brandBranchId?: string | null
+  }
+
+  export type CheckoutSessionCreateOrConnectWithoutUserInput = {
+    where: CheckoutSessionWhereUniqueInput
+    create: XOR<CheckoutSessionCreateWithoutUserInput, CheckoutSessionUncheckedCreateWithoutUserInput>
+  }
+
+  export type CheckoutSessionCreateManyUserInputEnvelope = {
+    data: CheckoutSessionCreateManyUserInput | CheckoutSessionCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CartUpsertWithoutUserInput = {
     update: XOR<CartUpdateWithoutUserInput, CartUncheckedUpdateWithoutUserInput>
     create: XOR<CartCreateWithoutUserInput, CartUncheckedCreateWithoutUserInput>
@@ -54469,11 +56822,13 @@ export namespace Prisma {
     userNumber?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
+    brand?: BrandUpdateOneWithoutCartsNestedInput
     products?: CartProductsUpdateManyWithoutCartNestedInput
   }
 
   export type CartUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
     discount?: NullableIntFieldUpdateOperationsInput | number | null
     cartNote?: NullableStringFieldUpdateOperationsInput | string | null
     userLocation?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54625,6 +56980,8 @@ export namespace Prisma {
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
+    carts?: CartUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutUserInput = {
@@ -54654,6 +57011,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
+    carts?: CartUncheckedUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUpsertWithoutBrandUsersInput = {
@@ -54694,6 +57053,8 @@ export namespace Prisma {
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
+    carts?: CartUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutBrandUsersInput = {
@@ -54723,6 +57084,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
+    carts?: CartUncheckedUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandBranchUpsertWithoutUsersInput = {
@@ -54741,8 +57104,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54765,6 +57128,7 @@ export namespace Prisma {
     inventory?: InventoryUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutBranchNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBranchesNestedInput
   }
 
   export type BrandBranchUncheckedUpdateWithoutUsersInput = {
@@ -54773,8 +57137,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54796,6 +57160,7 @@ export namespace Prisma {
     inventory?: InventoryUncheckedUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutBranchNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBranchesNestedInput
   }
 
   export type BrandDocumentUpsertWithWhereUniqueWithoutReviewerInput = {
@@ -54846,8 +57211,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54870,6 +57235,7 @@ export namespace Prisma {
     inventory?: InventoryUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutBranchNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBranchesNestedInput
   }
 
   export type BrandBranchUncheckedUpdateWithoutStaffInput = {
@@ -54878,8 +57244,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54901,6 +57267,7 @@ export namespace Prisma {
     inventory?: InventoryUncheckedUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutBranchNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBranchesNestedInput
   }
 
   export type branchStaffUpsertWithWhereUniqueWithoutUserInput = {
@@ -54963,6 +57330,45 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"StaffInvitation"> | Date | string
   }
 
+  export type CheckoutSessionUpsertWithWhereUniqueWithoutUserInput = {
+    where: CheckoutSessionWhereUniqueInput
+    update: XOR<CheckoutSessionUpdateWithoutUserInput, CheckoutSessionUncheckedUpdateWithoutUserInput>
+    create: XOR<CheckoutSessionCreateWithoutUserInput, CheckoutSessionUncheckedCreateWithoutUserInput>
+  }
+
+  export type CheckoutSessionUpdateWithWhereUniqueWithoutUserInput = {
+    where: CheckoutSessionWhereUniqueInput
+    data: XOR<CheckoutSessionUpdateWithoutUserInput, CheckoutSessionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CheckoutSessionUpdateManyWithWhereWithoutUserInput = {
+    where: CheckoutSessionScalarWhereInput
+    data: XOR<CheckoutSessionUpdateManyMutationInput, CheckoutSessionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type CheckoutSessionScalarWhereInput = {
+    AND?: CheckoutSessionScalarWhereInput | CheckoutSessionScalarWhereInput[]
+    OR?: CheckoutSessionScalarWhereInput[]
+    NOT?: CheckoutSessionScalarWhereInput | CheckoutSessionScalarWhereInput[]
+    id?: UuidFilter<"CheckoutSession"> | string
+    userId?: UuidFilter<"CheckoutSession"> | string
+    status?: EnumCheckoutStatusFilter<"CheckoutSession"> | $Enums.CheckoutStatus
+    cartHash?: StringFilter<"CheckoutSession"> | string
+    snapshot?: JsonFilter<"CheckoutSession">
+    addressLat?: DecimalNullableFilter<"CheckoutSession"> | Decimal | DecimalJsLike | number | string | null
+    addressLng?: DecimalNullableFilter<"CheckoutSession"> | Decimal | DecimalJsLike | number | string | null
+    addressText?: StringNullableFilter<"CheckoutSession"> | string | null
+    phoneNumber?: StringNullableFilter<"CheckoutSession"> | string | null
+    deliveryFee?: IntNullableFilter<"CheckoutSession"> | number | null
+    timeEstimation?: DateTimeNullableFilter<"CheckoutSession"> | Date | string | null
+    total?: IntNullableFilter<"CheckoutSession"> | number | null
+    expiresAt?: DateTimeFilter<"CheckoutSession"> | Date | string
+    createdAt?: DateTimeFilter<"CheckoutSession"> | Date | string
+    updatedAt?: DateTimeFilter<"CheckoutSession"> | Date | string
+    brandId?: StringFilter<"CheckoutSession"> | string
+    brandBranchId?: UuidNullableFilter<"CheckoutSession"> | string | null
+  }
+
   export type UserCreateWithoutBrandInput = {
     id?: string
     username: string
@@ -54999,6 +57405,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBrandInput = {
@@ -55037,6 +57444,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBrandInput = {
@@ -55080,6 +57488,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBrandTenantInput = {
@@ -55118,6 +57527,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBrandTenantInput = {
@@ -55263,8 +57673,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -55287,6 +57697,7 @@ export namespace Prisma {
     inventory?: InventoryCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffCreateNestedManyWithoutBranchInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchUncheckedCreateWithoutBrandInput = {
@@ -55294,8 +57705,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -55318,6 +57729,7 @@ export namespace Prisma {
     inventory?: InventoryUncheckedCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutBranchInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchCreateOrConnectWithoutBrandInput = {
@@ -55478,6 +57890,88 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CartCreateWithoutBrandInput = {
+    id?: string
+    discount?: number | null
+    cartNote?: string | null
+    userLocation?: string | null
+    userNumber?: string | null
+    price?: number
+    totalPrice?: number
+    user: UserCreateNestedOneWithoutCartInput
+    products?: CartProductsCreateNestedManyWithoutCartInput
+  }
+
+  export type CartUncheckedCreateWithoutBrandInput = {
+    id?: string
+    userId: string
+    discount?: number | null
+    cartNote?: string | null
+    userLocation?: string | null
+    userNumber?: string | null
+    price?: number
+    totalPrice?: number
+    products?: CartProductsUncheckedCreateNestedManyWithoutCartInput
+  }
+
+  export type CartCreateOrConnectWithoutBrandInput = {
+    where: CartWhereUniqueInput
+    create: XOR<CartCreateWithoutBrandInput, CartUncheckedCreateWithoutBrandInput>
+  }
+
+  export type CartCreateManyBrandInputEnvelope = {
+    data: CartCreateManyBrandInput | CartCreateManyBrandInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CheckoutSessionCreateWithoutBrandInput = {
+    id?: string
+    status?: $Enums.CheckoutStatus
+    cartHash: string
+    snapshot: JsonNullValueInput | InputJsonValue
+    addressLat?: Decimal | DecimalJsLike | number | string | null
+    addressLng?: Decimal | DecimalJsLike | number | string | null
+    addressText?: string | null
+    phoneNumber?: string | null
+    deliveryFee?: number | null
+    timeEstimation?: Date | string | null
+    total?: number | null
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    branches?: BrandBranchCreateNestedOneWithoutCheckoutSessionsInput
+    user: UserCreateNestedOneWithoutCheckoutSessionsInput
+  }
+
+  export type CheckoutSessionUncheckedCreateWithoutBrandInput = {
+    id?: string
+    userId: string
+    status?: $Enums.CheckoutStatus
+    cartHash: string
+    snapshot: JsonNullValueInput | InputJsonValue
+    addressLat?: Decimal | DecimalJsLike | number | string | null
+    addressLng?: Decimal | DecimalJsLike | number | string | null
+    addressText?: string | null
+    phoneNumber?: string | null
+    deliveryFee?: number | null
+    timeEstimation?: Date | string | null
+    total?: number | null
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    brandBranchId?: string | null
+  }
+
+  export type CheckoutSessionCreateOrConnectWithoutBrandInput = {
+    where: CheckoutSessionWhereUniqueInput
+    create: XOR<CheckoutSessionCreateWithoutBrandInput, CheckoutSessionUncheckedCreateWithoutBrandInput>
+  }
+
+  export type CheckoutSessionCreateManyBrandInputEnvelope = {
+    data: CheckoutSessionCreateManyBrandInput | CheckoutSessionCreateManyBrandInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutBrandInput = {
     update: XOR<UserUpdateWithoutBrandInput, UserUncheckedUpdateWithoutBrandInput>
     create: XOR<UserCreateWithoutBrandInput, UserUncheckedCreateWithoutBrandInput>
@@ -55525,6 +58019,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBrandInput = {
@@ -55563,6 +58058,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithWhereUniqueWithoutBrandTenantInput = {
@@ -55734,8 +58230,8 @@ export namespace Prisma {
     name?: StringFilter<"BrandBranch"> | string
     code?: StringFilter<"BrandBranch"> | string
     StaffIds?: StringNullableListFilter<"BrandBranch">
-    latitude?: DecimalNullableFilter<"BrandBranch"> | Decimal | DecimalJsLike | number | string | null
-    longitude?: DecimalNullableFilter<"BrandBranch"> | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFilter<"BrandBranch"> | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFilter<"BrandBranch"> | Decimal | DecimalJsLike | number | string
     placeId?: StringNullableFilter<"BrandBranch"> | string | null
     formattedAddress?: StringNullableFilter<"BrandBranch"> | string | null
     addressLine?: StringNullableFilter<"BrandBranch"> | string | null
@@ -55864,6 +58360,53 @@ export namespace Prisma {
     data: XOR<StaffInvitationUpdateManyMutationInput, StaffInvitationUncheckedUpdateManyWithoutBrandInput>
   }
 
+  export type CartUpsertWithWhereUniqueWithoutBrandInput = {
+    where: CartWhereUniqueInput
+    update: XOR<CartUpdateWithoutBrandInput, CartUncheckedUpdateWithoutBrandInput>
+    create: XOR<CartCreateWithoutBrandInput, CartUncheckedCreateWithoutBrandInput>
+  }
+
+  export type CartUpdateWithWhereUniqueWithoutBrandInput = {
+    where: CartWhereUniqueInput
+    data: XOR<CartUpdateWithoutBrandInput, CartUncheckedUpdateWithoutBrandInput>
+  }
+
+  export type CartUpdateManyWithWhereWithoutBrandInput = {
+    where: CartScalarWhereInput
+    data: XOR<CartUpdateManyMutationInput, CartUncheckedUpdateManyWithoutBrandInput>
+  }
+
+  export type CartScalarWhereInput = {
+    AND?: CartScalarWhereInput | CartScalarWhereInput[]
+    OR?: CartScalarWhereInput[]
+    NOT?: CartScalarWhereInput | CartScalarWhereInput[]
+    id?: UuidFilter<"Cart"> | string
+    userId?: UuidFilter<"Cart"> | string
+    brandId?: UuidNullableFilter<"Cart"> | string | null
+    discount?: IntNullableFilter<"Cart"> | number | null
+    cartNote?: StringNullableFilter<"Cart"> | string | null
+    userLocation?: StringNullableFilter<"Cart"> | string | null
+    userNumber?: StringNullableFilter<"Cart"> | string | null
+    price?: IntFilter<"Cart"> | number
+    totalPrice?: IntFilter<"Cart"> | number
+  }
+
+  export type CheckoutSessionUpsertWithWhereUniqueWithoutBrandInput = {
+    where: CheckoutSessionWhereUniqueInput
+    update: XOR<CheckoutSessionUpdateWithoutBrandInput, CheckoutSessionUncheckedUpdateWithoutBrandInput>
+    create: XOR<CheckoutSessionCreateWithoutBrandInput, CheckoutSessionUncheckedCreateWithoutBrandInput>
+  }
+
+  export type CheckoutSessionUpdateWithWhereUniqueWithoutBrandInput = {
+    where: CheckoutSessionWhereUniqueInput
+    data: XOR<CheckoutSessionUpdateWithoutBrandInput, CheckoutSessionUncheckedUpdateWithoutBrandInput>
+  }
+
+  export type CheckoutSessionUpdateManyWithWhereWithoutBrandInput = {
+    where: CheckoutSessionScalarWhereInput
+    data: XOR<CheckoutSessionUpdateManyMutationInput, CheckoutSessionUncheckedUpdateManyWithoutBrandInput>
+  }
+
   export type BrandCreateWithoutTransactionsInput = {
     id?: string
     name: string
@@ -55891,6 +58434,8 @@ export namespace Prisma {
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
+    carts?: CartCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutTransactionsInput = {
@@ -55920,6 +58465,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
+    carts?: CartUncheckedCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutTransactionsInput = {
@@ -55965,6 +58512,8 @@ export namespace Prisma {
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
+    carts?: CartUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutTransactionsInput = {
@@ -55994,6 +58543,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
+    carts?: CartUncheckedUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandBranchCreateWithoutBranchStaffsInput = {
@@ -56001,8 +58552,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -56025,6 +58576,7 @@ export namespace Prisma {
     orders?: BranchOrderCreateNestedManyWithoutBrandBranchInput
     inventory?: InventoryCreateNestedOneWithoutBranchInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchUncheckedCreateWithoutBranchStaffsInput = {
@@ -56033,8 +58585,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -56056,6 +58608,7 @@ export namespace Prisma {
     orders?: BranchOrderUncheckedCreateNestedManyWithoutBrandBranchInput
     inventory?: InventoryUncheckedCreateNestedOneWithoutBranchInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchCreateOrConnectWithoutBranchStaffsInput = {
@@ -56099,6 +58652,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBranchStaffsInput = {
@@ -56137,6 +58691,7 @@ export namespace Prisma {
     brand?: BrandUncheckedCreateNestedOneWithoutUserInput
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBranchStaffsInput = {
@@ -56160,8 +58715,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56184,6 +58739,7 @@ export namespace Prisma {
     orders?: BranchOrderUpdateManyWithoutBrandBranchNestedInput
     inventory?: InventoryUpdateOneWithoutBranchNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBranchesNestedInput
   }
 
   export type BrandBranchUncheckedUpdateWithoutBranchStaffsInput = {
@@ -56192,8 +58748,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56215,6 +58771,7 @@ export namespace Prisma {
     orders?: BranchOrderUncheckedUpdateManyWithoutBrandBranchNestedInput
     inventory?: InventoryUncheckedUpdateOneWithoutBranchNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBranchesNestedInput
   }
 
   export type UserUpsertWithoutBranchStaffsInput = {
@@ -56264,6 +58821,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBranchStaffsInput = {
@@ -56302,6 +58860,7 @@ export namespace Prisma {
     brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutBrandBranchInput = {
@@ -56340,6 +58899,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBrandBranchInput = {
@@ -56378,6 +58938,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBrandBranchInput = {
@@ -56417,6 +58978,8 @@ export namespace Prisma {
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
+    carts?: CartCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutBranchesInput = {
@@ -56446,6 +59009,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
+    carts?: CartUncheckedCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutBranchesInput = {
@@ -56489,6 +59054,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBranchTenantInput = {
@@ -56527,6 +59093,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBranchTenantInput = {
@@ -56700,6 +59267,54 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CheckoutSessionCreateWithoutBranchesInput = {
+    id?: string
+    status?: $Enums.CheckoutStatus
+    cartHash: string
+    snapshot: JsonNullValueInput | InputJsonValue
+    addressLat?: Decimal | DecimalJsLike | number | string | null
+    addressLng?: Decimal | DecimalJsLike | number | string | null
+    addressText?: string | null
+    phoneNumber?: string | null
+    deliveryFee?: number | null
+    timeEstimation?: Date | string | null
+    total?: number | null
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    brand: BrandCreateNestedOneWithoutCheckoutSessionsInput
+    user: UserCreateNestedOneWithoutCheckoutSessionsInput
+  }
+
+  export type CheckoutSessionUncheckedCreateWithoutBranchesInput = {
+    id?: string
+    userId: string
+    status?: $Enums.CheckoutStatus
+    cartHash: string
+    snapshot: JsonNullValueInput | InputJsonValue
+    addressLat?: Decimal | DecimalJsLike | number | string | null
+    addressLng?: Decimal | DecimalJsLike | number | string | null
+    addressText?: string | null
+    phoneNumber?: string | null
+    deliveryFee?: number | null
+    timeEstimation?: Date | string | null
+    total?: number | null
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    brandId: string
+  }
+
+  export type CheckoutSessionCreateOrConnectWithoutBranchesInput = {
+    where: CheckoutSessionWhereUniqueInput
+    create: XOR<CheckoutSessionCreateWithoutBranchesInput, CheckoutSessionUncheckedCreateWithoutBranchesInput>
+  }
+
+  export type CheckoutSessionCreateManyBranchesInputEnvelope = {
+    data: CheckoutSessionCreateManyBranchesInput | CheckoutSessionCreateManyBranchesInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithWhereUniqueWithoutBrandBranchInput = {
     where: UserWhereUniqueInput
     update: XOR<UserUpdateWithoutBrandBranchInput, UserUncheckedUpdateWithoutBrandBranchInput>
@@ -56754,6 +59369,8 @@ export namespace Prisma {
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
+    carts?: CartUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutBranchesInput = {
@@ -56783,6 +59400,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
+    carts?: CartUncheckedUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type UserUpsertWithWhereUniqueWithoutBranchTenantInput = {
@@ -56914,6 +59533,22 @@ export namespace Prisma {
     data: XOR<StaffInvitationUpdateManyMutationInput, StaffInvitationUncheckedUpdateManyWithoutBranchInput>
   }
 
+  export type CheckoutSessionUpsertWithWhereUniqueWithoutBranchesInput = {
+    where: CheckoutSessionWhereUniqueInput
+    update: XOR<CheckoutSessionUpdateWithoutBranchesInput, CheckoutSessionUncheckedUpdateWithoutBranchesInput>
+    create: XOR<CheckoutSessionCreateWithoutBranchesInput, CheckoutSessionUncheckedCreateWithoutBranchesInput>
+  }
+
+  export type CheckoutSessionUpdateWithWhereUniqueWithoutBranchesInput = {
+    where: CheckoutSessionWhereUniqueInput
+    data: XOR<CheckoutSessionUpdateWithoutBranchesInput, CheckoutSessionUncheckedUpdateWithoutBranchesInput>
+  }
+
+  export type CheckoutSessionUpdateManyWithWhereWithoutBranchesInput = {
+    where: CheckoutSessionScalarWhereInput
+    data: XOR<CheckoutSessionUpdateManyMutationInput, CheckoutSessionUncheckedUpdateManyWithoutBranchesInput>
+  }
+
   export type BrandCreateWithoutDocumentsInput = {
     id?: string
     name: string
@@ -56941,6 +59576,8 @@ export namespace Prisma {
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
+    carts?: CartCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutDocumentsInput = {
@@ -56970,6 +59607,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
+    carts?: CartUncheckedCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutDocumentsInput = {
@@ -57013,6 +59652,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewedBrandDocsInput = {
@@ -57051,6 +59691,7 @@ export namespace Prisma {
     brand?: BrandUncheckedCreateNestedOneWithoutUserInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewedBrandDocsInput = {
@@ -57096,6 +59737,8 @@ export namespace Prisma {
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
+    carts?: CartUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutDocumentsInput = {
@@ -57125,6 +59768,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
+    carts?: CartUncheckedUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type UserUpsertWithoutReviewedBrandDocsInput = {
@@ -57174,6 +59819,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewedBrandDocsInput = {
@@ -57212,6 +59858,7 @@ export namespace Prisma {
     brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BrandCreateWithoutStaffInvitationsInput = {
@@ -57241,6 +59888,8 @@ export namespace Prisma {
     transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
+    carts?: CartCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutStaffInvitationsInput = {
@@ -57270,6 +59919,8 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
+    carts?: CartUncheckedCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutStaffInvitationsInput = {
@@ -57282,8 +59933,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -57306,6 +59957,7 @@ export namespace Prisma {
     orders?: BranchOrderCreateNestedManyWithoutBrandBranchInput
     inventory?: InventoryCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchUncheckedCreateWithoutStaffInvitationsInput = {
@@ -57314,8 +59966,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -57337,6 +59989,7 @@ export namespace Prisma {
     orders?: BranchOrderUncheckedCreateNestedManyWithoutBrandBranchInput
     inventory?: InventoryUncheckedCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchCreateOrConnectWithoutStaffInvitationsInput = {
@@ -57380,6 +60033,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreatedStaffInvitationsInput = {
@@ -57418,6 +60072,7 @@ export namespace Prisma {
     brand?: BrandUncheckedCreateNestedOneWithoutUserInput
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreatedStaffInvitationsInput = {
@@ -57463,6 +60118,8 @@ export namespace Prisma {
     transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
+    carts?: CartUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutStaffInvitationsInput = {
@@ -57492,6 +60149,8 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
+    carts?: CartUncheckedUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandBranchUpsertWithoutStaffInvitationsInput = {
@@ -57510,8 +60169,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57534,6 +60193,7 @@ export namespace Prisma {
     orders?: BranchOrderUpdateManyWithoutBrandBranchNestedInput
     inventory?: InventoryUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBranchesNestedInput
   }
 
   export type BrandBranchUncheckedUpdateWithoutStaffInvitationsInput = {
@@ -57542,8 +60202,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57565,6 +60225,7 @@ export namespace Prisma {
     orders?: BranchOrderUncheckedUpdateManyWithoutBrandBranchNestedInput
     inventory?: InventoryUncheckedUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBranchesNestedInput
   }
 
   export type UserUpsertWithoutCreatedStaffInvitationsInput = {
@@ -57614,6 +60275,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedStaffInvitationsInput = {
@@ -57652,6 +60314,7 @@ export namespace Prisma {
     brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BrandCreateWithoutSocialLinksInput = {
@@ -57681,6 +60344,8 @@ export namespace Prisma {
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
+    carts?: CartCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutSocialLinksInput = {
@@ -57710,6 +60375,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
+    carts?: CartUncheckedCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutSocialLinksInput = {
@@ -57755,6 +60422,8 @@ export namespace Prisma {
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
+    carts?: CartUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutSocialLinksInput = {
@@ -57784,6 +60453,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
+    carts?: CartUncheckedUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandCreateWithoutFollowersInput = {
@@ -57813,6 +60484,8 @@ export namespace Prisma {
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
+    carts?: CartCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutFollowersInput = {
@@ -57842,6 +60515,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
+    carts?: CartUncheckedCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutFollowersInput = {
@@ -57885,6 +60560,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBrandFollowersInput = {
@@ -57923,6 +60599,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBrandFollowersInput = {
@@ -57968,6 +60645,8 @@ export namespace Prisma {
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
+    carts?: CartUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutFollowersInput = {
@@ -57997,6 +60676,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
+    carts?: CartUncheckedUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type UserUpsertWithoutBrandFollowersInput = {
@@ -58046,6 +60727,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBrandFollowersInput = {
@@ -58084,6 +60766,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProductCreateWithoutCategoryInput = {
@@ -58183,6 +60866,8 @@ export namespace Prisma {
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
+    carts?: CartCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutProductsInput = {
@@ -58212,6 +60897,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
+    carts?: CartUncheckedCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutProductsInput = {
@@ -58384,6 +61071,8 @@ export namespace Prisma {
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
+    carts?: CartUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutProductsInput = {
@@ -58413,6 +61102,8 @@ export namespace Prisma {
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
+    carts?: CartUncheckedUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type CategoryUpsertWithoutProductsInput = {
@@ -59076,8 +61767,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -59100,6 +61791,7 @@ export namespace Prisma {
     inventory?: InventoryCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffCreateNestedManyWithoutBranchInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchUncheckedCreateWithoutVariantsInput = {
@@ -59108,8 +61800,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -59131,6 +61823,7 @@ export namespace Prisma {
     inventory?: InventoryUncheckedCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutBranchInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchCreateOrConnectWithoutVariantsInput = {
@@ -59201,8 +61894,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59225,6 +61918,7 @@ export namespace Prisma {
     inventory?: InventoryUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutBranchNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBranchesNestedInput
   }
 
   export type BrandBranchUncheckedUpdateWithoutVariantsInput = {
@@ -59233,8 +61927,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59256,6 +61950,7 @@ export namespace Prisma {
     inventory?: InventoryUncheckedUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutBranchNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBranchesNestedInput
   }
 
   export type VariantUpsertWithoutBranchOffersInput = {
@@ -59396,6 +62091,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewsInput = {
@@ -59434,6 +62130,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewsInput = {
@@ -59543,6 +62240,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -59581,6 +62279,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutCartInput = {
@@ -59619,6 +62318,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCartInput = {
@@ -59657,11 +62357,79 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCartInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutCartInput, UserUncheckedCreateWithoutCartInput>
+  }
+
+  export type BrandCreateWithoutCartsInput = {
+    id?: string
+    name: string
+    slug: string
+    description?: string | null
+    verificationStatus?: $Enums.BrandVerificationTier
+    rating?: Decimal | DecimalJsLike | number | string
+    logoUrl?: string | null
+    logoUrl_id?: string | null
+    followersCount?: number
+    viewedTimes?: number
+    isPromoted?: boolean
+    isActive?: boolean
+    balance?: number
+    paymentDetails?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutBrandInput
+    brandUsers?: UserCreateNestedManyWithoutBrandTenantInput
+    documents?: BrandDocumentCreateNestedManyWithoutBrandInput
+    socialLinks?: BrandSocialLinkCreateNestedManyWithoutBrandInput
+    followers?: BrandFollowerCreateNestedManyWithoutBrandInput
+    products?: ProductCreateNestedManyWithoutBrandInput
+    branches?: BrandBranchCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
+    inventories?: InventoryCreateNestedManyWithoutBrandInput
+    branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBrandInput
+  }
+
+  export type BrandUncheckedCreateWithoutCartsInput = {
+    id?: string
+    userId: string
+    name: string
+    slug: string
+    description?: string | null
+    verificationStatus?: $Enums.BrandVerificationTier
+    rating?: Decimal | DecimalJsLike | number | string
+    logoUrl?: string | null
+    logoUrl_id?: string | null
+    followersCount?: number
+    viewedTimes?: number
+    isPromoted?: boolean
+    isActive?: boolean
+    balance?: number
+    paymentDetails?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    brandUsers?: UserUncheckedCreateNestedManyWithoutBrandTenantInput
+    documents?: BrandDocumentUncheckedCreateNestedManyWithoutBrandInput
+    socialLinks?: BrandSocialLinkUncheckedCreateNestedManyWithoutBrandInput
+    followers?: BrandFollowerUncheckedCreateNestedManyWithoutBrandInput
+    products?: ProductUncheckedCreateNestedManyWithoutBrandInput
+    branches?: BrandBranchUncheckedCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
+    inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
+    branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBrandInput
+  }
+
+  export type BrandCreateOrConnectWithoutCartsInput = {
+    where: BrandWhereUniqueInput
+    create: XOR<BrandCreateWithoutCartsInput, BrandUncheckedCreateWithoutCartsInput>
   }
 
   export type CartProductsCreateWithoutCartInput = {
@@ -59733,6 +62501,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCartInput = {
@@ -59771,6 +62540,80 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type BrandUpsertWithoutCartsInput = {
+    update: XOR<BrandUpdateWithoutCartsInput, BrandUncheckedUpdateWithoutCartsInput>
+    create: XOR<BrandCreateWithoutCartsInput, BrandUncheckedCreateWithoutCartsInput>
+    where?: BrandWhereInput
+  }
+
+  export type BrandUpdateToOneWithWhereWithoutCartsInput = {
+    where?: BrandWhereInput
+    data: XOR<BrandUpdateWithoutCartsInput, BrandUncheckedUpdateWithoutCartsInput>
+  }
+
+  export type BrandUpdateWithoutCartsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationStatus?: EnumBrandVerificationTierFieldUpdateOperationsInput | $Enums.BrandVerificationTier
+    rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl_id?: NullableStringFieldUpdateOperationsInput | string | null
+    followersCount?: IntFieldUpdateOperationsInput | number
+    viewedTimes?: IntFieldUpdateOperationsInput | number
+    isPromoted?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    balance?: IntFieldUpdateOperationsInput | number
+    paymentDetails?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBrandNestedInput
+    brandUsers?: UserUpdateManyWithoutBrandTenantNestedInput
+    documents?: BrandDocumentUpdateManyWithoutBrandNestedInput
+    socialLinks?: BrandSocialLinkUpdateManyWithoutBrandNestedInput
+    followers?: BrandFollowerUpdateManyWithoutBrandNestedInput
+    products?: ProductUpdateManyWithoutBrandNestedInput
+    branches?: BrandBranchUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
+    inventories?: InventoryUpdateManyWithoutBrandNestedInput
+    branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBrandNestedInput
+  }
+
+  export type BrandUncheckedUpdateWithoutCartsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationStatus?: EnumBrandVerificationTierFieldUpdateOperationsInput | $Enums.BrandVerificationTier
+    rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl_id?: NullableStringFieldUpdateOperationsInput | string | null
+    followersCount?: IntFieldUpdateOperationsInput | number
+    viewedTimes?: IntFieldUpdateOperationsInput | number
+    isPromoted?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    balance?: IntFieldUpdateOperationsInput | number
+    paymentDetails?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandUsers?: UserUncheckedUpdateManyWithoutBrandTenantNestedInput
+    documents?: BrandDocumentUncheckedUpdateManyWithoutBrandNestedInput
+    socialLinks?: BrandSocialLinkUncheckedUpdateManyWithoutBrandNestedInput
+    followers?: BrandFollowerUncheckedUpdateManyWithoutBrandNestedInput
+    products?: ProductUncheckedUpdateManyWithoutBrandNestedInput
+    branches?: BrandBranchUncheckedUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
+    inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
+    branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type CartProductsUpsertWithWhereUniqueWithoutCartInput = {
@@ -59798,11 +62641,13 @@ export namespace Prisma {
     price?: number
     totalPrice?: number
     user: UserCreateNestedOneWithoutCartInput
+    brand?: BrandCreateNestedOneWithoutCartsInput
   }
 
   export type CartUncheckedCreateWithoutProductsInput = {
     id?: string
     userId: string
+    brandId?: string | null
     discount?: number | null
     cartNote?: string | null
     userLocation?: string | null
@@ -59883,11 +62728,13 @@ export namespace Prisma {
     price?: IntFieldUpdateOperationsInput | number
     totalPrice?: IntFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutCartNestedInput
+    brand?: BrandUpdateOneWithoutCartsNestedInput
   }
 
   export type CartUncheckedUpdateWithoutProductsInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
     discount?: NullableIntFieldUpdateOperationsInput | number | null
     cartNote?: NullableStringFieldUpdateOperationsInput | string | null
     userLocation?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59949,6 +62796,462 @@ export namespace Prisma {
     availability?: VariantAvailabilityUncheckedUpdateOneWithoutVariantNestedInput
   }
 
+  export type BrandCreateWithoutCheckoutSessionsInput = {
+    id?: string
+    name: string
+    slug: string
+    description?: string | null
+    verificationStatus?: $Enums.BrandVerificationTier
+    rating?: Decimal | DecimalJsLike | number | string
+    logoUrl?: string | null
+    logoUrl_id?: string | null
+    followersCount?: number
+    viewedTimes?: number
+    isPromoted?: boolean
+    isActive?: boolean
+    balance?: number
+    paymentDetails?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutBrandInput
+    brandUsers?: UserCreateNestedManyWithoutBrandTenantInput
+    documents?: BrandDocumentCreateNestedManyWithoutBrandInput
+    socialLinks?: BrandSocialLinkCreateNestedManyWithoutBrandInput
+    followers?: BrandFollowerCreateNestedManyWithoutBrandInput
+    products?: ProductCreateNestedManyWithoutBrandInput
+    branches?: BrandBranchCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
+    inventories?: InventoryCreateNestedManyWithoutBrandInput
+    branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
+    carts?: CartCreateNestedManyWithoutBrandInput
+  }
+
+  export type BrandUncheckedCreateWithoutCheckoutSessionsInput = {
+    id?: string
+    userId: string
+    name: string
+    slug: string
+    description?: string | null
+    verificationStatus?: $Enums.BrandVerificationTier
+    rating?: Decimal | DecimalJsLike | number | string
+    logoUrl?: string | null
+    logoUrl_id?: string | null
+    followersCount?: number
+    viewedTimes?: number
+    isPromoted?: boolean
+    isActive?: boolean
+    balance?: number
+    paymentDetails?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    brandUsers?: UserUncheckedCreateNestedManyWithoutBrandTenantInput
+    documents?: BrandDocumentUncheckedCreateNestedManyWithoutBrandInput
+    socialLinks?: BrandSocialLinkUncheckedCreateNestedManyWithoutBrandInput
+    followers?: BrandFollowerUncheckedCreateNestedManyWithoutBrandInput
+    products?: ProductUncheckedCreateNestedManyWithoutBrandInput
+    branches?: BrandBranchUncheckedCreateNestedManyWithoutBrandInput
+    transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
+    inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
+    branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
+    carts?: CartUncheckedCreateNestedManyWithoutBrandInput
+  }
+
+  export type BrandCreateOrConnectWithoutCheckoutSessionsInput = {
+    where: BrandWhereUniqueInput
+    create: XOR<BrandCreateWithoutCheckoutSessionsInput, BrandUncheckedCreateWithoutCheckoutSessionsInput>
+  }
+
+  export type BrandBranchCreateWithoutCheckoutSessionsInput = {
+    id?: string
+    name: string
+    code: string
+    StaffIds?: BrandBranchCreateStaffIdsInput | string[]
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
+    placeId?: string | null
+    formattedAddress?: string | null
+    addressLine?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    postalCode?: string | null
+    locationGranularity?: string | null
+    phone?: string | null
+    openingHours?: NullableJsonNullValueInput | InputJsonValue
+    isMain?: boolean
+    isActive?: boolean
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Staff?: UserCreateNestedManyWithoutBrandBranchInput
+    brand: BrandCreateNestedOneWithoutBranchesInput
+    users?: UserCreateNestedManyWithoutBranchTenantInput
+    variants?: BranchVariantCreateNestedManyWithoutBranchInput
+    orders?: BranchOrderCreateNestedManyWithoutBrandBranchInput
+    inventory?: InventoryCreateNestedOneWithoutBranchInput
+    branchStaffs?: branchStaffCreateNestedManyWithoutBranchInput
+    staffInvitations?: StaffInvitationCreateNestedManyWithoutBranchInput
+  }
+
+  export type BrandBranchUncheckedCreateWithoutCheckoutSessionsInput = {
+    id?: string
+    brandId: string
+    name: string
+    code: string
+    StaffIds?: BrandBranchCreateStaffIdsInput | string[]
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
+    placeId?: string | null
+    formattedAddress?: string | null
+    addressLine?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    postalCode?: string | null
+    locationGranularity?: string | null
+    phone?: string | null
+    openingHours?: NullableJsonNullValueInput | InputJsonValue
+    isMain?: boolean
+    isActive?: boolean
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Staff?: UserUncheckedCreateNestedManyWithoutBrandBranchInput
+    users?: UserUncheckedCreateNestedManyWithoutBranchTenantInput
+    variants?: BranchVariantUncheckedCreateNestedManyWithoutBranchInput
+    orders?: BranchOrderUncheckedCreateNestedManyWithoutBrandBranchInput
+    inventory?: InventoryUncheckedCreateNestedOneWithoutBranchInput
+    branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutBranchInput
+    staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBranchInput
+  }
+
+  export type BrandBranchCreateOrConnectWithoutCheckoutSessionsInput = {
+    where: BrandBranchWhereUniqueInput
+    create: XOR<BrandBranchCreateWithoutCheckoutSessionsInput, BrandBranchUncheckedCreateWithoutCheckoutSessionsInput>
+  }
+
+  export type UserCreateWithoutCheckoutSessionsInput = {
+    id?: string
+    username: string
+    phone?: string | null
+    email: string
+    role?: $Enums.Role
+    password: string
+    picture_url?: string | null
+    picture_url_id?: string | null
+    otp?: string | null
+    otp_expiration?: Date | string | null
+    otp_purpose?: $Enums.otpPurpose | null
+    isVerified?: boolean
+    isBanned?: boolean
+    refreshToken?: string | null
+    created_At?: Date | string
+    updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
+    accountId?: string | null
+    payment_id?: string | null
+    passwordChangedAt?: Date | string | null
+    failedLoginAttempts?: number
+    lockedUntil?: Date | string | null
+    isOnline?: boolean
+    cart?: CartCreateNestedOneWithoutUserInput
+    wishlist?: wishlistCreateNestedOneWithoutUserInput
+    orders?: ParentOrderCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    brandFollowers?: BrandFollowerCreateNestedManyWithoutUserInput
+    brand?: BrandCreateNestedOneWithoutUserInput
+    brandTenant?: BrandCreateNestedOneWithoutBrandUsersInput
+    branchTenant?: BrandBranchCreateNestedOneWithoutUsersInput
+    reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
+    brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
+    branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserUncheckedCreateWithoutCheckoutSessionsInput = {
+    id?: string
+    username: string
+    phone?: string | null
+    email: string
+    role?: $Enums.Role
+    password: string
+    picture_url?: string | null
+    picture_url_id?: string | null
+    otp?: string | null
+    otp_expiration?: Date | string | null
+    otp_purpose?: $Enums.otpPurpose | null
+    isVerified?: boolean
+    isBanned?: boolean
+    refreshToken?: string | null
+    created_At?: Date | string
+    updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
+    accountId?: string | null
+    payment_id?: string | null
+    passwordChangedAt?: Date | string | null
+    failedLoginAttempts?: number
+    lockedUntil?: Date | string | null
+    isOnline?: boolean
+    brandId?: string | null
+    branchId?: string | null
+    brandBranchId?: string | null
+    cart?: CartUncheckedCreateNestedOneWithoutUserInput
+    wishlist?: wishlistUncheckedCreateNestedOneWithoutUserInput
+    orders?: ParentOrderUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    brandFollowers?: BrandFollowerUncheckedCreateNestedManyWithoutUserInput
+    brand?: BrandUncheckedCreateNestedOneWithoutUserInput
+    reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
+    branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserCreateOrConnectWithoutCheckoutSessionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCheckoutSessionsInput, UserUncheckedCreateWithoutCheckoutSessionsInput>
+  }
+
+  export type BrandUpsertWithoutCheckoutSessionsInput = {
+    update: XOR<BrandUpdateWithoutCheckoutSessionsInput, BrandUncheckedUpdateWithoutCheckoutSessionsInput>
+    create: XOR<BrandCreateWithoutCheckoutSessionsInput, BrandUncheckedCreateWithoutCheckoutSessionsInput>
+    where?: BrandWhereInput
+  }
+
+  export type BrandUpdateToOneWithWhereWithoutCheckoutSessionsInput = {
+    where?: BrandWhereInput
+    data: XOR<BrandUpdateWithoutCheckoutSessionsInput, BrandUncheckedUpdateWithoutCheckoutSessionsInput>
+  }
+
+  export type BrandUpdateWithoutCheckoutSessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationStatus?: EnumBrandVerificationTierFieldUpdateOperationsInput | $Enums.BrandVerificationTier
+    rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl_id?: NullableStringFieldUpdateOperationsInput | string | null
+    followersCount?: IntFieldUpdateOperationsInput | number
+    viewedTimes?: IntFieldUpdateOperationsInput | number
+    isPromoted?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    balance?: IntFieldUpdateOperationsInput | number
+    paymentDetails?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBrandNestedInput
+    brandUsers?: UserUpdateManyWithoutBrandTenantNestedInput
+    documents?: BrandDocumentUpdateManyWithoutBrandNestedInput
+    socialLinks?: BrandSocialLinkUpdateManyWithoutBrandNestedInput
+    followers?: BrandFollowerUpdateManyWithoutBrandNestedInput
+    products?: ProductUpdateManyWithoutBrandNestedInput
+    branches?: BrandBranchUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
+    inventories?: InventoryUpdateManyWithoutBrandNestedInput
+    branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
+    carts?: CartUpdateManyWithoutBrandNestedInput
+  }
+
+  export type BrandUncheckedUpdateWithoutCheckoutSessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationStatus?: EnumBrandVerificationTierFieldUpdateOperationsInput | $Enums.BrandVerificationTier
+    rating?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl_id?: NullableStringFieldUpdateOperationsInput | string | null
+    followersCount?: IntFieldUpdateOperationsInput | number
+    viewedTimes?: IntFieldUpdateOperationsInput | number
+    isPromoted?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    balance?: IntFieldUpdateOperationsInput | number
+    paymentDetails?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandUsers?: UserUncheckedUpdateManyWithoutBrandTenantNestedInput
+    documents?: BrandDocumentUncheckedUpdateManyWithoutBrandNestedInput
+    socialLinks?: BrandSocialLinkUncheckedUpdateManyWithoutBrandNestedInput
+    followers?: BrandFollowerUncheckedUpdateManyWithoutBrandNestedInput
+    products?: ProductUncheckedUpdateManyWithoutBrandNestedInput
+    branches?: BrandBranchUncheckedUpdateManyWithoutBrandNestedInput
+    transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
+    inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
+    branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
+    carts?: CartUncheckedUpdateManyWithoutBrandNestedInput
+  }
+
+  export type BrandBranchUpsertWithoutCheckoutSessionsInput = {
+    update: XOR<BrandBranchUpdateWithoutCheckoutSessionsInput, BrandBranchUncheckedUpdateWithoutCheckoutSessionsInput>
+    create: XOR<BrandBranchCreateWithoutCheckoutSessionsInput, BrandBranchUncheckedCreateWithoutCheckoutSessionsInput>
+    where?: BrandBranchWhereInput
+  }
+
+  export type BrandBranchUpdateToOneWithWhereWithoutCheckoutSessionsInput = {
+    where?: BrandBranchWhereInput
+    data: XOR<BrandBranchUpdateWithoutCheckoutSessionsInput, BrandBranchUncheckedUpdateWithoutCheckoutSessionsInput>
+  }
+
+  export type BrandBranchUpdateWithoutCheckoutSessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    placeId?: NullableStringFieldUpdateOperationsInput | string | null
+    formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    locationGranularity?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableJsonNullValueInput | InputJsonValue
+    isMain?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Staff?: UserUpdateManyWithoutBrandBranchNestedInput
+    brand?: BrandUpdateOneRequiredWithoutBranchesNestedInput
+    users?: UserUpdateManyWithoutBranchTenantNestedInput
+    variants?: BranchVariantUpdateManyWithoutBranchNestedInput
+    orders?: BranchOrderUpdateManyWithoutBrandBranchNestedInput
+    inventory?: InventoryUpdateOneWithoutBranchNestedInput
+    branchStaffs?: branchStaffUpdateManyWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUpdateManyWithoutBranchNestedInput
+  }
+
+  export type BrandBranchUncheckedUpdateWithoutCheckoutSessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    brandId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    placeId?: NullableStringFieldUpdateOperationsInput | string | null
+    formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    locationGranularity?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableJsonNullValueInput | InputJsonValue
+    isMain?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Staff?: UserUncheckedUpdateManyWithoutBrandBranchNestedInput
+    users?: UserUncheckedUpdateManyWithoutBranchTenantNestedInput
+    variants?: BranchVariantUncheckedUpdateManyWithoutBranchNestedInput
+    orders?: BranchOrderUncheckedUpdateManyWithoutBrandBranchNestedInput
+    inventory?: InventoryUncheckedUpdateOneWithoutBranchNestedInput
+    branchStaffs?: branchStaffUncheckedUpdateManyWithoutBranchNestedInput
+    staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput
+  }
+
+  export type UserUpsertWithoutCheckoutSessionsInput = {
+    update: XOR<UserUpdateWithoutCheckoutSessionsInput, UserUncheckedUpdateWithoutCheckoutSessionsInput>
+    create: XOR<UserCreateWithoutCheckoutSessionsInput, UserUncheckedCreateWithoutCheckoutSessionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCheckoutSessionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCheckoutSessionsInput, UserUncheckedUpdateWithoutCheckoutSessionsInput>
+  }
+
+  export type UserUpdateWithoutCheckoutSessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    password?: StringFieldUpdateOperationsInput | string
+    picture_url?: NullableStringFieldUpdateOperationsInput | string | null
+    picture_url_id?: NullableStringFieldUpdateOperationsInput | string | null
+    otp?: NullableStringFieldUpdateOperationsInput | string | null
+    otp_expiration?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    otp_purpose?: NullableEnumotpPurposeFieldUpdateOperationsInput | $Enums.otpPurpose | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    created_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    accountId?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedLoginAttempts?: IntFieldUpdateOperationsInput | number
+    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    cart?: CartUpdateOneWithoutUserNestedInput
+    wishlist?: wishlistUpdateOneWithoutUserNestedInput
+    orders?: ParentOrderUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    brandFollowers?: BrandFollowerUpdateManyWithoutUserNestedInput
+    brand?: BrandUpdateOneWithoutUserNestedInput
+    brandTenant?: BrandUpdateOneWithoutBrandUsersNestedInput
+    branchTenant?: BrandBranchUpdateOneWithoutUsersNestedInput
+    reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
+    brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
+    branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCheckoutSessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    password?: StringFieldUpdateOperationsInput | string
+    picture_url?: NullableStringFieldUpdateOperationsInput | string | null
+    picture_url_id?: NullableStringFieldUpdateOperationsInput | string | null
+    otp?: NullableStringFieldUpdateOperationsInput | string | null
+    otp_expiration?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    otp_purpose?: NullableEnumotpPurposeFieldUpdateOperationsInput | $Enums.otpPurpose | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    created_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    accountId?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedLoginAttempts?: IntFieldUpdateOperationsInput | number
+    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    brandBranchId?: NullableStringFieldUpdateOperationsInput | string | null
+    cart?: CartUncheckedUpdateOneWithoutUserNestedInput
+    wishlist?: wishlistUncheckedUpdateOneWithoutUserNestedInput
+    orders?: ParentOrderUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    brandFollowers?: BrandFollowerUncheckedUpdateManyWithoutUserNestedInput
+    brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
+    reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
+    branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+  }
+
   export type UserCreateWithoutWishlistInput = {
     id?: string
     username: string
@@ -59985,6 +63288,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWishlistInput = {
@@ -60023,6 +63327,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWishlistInput = {
@@ -60126,6 +63431,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWishlistInput = {
@@ -60164,6 +63470,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProductUpsertWithWhereUniqueWithoutWishlistsInput = {
@@ -60209,6 +63516,8 @@ export namespace Prisma {
     transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
+    carts?: CartCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutInventoriesInput = {
@@ -60238,6 +63547,8 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     branchOrders?: BranchOrderUncheckedCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
+    carts?: CartUncheckedCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutInventoriesInput = {
@@ -60250,8 +63561,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -60274,6 +63585,7 @@ export namespace Prisma {
     orders?: BranchOrderCreateNestedManyWithoutBrandBranchInput
     branchStaffs?: branchStaffCreateNestedManyWithoutBranchInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchUncheckedCreateWithoutInventoryInput = {
@@ -60282,8 +63594,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -60305,6 +63617,7 @@ export namespace Prisma {
     orders?: BranchOrderUncheckedCreateNestedManyWithoutBrandBranchInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutBranchInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchCreateOrConnectWithoutInventoryInput = {
@@ -60510,6 +63823,8 @@ export namespace Prisma {
     transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
+    carts?: CartUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutInventoriesInput = {
@@ -60539,6 +63854,8 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     branchOrders?: BranchOrderUncheckedUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
+    carts?: CartUncheckedUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandBranchUpsertWithoutInventoryInput = {
@@ -60557,8 +63874,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60581,6 +63898,7 @@ export namespace Prisma {
     orders?: BranchOrderUpdateManyWithoutBrandBranchNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutBranchNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBranchesNestedInput
   }
 
   export type BrandBranchUncheckedUpdateWithoutInventoryInput = {
@@ -60589,8 +63907,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60612,6 +63930,7 @@ export namespace Prisma {
     orders?: BranchOrderUncheckedUpdateManyWithoutBrandBranchNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutBranchNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBranchesNestedInput
   }
 
   export type InventoryStockUpsertWithWhereUniqueWithoutInventoryInput = {
@@ -61795,6 +65114,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutOrdersInput = {
@@ -61833,6 +65153,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutOrdersInput = {
@@ -61931,6 +65252,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -61969,6 +65291,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BranchOrderUpsertWithWhereUniqueWithoutOrderInput = {
@@ -62049,6 +65372,8 @@ export namespace Prisma {
     transactions?: BrandTransactionCreateNestedManyWithoutBrandInput
     inventories?: InventoryCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBrandInput
+    carts?: CartCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutBranchOrdersInput = {
@@ -62078,6 +65403,8 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedCreateNestedManyWithoutBrandInput
     inventories?: InventoryUncheckedCreateNestedManyWithoutBrandInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBrandInput
+    carts?: CartUncheckedCreateNestedManyWithoutBrandInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutBranchOrdersInput = {
@@ -62090,8 +65417,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -62114,6 +65441,7 @@ export namespace Prisma {
     inventory?: InventoryCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffCreateNestedManyWithoutBranchInput
     staffInvitations?: StaffInvitationCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchUncheckedCreateWithoutOrdersInput = {
@@ -62122,8 +65450,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -62145,6 +65473,7 @@ export namespace Prisma {
     inventory?: InventoryUncheckedCreateNestedOneWithoutBranchInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutBranchInput
     staffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutBranchInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutBranchesInput
   }
 
   export type BrandBranchCreateOrConnectWithoutOrdersInput = {
@@ -62317,6 +65646,8 @@ export namespace Prisma {
     transactions?: BrandTransactionUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBrandNestedInput
+    carts?: CartUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutBranchOrdersInput = {
@@ -62346,6 +65677,8 @@ export namespace Prisma {
     transactions?: BrandTransactionUncheckedUpdateManyWithoutBrandNestedInput
     inventories?: InventoryUncheckedUpdateManyWithoutBrandNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBrandNestedInput
+    carts?: CartUncheckedUpdateManyWithoutBrandNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandBranchUpsertWithoutOrdersInput = {
@@ -62364,8 +65697,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -62388,6 +65721,7 @@ export namespace Prisma {
     inventory?: InventoryUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutBranchNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBranchesNestedInput
   }
 
   export type BrandBranchUncheckedUpdateWithoutOrdersInput = {
@@ -62396,8 +65730,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -62419,6 +65753,7 @@ export namespace Prisma {
     inventory?: InventoryUncheckedUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutBranchNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBranchesNestedInput
   }
 
   export type D_CompanyUpsertWithoutOrdersInput = {
@@ -63124,6 +66459,25 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type CheckoutSessionCreateManyUserInput = {
+    id?: string
+    status?: $Enums.CheckoutStatus
+    cartHash: string
+    snapshot: JsonNullValueInput | InputJsonValue
+    addressLat?: Decimal | DecimalJsLike | number | string | null
+    addressLng?: Decimal | DecimalJsLike | number | string | null
+    addressText?: string | null
+    phoneNumber?: string | null
+    deliveryFee?: number | null
+    timeEstimation?: Date | string | null
+    total?: number | null
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    brandId: string
+    brandBranchId?: string | null
+  }
+
   export type ParentOrderUpdateWithoutUserInput = {
     parentOrderId?: StringFieldUpdateOperationsInput | string
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
@@ -63297,6 +66651,63 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CheckoutSessionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
+    cartHash?: StringFieldUpdateOperationsInput | string
+    snapshot?: JsonNullValueInput | InputJsonValue
+    addressLat?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressLng?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressText?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryFee?: NullableIntFieldUpdateOperationsInput | number | null
+    timeEstimation?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    total?: NullableIntFieldUpdateOperationsInput | number | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brand?: BrandUpdateOneRequiredWithoutCheckoutSessionsNestedInput
+    branches?: BrandBranchUpdateOneWithoutCheckoutSessionsNestedInput
+  }
+
+  export type CheckoutSessionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
+    cartHash?: StringFieldUpdateOperationsInput | string
+    snapshot?: JsonNullValueInput | InputJsonValue
+    addressLat?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressLng?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressText?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryFee?: NullableIntFieldUpdateOperationsInput | number | null
+    timeEstimation?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    total?: NullableIntFieldUpdateOperationsInput | number | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandId?: StringFieldUpdateOperationsInput | string
+    brandBranchId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CheckoutSessionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
+    cartHash?: StringFieldUpdateOperationsInput | string
+    snapshot?: JsonNullValueInput | InputJsonValue
+    addressLat?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressLng?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressText?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryFee?: NullableIntFieldUpdateOperationsInput | number | null
+    timeEstimation?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    total?: NullableIntFieldUpdateOperationsInput | number | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandId?: StringFieldUpdateOperationsInput | string
+    brandBranchId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type UserCreateManyBrandTenantInput = {
     id?: string
     username: string
@@ -63371,8 +66782,8 @@ export namespace Prisma {
     name: string
     code: string
     StaffIds?: BrandBranchCreateStaffIdsInput | string[]
-    latitude?: Decimal | DecimalJsLike | number | string | null
-    longitude?: Decimal | DecimalJsLike | number | string | null
+    latitude: Decimal | DecimalJsLike | number | string
+    longitude: Decimal | DecimalJsLike | number | string
     placeId?: string | null
     formattedAddress?: string | null
     addressLine?: string | null
@@ -63438,6 +66849,36 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type CartCreateManyBrandInput = {
+    id?: string
+    userId: string
+    discount?: number | null
+    cartNote?: string | null
+    userLocation?: string | null
+    userNumber?: string | null
+    price?: number
+    totalPrice?: number
+  }
+
+  export type CheckoutSessionCreateManyBrandInput = {
+    id?: string
+    userId: string
+    status?: $Enums.CheckoutStatus
+    cartHash: string
+    snapshot: JsonNullValueInput | InputJsonValue
+    addressLat?: Decimal | DecimalJsLike | number | string | null
+    addressLng?: Decimal | DecimalJsLike | number | string | null
+    addressText?: string | null
+    phoneNumber?: string | null
+    deliveryFee?: number | null
+    timeEstimation?: Date | string | null
+    total?: number | null
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    brandBranchId?: string | null
+  }
+
   export type UserUpdateWithoutBrandTenantInput = {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
@@ -63474,6 +66915,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBrandTenantInput = {
@@ -63512,6 +66954,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutBrandTenantInput = {
@@ -63676,8 +67119,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63700,6 +67143,7 @@ export namespace Prisma {
     inventory?: InventoryUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutBranchNestedInput
     staffInvitations?: StaffInvitationUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutBranchesNestedInput
   }
 
   export type BrandBranchUncheckedUpdateWithoutBrandInput = {
@@ -63707,8 +67151,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63731,6 +67175,7 @@ export namespace Prisma {
     inventory?: InventoryUncheckedUpdateOneWithoutBranchNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutBranchNestedInput
     staffInvitations?: StaffInvitationUncheckedUpdateManyWithoutBranchNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBranchesNestedInput
   }
 
   export type BrandBranchUncheckedUpdateManyWithoutBrandInput = {
@@ -63738,8 +67183,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     StaffIds?: BrandBranchUpdateStaffIdsInput | string[]
-    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     placeId?: NullableStringFieldUpdateOperationsInput | string | null
     formattedAddress?: NullableStringFieldUpdateOperationsInput | string | null
     addressLine?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63913,6 +67358,98 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CartUpdateWithoutBrandInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    discount?: NullableIntFieldUpdateOperationsInput | number | null
+    cartNote?: NullableStringFieldUpdateOperationsInput | string | null
+    userLocation?: NullableStringFieldUpdateOperationsInput | string | null
+    userNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: IntFieldUpdateOperationsInput | number
+    totalPrice?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutCartNestedInput
+    products?: CartProductsUpdateManyWithoutCartNestedInput
+  }
+
+  export type CartUncheckedUpdateWithoutBrandInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    discount?: NullableIntFieldUpdateOperationsInput | number | null
+    cartNote?: NullableStringFieldUpdateOperationsInput | string | null
+    userLocation?: NullableStringFieldUpdateOperationsInput | string | null
+    userNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: IntFieldUpdateOperationsInput | number
+    totalPrice?: IntFieldUpdateOperationsInput | number
+    products?: CartProductsUncheckedUpdateManyWithoutCartNestedInput
+  }
+
+  export type CartUncheckedUpdateManyWithoutBrandInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    discount?: NullableIntFieldUpdateOperationsInput | number | null
+    cartNote?: NullableStringFieldUpdateOperationsInput | string | null
+    userLocation?: NullableStringFieldUpdateOperationsInput | string | null
+    userNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: IntFieldUpdateOperationsInput | number
+    totalPrice?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type CheckoutSessionUpdateWithoutBrandInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
+    cartHash?: StringFieldUpdateOperationsInput | string
+    snapshot?: JsonNullValueInput | InputJsonValue
+    addressLat?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressLng?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressText?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryFee?: NullableIntFieldUpdateOperationsInput | number | null
+    timeEstimation?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    total?: NullableIntFieldUpdateOperationsInput | number | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branches?: BrandBranchUpdateOneWithoutCheckoutSessionsNestedInput
+    user?: UserUpdateOneRequiredWithoutCheckoutSessionsNestedInput
+  }
+
+  export type CheckoutSessionUncheckedUpdateWithoutBrandInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    status?: EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
+    cartHash?: StringFieldUpdateOperationsInput | string
+    snapshot?: JsonNullValueInput | InputJsonValue
+    addressLat?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressLng?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressText?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryFee?: NullableIntFieldUpdateOperationsInput | number | null
+    timeEstimation?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    total?: NullableIntFieldUpdateOperationsInput | number | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandBranchId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CheckoutSessionUncheckedUpdateManyWithoutBrandInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    status?: EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
+    cartHash?: StringFieldUpdateOperationsInput | string
+    snapshot?: JsonNullValueInput | InputJsonValue
+    addressLat?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressLng?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressText?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryFee?: NullableIntFieldUpdateOperationsInput | number | null
+    timeEstimation?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    total?: NullableIntFieldUpdateOperationsInput | number | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandBranchId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type UserCreateManyBrandBranchInput = {
     id?: string
     username: string
@@ -64015,6 +67552,25 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type CheckoutSessionCreateManyBranchesInput = {
+    id?: string
+    userId: string
+    status?: $Enums.CheckoutStatus
+    cartHash: string
+    snapshot: JsonNullValueInput | InputJsonValue
+    addressLat?: Decimal | DecimalJsLike | number | string | null
+    addressLng?: Decimal | DecimalJsLike | number | string | null
+    addressText?: string | null
+    phoneNumber?: string | null
+    deliveryFee?: number | null
+    timeEstimation?: Date | string | null
+    total?: number | null
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    brandId: string
+  }
+
   export type UserUpdateWithoutBrandBranchInput = {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
@@ -64051,6 +67607,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBrandBranchInput = {
@@ -64089,6 +67646,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutBrandBranchInput = {
@@ -64156,6 +67714,7 @@ export namespace Prisma {
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBranchTenantInput = {
@@ -64194,6 +67753,7 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutBranchTenantInput = {
@@ -64357,6 +67917,63 @@ export namespace Prisma {
     revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CheckoutSessionUpdateWithoutBranchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
+    cartHash?: StringFieldUpdateOperationsInput | string
+    snapshot?: JsonNullValueInput | InputJsonValue
+    addressLat?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressLng?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressText?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryFee?: NullableIntFieldUpdateOperationsInput | number | null
+    timeEstimation?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    total?: NullableIntFieldUpdateOperationsInput | number | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brand?: BrandUpdateOneRequiredWithoutCheckoutSessionsNestedInput
+    user?: UserUpdateOneRequiredWithoutCheckoutSessionsNestedInput
+  }
+
+  export type CheckoutSessionUncheckedUpdateWithoutBranchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    status?: EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
+    cartHash?: StringFieldUpdateOperationsInput | string
+    snapshot?: JsonNullValueInput | InputJsonValue
+    addressLat?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressLng?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressText?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryFee?: NullableIntFieldUpdateOperationsInput | number | null
+    timeEstimation?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    total?: NullableIntFieldUpdateOperationsInput | number | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CheckoutSessionUncheckedUpdateManyWithoutBranchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    status?: EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
+    cartHash?: StringFieldUpdateOperationsInput | string
+    snapshot?: JsonNullValueInput | InputJsonValue
+    addressLat?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressLng?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    addressText?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryFee?: NullableIntFieldUpdateOperationsInput | number | null
+    timeEstimation?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    total?: NullableIntFieldUpdateOperationsInput | number | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProductCreateManyCategoryInput = {
