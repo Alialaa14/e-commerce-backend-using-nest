@@ -6,9 +6,9 @@ import { VariantModule } from '../Variants/variant.module';
 import { BrandBranchModule } from '../BrandBranch/brandBranch.module';
 
 @Module({
-  exports: [],
+  exports: [CheckoutService],
   controllers: [CheckoutController],
   providers: [CheckoutService],
-  imports: [CartModule, VariantModule , BrandBranchModule],
+  imports: [CartModule, VariantModule, BrandBranchModule],
 })
 export class CheckoutModule {}

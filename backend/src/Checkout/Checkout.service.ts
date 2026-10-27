@@ -5,17 +5,152 @@ import {
   ConflictException,
   GoneException,
 } from '@nestjs/common';
+import { randomInt } from 'node:crypto';
 import { CartService } from '../Cart/cart.service';
 import { VariantService } from '../Variants/variant.service';
 import { PrismaService } from '../utils/prisma/prisma.service';
 import { buildCartHash } from '../utils/buildHash';
-import { CheckoutStatus, Prisma } from '../generated/prisma';
+import { CheckoutStatus, orderStatus, Prisma } from '../generated/prisma';
 import { Coordinates, LocationService } from '../Location/location.service';
 import { BrandBranchService } from '../BrandBranch/brandBranch.service';
 import { InventoryService } from '../Inventory/inventory.service';
 
 const SESSION_TTL_MS = 30 * 60 * 1000;
 const Active = [CheckoutStatus.ready, CheckoutStatus.pending];
+
+interface CheckoutItemSnapshot {
+  variantId: string;
+  name: string;
+  quantity: number;
+  price: number;
+}
+
+interface CheckoutShipmentSnapshot {
+  branchId: string;
+  variants: { variantId: string; quantity: number }[];
+  shipmentDetails: { fee: number; duration: number };
+}
+
+interface CheckoutOrderSnapshot {
+  items: CheckoutItemSnapshot[];
+  subtotal: number;
+  totalPrice: number;
+  shipments: CheckoutShipmentSnapshot[];
+  deliveryFee: number;
+  total: number;
+}
+
+function isJsonObject(value: unknown): value is Prisma.JsonObject {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function parseCheckoutSnapshot(value: Prisma.JsonValue): CheckoutOrderSnapshot {
+  if (!isJsonObject(value)) {
+    throw new BadRequestException('Checkout snapshot is invalid');
+  }
+
+  const itemsValue = value.items;
+  const shipmentsValue = value.shipments;
+  if (!Array.isArray(itemsValue) || !Array.isArray(shipmentsValue)) {
+    throw new BadRequestException('Checkout snapshot is incomplete');
+  }
+
+  const items = itemsValue.map((item): CheckoutItemSnapshot => {
+    if (
+      !isJsonObject(item) ||
+      typeof item.variantId !== 'string' ||
+      typeof item.name !== 'string' ||
+      typeof item.quantity !== 'number' ||
+      !Number.isSafeInteger(item.quantity) ||
+      item.quantity < 1 ||
+      typeof item.price !== 'number' ||
+      !Number.isSafeInteger(item.price) ||
+      item.price < 0
+    ) {
+      throw new BadRequestException('Checkout item snapshot is invalid');
+    }
+
+    return {
+      variantId: item.variantId,
+      name: item.name,
+      quantity: item.quantity,
+      price: item.price,
+    };
+  });
+
+  const shipments = shipmentsValue.map((shipment): CheckoutShipmentSnapshot => {
+    if (
+      !isJsonObject(shipment) ||
+      typeof shipment.branchId !== 'string' ||
+      !Array.isArray(shipment.variants) ||
+      !isJsonObject(shipment.shipmentDetails) ||
+      typeof shipment.shipmentDetails.fee !== 'number' ||
+      !Number.isSafeInteger(shipment.shipmentDetails.fee) ||
+      shipment.shipmentDetails.fee < 0 ||
+      typeof shipment.shipmentDetails.duration !== 'number' ||
+      !Number.isSafeInteger(shipment.shipmentDetails.duration) ||
+      shipment.shipmentDetails.duration < 0
+    ) {
+      throw new BadRequestException('Checkout shipment snapshot is invalid');
+    }
+
+    const variants = shipment.variants.map((line) => {
+      if (
+        !isJsonObject(line) ||
+        typeof line.variantId !== 'string' ||
+        typeof line.quantity !== 'number' ||
+        !Number.isSafeInteger(line.quantity) ||
+        line.quantity < 1
+      ) {
+        throw new BadRequestException(
+          'Checkout shipment item snapshot is invalid',
+        );
+      }
+
+      return { variantId: line.variantId, quantity: line.quantity };
+    });
+
+    if (variants.length === 0) {
+      throw new BadRequestException('Checkout shipment has no items');
+    }
+
+    return {
+      branchId: shipment.branchId,
+      variants,
+      shipmentDetails: {
+        fee: shipment.shipmentDetails.fee,
+        duration: shipment.shipmentDetails.duration,
+      },
+    };
+  });
+  if (shipments.length === 0) {
+    throw new BadRequestException('Checkout snapshot has no shipments');
+  }
+
+  const subtotal = value.subtotal;
+  const totalPrice = value.totalPrice;
+  const deliveryFee = value.deliveryFee;
+  const total = value.total;
+  if (
+    typeof subtotal !== 'number' ||
+    !Number.isSafeInteger(subtotal) ||
+    subtotal < 0 ||
+    typeof totalPrice !== 'number' ||
+    !Number.isSafeInteger(totalPrice) ||
+    totalPrice < 0 ||
+    totalPrice > subtotal ||
+    typeof deliveryFee !== 'number' ||
+    !Number.isSafeInteger(deliveryFee) ||
+    deliveryFee < 0 ||
+    typeof total !== 'number' ||
+    !Number.isSafeInteger(total) ||
+    total < 0
+  ) {
+    throw new BadRequestException('Checkout totals are invalid');
+  }
+
+  return { items, subtotal, totalPrice, shipments, deliveryFee, total };
+}
 
 @Injectable()
 export class CheckoutService {
@@ -94,6 +229,8 @@ export class CheckoutService {
   private combineMatchingProducts(
     matchingProducts: {
       branchId: string;
+      lang: number;
+      lat: number;
       variants: { variantId: string; quantity: number }[];
     }[], // sorted nearest first, each entry lists only the lines that branch covers in full
     products: { variantId: string; quantity: number }[],
@@ -128,8 +265,18 @@ export class CheckoutService {
         if (fromFirst.length === 0 || fromSecond.length === 0) continue;
 
         return [
-          { branchId: first.branchId, variants: fromFirst },
-          { branchId: second.branchId, variants: fromSecond },
+          {
+            branchId: first.branchId,
+            variants: fromFirst,
+            lang: first.lang,
+            lat: first.lat,
+          },
+          {
+            branchId: second.branchId,
+            variants: fromSecond,
+            lang: second.lang,
+            lat: second.lat,
+          },
         ];
       }
     }
@@ -151,11 +298,14 @@ export class CheckoutService {
     // array with matching products if no branch has all the products
     let matchingProducts: {
       branchId: string;
+      lat: number;
+      lang: number;
       variants: { variantId: string; quantity: number }[];
     }[] = [];
     let branchHasAllProducts = null;
     for (let i = 0; i < nearestBranches.length; i++) {
-      let hasAllProducts = false;
+      let hasAllProducts = true;
+      const availableVariants: { variantId: string; quantity: number }[] = [];
 
       // get the inventory of the branch
       for (let j = 0; j < products.length; j++) {
@@ -166,14 +316,9 @@ export class CheckoutService {
           );
 
         if (stockAvailable.available >= products[j].quantity) {
-          hasAllProducts = true;
-          matchingProducts.filter((entry) => {
-            if (entry.branchId === nearestBranches[i].id) {
-              entry.variants.push({
-                variantId: products[j].variantId,
-                quantity: products[j].quantity,
-              });
-            }
+          availableVariants.push({
+            variantId: products[j].variantId,
+            quantity: products[j].quantity,
           });
         } else {
           hasAllProducts = false;
@@ -182,6 +327,15 @@ export class CheckoutService {
       if (hasAllProducts) {
         branchHasAllProducts = nearestBranches[i];
         break;
+      }
+
+      if (availableVariants.length > 0) {
+        matchingProducts.push({
+          branchId: nearestBranches[i].id,
+          lat: nearestBranches[i].latitude,
+          lang: nearestBranches[i].longitude,
+          variants: availableVariants,
+        });
       }
     }
 
@@ -193,6 +347,8 @@ export class CheckoutService {
       {
         branchId: branchHasAllProducts.id,
         variants: products,
+        lat: branchHasAllProducts.latitude,
+        lang: branchHasAllProducts.longitude,
       },
     ];
   }
@@ -266,6 +422,7 @@ export class CheckoutService {
         subtotal: cart.price,
         totalPrice: cart.totalPrice,
         discount: cart.discount,
+        phoneNumber: cart.userNumber,
       };
 
       const checkoutSession = await this.createOrRefreshCheckoutSession(
@@ -373,17 +530,288 @@ export class CheckoutService {
         console.log('reverseGeocode failed', e);
       }
 
-      // next: fee/ETA, then a conditional updateMany to save
       // now i will get the nearest branches that have all the products
       const getBranchesThatHasProducts = await this.getFulfilledNearestBranch(
         nearestBranchs,
         cart.products,
       );
 
-      return { getBranchesThatHasProducts, addressText };
+      if (!getBranchesThatHasProducts?.length) {
+        throw new BadRequestException('No branches can fulfill the cart items');
+      }
+
+      const shipments = await Promise.all(
+        getBranchesThatHasProducts.map(async (branch) => {
+          const shipmentDistanceDetails =
+            await this.locationService.getDirections(location, {
+              latitude: branch.lat,
+              longitude: branch.lang,
+            });
+          // calculate fee (todo : make costPerKm dynamic)
+          const fee = this.locationService.calculateDeliveryCost(
+            shipmentDistanceDetails.distance,
+            2,
+          );
+
+          return {
+            branchId: branch.branchId,
+            variants: branch.variants,
+            shipmentDetails: {
+              distance: shipmentDistanceDetails.distance,
+              duration: shipmentDistanceDetails.duration,
+              fee,
+            },
+          };
+        }),
+      );
+
+      const deliveryFee = shipments.reduce(
+        (total, shipment) => total + shipment.shipmentDetails.fee,
+        0,
+      );
+      const total = cart.totalPrice + deliveryFee;
+      const timeEstimation = new Date(
+        Date.now() +
+          Math.max(
+            ...shipments.map((shipment) => shipment.shipmentDetails.duration),
+          ) *
+            24 *
+            60 *
+            60 *
+            1000,
+      );
+      const sessionSnapshot =
+        session.snapshot &&
+        typeof session.snapshot === 'object' &&
+        !Array.isArray(session.snapshot)
+          ? session.snapshot
+          : {};
+      const snapshot = {
+        ...sessionSnapshot,
+        location: { latitude, longitude },
+        addressText,
+        phoneNumber: cart.userNumber,
+        shipments,
+        deliveryFee,
+        total,
+      } satisfies Prisma.InputJsonObject;
+
+      const { count } = await db.updateMany({
+        where: {
+          id: session.id,
+          userId,
+          status: { in: Active },
+          expiresAt: { gt: new Date() },
+        },
+        data: {
+          status: CheckoutStatus.ready,
+          addressLat: latitude,
+          addressLng: longitude,
+          addressText,
+          phoneNumber: cart.userNumber,
+          brandBranchId: shipments.length === 1 ? shipments[0].branchId : null,
+          deliveryFee,
+          timeEstimation,
+          total,
+          snapshot,
+        },
+      });
+
+      if (count !== 1) {
+        throw new ConflictException({ code: 'CHECKOUT_NOT_ACTIVE' });
+      }
+
+      return { shipments, addressText };
     } catch (e) {
       console.log(e);
       throw e;
     }
+  }
+
+  async placeOrder(checkoutId: string, userId: string) {
+    return this.prismaService.prisma.$transaction(async (tx) => {
+      const session = await tx.checkoutSession.findFirst({
+        where: { id: checkoutId, userId },
+      });
+      if (!session) throw new NotFoundException('Checkout session not found');
+
+      if (session.status === CheckoutStatus.placed) {
+        const existingOrder = await tx.parentOrder.findUnique({
+          where: { checkoutId: session.id },
+          include: { branchOrders: { include: { orderItems: true } } },
+        });
+        if (!existingOrder) {
+          throw new ConflictException('Placed checkout has no order');
+        }
+        return existingOrder;
+      }
+
+      if (session.status !== CheckoutStatus.ready) {
+        throw new ConflictException({ code: 'CHECKOUT_NOT_READY' });
+      }
+      if (!session.addressText || !session.phoneNumber) {
+        throw new BadRequestException(
+          'Checkout address and phone number are required',
+        );
+      }
+
+      const snapshot = parseCheckoutSnapshot(session.snapshot);
+      if (
+        session.total === null ||
+        session.deliveryFee === null ||
+        snapshot.total !== session.total ||
+        snapshot.deliveryFee !== session.deliveryFee ||
+        snapshot.totalPrice + snapshot.deliveryFee !== session.total
+      ) {
+        throw new BadRequestException('Checkout totals do not match');
+      }
+
+      const itemsByVariant = new Map(
+        snapshot.items.map((item) => [item.variantId, item]),
+      );
+      if (itemsByVariant.size !== snapshot.items.length) {
+        throw new BadRequestException(
+          'Checkout contains duplicate variant items',
+        );
+      }
+
+      const assignedQuantities = new Map<string, number>();
+      const branchOrderInputs = snapshot.shipments.map((shipment, index) => {
+        const branchItems = shipment.variants.map((line) => {
+          const item = itemsByVariant.get(line.variantId);
+          if (!item || item.quantity !== line.quantity) {
+            throw new BadRequestException(
+              'Checkout shipment items do not match the order',
+            );
+          }
+          if (assignedQuantities.has(line.variantId)) {
+            throw new BadRequestException(
+              'Checkout item is assigned to multiple shipments',
+            );
+          }
+          assignedQuantities.set(line.variantId, line.quantity);
+          return item;
+        });
+
+        const subtotal = branchItems.reduce(
+          (sum, item) => sum + item.price * item.quantity,
+          0,
+        );
+
+        return {
+          shipment,
+          subtotal,
+          discountShare: 0,
+          items: branchItems,
+        };
+      });
+
+      if (
+        assignedQuantities.size !== snapshot.items.length ||
+        snapshot.items.some(
+          (item) => assignedQuantities.get(item.variantId) !== item.quantity,
+        ) ||
+        branchOrderInputs.reduce((sum, branch) => sum + branch.subtotal, 0) !==
+          snapshot.subtotal ||
+        branchOrderInputs.reduce(
+          (sum, branch) => sum + branch.shipment.shipmentDetails.fee,
+          0,
+        ) !== snapshot.deliveryFee
+      ) {
+        throw new BadRequestException(
+          'Checkout shipments do not match the order totals',
+        );
+      }
+
+      let remainingDiscount = snapshot.subtotal - snapshot.totalPrice;
+      for (let index = 0; index < branchOrderInputs.length; index++) {
+        const branch = branchOrderInputs[index];
+        const discountShare =
+          index === branchOrderInputs.length - 1
+            ? remainingDiscount
+            : snapshot.subtotal === 0
+              ? 0
+              : Math.floor(
+                  ((snapshot.subtotal - snapshot.totalPrice) *
+                    branch.subtotal) /
+                    snapshot.subtotal,
+                );
+        branch.discountShare = discountShare;
+        remainingDiscount -= discountShare;
+      }
+
+      const variants = await tx.variant.findMany({
+        where: {
+          id: { in: snapshot.items.map((item) => item.variantId) },
+        },
+        select: { id: true, sku: true },
+      });
+      const skuByVariant = new Map(
+        variants.map((variant) => [variant.id, variant.sku]),
+      );
+      if (skuByVariant.size !== snapshot.items.length) {
+        throw new BadRequestException(
+          'A checkout product variant no longer exists',
+        );
+      }
+
+      const { count } = await tx.checkoutSession.updateMany({
+        where: {
+          id: session.id,
+          userId,
+          status: CheckoutStatus.ready,
+        },
+        data: { status: CheckoutStatus.placed },
+      });
+      if (count !== 1) {
+        throw new ConflictException({ code: 'CHECKOUT_NOT_READY' });
+      }
+
+      return tx.parentOrder.create({
+        data: {
+          userId,
+          status: orderStatus.ordering,
+          otp: randomInt(100_000, 1_000_000).toString(),
+          price: snapshot.subtotal,
+          deliveryPrice: snapshot.deliveryFee,
+          totalPrice: snapshot.total,
+          address: session.addressText,
+          phoneNumber: session.phoneNumber,
+          checkoutId: session.id,
+          branchOrders: {
+            create: branchOrderInputs.map(
+              ({ shipment, subtotal, discountShare, items }) => ({
+                brandId: session.brandId,
+                brandBranchId: shipment.branchId,
+                status: orderStatus.ordering,
+                subtotal,
+                deliveryFee: shipment.shipmentDetails.fee,
+                discountShare,
+                total: subtotal - discountShare + shipment.shipmentDetails.fee,
+                etaAt: session.timeEstimation,
+                orderItems: {
+                  create: items.map((item) => {
+                    const sku = skuByVariant.get(item.variantId);
+                    if (!sku) {
+                      throw new BadRequestException(
+                        'A checkout product variant has no SKU',
+                      );
+                    }
+                    return {
+                      variantId: item.variantId,
+                      nameSnapshot: item.name,
+                      skuSnapshot: sku,
+                      priceSnapshot: item.price,
+                      quantity: item.quantity,
+                    };
+                  }),
+                },
+              }),
+            ),
+          },
+        },
+        include: { branchOrders: { include: { orderItems: true } } },
+      });
+    });
   }
 }
