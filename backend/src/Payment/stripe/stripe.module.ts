@@ -11,7 +11,6 @@ import { StripeService } from './stripe.service';
       provide: STRIPE_CLIENT,
       useFactory: (config: ConfigService) => {
         const stripeSecretKey = config.get<string>('STRIPE_TEST_SECRET_KEY');
-        console.log(stripeSecretKey);
         if (!stripeSecretKey) {
           throw new Error('STRIPE_TEST_SECRET_KEY is not defined');
         }

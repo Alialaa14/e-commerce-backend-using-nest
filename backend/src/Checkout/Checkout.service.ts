@@ -10,10 +10,18 @@ import { CartService } from '../Cart/cart.service';
 import { VariantService } from '../Variants/variant.service';
 import { PrismaService } from '../utils/prisma/prisma.service';
 import { buildCartHash } from '../utils/buildHash';
-import { CheckoutStatus, orderStatus, Prisma } from '../generated/prisma';
+import {
+  CheckoutPaymentStatus,
+  CheckoutStatus,
+  orderStatus,
+  Prisma,
+} from '../generated/prisma';
 import { Coordinates, LocationService } from '../Location/location.service';
 import { BrandBranchService } from '../BrandBranch/brandBranch.service';
 import { InventoryService } from '../Inventory/inventory.service';
+import { CheckoutService as StripeCheckoutService } from '../Payment/checkout/checkout.service';
+import type Stripe from 'stripe';
+import { SocketServices } from '../Socket/socket.service';
 
 const SESSION_TTL_MS = 30 * 60 * 1000;
 const Active = [CheckoutStatus.ready, CheckoutStatus.pending];
@@ -161,6 +169,8 @@ export class CheckoutService {
     private readonly locationService: LocationService,
     private readonly brandBranchService: BrandBranchService,
     private readonly inventoryService: InventoryService,
+    private readonly stripeCheckoutService: StripeCheckoutService,
+    private readonly socketServices: SocketServices,
   ) {}
 
   // ---------------------------------------------------------------
@@ -605,6 +615,10 @@ export class CheckoutService {
         },
         data: {
           status: CheckoutStatus.ready,
+          paymentStatus: CheckoutPaymentStatus.unpaid,
+          stripeSessionId: null,
+          stripePaymentIntentId: null,
+          paymentAttempt: 0,
           addressLat: latitude,
           addressLng: longitude,
           addressText,
@@ -629,7 +643,7 @@ export class CheckoutService {
   }
 
   async placeOrder(checkoutId: string, userId: string) {
-    return this.prismaService.prisma.$transaction(async (tx) => {
+    const result = await this.prismaService.prisma.$transaction(async (tx) => {
       const session = await tx.checkoutSession.findFirst({
         where: { id: checkoutId, userId },
       });
@@ -643,11 +657,18 @@ export class CheckoutService {
         if (!existingOrder) {
           throw new ConflictException('Placed checkout has no order');
         }
-        return existingOrder;
+        return {
+          order: existingOrder,
+          created: false,
+          brandId: session.brandId,
+        };
       }
 
-      if (session.status !== CheckoutStatus.ready) {
-        throw new ConflictException({ code: 'CHECKOUT_NOT_READY' });
+      if (
+        session.status !== CheckoutStatus.payment_pending ||
+        session.paymentStatus !== CheckoutPaymentStatus.succeeded
+      ) {
+        throw new ConflictException({ code: 'PAYMENT_NOT_CONFIRMED' });
       }
       if (!session.addressText || !session.phoneNumber) {
         throw new BadRequestException(
@@ -759,7 +780,8 @@ export class CheckoutService {
         where: {
           id: session.id,
           userId,
-          status: CheckoutStatus.ready,
+          status: CheckoutStatus.payment_pending,
+          paymentStatus: CheckoutPaymentStatus.succeeded,
         },
         data: { status: CheckoutStatus.placed },
       });
@@ -767,7 +789,7 @@ export class CheckoutService {
         throw new ConflictException({ code: 'CHECKOUT_NOT_READY' });
       }
 
-      return tx.parentOrder.create({
+      const order = await tx.parentOrder.create({
         data: {
           userId,
           status: orderStatus.ordering,
@@ -812,6 +834,241 @@ export class CheckoutService {
         },
         include: { branchOrders: { include: { orderItems: true } } },
       });
+      return { order, created: true, brandId: session.brandId };
     });
+
+    if (result.created) {
+      this.socketServices.notifyOrderCreated(result.brandId, result.order);
+    }
+
+    return result.order;
+  }
+
+  async createPaymentSession(
+    checkoutId: string,
+    userId: string,
+  ): Promise<Stripe.Response<Stripe.Checkout.Session>> {
+    const checkoutSession =
+      await this.prismaService.prisma.checkoutSession.findFirst({
+        where: {
+          id: checkoutId,
+          userId,
+          status: {
+            in: [
+              CheckoutStatus.ready,
+              CheckoutStatus.payment_pending,
+              CheckoutStatus.payment_failed,
+            ],
+          },
+          expiresAt: { gt: new Date() },
+        },
+        select: { id: true },
+      });
+
+    if (!checkoutSession) {
+      throw new NotFoundException('Ready checkout session not found');
+    }
+
+    return this.stripeCheckoutService.createCheckout(userId, checkoutId);
+  }
+
+  async handleStripeCheckoutEvent(event: Stripe.Event): Promise<void> {
+    if (event.type === 'payment_intent.payment_failed') {
+      await this.handleStripePaymentFailure(
+        event.data.object as Stripe.PaymentIntent,
+      );
+      return;
+    }
+    if (event.type === 'charge.refunded') {
+      await this.handleStripeRefund(event.data.object as Stripe.Charge);
+      return;
+    }
+    if (
+      event.type !== 'checkout.session.completed' &&
+      event.type !== 'checkout.session.async_payment_succeeded' &&
+      event.type !== 'checkout.session.async_payment_failed' &&
+      event.type !== 'checkout.session.expired'
+    ) {
+      return;
+    }
+
+    const checkoutSession = event.data.object as Stripe.Checkout.Session;
+    const checkoutId = checkoutSession.metadata?.checkoutId;
+    const userId = checkoutSession.metadata?.userId;
+    if (!checkoutId || !userId) {
+      throw new BadRequestException(
+        'Stripe checkout session metadata is incomplete',
+      );
+    }
+
+    const session = await this.prismaService.prisma.checkoutSession.findFirst({
+      where: {
+        id: checkoutId,
+        userId,
+        stripeSessionId: checkoutSession.id,
+      },
+      select: {
+        id: true,
+        userId: true,
+        status: true,
+        paymentStatus: true,
+      },
+    });
+    if (!session) {
+      throw new NotFoundException('Stripe checkout session not found');
+    }
+
+    let status: CheckoutStatus | undefined;
+    let paymentStatus: CheckoutPaymentStatus | undefined;
+    let shouldPlaceOrder = false;
+
+    switch (event.type) {
+      case 'checkout.session.completed':
+      case 'checkout.session.async_payment_succeeded':
+        if (checkoutSession.payment_status === 'paid') {
+          paymentStatus = CheckoutPaymentStatus.succeeded;
+          shouldPlaceOrder = true;
+        } else {
+          paymentStatus = CheckoutPaymentStatus.pending;
+        }
+        break;
+      case 'checkout.session.async_payment_failed':
+        status = CheckoutStatus.payment_failed;
+        paymentStatus = CheckoutPaymentStatus.failed;
+        break;
+      case 'checkout.session.expired':
+        status = CheckoutStatus.expired;
+        paymentStatus = CheckoutPaymentStatus.cancelled;
+        break;
+      default:
+        return;
+    }
+
+    if (session.status === CheckoutStatus.placed) {
+      return;
+    }
+    if (
+      (event.type === 'checkout.session.expired' &&
+        session.status === CheckoutStatus.expired) ||
+      (event.type === 'checkout.session.async_payment_failed' &&
+        session.status === CheckoutStatus.payment_failed)
+    ) {
+      return;
+    }
+
+    const { count } =
+      await this.prismaService.prisma.checkoutSession.updateMany({
+        where: {
+          id: session.id,
+          userId: session.userId,
+          stripeSessionId: checkoutSession.id,
+          status: session.status,
+          paymentStatus: session.paymentStatus,
+        },
+        data: {
+          ...(status ? { status } : {}),
+          ...(paymentStatus ? { paymentStatus } : {}),
+          ...(typeof checkoutSession.payment_intent === 'string'
+            ? { stripePaymentIntentId: checkoutSession.payment_intent }
+            : {}),
+        },
+      });
+    if (count !== 1) {
+      if (
+        shouldPlaceOrder &&
+        session.paymentStatus === CheckoutPaymentStatus.succeeded
+      ) {
+        return;
+      }
+      throw new ConflictException({ code: 'CHECKOUT_PAYMENT_NOT_ACTIVE' });
+    }
+
+    if (shouldPlaceOrder) {
+      await this.placeOrder(checkoutId, userId);
+      this.socketServices.notifyCheckoutPaymentUpdated(userId, {
+        checkoutId,
+        status: CheckoutStatus.placed,
+        paymentStatus: CheckoutPaymentStatus.succeeded,
+      });
+    } else {
+      this.socketServices.notifyCheckoutPaymentUpdated(userId, {
+        checkoutId,
+        status: status ?? session.status,
+        paymentStatus: paymentStatus ?? session.paymentStatus,
+      });
+    }
+  }
+
+  private async handleStripePaymentFailure(
+    paymentIntent: Stripe.PaymentIntent,
+  ) {
+    const checkoutId = paymentIntent.metadata.checkoutId;
+    const userId = paymentIntent.metadata.userId;
+    const paymentAttempt = Number(paymentIntent.metadata.paymentAttempt);
+    if (
+      !checkoutId ||
+      !userId ||
+      !Number.isSafeInteger(paymentAttempt) ||
+      paymentAttempt < 1
+    ) {
+      throw new BadRequestException(
+        'Stripe payment intent metadata is incomplete',
+      );
+    }
+
+    const { count } =
+      await this.prismaService.prisma.checkoutSession.updateMany({
+        where: {
+          id: checkoutId,
+          userId,
+          paymentAttempt,
+          status: CheckoutStatus.payment_pending,
+          OR: [
+            { stripePaymentIntentId: null },
+            { stripePaymentIntentId: paymentIntent.id },
+          ],
+        },
+        data: {
+          paymentStatus: CheckoutPaymentStatus.failed,
+          stripePaymentIntentId: paymentIntent.id,
+        },
+      });
+    if (count === 0) return;
+
+    this.socketServices.notifyCheckoutPaymentUpdated(userId, {
+      checkoutId,
+      status: CheckoutStatus.payment_pending,
+      paymentStatus: CheckoutPaymentStatus.failed,
+    });
+  }
+
+  private async handleStripeRefund(charge: Stripe.Charge) {
+    if (!charge.refunded || typeof charge.payment_intent !== 'string') return;
+
+    const session = await this.prismaService.prisma.checkoutSession.findFirst({
+      where: {
+        stripePaymentIntentId: charge.payment_intent,
+        paymentStatus: CheckoutPaymentStatus.succeeded,
+      },
+      select: { id: true, userId: true, status: true },
+    });
+    if (!session) return;
+
+    const { count } =
+      await this.prismaService.prisma.checkoutSession.updateMany({
+        where: {
+          id: session.id,
+          stripePaymentIntentId: charge.payment_intent,
+          paymentStatus: CheckoutPaymentStatus.succeeded,
+        },
+        data: { paymentStatus: CheckoutPaymentStatus.refunded },
+      });
+    if (count === 1) {
+      this.socketServices.notifyCheckoutPaymentUpdated(session.userId, {
+        checkoutId: session.id,
+        status: session.status,
+        paymentStatus: CheckoutPaymentStatus.refunded,
+      });
+    }
   }
 }

@@ -1,21 +1,19 @@
 import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import {
   OnGatewayConnection,
-  OnGatewayDisconnect,
   OnGatewayInit,
   WebSocketGateway,
+  WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { TokenService } from '../utils/Token/token.service';
 import { socketAuth } from './middlewares/auth-middleware';
 import { UserService } from '../User/user.service';
 import { BranchRole, Role } from '../generated/prisma';
-import { RedisService } from '../Redis/redis.services';
 import { PrismaService } from '../utils/prisma/prisma.service';
 
 interface SocketData {
   user?: { sub?: string };
-  queueEntry?: { queueName: string; data: unknown };
 }
 
 function socketData(client: Socket): SocketData {
@@ -24,15 +22,14 @@ function socketData(client: Socket): SocketData {
 
 @WebSocketGateway({ cors: { origin: process.env.FRONTEND_URL } })
 @Injectable()
-export class SocketServices
-  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
-{
+export class SocketServices implements OnGatewayInit, OnGatewayConnection {
   private readonly logger = new Logger(SocketServices.name);
+  @WebSocketServer()
+  private server!: Server;
 
   constructor(
     private readonly tokenService: TokenService,
     private readonly userService: UserService,
-    private readonly redisService: RedisService,
     private readonly prismaService: PrismaService,
   ) {}
 
@@ -97,72 +94,26 @@ export class SocketServices
     const userPayload = await this.IdenifyingSocketUser(userId);
 
     if (userPayload.role === 'user') {
-      const isFoundUser = await this.redisService.getOne(
-        'users',
-        userPayload.userId,
-      );
-      if (isFoundUser == null) {
-        const data = {
-          userId: userPayload.userId,
-          socketId: client.id,
-        };
-        await this.redisService.enqueue('users', data);
-        socketData(client).queueEntry = { queueName: 'users', data };
-      }
-      await client.join('users');
+      await client.join(`user:${userPayload.userId}`);
     }
 
     if (userPayload.role === 'BRANCH_MANAGER') {
-      const isFoundUser = await this.redisService.getOne(
-        'branch-managers',
-        userPayload.branchId!,
-      );
-      if (isFoundUser == null) {
-        const data = {
-          userId: userPayload.userId,
-          socketId: client.id,
-          branchId: userPayload.branchId,
-          brandId: userPayload.brandId,
-        };
-        await this.redisService.enqueue('branch-managers', data);
-        socketData(client).queueEntry = { queueName: 'branch-managers', data };
-      }
-      await client.join('branch-managers');
+      await client.join(`branch:${userPayload.branchId}`);
     }
 
     if (userPayload.role === 'Branch_Sales') {
-      const isFoundUser = await this.redisService.getOne(
-        'branch-sales',
-        userPayload.branchId!,
-      );
-      if (isFoundUser == null) {
-        const data = {
-          userId: userPayload.userId,
-          socketId: client.id,
-          branchId: userPayload.branchId,
-          brandId: userPayload.brandId,
-        };
-        await this.redisService.enqueue('branch-sales', data);
-        socketData(client).queueEntry = { queueName: 'branch-sales', data };
-      }
-      await client.join('branch-sales');
+      await client.join(`branch:${userPayload.branchId}`);
     }
 
     if (userPayload.role === 'brandOwner') {
-      const isFoundUser = await this.redisService.getOne(
-        'brand-owners',
-        userPayload.brandId!,
-      );
-      if (isFoundUser == null) {
-        const data = {
-          userId: userPayload.userId,
-          socketId: client.id,
-          brandId: userPayload.brandId,
-        };
-        await this.redisService.enqueue('brand-owners', data);
-        socketData(client).queueEntry = { queueName: 'brand-owners', data };
+      const brand = await this.prismaService.prisma.brand.findFirst({
+        where: { userId: userId, isActive: true },
+        select: { id: true },
+      });
+      if (!brand) {
+        throw new ForbiddenException('Active brand owner profile required');
       }
-      await client.join('brand-owners');
+      await client.join(`brand:${brand.id}`);
     }
   }
 
@@ -184,14 +135,52 @@ export class SocketServices
     }
   }
 
-  async handleDisconnect(client: Socket) {
-    const entry = socketData(client).queueEntry;
-    if (!entry) return;
+  notifyOrderCreated(
+    brandId: string,
+    order: {
+      parentOrderId: string;
+      address: string;
+      phoneNumber: string;
+      branchOrders: {
+        branchOrderId: string;
+        brandBranchId: string;
+        status: string;
+        total: number;
+        orderItems: unknown[];
+      }[];
+    },
+  ) {
+    const notification = {
+      brandId,
+      parentOrderId: order.parentOrderId,
+      address: order.address,
+      phoneNumber: order.phoneNumber,
+      branchOrders: order.branchOrders,
+    };
+    this.server.to(`brand:${brandId}`).emit('order:created', notification);
 
-    try {
-      await this.redisService.remove(entry.queueName, entry.data);
-    } catch (err) {
-      this.logger.error(`Queue cleanup failed (${client.id})`, err as Error);
+    for (const branchOrder of order.branchOrders) {
+      this.server
+        .to(`branch:${branchOrder.brandBranchId}`)
+        .emit('order:created', {
+          ...notification,
+          branchOrders: [branchOrder],
+        });
     }
+  }
+
+  notifyBranchOrderUpdated(branchId: string, branchOrder: object) {
+    this.server.to(`branch:${branchId}`).emit('order:updated', branchOrder);
+  }
+
+  notifyCheckoutPaymentUpdated(
+    userId: string,
+    payment: {
+      checkoutId: string;
+      status: string;
+      paymentStatus: string;
+    },
+  ) {
+    this.server.to(`user:${userId}`).emit('checkout:payment_updated', payment);
   }
 }

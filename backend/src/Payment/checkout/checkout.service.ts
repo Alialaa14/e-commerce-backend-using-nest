@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   Inject,
   NotFoundException,
@@ -7,7 +8,11 @@ import {
 import { STRIPE_CLIENT } from '../stripe/stripe-constants';
 import Stripe from 'stripe';
 import { PrismaService } from '../../utils/prisma/prisma.service';
-import { CheckoutStatus, Prisma } from '../../generated/prisma';
+import {
+  CheckoutPaymentStatus,
+  CheckoutStatus,
+  Prisma,
+} from '../../generated/prisma';
 
 interface StripeCheckoutItem {
   variantId: string;
@@ -321,7 +326,10 @@ export class CheckoutService {
       };
     });
   }
-  async createCheckout(userId: string): Promise<any> {
+  async createCheckout(
+    userId: string,
+    checkoutId?: string,
+  ): Promise<Stripe.Response<Stripe.Checkout.Session>> {
     const [user, checkoutSession] = await Promise.all([
       this.prismaService.prisma.user.findUnique({
         where: { id: userId },
@@ -329,13 +337,22 @@ export class CheckoutService {
       }),
       this.prismaService.prisma.checkoutSession.findFirst({
         where: {
+          ...(checkoutId ? { id: checkoutId } : {}),
           userId,
-          status: CheckoutStatus.ready,
+          status: {
+            in: [
+              CheckoutStatus.ready,
+              CheckoutStatus.payment_pending,
+              CheckoutStatus.payment_failed,
+            ],
+          },
           expiresAt: { gt: new Date() },
         },
         orderBy: { updatedAt: 'desc' },
         select: {
           id: true,
+          status: true,
+          paymentAttempt: true,
           total: true,
           addressText: true,
           phoneNumber: true,
@@ -367,19 +384,76 @@ export class CheckoutService {
       checkoutSession.id,
       checkoutSession.total,
     );
+    let paymentAttempt = checkoutSession.paymentAttempt;
+    if (checkoutSession.status !== CheckoutStatus.payment_pending) {
+      const { count } =
+        await this.prismaService.prisma.checkoutSession.updateMany({
+          where: {
+            id: checkoutSession.id,
+            userId,
+            status: checkoutSession.status,
+          },
+          data: {
+            status: CheckoutStatus.payment_pending,
+            paymentStatus: CheckoutPaymentStatus.pending,
+            paymentAttempt: { increment: 1 },
+          },
+        });
+      if (count !== 1) {
+        throw new ConflictException(
+          'Checkout payment is already being started',
+        );
+      }
+      paymentAttempt += 1;
+    }
 
-    const session = await this.stripe.checkout.sessions.create({
-      customer_email: user.email,
-      line_items: lineItems,
-      metadata: {
-        checkoutId: checkoutSession.id,
-        userId,
+    const session = await this.stripe.checkout.sessions.create(
+      {
+        customer_email: user.email,
+        line_items: lineItems,
+        metadata: {
+          checkoutId: checkoutSession.id,
+          userId,
+          paymentAttempt: paymentAttempt.toString(),
+        },
+        mode: 'payment',
+        success_url: 'http://localhost:3000/success',
+        cancel_url: 'http://localhost:3000/cancel',
+        payment_method_types: ['card'],
+        payment_intent_data: {
+          metadata: {
+            checkoutId: checkoutSession.id,
+            userId,
+            paymentAttempt: paymentAttempt.toString(),
+          },
+        },
       },
-      mode: 'payment',
-      success_url: 'http://localhost:3000/success',
-      cancel_url: 'http://localhost:3000/cancel',
-      payment_method_types: ['card'],
-    });
+      {
+        idempotencyKey: `${checkoutSession.id}:${paymentAttempt}`,
+      },
+    );
+
+    const { count } =
+      await this.prismaService.prisma.checkoutSession.updateMany({
+        where: {
+          id: checkoutSession.id,
+          userId,
+          status: CheckoutStatus.payment_pending,
+          paymentAttempt,
+        },
+        data: {
+          stripeSessionId: session.id,
+          stripePaymentIntentId:
+            typeof session.payment_intent === 'string'
+              ? session.payment_intent
+              : null,
+        },
+      });
+    if (count !== 1) {
+      throw new ConflictException(
+        'Checkout payment session is no longer active',
+      );
+    }
 
     return session;
   }

@@ -336,6 +336,10 @@ exports.Prisma.CheckoutSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   status: 'status',
+  paymentStatus: 'paymentStatus',
+  stripeSessionId: 'stripeSessionId',
+  stripePaymentIntentId: 'stripePaymentIntentId',
+  paymentAttempt: 'paymentAttempt',
   cartHash: 'cartHash',
   snapshot: 'snapshot',
   addressLat: 'addressLat',
@@ -617,9 +621,20 @@ exports.ProductStatus = exports.$Enums.ProductStatus = {
 exports.CheckoutStatus = exports.$Enums.CheckoutStatus = {
   pending: 'pending',
   ready: 'ready',
+  payment_pending: 'payment_pending',
+  payment_failed: 'payment_failed',
   placed: 'placed',
   expired: 'expired',
   cancelled: 'cancelled'
+};
+
+exports.CheckoutPaymentStatus = exports.$Enums.CheckoutPaymentStatus = {
+  unpaid: 'unpaid',
+  pending: 'pending',
+  succeeded: 'succeeded',
+  failed: 'failed',
+  cancelled: 'cancelled',
+  refunded: 'refunded'
 };
 
 exports.inventoryType = exports.$Enums.inventoryType = {

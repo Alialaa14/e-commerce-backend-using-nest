@@ -1,3 +1,7 @@
+jest.mock('../User/user.service', () => ({
+  UserService: class UserService {},
+}));
+
 import { CheckoutStatus } from '../generated/prisma';
 import { buildCartHash } from '../utils/buildHash';
 import { CheckoutService } from './Checkout.service';
@@ -77,6 +81,11 @@ describe('CheckoutService.placeLocation', () => {
                 : 0,
           }),
         ),
+      } as never,
+      {} as never,
+      {
+        notifyOrderCreated: jest.fn(),
+        notifyCheckoutPaymentUpdated: jest.fn(),
       } as never,
     );
 
@@ -161,6 +170,7 @@ describe('CheckoutService.placeOrder', () => {
       userId: 'user-1',
       brandId: 'brand-1',
       status: sessionStatus,
+      paymentStatus: 'succeeded',
       snapshot,
       addressText: 'Test address',
       phoneNumber: '+201000000000',
@@ -184,6 +194,10 @@ describe('CheckoutService.placeOrder', () => {
         ]),
       },
     };
+    const socketService = {
+      notifyOrderCreated: jest.fn(),
+      notifyCheckoutPaymentUpdated: jest.fn(),
+    };
     const service = new CheckoutService(
       {} as never,
       {} as never,
@@ -195,16 +209,32 @@ describe('CheckoutService.placeOrder', () => {
       {} as never,
       {} as never,
       {} as never,
+      {} as never,
+      socketService as never,
     );
 
-    return { service, tx };
+    return { service, tx, socketService };
   }
 
   it('creates one parent order with a branch order for every shipment', async () => {
-    const createOrder = jest
-      .fn()
-      .mockResolvedValue({ parentOrderId: 'order-1' });
-    const { service, tx } = createService(CheckoutStatus.ready, createOrder);
+    const createOrder = jest.fn().mockResolvedValue({
+      parentOrderId: 'order-1',
+      address: 'Test address',
+      phoneNumber: '+201000000000',
+      branchOrders: [
+        {
+          branchOrderId: 'branch-order-1',
+          brandBranchId: 'branch-1',
+          status: 'ordering',
+          total: 50,
+          orderItems: [],
+        },
+      ],
+    });
+    const { service, tx, socketService } = createService(
+      CheckoutStatus.payment_pending,
+      createOrder,
+    );
 
     await service.placeOrder('checkout-1', 'user-1');
 
@@ -212,7 +242,8 @@ describe('CheckoutService.placeOrder', () => {
       where: {
         id: 'checkout-1',
         userId: 'user-1',
-        status: CheckoutStatus.ready,
+        status: CheckoutStatus.payment_pending,
+        paymentStatus: 'succeeded',
       },
       data: { status: CheckoutStatus.placed },
     });
@@ -267,10 +298,22 @@ describe('CheckoutService.placeOrder', () => {
         }),
       }),
     );
+    expect(socketService.notifyOrderCreated).toHaveBeenCalledWith(
+      'brand-1',
+      expect.objectContaining({
+        parentOrderId: 'order-1',
+        branchOrders: expect.arrayContaining([
+          expect.objectContaining({
+            branchOrderId: 'branch-order-1',
+            brandBranchId: 'branch-1',
+          }),
+        ]),
+      }),
+    );
   });
 
   it('returns the existing order when the checkout was already placed', async () => {
-    const { service, tx } = createService(CheckoutStatus.placed);
+    const { service, tx, socketService } = createService(CheckoutStatus.placed);
     const existingOrder = { parentOrderId: 'order-1' };
     tx.parentOrder.findUnique.mockResolvedValue(existingOrder);
 
@@ -280,5 +323,215 @@ describe('CheckoutService.placeOrder', () => {
 
     expect(tx.parentOrder.create).not.toHaveBeenCalled();
     expect(tx.checkoutSession.updateMany).not.toHaveBeenCalled();
+    expect(socketService.notifyOrderCreated).not.toHaveBeenCalled();
+  });
+});
+
+describe('CheckoutService.createPaymentSession', () => {
+  it('creates Stripe checkout for the requested ready checkout', async () => {
+    const stripeCheckout = {
+      id: 'cs_test_1',
+      url: 'https://checkout.stripe.test/session',
+    };
+    const findFirst = jest.fn().mockResolvedValue({
+      id: 'checkout-1',
+      status: CheckoutStatus.ready,
+      expiresAt: new Date(Date.now() + 60_000),
+    });
+    const createCheckout = jest.fn().mockResolvedValue(stripeCheckout);
+    const service = new CheckoutService(
+      {} as never,
+      {} as never,
+      {
+        prisma: { checkoutSession: { findFirst } },
+      } as never,
+      {} as never,
+      {} as never,
+      {} as never,
+      { createCheckout } as never,
+      {
+        notifyOrderCreated: jest.fn(),
+        notifyCheckoutPaymentUpdated: jest.fn(),
+      } as never,
+    );
+
+    await expect(
+      service.createPaymentSession('checkout-1', 'user-1'),
+    ).resolves.toBe(stripeCheckout);
+
+    expect(findFirst).toHaveBeenCalledWith({
+      where: {
+        id: 'checkout-1',
+        userId: 'user-1',
+        status: {
+          in: [
+            CheckoutStatus.ready,
+            CheckoutStatus.payment_pending,
+            CheckoutStatus.payment_failed,
+          ],
+        },
+        expiresAt: { gt: expect.any(Date) },
+      },
+      select: { id: true },
+    });
+    expect(createCheckout).toHaveBeenCalledWith('user-1', 'checkout-1');
+  });
+});
+
+describe('CheckoutService.handleStripeCheckoutEvent', () => {
+  function createPaymentHandler() {
+    const checkoutSession = {
+      id: 'checkout-1',
+      userId: 'user-1',
+      status: CheckoutStatus.payment_pending,
+      paymentStatus: 'pending',
+      stripeSessionId: 'cs_test_1',
+      stripePaymentIntentId: 'pi_test_1',
+    };
+    const findFirst = jest.fn().mockResolvedValue(checkoutSession);
+    const updateMany = jest.fn().mockResolvedValue({ count: 1 });
+    const service = new CheckoutService(
+      {} as never,
+      {} as never,
+      {
+        prisma: { checkoutSession: { findFirst, updateMany } },
+      } as never,
+      {} as never,
+      {} as never,
+      {} as never,
+      {} as never,
+      {
+        notifyOrderCreated: jest.fn(),
+        notifyCheckoutPaymentUpdated: jest.fn(),
+      } as never,
+    );
+    const placeOrder = jest
+      .spyOn(service, 'placeOrder')
+      .mockResolvedValue({ parentOrderId: 'order-1' } as never);
+
+    return { service, findFirst, updateMany, placeOrder };
+  }
+
+  it('marks a paid Stripe checkout successful and places its order', async () => {
+    const { service, findFirst, updateMany, placeOrder } =
+      createPaymentHandler();
+    const event = {
+      type: 'checkout.session.completed',
+      data: {
+        object: {
+          id: 'cs_test_1',
+          payment_status: 'paid',
+          payment_intent: 'pi_test_1',
+          metadata: { checkoutId: 'checkout-1', userId: 'user-1' },
+        },
+      },
+    };
+
+    await service.handleStripeCheckoutEvent(event as never);
+
+    expect(findFirst).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: {
+          id: 'checkout-1',
+          userId: 'user-1',
+          stripeSessionId: 'cs_test_1',
+        },
+      }),
+    );
+    expect(updateMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({ paymentStatus: 'succeeded' }),
+      }),
+    );
+    expect(placeOrder).toHaveBeenCalledWith('checkout-1', 'user-1');
+  });
+
+  it('records an expired Stripe checkout without creating an order', async () => {
+    const { service, updateMany, placeOrder } = createPaymentHandler();
+    const event = {
+      type: 'checkout.session.expired',
+      data: {
+        object: {
+          id: 'cs_test_1',
+          payment_status: 'unpaid',
+          payment_intent: null,
+          metadata: { checkoutId: 'checkout-1', userId: 'user-1' },
+        },
+      },
+    };
+
+    await service.handleStripeCheckoutEvent(event as never);
+
+    expect(updateMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          status: CheckoutStatus.expired,
+          paymentStatus: 'cancelled',
+        }),
+      }),
+    );
+    expect(placeOrder).not.toHaveBeenCalled();
+  });
+
+  it('records a failed Stripe payment attempt without completing the checkout', async () => {
+    const { service, updateMany, placeOrder } = createPaymentHandler();
+    const event = {
+      type: 'payment_intent.payment_failed',
+      data: {
+        object: {
+          id: 'pi_test_1',
+          metadata: {
+            checkoutId: 'checkout-1',
+            userId: 'user-1',
+            paymentAttempt: '1',
+          },
+        },
+      },
+    };
+
+    await service.handleStripeCheckoutEvent(event as never);
+
+    expect(updateMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          id: 'checkout-1',
+          paymentAttempt: 1,
+          status: CheckoutStatus.payment_pending,
+        }),
+        data: expect.objectContaining({ paymentStatus: 'failed' }),
+      }),
+    );
+    expect(placeOrder).not.toHaveBeenCalled();
+  });
+
+  it('records a full Stripe refund against its payment intent', async () => {
+    const { service, findFirst, updateMany, placeOrder } =
+      createPaymentHandler();
+    const event = {
+      type: 'charge.refunded',
+      data: {
+        object: {
+          refunded: true,
+          payment_intent: 'pi_test_1',
+        },
+      },
+    };
+
+    await service.handleStripeCheckoutEvent(event as never);
+
+    expect(findFirst).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: {
+          stripePaymentIntentId: 'pi_test_1',
+          paymentStatus: 'succeeded',
+        },
+      }),
+    );
+    expect(updateMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: { paymentStatus: 'refunded' },
+      }),
+    );
+    expect(placeOrder).not.toHaveBeenCalled();
   });
 });

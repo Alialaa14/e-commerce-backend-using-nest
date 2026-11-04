@@ -6,6 +6,52 @@ describe('PaymentCheckoutService.createCheckout', () => {
     checkoutTotal: number,
     createStripeSession = jest.fn().mockResolvedValue({ id: 'stripe-1' }),
   ) {
+    const findCheckoutSession = jest.fn().mockResolvedValue({
+      id: 'checkout-1',
+      total: checkoutTotal,
+      status: CheckoutStatus.ready,
+      paymentAttempt: 0,
+      expiresAt: new Date(Date.now() + 60_000),
+      addressText: 'Test address',
+      phoneNumber: '+201000000000',
+      snapshot: {
+        items: [
+          {
+            variantId: 'variant-1',
+            name: 'Shirt',
+            color: 'Blue',
+            size: 'M',
+            quantity: 2,
+            price: 50,
+          },
+          {
+            variantId: 'variant-2',
+            name: 'Pants',
+            color: 'Black',
+            size: 'L',
+            quantity: 1,
+            price: 50,
+          },
+        ],
+        subtotal: 150,
+        totalPrice: 135,
+        shipments: [
+          {
+            branchId: 'branch-1',
+            variants: [{ variantId: 'variant-1', quantity: 2 }],
+            shipmentDetails: { fee: 5 },
+          },
+          {
+            branchId: 'branch-2',
+            variants: [{ variantId: 'variant-2', quantity: 1 }],
+            shipmentDetails: { fee: 5 },
+          },
+        ],
+        deliveryFee: 10,
+        total: 145,
+      },
+    });
+    const updateCheckoutSession = jest.fn().mockResolvedValue({ count: 1 });
     const service = new CheckoutService(
       {
         checkout: {
@@ -20,55 +66,18 @@ describe('PaymentCheckoutService.createCheckout', () => {
             }),
           },
           checkoutSession: {
-            findFirst: jest.fn().mockResolvedValue({
-              id: 'checkout-1',
-              total: checkoutTotal,
-              status: CheckoutStatus.ready,
-              expiresAt: new Date(Date.now() + 60_000),
-              addressText: 'Test address',
-              phoneNumber: '+201000000000',
-              snapshot: {
-                items: [
-                  {
-                    variantId: 'variant-1',
-                    name: 'Shirt',
-                    color: 'Blue',
-                    size: 'M',
-                    quantity: 2,
-                    price: 50,
-                  },
-                  {
-                    variantId: 'variant-2',
-                    name: 'Pants',
-                    color: 'Black',
-                    size: 'L',
-                    quantity: 1,
-                    price: 50,
-                  },
-                ],
-                subtotal: 150,
-                totalPrice: 135,
-                shipments: [
-                  {
-                    branchId: 'branch-1',
-                    variants: [{ variantId: 'variant-1', quantity: 2 }],
-                    shipmentDetails: { fee: 5 },
-                  },
-                  {
-                    branchId: 'branch-2',
-                    variants: [{ variantId: 'variant-2', quantity: 1 }],
-                    shipmentDetails: { fee: 5 },
-                  },
-                ],
-                deliveryFee: 10,
-                total: 145,
-              },
-            }),
+            findFirst: findCheckoutSession,
+            updateMany: updateCheckoutSession,
           },
         },
       } as never,
     );
-    return { service, createStripeSession };
+    return {
+      service,
+      createStripeSession,
+      findCheckoutSession,
+      updateCheckoutSession,
+    };
   }
 
   it('creates Stripe line items from session products and shipment fees', async () => {
@@ -131,9 +140,18 @@ describe('PaymentCheckoutService.createCheckout', () => {
         metadata: {
           checkoutId: 'checkout-1',
           userId: 'user-1',
+          paymentAttempt: '1',
         },
         payment_method_types: ['card'],
+        payment_intent_data: {
+          metadata: {
+            checkoutId: 'checkout-1',
+            userId: 'user-1',
+            paymentAttempt: '1',
+          },
+        },
       }),
+      { idempotencyKey: 'checkout-1:1' },
     );
   });
 
@@ -145,5 +163,59 @@ describe('PaymentCheckoutService.createCheckout', () => {
     );
 
     expect(createStripeSession).not.toHaveBeenCalled();
+  });
+
+  it('scopes Stripe checkout creation to the supplied checkout id and is idempotent', async () => {
+    const {
+      service,
+      createStripeSession,
+      findCheckoutSession,
+      updateCheckoutSession,
+    } = createService(145);
+
+    await service.createCheckout('user-1', 'checkout-1');
+
+    expect(findCheckoutSession).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          id: 'checkout-1',
+          userId: 'user-1',
+          status: {
+            in: [
+              CheckoutStatus.ready,
+              CheckoutStatus.payment_pending,
+              CheckoutStatus.payment_failed,
+            ],
+          },
+        }),
+      }),
+    );
+    expect(createStripeSession).toHaveBeenCalledWith(expect.any(Object), {
+      idempotencyKey: 'checkout-1:1',
+    });
+    expect(updateCheckoutSession).toHaveBeenCalledWith({
+      where: {
+        id: 'checkout-1',
+        userId: 'user-1',
+        status: CheckoutStatus.payment_pending,
+        paymentAttempt: 1,
+      },
+      data: expect.objectContaining({
+        stripeSessionId: 'stripe-1',
+        stripePaymentIntentId: null,
+      }),
+    });
+    expect(updateCheckoutSession).toHaveBeenCalledWith({
+      where: {
+        id: 'checkout-1',
+        userId: 'user-1',
+        status: CheckoutStatus.ready,
+      },
+      data: {
+        status: CheckoutStatus.payment_pending,
+        paymentStatus: 'pending',
+        paymentAttempt: { increment: 1 },
+      },
+    });
   });
 });

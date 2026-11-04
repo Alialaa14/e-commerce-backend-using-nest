@@ -20,6 +20,7 @@ import { StaffModule } from './Staff/staff.module';
 import { InventoryModule } from './Inventory/inventory.module';
 import { VariantReservationModule } from './VariantReservation/Reservation.module';
 import { CheckoutModule } from './Checkout/Checkout.module';
+import { OrderModule } from './Order/order.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -57,6 +58,7 @@ import { CheckoutModule } from './Checkout/Checkout.module';
     InventoryModule,
     VariantReservationModule,
     CheckoutModule,
+    OrderModule,
   ],
   controllers: [],
   providers: [],

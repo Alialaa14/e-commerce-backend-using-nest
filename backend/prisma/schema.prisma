@@ -532,6 +532,8 @@ model CartProducts {
 enum CheckoutStatus {
   pending // created, address not resolved yet
   ready // address resolved, can be placed
+  payment_pending
+  payment_failed
   placed // order created
   expired
   cancelled
@@ -539,25 +541,40 @@ enum CheckoutStatus {
   @@map("checkout_status")
 }
 
+enum CheckoutPaymentStatus {
+  unpaid
+  pending
+  succeeded
+  failed
+  cancelled
+  refunded
+
+  @@map("checkout_payment_status")
+}
+
 model CheckoutSession {
-  id             String         @id @default(uuid()) @db.Uuid // the checkoutId
-  userId         String         @map("user_id") @db.Uuid
-  status         CheckoutStatus @default(pending)
-  cartHash       String         @map("cart_hash")
-  snapshot       Json // groups, items, prices, branch, fee per group
-  addressLat     Decimal?       @map("address_lat") @db.Decimal(9, 6)
-  addressLng     Decimal?       @map("address_lng") @db.Decimal(9, 6)
-  addressText    String?        @map("address_text")
-  phoneNumber    String?        @map("phone_number")
-  deliveryFee    Int?
-  timeEstimation DateTime?
-  total          Int?
-  expiresAt      DateTime       @map("expires_at") @db.Timestamptz
-  createdAt      DateTime       @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt      DateTime       @updatedAt @map("updated_at") @db.Timestamptz
-  brandId        String
-  brand          Brand          @relation(fields: [brandId], references: [id])
-  branches       BrandBranch?   @relation(fields: [brandBranchId], references: [id])
+  id                    String                @id @default(uuid()) @db.Uuid // the checkoutId
+  userId                String                @map("user_id") @db.Uuid
+  status                CheckoutStatus        @default(pending)
+  paymentStatus         CheckoutPaymentStatus @default(unpaid) @map("payment_status")
+  stripeSessionId       String?               @unique @map("stripe_session_id")
+  stripePaymentIntentId String?               @unique @map("stripe_payment_intent_id")
+  paymentAttempt        Int                   @default(0) @map("payment_attempt")
+  cartHash              String                @map("cart_hash")
+  snapshot              Json // groups, items, prices, branch, fee per group
+  addressLat            Decimal?              @map("address_lat") @db.Decimal(9, 6)
+  addressLng            Decimal?              @map("address_lng") @db.Decimal(9, 6)
+  addressText           String?               @map("address_text")
+  phoneNumber           String?               @map("phone_number")
+  deliveryFee           Int?
+  timeEstimation        DateTime?
+  total                 Int?
+  expiresAt             DateTime              @map("expires_at") @db.Timestamptz
+  createdAt             DateTime              @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt             DateTime              @updatedAt @map("updated_at") @db.Timestamptz
+  brandId               String
+  brand                 Brand                 @relation(fields: [brandId], references: [id])
+  branches              BrandBranch?          @relation(fields: [brandBranchId], references: [id])
 
   user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   brandBranchId String? @db.Uuid
