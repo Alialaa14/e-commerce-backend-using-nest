@@ -1,4 +1,4 @@
-import { ExecutionContext } from '@nestjs/common';
+import { ExecutionContext, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../../utils/prisma/prisma.service';
 import { TokenService } from '../../utils/Token/token.service';
 import { AuthGuard } from './auth.guard';
@@ -40,15 +40,48 @@ describe('AuthGuard tenant context', () => {
       brandId: 'brand-current',
       branchId: null,
     });
-    expect(prismaService.prisma.user.findUnique).toHaveBeenCalledWith({
-      where: { id: '11111111-1111-4111-8111-111111111111' },
-      select: {
-        id: true,
-        role: true,
-        brandId: true,
-        branchId: true,
-        isBanned: true,
+  });
+
+  it('rejects branch staff without an active branch membership', async () => {
+    const request = {
+      headers: { authorization: 'Bearer valid-token' },
+    };
+    const context = {
+      switchToHttp: () => ({ getRequest: () => request }),
+    } as ExecutionContext;
+    const tokenService = {
+      verifyAccessToken: jest.fn().mockReturnValue({
+        sub: '11111111-1111-4111-8111-111111111111',
+      }),
+    } as unknown as TokenService;
+    const prismaService = {
+      prisma: {
+        user: {
+          findUnique: jest.fn().mockResolvedValue({
+            id: '11111111-1111-4111-8111-111111111111',
+            role: 'Branch_Sales',
+            brandId: 'brand-1',
+            branchId: 'branch-1',
+            isBanned: false,
+          }),
+        },
+        branchStaff: {
+          findUnique: jest.fn().mockResolvedValue({
+            isActive: false,
+            role: 'sales',
+            branch: {
+              brandId: 'brand-1',
+              isActive: true,
+              deletedAt: null,
+            },
+          }),
+        },
       },
-    });
+    } as unknown as PrismaService;
+    const guard = new AuthGuard(tokenService, prismaService);
+
+    await expect(guard.canActivate(context)).rejects.toThrow(
+      ForbiddenException,
+    );
   });
 });

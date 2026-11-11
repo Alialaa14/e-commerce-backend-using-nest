@@ -17,7 +17,7 @@
 
 ### 1.3 Authorization Model
 
-- Roles: `admin`, `sub_admin`, `brandOwner`, `end_user`, `delivery_company`, `courier`, `guest`
+- Roles: `admin`, `brandOwner`, `BRANCH_MANAGER`, `Branch_Sales`, `customer_Service`, `user`, `deliveryC`, `courier`
 
 ### 1.4 Shared Response Envelope
 
@@ -66,6 +66,7 @@ Error response:
 | Payments, Wallets & Payouts   | Create payments, process webhooks, manage wallets and payouts    | `transactions`, `wallets`, `wallet_transactions`, `payouts`                |
 | Messaging & Notifications     | Chat and notification delivery                                   | `chat_threads`, `chat_messages`, `notifications`                           |
 | Admin Governance              | Moderate content, handle disputes, manage ranking and sub-admins | `disputes`, `moderation_flags`, `admin_audit_log`, `ranking_scores`        |
+| Staff Management              | Invite customer-service agents, branch managers, and sales staff | `users`, `branch_staff`, `staff_invitations`                                |
 | File Uploads                  | Upload documents, images, and proof-of-delivery media            | `uploads` (logical storage boundary)                                       |
 
 ---
@@ -3583,6 +3584,27 @@ Error response:
 - Side effects: create audit or media-link record.
 
 ---
+
+## 3.21 StaffController
+
+### Controller Summary
+
+- Purpose: Invite staff and assign roles through a one-time email invitation.
+- Authentication Required: Yes, except invitation acceptance.
+- Authorization: Admins invite customer-service agents; brand owners invite managers for their own branches; branch managers invite sales staff for their own branch.
+
+### Routes
+
+| Method | Endpoint | Authorization | Purpose |
+| ------ | -------- | ------------- | ------- |
+| `POST` | `/staff/customer-service/invitations` | `admin` | Invite a customer-service agent |
+| `GET` | `/staff/customer-service` | `admin` | List customer-service agents |
+| `POST` | `/staff/brands/{brandId}/branches/{branchId}/manager-invitations` | `brandOwner` who owns the brand | Invite a branch manager |
+| `POST` | `/staff/branches/{branchId}/sales-invitations` | `BRANCH_MANAGER` assigned to that branch | Invite a sales staff member |
+| `GET` | `/staff/branches/{branchId}` | `brandOwner` of the branch's brand or its `BRANCH_MANAGER` | List branch staff |
+| `POST` | `/staff/invitations/accept` | Public; requires invitation token | Accept invitation and set up account |
+
+Invitation creation accepts an email address only. The server assigns the role and branch/brand scope; callers cannot choose them in the request. Invitation tokens are single-use, expire after 48 hours, and are stored hashed. Acceptance requires the invited email, a username, and a password of at least 12 characters containing uppercase, lowercase, and numeric characters. New branch staff receive an active `branch_staff` membership, and authentication checks that membership and its role against the current user and branch record.
 
 ## 4. Cross-Cutting Business Rules
 

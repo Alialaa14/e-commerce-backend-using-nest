@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -9,8 +9,18 @@ import { Server, Socket } from 'socket.io';
 import { TokenService } from '../utils/Token/token.service';
 import { socketAuth } from './middlewares/auth-middleware';
 import { UserService } from '../User/user.service';
-import { Role } from '../generated/prisma';
+import { BranchRole, Role } from '../generated/prisma';
 import { RedisService } from '../Redis/redis.services';
+import { PrismaService } from '../utils/prisma/prisma.service';
+
+interface SocketData {
+  user?: { sub?: string };
+  queueEntry?: { queueName: string; data: unknown };
+}
+
+function socketData(client: Socket): SocketData {
+  return client.data as SocketData;
+}
 
 @WebSocketGateway({ cors: { origin: process.env.FRONTEND_URL } })
 @Injectable()
@@ -23,6 +33,7 @@ export class SocketServices
     private readonly tokenService: TokenService,
     private readonly userService: UserService,
     private readonly redisService: RedisService,
+    private readonly prismaService: PrismaService,
   ) {}
 
   private async IdenifyingSocketUser(userId: string): Promise<{
@@ -32,6 +43,48 @@ export class SocketServices
     branchId?: string;
   }> {
     const user = await this.userService.getCurrentUser(userId);
+    if (user.role === Role.BRANCH_MANAGER || user.role === Role.Branch_Sales) {
+      if (!user.brandId || !user.branchId) {
+        throw new ForbiddenException('Branch staff scope is missing');
+      }
+
+      const membership = await this.prismaService.prisma.branchStaff.findUnique(
+        {
+          where: {
+            branchId_userId: {
+              branchId: user.branchId,
+              userId,
+            },
+          },
+          select: {
+            isActive: true,
+            role: true,
+            branch: {
+              select: {
+                brandId: true,
+                isActive: true,
+                deletedAt: true,
+              },
+            },
+          },
+        },
+      );
+
+      const expectedRole =
+        user.role === Role.BRANCH_MANAGER
+          ? BranchRole.manager
+          : BranchRole.sales;
+      if (
+        !membership?.isActive ||
+        membership.role !== expectedRole ||
+        !membership.branch.isActive ||
+        membership.branch.deletedAt ||
+        membership.branch.brandId !== user.brandId
+      ) {
+        throw new ForbiddenException('Active branch staff membership required');
+      }
+    }
+
     return {
       userId,
       role: user.role,
@@ -54,7 +107,7 @@ export class SocketServices
           socketId: client.id,
         };
         await this.redisService.enqueue('users', data);
-        client.data.queueEntry = { queueName: 'users', data };
+        socketData(client).queueEntry = { queueName: 'users', data };
       }
       await client.join('users');
     }
@@ -72,7 +125,7 @@ export class SocketServices
           brandId: userPayload.brandId,
         };
         await this.redisService.enqueue('branch-managers', data);
-        client.data.queueEntry = { queueName: 'branch-managers', data };
+        socketData(client).queueEntry = { queueName: 'branch-managers', data };
       }
       await client.join('branch-managers');
     }
@@ -90,7 +143,7 @@ export class SocketServices
           brandId: userPayload.brandId,
         };
         await this.redisService.enqueue('branch-sales', data);
-        client.data.queueEntry = { queueName: 'branch-sales', data };
+        socketData(client).queueEntry = { queueName: 'branch-sales', data };
       }
       await client.join('branch-sales');
     }
@@ -107,7 +160,7 @@ export class SocketServices
           brandId: userPayload.brandId,
         };
         await this.redisService.enqueue('brand-owners', data);
-        client.data.queueEntry = { queueName: 'brand-owners', data };
+        socketData(client).queueEntry = { queueName: 'brand-owners', data };
       }
       await client.join('brand-owners');
     }
@@ -119,8 +172,12 @@ export class SocketServices
 
   async handleConnection(client: Socket) {
     try {
-      const userId: string = client.data.user.sub;
+      const userId = socketData(client).user?.sub;
+      if (!userId) {
+        throw new ForbiddenException('Socket authentication required');
+      }
       await this.joiningRooms(client, userId);
+      console.log(`Client connected: ${client.id}`);
     } catch (err) {
       this.logger.error(`Connection setup failed (${client.id})`, err as Error);
       client.disconnect(true);
@@ -128,8 +185,7 @@ export class SocketServices
   }
 
   async handleDisconnect(client: Socket) {
-    const entry = client.data.queueEntry as
-      { queueName: string; data: unknown } | undefined;
+    const entry = socketData(client).queueEntry;
     if (!entry) return;
 
     try {

@@ -1,0 +1,2 @@
+ALTER TYPE "Role" ADD VALUE IF NOT EXISTS 'Branch_Sales';
+ALTER TYPE "Role" ADD VALUE IF NOT EXISTS 'customer_Service';
