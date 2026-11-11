@@ -8,11 +8,13 @@ import { VariantModel } from './variant.model';
 import { ProductModel } from '../Product/product.model';
 import { randomUUID } from 'node:crypto';
 import { updateVariantDto } from './dto/update-variant-dto';
+import { PrismaService } from '../utils/prisma/prisma.service';
 @Injectable()
 export class VariantService {
   constructor(
     private readonly variantModel: VariantModel,
     private readonly productModel: ProductModel,
+    private prismaService: PrismaService,
   ) {}
 
   async createVariants(
@@ -213,6 +215,12 @@ export class VariantService {
       size: variant.size,
       stock: variant.stock,
     };
+  }
+
+  async checkOnVariantAvailability(variantId: string) {
+    return this.prismaService.prisma.variantAvailability.findFirstOrThrow({
+      where: { variantId },
+    });
   }
 
   // todo: stock movement model in database and add their controllers (display stock movement history of Variant)

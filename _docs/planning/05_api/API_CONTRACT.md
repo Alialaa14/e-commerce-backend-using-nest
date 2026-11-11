@@ -1964,6 +1964,17 @@ Error response:
 
 ### Routes
 
+### Stripe Checkout payment handoff
+
+- HTTP Method: `POST`
+- Endpoint: `/api/v1/checkout/{checkoutId}/payment`
+- Authentication Required: Yes
+- Authorized Roles: `user`
+- The checkout must belong to the authenticated user, be ready, and not be expired.
+- Returns the Stripe Checkout Session, including its `id` and `url`.
+- The order is created only after the signed Stripe webhook confirms payment.
+- Stripe session creation uses the checkout ID as its idempotency key.
+
 ### Route 1: Create Checkout
 
 - HTTP Method: `POST`
@@ -2841,10 +2852,11 @@ Error response:
 ### Route 2: Stripe Webhook
 
 - HTTP Method: `POST`
-- Endpoint: `/payments/webhooks/stripe`
+- Endpoint: `/api/v1/webhook`
 - Description: Receive Stripe payment status updates.
 - Authentication Required: No
 - Authorized Roles: `guest`
+- Stripe's `Stripe-Signature` header and the raw request body are required.
 
 #### Success Response
 
@@ -2866,8 +2878,9 @@ Error response:
 
 #### Business Logic
 
-- Verify webhook signature and update payment state.
-- Side effects: update order status and notify downstream services.
+- Verify the webhook signature.
+- Create the order only when a `checkout.session.completed` event reports `payment_status: paid`.
+- Repeated delivery is safe: an already placed checkout returns its existing order.
 
 ---
 

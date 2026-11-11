@@ -316,6 +316,7 @@ exports.Prisma.ReviewScalarFieldEnum = {
 exports.Prisma.CartScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  brandId: 'brandId',
   discount: 'discount',
   cartNote: 'cartNote',
   userLocation: 'userLocation',
@@ -329,6 +330,30 @@ exports.Prisma.CartProductsScalarFieldEnum = {
   variantId: 'variantId',
   quantity: 'quantity',
   price: 'price'
+};
+
+exports.Prisma.CheckoutSessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  status: 'status',
+  paymentStatus: 'paymentStatus',
+  stripeSessionId: 'stripeSessionId',
+  stripePaymentIntentId: 'stripePaymentIntentId',
+  paymentAttempt: 'paymentAttempt',
+  cartHash: 'cartHash',
+  snapshot: 'snapshot',
+  addressLat: 'addressLat',
+  addressLng: 'addressLng',
+  addressText: 'addressText',
+  phoneNumber: 'phoneNumber',
+  deliveryFee: 'deliveryFee',
+  timeEstimation: 'timeEstimation',
+  total: 'total',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  brandId: 'brandId',
+  brandBranchId: 'brandBranchId'
 };
 
 exports.Prisma.WishlistScalarFieldEnum = {
@@ -593,6 +618,25 @@ exports.ProductStatus = exports.$Enums.ProductStatus = {
   archived: 'archived'
 };
 
+exports.CheckoutStatus = exports.$Enums.CheckoutStatus = {
+  pending: 'pending',
+  ready: 'ready',
+  payment_pending: 'payment_pending',
+  payment_failed: 'payment_failed',
+  placed: 'placed',
+  expired: 'expired',
+  cancelled: 'cancelled'
+};
+
+exports.CheckoutPaymentStatus = exports.$Enums.CheckoutPaymentStatus = {
+  unpaid: 'unpaid',
+  pending: 'pending',
+  succeeded: 'succeeded',
+  failed: 'failed',
+  cancelled: 'cancelled',
+  refunded: 'refunded'
+};
+
 exports.inventoryType = exports.$Enums.inventoryType = {
   main: 'main',
   branch: 'branch'
@@ -672,6 +716,7 @@ exports.Prisma.ModelName = {
   Review: 'Review',
   Cart: 'Cart',
   CartProducts: 'CartProducts',
+  CheckoutSession: 'CheckoutSession',
   wishlist: 'wishlist',
   Inventory: 'Inventory',
   InventoryStock: 'InventoryStock',

@@ -5,6 +5,7 @@ import { AuthGuard } from '../../common/guards/auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { UseGuards } from '@nestjs/common';
 import { Roles } from '../../common/decorators/roles.decorator';
+import Stripe from 'stripe';
 
 @Controller('checkout')
 export class CheckoutController {
@@ -12,7 +13,9 @@ export class CheckoutController {
   @Post()
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('user')
-  checkout(@getCurrentUser() user: { sub: string }) {
+  checkout(
+    @getCurrentUser() user: { sub: string },
+  ): Promise<Stripe.Response<Stripe.Checkout.Session>> {
     console.log(user.sub);
     return this.checkoutService.createCheckout(user.sub);
   }

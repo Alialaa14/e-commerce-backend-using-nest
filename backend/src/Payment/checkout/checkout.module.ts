@@ -9,7 +9,7 @@ import { RolesGuard } from '../../common/guards/roles.guard';
 @Module({
   controllers: [CheckoutController],
   providers: [CheckoutService, AuthGuard, RolesGuard],
-  exports: [],
+  exports: [CheckoutService],
   imports: [StripeModule, PrismaModule, TokenModule],
 })
 export class CheckoutModule {}

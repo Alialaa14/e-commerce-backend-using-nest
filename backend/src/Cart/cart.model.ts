@@ -19,6 +19,7 @@ export class CartModel {
       select: {
         id: true,
         userId: true,
+        brandId: true,
         discount: true,
         price: true,
         totalPrice: true,
@@ -36,6 +37,7 @@ export class CartModel {
                 color: true,
                 size: true,
                 stock: true,
+                isActive: true,
                 product: {
                   select: {
                     id: true,
@@ -80,6 +82,19 @@ export class CartModel {
     });
   }
 
+  async setCartBrandIfUnset(cartId: string, brandId: string) {
+    const result = await this.prismaService.prisma.cart.updateMany({
+      where: {
+        id: cartId,
+        brandId: null,
+      },
+      data: {
+        brandId,
+      },
+    });
+    return result.count;
+  }
+
   async updateProductsCartCount(
     cartId: string,
     variantId: string,
@@ -111,6 +126,7 @@ export class CartModel {
       },
       data: {
         discount: 0,
+        brandId: null,
         price: 0,
         totalPrice: 0,
         cartNote: '',
@@ -183,6 +199,7 @@ export class CartModel {
         ...queryOpts,
       },
       select: {
+        brandId: true,
         products: {
           select: {
             quantity: true,

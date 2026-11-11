@@ -19,6 +19,8 @@ import { SocketModule } from './Socket/socket.module';
 import { StaffModule } from './Staff/staff.module';
 import { InventoryModule } from './Inventory/inventory.module';
 import { VariantReservationModule } from './VariantReservation/Reservation.module';
+import { CheckoutModule } from './Checkout/Checkout.module';
+import { OrderModule } from './Order/order.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -55,6 +57,8 @@ import { VariantReservationModule } from './VariantReservation/Reservation.modul
     StaffModule,
     InventoryModule,
     VariantReservationModule,
+    CheckoutModule,
+    OrderModule,
   ],
   controllers: [],
   providers: [],

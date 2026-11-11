@@ -1,34 +1,47 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Headers,
+  Post,
+  Req,
+} from '@nestjs/common';
+import { CheckoutService } from '../Checkout/Checkout.service';
 import { StripeService } from '../Payment/stripe/stripe.service';
-import { PrismaService } from '../utils/prisma/prisma.service';
+
+interface StripeWebhookRequest {
+  rawBody?: Buffer;
+}
 
 @Controller('webhook')
 export class WebhookController {
   constructor(
     private readonly stripeService: StripeService,
-    private readonly prismaService: PrismaService,
+    private readonly checkoutService: CheckoutService,
   ) {}
+
   @Post()
-  async handleWebhook(@Body() body: any) {
-    const event = this.stripeService.construct(body, '');
-    switch (event.type) {
-      case 'payment_intent.succeeded':
-        // Handle successful payment intent
-        break;
-      case 'payment_intent.payment_failed':
-        // Handle failed payment intent
-        break;
-      // Add more cases for other event types as needed
-
-      case 'checkout.session.completed':
-        // Handle checkout session completed
-
-        break;
-      default:
-        console.log(`Unhandled event type: ${event.type}`);
+  async handleWebhook(
+    @Req() request: StripeWebhookRequest,
+    @Headers('stripe-signature') signature?: string,
+  ) {
+    if (!request.rawBody || !signature) {
+      throw new BadRequestException(
+        'Stripe webhook body and signature are required',
+      );
     }
-    console.log('Webhook received');
-    // Handle the webhook event here
+
+    const event = this.stripeService.construct(request.rawBody, signature);
+    if (
+      event.type === 'checkout.session.completed' ||
+      event.type === 'checkout.session.async_payment_succeeded' ||
+      event.type === 'checkout.session.async_payment_failed' ||
+      event.type === 'checkout.session.expired' ||
+      event.type === 'payment_intent.payment_failed' ||
+      event.type === 'charge.refunded'
+    ) {
+      await this.checkoutService.handleStripeCheckoutEvent(event);
+    }
+
     return { message: 'Webhook received' };
   }
 }
