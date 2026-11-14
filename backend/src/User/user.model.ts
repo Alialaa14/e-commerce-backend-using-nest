@@ -158,4 +158,22 @@ export class UserModel {
       data,
     });
   }
+
+  async updateProfile(
+    userId: string,
+    data: { username?: string; phone?: string },
+  ) {
+    return this.prismaService.prisma.user.update({
+      where: { id: userId },
+      data,
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        phone: true,
+        role: true,
+        picture_url: true,
+      },
+    });
+  }
 }

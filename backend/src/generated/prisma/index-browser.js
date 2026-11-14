@@ -150,6 +150,25 @@ exports.Prisma.UserScalarFieldEnum = {
   brandBranchId: 'brandBranchId'
 };
 
+exports.Prisma.AddressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  label: 'label',
+  governorate: 'governorate',
+  city: 'city',
+  street: 'street',
+  building: 'building',
+  apartment: 'apartment',
+  landmark: 'landmark',
+  addressText: 'addressText',
+  contactPhone: 'contactPhone',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.BrandScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -701,6 +720,7 @@ exports.courierDocuments = exports.$Enums.courierDocuments = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Address: 'Address',
   Brand: 'Brand',
   BrandTransaction: 'BrandTransaction',
   branchStaff: 'branchStaff',

@@ -440,6 +440,36 @@ export class CheckoutService {
         brandId,
         { cartHash, snapshot },
       );
+      const savedAddress = await this.prismaService.prisma.address.findFirst({
+        where: { userId },
+        orderBy: [{ isDefault: 'desc' }, { updatedAt: 'desc' }],
+        select: {
+          id: true,
+          addressText: true,
+          contactPhone: true,
+          latitude: true,
+          longitude: true,
+        },
+      });
+      let preparedAddress: {
+        shipments: unknown[];
+        addressText: string | null;
+      } | null = null;
+
+      if (savedAddress) {
+        preparedAddress = await this.placeLocation(
+          checkoutSession.id,
+          userId,
+          {
+            latitude: Number(savedAddress.latitude),
+            longitude: Number(savedAddress.longitude),
+          },
+          {
+            addressText: savedAddress.addressText,
+            phoneNumber: savedAddress.contactPhone ?? cart.userNumber,
+          },
+        );
+      }
 
       return {
         success: true,
@@ -455,6 +485,14 @@ export class CheckoutService {
           userLocation: cart.userLocation,
           userNumber: cart.userNumber,
           userId: cart.userId,
+          addressRequired: !savedAddress,
+          address: savedAddress
+            ? {
+                id: savedAddress.id,
+                addressText:
+                  preparedAddress?.addressText ?? savedAddress.addressText,
+              }
+            : null,
         },
       };
     } catch (e) {
@@ -472,6 +510,10 @@ export class CheckoutService {
     location: {
       latitude: number;
       longitude: number;
+    },
+    savedAddress?: {
+      addressText: string;
+      phoneNumber: string | null;
     },
   ) {
     // 1. coordinates (free check first)
@@ -535,9 +577,10 @@ export class CheckoutService {
           latitude,
           longitude,
         });
-        addressText = formattedAddress;
+        addressText = savedAddress?.addressText ?? formattedAddress;
       } catch (e) {
         console.log('reverseGeocode failed', e);
+        addressText = savedAddress?.addressText ?? null;
       }
 
       // now i will get the nearest branches that have all the products
@@ -590,6 +633,16 @@ export class CheckoutService {
             60 *
             1000,
       );
+      const phoneNumber =
+        savedAddress?.phoneNumber ??
+        cart.userNumber ??
+        (
+          await this.prismaService.prisma.user.findUnique({
+            where: { id: userId },
+            select: { phone: true },
+          })
+        )?.phone ??
+        null;
       const sessionSnapshot =
         session.snapshot &&
         typeof session.snapshot === 'object' &&
@@ -600,7 +653,7 @@ export class CheckoutService {
         ...sessionSnapshot,
         location: { latitude, longitude },
         addressText,
-        phoneNumber: cart.userNumber,
+        phoneNumber,
         shipments,
         deliveryFee,
         total,
@@ -622,7 +675,7 @@ export class CheckoutService {
           addressLat: latitude,
           addressLng: longitude,
           addressText,
-          phoneNumber: cart.userNumber,
+          phoneNumber,
           brandBranchId: shipments.length === 1 ? shipments[0].branchId : null,
           deliveryFee,
           timeEstimation,

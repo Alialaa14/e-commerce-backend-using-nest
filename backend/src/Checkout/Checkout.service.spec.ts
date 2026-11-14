@@ -37,6 +37,9 @@ describe('CheckoutService.placeLocation', () => {
       {} as never,
       {
         prisma: {
+          user: {
+            findUnique: jest.fn().mockResolvedValue({ phone: null }),
+          },
           checkoutSession: {
             findFirst: jest.fn().mockResolvedValue(session),
             updateMany,
@@ -124,6 +127,154 @@ describe('CheckoutService.placeLocation', () => {
         }),
       }),
     );
+  });
+});
+
+describe('CheckoutService.checkout', () => {
+  it('uses the customer default address to prepare checkout automatically', async () => {
+    const checkoutSession = {
+      id: 'checkout-1',
+      userId: 'user-1',
+      brandId: 'brand-1',
+      status: CheckoutStatus.pending,
+      expiresAt: new Date(Date.now() + 60_000),
+    };
+    const savedAddress = {
+      id: 'address-1',
+      addressText: '12 Nile Street, Cairo',
+      contactPhone: '+201000000000',
+      latitude: 30.0444,
+      longitude: 31.2357,
+    };
+    const placeLocation = jest.fn().mockResolvedValue({
+      addressText: savedAddress.addressText,
+    });
+    const service = new CheckoutService(
+      {
+        getCart: jest.fn().mockResolvedValue({
+          brandId: 'brand-1',
+          products: [
+            {
+              variantId: 'variant-1',
+              quantity: 1,
+              price: 100,
+              variant: {
+                isActive: true,
+                color: 'Blue',
+                size: 'M',
+                product: { isDeleted: false, name: 'Shirt' },
+              },
+            },
+          ],
+          price: 100,
+          totalPrice: 100,
+          discount: 0,
+          userNumber: '+201111111111',
+          userLocation: null,
+          cartNote: null,
+          userId: 'user-1',
+        }),
+      } as never,
+      {
+        checkOnVariantAvailability: jest
+          .fn()
+          .mockResolvedValue({ totalAvailable: 5 }),
+      } as never,
+      {
+        prisma: {
+          address: {
+            findFirst: jest.fn().mockResolvedValue(savedAddress),
+          },
+          checkoutSession: {
+            updateMany: jest.fn().mockResolvedValue({ count: 1 }),
+            findFirst: jest.fn().mockResolvedValue(null),
+            create: jest.fn().mockResolvedValue(checkoutSession),
+          },
+        },
+      } as never,
+      {} as never,
+      {} as never,
+      {} as never,
+      {} as never,
+      {} as never,
+    );
+    jest.spyOn(service, 'placeLocation').mockImplementation(placeLocation);
+
+    await service.checkout('user-1');
+
+    expect(placeLocation).toHaveBeenCalledWith(
+      'checkout-1',
+      'user-1',
+      { latitude: 30.0444, longitude: 31.2357 },
+      {
+        addressText: '12 Nile Street, Cairo',
+        phoneNumber: '+201000000000',
+      },
+    );
+  });
+
+  it('keeps the manual address step when the customer has no saved address', async () => {
+    const checkoutSession = {
+      id: 'checkout-1',
+      userId: 'user-1',
+      brandId: 'brand-1',
+      status: CheckoutStatus.pending,
+      expiresAt: new Date(Date.now() + 60_000),
+    };
+    const service = new CheckoutService(
+      {
+        getCart: jest.fn().mockResolvedValue({
+          brandId: 'brand-1',
+          products: [
+            {
+              variantId: 'variant-1',
+              quantity: 1,
+              price: 100,
+              variant: {
+                isActive: true,
+                color: 'Blue',
+                size: 'M',
+                product: { isDeleted: false, name: 'Shirt' },
+              },
+            },
+          ],
+          price: 100,
+          totalPrice: 100,
+          discount: 0,
+          userNumber: '+201111111111',
+          userLocation: null,
+          cartNote: null,
+          userId: 'user-1',
+        }),
+      } as never,
+      {
+        checkOnVariantAvailability: jest
+          .fn()
+          .mockResolvedValue({ totalAvailable: 5 }),
+      } as never,
+      {
+        prisma: {
+          address: { findFirst: jest.fn().mockResolvedValue(null) },
+          checkoutSession: {
+            updateMany: jest.fn().mockResolvedValue({ count: 1 }),
+            findFirst: jest.fn().mockResolvedValue(null),
+            create: jest.fn().mockResolvedValue(checkoutSession),
+          },
+        },
+      } as never,
+      {} as never,
+      {} as never,
+      {} as never,
+      {} as never,
+      {} as never,
+    );
+    const placeLocation = jest.spyOn(service, 'placeLocation');
+
+    const result = await service.checkout('user-1');
+
+    expect(result.data.addressRequired).toBe(true);
+    expect(result.data.address).toBeNull();
+    expect(placeLocation).not.toHaveBeenCalled();
   });
 });
 

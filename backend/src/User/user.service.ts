@@ -14,6 +14,9 @@ import { MailService } from '../utils/email/email.service';
 import { otpEmailTemplate } from '../utils/email/emailTemplates';
 import { OtpService } from '../utils/Otp/otp.service';
 import { TokenService } from '../utils/Token/token.service';
+import { Prisma } from '../generated/prisma';
+import { UpdateProfileDto } from './dto/update-profile.dto';
+import { normalizeEgyptianMobilePhone } from './phone.util';
 
 interface SignupPendingPayload {
   purpose: 'signup-pending';
@@ -161,6 +164,33 @@ export class UserService {
       brandId: user.brandId,
       branchId: user.branchId,
     };
+  }
+
+  async updateProfile(userId: string, dto: UpdateProfileDto) {
+    if (!dto.username && !dto.phone) {
+      throw new BadRequestException('At least one profile field is required');
+    }
+
+    try {
+      return await this.userModel.updateProfile(userId, {
+        username: dto.username,
+        phone: dto.phone ? normalizeEgyptianMobilePhone(dto.phone) : undefined,
+      });
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2002'
+      ) {
+        throw new ConflictException('Phone number is already in use');
+      }
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2025'
+      ) {
+        throw new NotFoundException('User not found');
+      }
+      throw error;
+    }
   }
 
   async login(identifier: string, password: string) {

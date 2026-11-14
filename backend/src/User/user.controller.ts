@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Get,
@@ -20,6 +19,7 @@ import { RegisterDto } from './dto/register.dto';
 import { VerifyOtpDto } from './dto/register-verify-otp.dto';
 import { ForgetPasswordDto } from './dto/forget-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 import { MultipartInterceptor } from '../utils/multer/multer.interceptor';
 import { UploadedFastifyFile } from '../utils/multer/multer-file.decorator';
 
@@ -148,6 +148,26 @@ export class UserController {
       success: true,
       message: 'Profile retrieved successfully',
       data: profile,
+    };
+  }
+
+  @Patch('me')
+  @UseGuards(AuthGuard)
+  async updateCurrentUser(
+    @Req() req: FastifyRequest,
+    @Body() body: UpdateProfileDto,
+  ) {
+    const user = (req as any).user;
+    const userId = user?.sub ?? user?.id;
+
+    if (!userId) {
+      throw new UnauthorizedException('Not authenticated');
+    }
+
+    return {
+      success: true,
+      message: 'Profile updated successfully',
+      data: await this.userService.updateProfile(userId, body),
     };
   }
 

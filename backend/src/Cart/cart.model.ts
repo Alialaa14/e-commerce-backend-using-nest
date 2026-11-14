@@ -36,7 +36,6 @@ export class CartModel {
                 productId: true,
                 color: true,
                 size: true,
-                stock: true,
                 isActive: true,
                 product: {
                   select: {

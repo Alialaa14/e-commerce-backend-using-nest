@@ -120,7 +120,7 @@ Error response:
 ```json
 {
   "role": "end_user",
-  "name": "Ahmed Hassan",
+  "username": "Ahmed Hassan",
   "phone": "+201001234567",
   "email": "ahmed@example.com",
   "password": "StrongPass123"
@@ -559,19 +559,19 @@ Error response:
 #### Request Input
 
 - Request Body
-  - `name` (optional): string
-  - `email` (optional): string
+  - `username` (optional): string
   - `phone` (optional): string
-  - `profilePictureUrl` (optional): string
 - Validation Rules:
-  - `email` must be valid if supplied
-  - `phone` must be unique if changed
+  - At least one supported field must be supplied.
+  - `username` must be 3–30 characters.
+  - `phone`, when supplied, must be an Egyptian mobile number and is stored in `+20` format.
+  - Email and profile-picture changes are not supported by this endpoint.
 - Example Request JSON
 
 ```json
 {
-  "name": "Ahmed El Hassan",
-  "profilePictureUrl": "https://cdn.example.com/avatar.png"
+  "username": "Ahmed El Hassan",
+  "phone": "01012345678"
 }
 ```
 
@@ -586,7 +586,7 @@ Error response:
   "message": "Profile updated successfully",
   "data": {
     "id": "uuid",
-    "name": "Ahmed El Hassan"
+    "username": "Ahmed El Hassan"
   }
 }
 ```
@@ -600,7 +600,8 @@ Error response:
 #### Business Logic
 
 - Apply safe profile updates.
-- Side effects: audit profile change.
+- Role, brand ownership, and account identity fields cannot be changed here.
+- Side effects: none.
 
 ---
 
@@ -614,7 +615,7 @@ Error response:
 
 #### Request Input
 
-- Query Parameters: `defaultOnly` (optional, boolean)
+- Query Parameters: None
 - Validation Rules: None beyond authentication
 
 #### Success Response
@@ -630,9 +631,13 @@ Error response:
     "items": [
       {
         "id": "uuid",
+        "label": "Home",
         "governorate": "Cairo",
+        "city": "Cairo",
         "street": "Main Street",
         "contactPhone": "+201001234567",
+        "latitude": 30.0444,
+        "longitude": 31.2357,
         "isDefault": true
       }
     ]
@@ -663,18 +668,25 @@ Error response:
 #### Request Input
 
 - Request Body
-  - `governorate` (required): string
-  - `street` (required): string
-  - `contactPhone` (required): string
+  - `label`, `governorate`, `city`, `street` (required): strings
+  - `latitude`, `longitude` (required): coordinates used for branch and delivery calculations
+  - `building`, `apartment`, `landmark`, `contactPhone` (optional): strings
   - `isDefault` (optional): boolean
 - Validation Rules:
-  - Only one default address may exist
+  - Coordinates must be within valid latitude/longitude ranges.
+  - `contactPhone`, when supplied, must be an Egyptian mobile number and is stored in `+20` format.
+  - The first saved address is automatically the default.
+  - Only one default address may exist.
 - Example Request JSON
 
 ```json
 {
+  "label": "Home",
   "governorate": "Cairo",
+  "city": "Cairo",
   "street": "12 Street",
+  "latitude": 30.0444,
+  "longitude": 31.2357,
   "contactPhone": "+201001234567",
   "isDefault": true
 }
@@ -778,7 +790,8 @@ Error response:
 
 #### Business Logic
 
-- Remove an address only if it is not currently used in a pending order.
+- Remove an address owned by the authenticated user.
+- If the deleted address was the default, promote another saved address when available.
 - Side effects: none.
 
 ---
@@ -1978,46 +1991,39 @@ Error response:
 ### Route 1: Create Checkout
 
 - HTTP Method: `POST`
-- Endpoint: `/users/me/checkout`
-- Description: Create an order from the user cart.
+- Endpoint: `/checkout`
+- Description: Create or refresh a checkout session from the user cart.
 - Authentication Required: Yes
 - Authorized Roles: `end_user`
 
 #### Request Input
 
-- Request Body
-  - `addressId` (required): string
-  - `paymentMethod` (required): string
-  - `couponCode` (optional): string
+- Request Body: None
 - Validation Rules:
   - Cart must not be empty
-  - Address must belong to the user
-  - Payment method must be supported
   - Inventory must be sufficient
+  - If the user has a saved address, the default address (or most recently updated address if no default exists) is applied automatically.
+  - If no saved address exists, the checkout remains pending until an address is submitted.
 - Example Request JSON
 
-```json
-{
-  "addressId": "uuid",
-  "paymentMethod": "cod"
-}
-```
+None
 
 #### Success Response
 
-- Status Code: `201`
+- Status Code: `200`
 - Example JSON
 
 ```json
 {
   "success": true,
-  "message": "Checkout completed successfully",
+  "message": "Checkout started",
   "data": {
-    "orderId": "uuid",
-    "orderNumber": "ORD-1001",
-    "paymentStatus": "pending",
-    "totalAmount": 700,
-    "subOrders": []
+    "checkoutId": "uuid",
+    "addressRequired": false,
+    "address": {
+      "id": "uuid",
+      "addressText": "12 Street, Cairo, Cairo"
+    }
   }
 }
 ```
@@ -2030,10 +2036,29 @@ Error response:
 
 #### Business Logic
 
-- Validate cart contents and address.
-- Create a parent order and one sub-order per brand.
-- Create payment intent or payment record.
-- Side effects: create transaction, notify user and brand, emit order-created event.
+- Validate cart contents and inventory.
+- Create or refresh a checkout session.
+- Automatically prepare the session with a saved address when available.
+- Do not create the order until the payment webhook confirms success.
+
+### Route 2: Provide Checkout Address
+
+- HTTP Method: `POST`
+- Endpoint: `/checkout/{checkoutId}/address`
+- Description: Provide the checkout destination when no saved address was applied.
+- Authentication Required: Yes
+- Authorized Roles: `end_user`
+
+#### Request Input
+
+- Path Parameters: `checkoutId`
+- Request Body: `latitude` and `longitude` numbers
+- Validation Rules: coordinates must be within valid latitude/longitude ranges.
+
+#### Business Logic
+
+- Verify the checkout belongs to the authenticated user and is active.
+- Preserve the existing reverse-geocoding, branch selection, delivery calculation, and checkout preparation flow.
 
 ---
 
