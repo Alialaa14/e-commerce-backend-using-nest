@@ -93,7 +93,7 @@ export class SocketServices implements OnGatewayInit, OnGatewayConnection {
   private async joiningRooms(client: Socket, userId: string): Promise<void> {
     const userPayload = await this.IdenifyingSocketUser(userId);
 
-    if (userPayload.role === 'user') {
+    if (userPayload.role === Role.user || userPayload.role === Role.courier) {
       await client.join(`user:${userPayload.userId}`);
     }
 
@@ -171,6 +171,17 @@ export class SocketServices implements OnGatewayInit, OnGatewayConnection {
 
   notifyBranchOrderUpdated(branchId: string, branchOrder: object) {
     this.server.to(`branch:${branchId}`).emit('order:updated', branchOrder);
+  }
+
+  notifyCourierAssigned(
+    userId: string,
+    assignment: {
+      branchOrderId: string;
+      parentOrderId: string;
+      status: string;
+    },
+  ) {
+    this.server.to(`user:${userId}`).emit('delivery:assigned', assignment);
   }
 
   notifyCheckoutPaymentUpdated(

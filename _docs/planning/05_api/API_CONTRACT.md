@@ -2484,9 +2484,62 @@ None
 ### Controller Summary
 
 - Purpose: Manage delivery-company operations and fleet configuration.
-- Description: Supports order intake, courier assignment, fee tiers, and reconciliation.
-- Authentication Required: Yes for internal operations; No for webhook intake.
-- Authorized Roles: `delivery_company`, `admin`
+- Description: Admins create and verify companies; company managers manage their profile, couriers, and handed-off orders.
+- Authentication Required: Yes
+- Authorized Roles: `deliveryC`, `admin`
+
+### Implemented Routes
+
+All routes below are prefixed with `/api/v1`.
+
+| Method | Endpoint | Role | Purpose |
+|---|---|---|---|
+| `POST` | `/delivery-companies` | `admin` | Create an unclaimed company profile |
+| `POST` | `/delivery-companies/{deliveryCompanyId}/manager-invitations` | `admin` | Invite a manager to claim the company |
+| `PATCH` | `/delivery-companies/{deliveryCompanyId}/verification` | `admin` | Verify or unverify a company |
+| `GET` | `/delivery-companies/me` | `deliveryC` | Read the authenticated company profile |
+| `PATCH` | `/delivery-companies/me` | `deliveryC` | Update company name, address, or phone |
+| `GET` | `/delivery-companies/me/couriers` | `deliveryC` | List the company fleet |
+| `POST` | `/delivery-companies/me/couriers/invitations` | `deliveryC` | Invite a courier with profile data and a photo (`multipart/form-data`) |
+| `PATCH` | `/delivery-companies/me/couriers/{courierId}` | `deliveryC` | Update a courier's fleet status and details |
+| `GET` | `/delivery-companies/me/orders` | `deliveryC` | Paginated list of orders handed to the company |
+| `PATCH` | `/delivery-companies/me/orders/{branchOrderId}/assignment` | `deliveryC` | Assign an active, verified fleet courier |
+
+The order list accepts optional `status`, `page` (default `1`), and `limit` (default `20`, maximum `100`) query parameters. Courier assignment is limited to this company’s unassigned `readytoship` orders. The APIs do not include delivery webhooks, auto-assignment rules, delivery rates/zones, or COD reconciliation.
+
+After a successful assignment, the server emits the Socket.IO event `delivery:assigned` to the authenticated courier’s private `user:{userId}` room. Its payload contains `branchOrderId`, `parentOrderId`, and `status`. Clients should refresh `/api/v1/courier/me/orders` after reconnecting because real-time events are not persisted.
+
+---
+
+## 3.13 CourierController
+
+### Controller Summary
+
+- Purpose: Let an authenticated courier manage their profile and assigned deliveries.
+- Authentication Required: Yes
+- Authorized Roles: `courier`
+
+### Implemented Routes
+
+All routes below are prefixed with `/api/v1`.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `GET` | `/courier/me` | Read the authenticated courier profile |
+| `PATCH` | `/courier/me` | Update username, phone, and/or photo (`multipart/form-data`) |
+| `GET` | `/courier/me/orders` | Paginated list of the courier’s assigned orders |
+| `PATCH` | `/courier/me/orders/{branchOrderId}/status` | Advance the assigned order through valid delivery statuses |
+| `POST` | `/courier/me/orders/{branchOrderId}/proof` | Upload proof and mark the order delivered (`multipart/form-data`) |
+
+Courier status updates follow `readytoship → shipping → delivering → delivered | returned`; proof of delivery is required for `delivered`. Both order-list endpoints accept optional `status`, `page` (default `1`), and `limit` (default `20`, maximum `100`).
+
+---
+
+### Archived Delivery API Proposal (Not Implemented)
+
+The routes in the following historical proposal are superseded by the implemented routes above. Do not use the webhook, courier-ID-based routes, fee-tier, auto-assignment, or reconciliation descriptions below as API specifications.
+
+### Legacy DeliveryCompanyController Proposal
 
 ### Routes
 
@@ -2649,7 +2702,7 @@ None
 
 ---
 
-## 3.13 CourierController
+### Legacy CourierController Proposal
 
 ### Controller Summary
 

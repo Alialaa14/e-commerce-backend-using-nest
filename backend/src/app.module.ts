@@ -21,6 +21,7 @@ import { InventoryModule } from './Inventory/inventory.module';
 import { VariantReservationModule } from './VariantReservation/Reservation.module';
 import { CheckoutModule } from './Checkout/Checkout.module';
 import { OrderModule } from './Order/order.module';
+import { DeliveryModule } from './Delivery/delivery.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -59,6 +60,7 @@ import { OrderModule } from './Order/order.module';
     VariantReservationModule,
     CheckoutModule,
     OrderModule,
+    DeliveryModule,
   ],
   controllers: [],
   providers: [],

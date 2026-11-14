@@ -7,11 +7,17 @@ import {
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { BranchRole, Prisma, Role } from '../generated/prisma';
+import {
+  BranchRole,
+  courierDocuments,
+  Prisma,
+  Role,
+} from '../generated/prisma';
 import { PrismaService } from '../utils/prisma/prisma.service';
 import { MailService } from '../utils/email/email.service';
 import { createHash, randomBytes } from 'node:crypto';
 import * as bcrypt from 'bcryptjs';
+import { normalizeEgyptianMobilePhone } from '../User/phone.util';
 
 export interface StaffActor {
   sub: string;
@@ -21,6 +27,14 @@ export interface StaffActor {
 }
 
 const INVITATION_EXPIRY_MS = 48 * 60 * 60 * 1000;
+
+interface CourierInvitationProfile {
+  phoneNumber: string;
+  photo_url: string;
+  photo_id: string;
+  documents: courierDocuments[];
+  plateNumber: string;
+}
 
 @Injectable()
 export class StaffService {
@@ -130,6 +144,79 @@ export class StaffService {
     });
   }
 
+  async inviteDeliveryCompany(
+    actor: StaffActor,
+    deliveryCompanyId: string,
+    email: string,
+  ) {
+    if (actor.role !== Role.admin) {
+      throw new ForbiddenException(
+        'Only platform admins can invite delivery-company users',
+      );
+    }
+
+    const company = await this.prismaService.prisma.d_Company.findFirst({
+      where: {
+        deliveryCompany: deliveryCompanyId,
+        ownerUserId: null,
+        isBanned: false,
+      },
+      select: { deliveryCompany: true },
+    });
+    if (!company) {
+      throw new NotFoundException('Unclaimed delivery company not found');
+    }
+
+    return this.createInvitation({
+      actorId: actor.sub,
+      email,
+      role: Role.deliveryC,
+      deliveryCompanyId,
+    });
+  }
+
+  async inviteCourier(
+    actor: StaffActor,
+    input: {
+      email: string;
+      phoneNumber: string;
+      photo_url: string;
+      photo_id: string;
+      documents: courierDocuments[];
+      plateNumber: string;
+    },
+  ) {
+    if (actor.role !== Role.deliveryC) {
+      throw new ForbiddenException(
+        'Only delivery-company users can invite couriers',
+      );
+    }
+
+    const company = await this.prismaService.prisma.d_Company.findFirst({
+      where: { ownerUserId: actor.sub, isBanned: false },
+      select: { deliveryCompany: true },
+    });
+    if (!company) {
+      throw new ForbiddenException('Delivery-company access denied');
+    }
+
+    const courierProfile: Prisma.InputJsonObject = {
+      phoneNumber: normalizeEgyptianMobilePhone(input.phoneNumber),
+      photo_url: input.photo_url,
+      photo_id: input.photo_id,
+      documents: input.documents,
+      plateNumber: input.plateNumber,
+    };
+
+    return this.createInvitation({
+      actorId: actor.sub,
+      email: input.email,
+      role: Role.courier,
+      deliveryCompanyId: company.deliveryCompany,
+      courierProfile,
+    });
+  }
+
   async acceptInvitation(
     token: string,
     email: string,
@@ -157,6 +244,8 @@ export class StaffService {
             role: true,
             brandId: true,
             branchId: true,
+            deliveryCompanyId: true,
+            courierProfile: true,
           },
         });
         if (!invitation) {
@@ -168,13 +257,49 @@ export class StaffService {
         const isBranchRole =
           invitation.role === Role.BRANCH_MANAGER ||
           invitation.role === Role.Branch_Sales;
+        const isDeliveryCompanyRole = invitation.role === Role.deliveryC;
+        const isCourierRole = invitation.role === Role.courier;
+        const hasDeliveryScope =
+          isDeliveryCompanyRole || isCourierRole
+            ? Boolean(invitation.deliveryCompanyId)
+            : !invitation.deliveryCompanyId;
         if (
           (invitation.role === Role.customer_Service &&
             (invitation.brandId || invitation.branchId)) ||
           (isBranchRole && (!invitation.brandId || !invitation.branchId)) ||
-          (!isBranchRole && invitation.role !== Role.customer_Service)
+          (!isBranchRole &&
+            invitation.role !== Role.customer_Service &&
+            !isDeliveryCompanyRole &&
+            !isCourierRole) ||
+          !hasDeliveryScope ||
+          ((isDeliveryCompanyRole || isCourierRole) &&
+            (invitation.brandId || invitation.branchId)) ||
+          (isDeliveryCompanyRole && invitation.courierProfile) ||
+          (isCourierRole && !invitation.courierProfile)
         ) {
           throw new BadRequestException('Invitation has invalid role scope');
+        }
+
+        let courierProfile: CourierInvitationProfile | undefined;
+        if (isDeliveryCompanyRole || isCourierRole) {
+          const company = await tx.d_Company.findFirst({
+            where: {
+              deliveryCompany: invitation.deliveryCompanyId!,
+              isBanned: false,
+              ...(isDeliveryCompanyRole ? { ownerUserId: null } : {}),
+            },
+            select: { deliveryCompany: true },
+          });
+          if (!company) {
+            throw new BadRequestException(
+              'The invited delivery company is no longer available',
+            );
+          }
+        }
+        if (isCourierRole) {
+          courierProfile = this.parseCourierInvitationProfile(
+            invitation.courierProfile,
+          );
         }
 
         if (isBranchRole) {
@@ -223,6 +348,7 @@ export class StaffService {
             role: invitation.role,
             brandId: invitation.brandId,
             branchId: invitation.branchId,
+            ...(courierProfile ? { phone: courierProfile.phoneNumber } : {}),
             isVerified: true,
           },
           select: {
@@ -244,6 +370,32 @@ export class StaffService {
                 invitation.role === Role.BRANCH_MANAGER
                   ? BranchRole.manager
                   : BranchRole.sales,
+            },
+          });
+        }
+
+        if (isDeliveryCompanyRole) {
+          const linked = await tx.d_Company.updateMany({
+            where: {
+              deliveryCompany: invitation.deliveryCompanyId!,
+              ownerUserId: null,
+              isBanned: false,
+            },
+            data: { ownerUserId: user.id },
+          });
+          if (linked.count !== 1) {
+            throw new ConflictException(
+              'The delivery-company profile has already been claimed',
+            );
+          }
+        }
+
+        if (isCourierRole && courierProfile) {
+          await tx.courier.create({
+            data: {
+              userId: user.id,
+              deliveryCompanyId: invitation.deliveryCompanyId!,
+              ...courierProfile,
             },
           });
         }
@@ -345,6 +497,8 @@ export class StaffService {
     role: Role;
     brandId?: string;
     branchId?: string;
+    deliveryCompanyId?: string;
+    courierProfile?: Prisma.InputJsonObject;
   }) {
     const email = this.normalizeEmail(input.email);
     const token = randomBytes(32).toString('base64url');
@@ -361,6 +515,7 @@ export class StaffService {
       expiresAt: Date;
       brandId: string | null;
       branchId: string | null;
+      deliveryCompanyId: string | null;
     };
     try {
       invitation = await this.prismaService.prisma.$transaction(async (tx) => {
@@ -380,6 +535,7 @@ export class StaffService {
             role: input.role,
             brandId: input.brandId ?? null,
             branchId: input.branchId ?? null,
+            deliveryCompanyId: input.deliveryCompanyId ?? null,
             acceptedAt: null,
             revokedAt: null,
             expiresAt: { lte: now },
@@ -393,6 +549,7 @@ export class StaffService {
             role: input.role,
             brandId: input.brandId ?? null,
             branchId: input.branchId ?? null,
+            deliveryCompanyId: input.deliveryCompanyId ?? null,
             acceptedAt: null,
             revokedAt: null,
             expiresAt: { gt: now },
@@ -411,6 +568,8 @@ export class StaffService {
             role: input.role,
             brandId: input.brandId,
             branchId: input.branchId,
+            deliveryCompanyId: input.deliveryCompanyId,
+            courierProfile: input.courierProfile,
             tokenHash,
             expiresAt,
             createdById: input.actorId,
@@ -422,6 +581,7 @@ export class StaffService {
             expiresAt: true,
             brandId: true,
             branchId: true,
+            deliveryCompanyId: true,
           },
         });
       });
@@ -462,6 +622,35 @@ export class StaffService {
       expiresAt: invitation.expiresAt,
       brandId: invitation.brandId,
       branchId: invitation.branchId,
+      deliveryCompanyId: invitation.deliveryCompanyId,
+    };
+  }
+
+  private parseCourierInvitationProfile(
+    value: Prisma.JsonValue | null,
+  ): CourierInvitationProfile {
+    if (
+      typeof value !== 'object' ||
+      value === null ||
+      Array.isArray(value) ||
+      typeof value.phoneNumber !== 'string' ||
+      typeof value.photo_url !== 'string' ||
+      typeof value.photo_id !== 'string' ||
+      typeof value.plateNumber !== 'string' ||
+      !Array.isArray(value.documents) ||
+      !value.documents.every((document) =>
+        Object.values(courierDocuments).includes(document as courierDocuments),
+      )
+    ) {
+      throw new BadRequestException('Courier invitation profile is invalid');
+    }
+
+    return {
+      phoneNumber: normalizeEgyptianMobilePhone(value.phoneNumber),
+      photo_url: value.photo_url,
+      photo_id: value.photo_id,
+      plateNumber: value.plateNumber,
+      documents: value.documents as courierDocuments[],
     };
   }
 

@@ -195,17 +195,20 @@ model User {
   brandFollowers BrandFollower[]
 
   // brand side
-  brand                   Brand?            @relation("BrandOwner") // the brand this user OWNS
-  brandId                 String?           @map("brand_id") @db.Uuid // the brand this user WORKS for (staff)
-  branchId                String?           @map("branch_id") @db.Uuid // the branch this user WORKS at (staff)
-  brandTenant             Brand?            @relation("BrandUsers", fields: [brandId], references: [id], onDelete: SetNull)
-  branchTenant            BrandBranch?      @relation("BranchUsers", fields: [branchId], references: [id], onDelete: SetNull)
-  reviewedBrandDocs       BrandDocument[]   @relation("BrandDocumentReviewer")
-  brandBranch             BrandBranch?      @relation(fields: [brandBranchId], references: [id])
-  brandBranchId           String?           @db.Uuid
-  branchStaffs            branchStaff[]
-  createdStaffInvitations StaffInvitation[] @relation("StaffInvitationCreator")
-  checkoutSessions        CheckoutSession[]
+  brand                    Brand?                     @relation("BrandOwner") // the brand this user OWNS
+  brandId                  String?                    @map("brand_id") @db.Uuid // the brand this user WORKS for (staff)
+  branchId                 String?                    @map("branch_id") @db.Uuid // the branch this user WORKS at (staff)
+  brandTenant              Brand?                     @relation("BrandUsers", fields: [brandId], references: [id], onDelete: SetNull)
+  branchTenant             BrandBranch?               @relation("BranchUsers", fields: [branchId], references: [id], onDelete: SetNull)
+  reviewedBrandDocs        BrandDocument[]            @relation("BrandDocumentReviewer")
+  brandBranch              BrandBranch?               @relation(fields: [brandBranchId], references: [id])
+  brandBranchId            String?                    @db.Uuid
+  branchStaffs             branchStaff[]
+  createdStaffInvitations  StaffInvitation[]          @relation("StaffInvitationCreator")
+  checkoutSessions         CheckoutSession[]
+  deliveryCompany          D_Company?                 @relation("DeliveryCompanyOwner")
+  courierProfile           Courier?
+  branchOrderStatusChanges BranchOrderStatusHistory[]
 
   @@unique([provider, providerCustomerId])
   @@index([brandId])
@@ -370,24 +373,28 @@ model BrandDocument {
 }
 
 model StaffInvitation {
-  id          String    @id @default(uuid()) @db.Uuid
-  email       String
-  role        Role
-  brandId     String?   @map("brand_id") @db.Uuid
-  branchId    String?   @map("branch_id") @db.Uuid
-  tokenHash   String    @unique @map("token_hash")
-  expiresAt   DateTime  @map("expires_at") @db.Timestamptz
-  acceptedAt  DateTime? @map("accepted_at") @db.Timestamptz
-  revokedAt   DateTime? @map("revoked_at") @db.Timestamptz
-  createdById String    @map("created_by_id") @db.Uuid
-  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  id                String    @id @default(uuid()) @db.Uuid
+  email             String
+  role              Role
+  brandId           String?   @map("brand_id") @db.Uuid
+  branchId          String?   @map("branch_id") @db.Uuid
+  deliveryCompanyId String?   @map("delivery_company_id") @db.Uuid
+  courierProfile    Json?     @map("courier_profile")
+  tokenHash         String    @unique @map("token_hash")
+  expiresAt         DateTime  @map("expires_at") @db.Timestamptz
+  acceptedAt        DateTime? @map("accepted_at") @db.Timestamptz
+  revokedAt         DateTime? @map("revoked_at") @db.Timestamptz
+  createdById       String    @map("created_by_id") @db.Uuid
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz
 
-  brand   Brand?       @relation(fields: [brandId], references: [id], onDelete: Cascade)
-  branch  BrandBranch? @relation(fields: [branchId], references: [id], onDelete: Cascade)
-  creator User         @relation("StaffInvitationCreator", fields: [createdById], references: [id], onDelete: Restrict)
+  brand           Brand?       @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  branch          BrandBranch? @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  deliveryCompany D_Company?   @relation(fields: [deliveryCompanyId], references: [deliveryCompany], onDelete: Cascade)
+  creator         User         @relation("StaffInvitationCreator", fields: [createdById], references: [id], onDelete: Restrict)
 
   @@index([email, role, expiresAt])
   @@index([brandId, branchId, role])
+  @@index([deliveryCompanyId, role, expiresAt])
   @@map("staff_invitations")
 }
 
@@ -804,16 +811,52 @@ model BranchOrder {
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
 
-  order           ParentOrder @relation(fields: [parentOrderId], references: [parentOrderId], onDelete: Cascade)
-  brand           Brand       @relation(fields: [brandId], references: [id], onDelete: Cascade)
-  brandBranch     BrandBranch @relation(fields: [brandBranchId], references: [id])
-  deliveryCompany D_Company?  @relation(fields: [deliveryCompanyId], references: [deliveryCompany])
-  courier         Courier?    @relation(fields: [courierId], references: [id])
+  order           ParentOrder                @relation(fields: [parentOrderId], references: [parentOrderId], onDelete: Cascade)
+  brand           Brand                      @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  brandBranch     BrandBranch                @relation(fields: [brandBranchId], references: [id])
+  deliveryCompany D_Company?                 @relation(fields: [deliveryCompanyId], references: [deliveryCompany])
+  courier         Courier?                   @relation(fields: [courierId], references: [id])
   orderItems      OrderItem[]
+  statusHistory   BranchOrderStatusHistory[]
+  deliveryProofs  DeliveryProof[]
 
   @@index([parentOrderId])
   @@index([brandBranchId, status])
   @@index([brandId])
+  @@index([deliveryCompanyId, status])
+  @@index([courierId, status])
+}
+
+model BranchOrderStatusHistory {
+  id              String       @id @default(uuid()) @db.Uuid
+  branchOrderId   String       @db.Uuid
+  fromStatus      orderStatus?
+  toStatus        orderStatus
+  changedByUserId String       @db.Uuid
+  changedByRole   Role
+  metadata        Json?
+  createdAt       DateTime     @default(now()) @db.Timestamptz
+
+  branchOrder BranchOrder @relation(fields: [branchOrderId], references: [branchOrderId], onDelete: Cascade)
+  changedBy   User        @relation(fields: [changedByUserId], references: [id], onDelete: Restrict)
+
+  @@index([branchOrderId, createdAt])
+  @@index([changedByUserId, createdAt])
+}
+
+model DeliveryProof {
+  id             String   @id @default(uuid()) @db.Uuid
+  branchOrderId  String   @db.Uuid
+  courierId      String   @db.Uuid
+  proofUrl       String
+  proofStorageId String
+  createdAt      DateTime @default(now()) @db.Timestamptz
+
+  branchOrder BranchOrder @relation(fields: [branchOrderId], references: [branchOrderId], onDelete: Cascade)
+  courier     Courier     @relation(fields: [courierId], references: [id], onDelete: Restrict)
+
+  @@index([branchOrderId, createdAt])
+  @@index([courierId, createdAt])
 }
 
 model OrderItem {
@@ -841,12 +884,15 @@ model D_Company {
   name            String
   address         String
   phoneNumber     String
+  ownerUserId     String? @unique @map("owner_user_id") @db.Uuid
   isVerified      Boolean @default(false)
   isBanned        Boolean @default(false)
   balance         Int     @default(0)
 
+  owner        User?                        @relation("DeliveryCompanyOwner", fields: [ownerUserId], references: [id], onDelete: SetNull)
   couriers     Courier[]
   orders       BranchOrder[]
+  invitations  StaffInvitation[]
   transactions DeliveryCompanyTransaction[]
 }
 
@@ -869,6 +915,7 @@ model DeliveryCompanyTransaction {
 
 model Courier {
   id                String             @id @default(uuid()) @db.Uuid
+  userId            String?            @unique @map("user_id") @db.Uuid
   photo_url         String
   photo_id          String
   phoneNumber       String
@@ -876,10 +923,14 @@ model Courier {
   plateNumber       String
   isVerified        Boolean            @default(false)
   isBanned          Boolean            @default(false)
+  isActive          Boolean            @default(true) @map("is_active")
   deliveryCompanyId String             @db.Uuid // was "delieveryCId" + @unique (allowed only 1 courier per company)
 
-  deliveryCompany D_Company     @relation(fields: [deliveryCompanyId], references: [deliveryCompany])
+  user            User?           @relation(fields: [userId], references: [id], onDelete: SetNull)
+  deliveryCompany D_Company       @relation(fields: [deliveryCompanyId], references: [deliveryCompany])
   orders          BranchOrder[]
+  proofs          DeliveryProof[]
 
   @@index([deliveryCompanyId])
+  @@index([deliveryCompanyId, isActive])
 }

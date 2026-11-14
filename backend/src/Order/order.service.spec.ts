@@ -1,23 +1,17 @@
 import { BadRequestException, ForbiddenException } from '@nestjs/common';
 import { BranchRole, orderStatus, Role } from '../generated/prisma';
-import { AuthUser } from '../common/decorators/Current-user-decorator';
+import type { AuthUser } from '../common/decorators/Current-user-decorator';
+import { OrderService } from './order.service';
+import { PrismaService } from '../utils/prisma/prisma.service';
 
 jest.mock('../User/user.service', () => ({
   UserService: class UserService {},
 }));
 
-const { OrderService } = require('./order.service') as {
-  OrderService: new (
-    prisma: unknown,
-    socket: unknown,
-  ) => {
-    updateBranchOrderStatus(
-      actor: AuthUser,
-      branchOrderId: string,
-      status: orderStatus,
-    ): Promise<unknown>;
-  };
-};
+const runTransaction = (transaction: unknown) =>
+  jest.fn((callback: (tx: unknown) => Promise<unknown>) =>
+    callback(transaction),
+  );
 
 describe('OrderService.updateBranchOrderStatus', () => {
   const actor: AuthUser = {
@@ -57,15 +51,21 @@ describe('OrderService.updateBranchOrderStatus', () => {
           },
         }),
       },
+      branchOrderStatusHistory: {
+        create: jest.fn().mockResolvedValue({}),
+      },
     };
     const prismaService = {
       prisma: {
-        $transaction: jest.fn((callback) => callback(tx)),
+        $transaction: runTransaction(tx),
       },
     };
     const socket = { notifyBranchOrderUpdated: jest.fn() };
     return {
-      service: new OrderService(prismaService, socket),
+      service: new OrderService(
+        prismaService as unknown as PrismaService,
+        socket as never,
+      ),
       tx,
       socket,
     };
@@ -123,5 +123,230 @@ describe('OrderService.updateBranchOrderStatus', () => {
         orderStatus.packing,
       ),
     ).rejects.toBeInstanceOf(ForbiddenException);
+  });
+
+  it('hands a ready branch order to the selected verified delivery company', async () => {
+    const tx = {
+      branchOrder: {
+        findFirst: jest.fn().mockResolvedValue({
+          branchOrderId: 'branch-order-1',
+          parentOrderId: 'parent-order-1',
+          brandBranchId: 'branch-1',
+          brandId: 'brand-1',
+          status: orderStatus.packing,
+        }),
+        updateMany: jest.fn().mockResolvedValue({ count: 1 }),
+      },
+      branchStaff: {
+        findUnique: jest.fn().mockResolvedValue({
+          isActive: true,
+          role: BranchRole.manager,
+          branch: {
+            brandId: 'brand-1',
+            isActive: true,
+            deletedAt: null,
+          },
+        }),
+      },
+      d_Company: {
+        findFirst: jest.fn().mockResolvedValue({
+          deliveryCompany: 'company-1',
+          isVerified: true,
+          isBanned: false,
+        }),
+      },
+      branchOrderStatusHistory: {
+        create: jest.fn().mockResolvedValue({}),
+      },
+    };
+    const prismaService = {
+      prisma: {
+        $transaction: runTransaction(tx),
+      },
+    };
+    const socket = { notifyBranchOrderUpdated: jest.fn() };
+    const service = new OrderService(
+      prismaService as unknown as PrismaService,
+      socket as never,
+    );
+
+    await service.updateBranchOrderStatus(
+      actor,
+      'branch-order-1',
+      orderStatus.readytoship,
+      'company-1',
+    );
+
+    expect(tx.d_Company.findFirst).toHaveBeenCalledWith({
+      where: {
+        deliveryCompany: 'company-1',
+        isVerified: true,
+        isBanned: false,
+      },
+      select: { deliveryCompany: true },
+    });
+    expect(tx.branchOrder.updateMany).toHaveBeenCalledWith({
+      where: {
+        branchOrderId: 'branch-order-1',
+        brandBranchId: 'branch-1',
+        status: orderStatus.packing,
+      },
+      data: {
+        status: orderStatus.readytoship,
+        deliveryCompanyId: 'company-1',
+      },
+    });
+  });
+
+  it('allows only the assigned courier to start delivery', async () => {
+    const courierActor: AuthUser = {
+      sub: 'courier-user-1',
+      role: Role.courier,
+    };
+    const tx = {
+      branchOrder: {
+        findFirst: jest.fn().mockResolvedValue({
+          branchOrderId: 'branch-order-1',
+          parentOrderId: 'parent-order-1',
+          brandBranchId: 'branch-1',
+          brandId: 'brand-1',
+          deliveryCompanyId: 'company-1',
+          courierId: 'courier-1',
+          status: orderStatus.readytoship,
+        }),
+        updateMany: jest.fn().mockResolvedValue({ count: 1 }),
+      },
+      courier: {
+        findFirst: jest.fn().mockResolvedValue({
+          id: 'courier-1',
+          deliveryCompanyId: 'company-1',
+          isVerified: true,
+          isBanned: false,
+          isActive: true,
+        }),
+      },
+      branchOrderStatusHistory: { create: jest.fn().mockResolvedValue({}) },
+    };
+    const prismaService = {
+      prisma: {
+        $transaction: runTransaction(tx),
+      },
+    };
+    const socket = { notifyBranchOrderUpdated: jest.fn() };
+    const service = new OrderService(
+      prismaService as unknown as PrismaService,
+      socket as never,
+    );
+
+    await service.updateBranchOrderStatus(
+      courierActor,
+      'branch-order-1',
+      orderStatus.shipping,
+    );
+
+    expect(tx.branchOrder.updateMany).toHaveBeenCalledWith({
+      where: {
+        branchOrderId: 'branch-order-1',
+        status: orderStatus.readytoship,
+        deliveryCompanyId: 'company-1',
+        courierId: 'courier-1',
+      },
+      data: { status: orderStatus.shipping },
+    });
+    expect(tx.branchOrderStatusHistory.create).toHaveBeenCalledWith({
+      data: {
+        branchOrderId: 'branch-order-1',
+        fromStatus: orderStatus.readytoship,
+        toStatus: orderStatus.shipping,
+        changedByUserId: courierActor.sub,
+        changedByRole: Role.courier,
+        metadata: undefined,
+      },
+    });
+  });
+
+  it('does not allow an unassigned courier to update a delivery order', async () => {
+    const courierActor: AuthUser = {
+      sub: 'courier-user-2',
+      role: Role.courier,
+    };
+    const tx = {
+      branchOrder: {
+        findFirst: jest.fn().mockResolvedValue({
+          branchOrderId: 'branch-order-1',
+          status: orderStatus.readytoship,
+          deliveryCompanyId: 'company-1',
+          courierId: 'courier-1',
+        }),
+        updateMany: jest.fn().mockResolvedValue({ count: 1 }),
+      },
+      courier: { findFirst: jest.fn().mockResolvedValue(null) },
+    };
+    const prismaService = {
+      prisma: {
+        $transaction: runTransaction(tx),
+      },
+    };
+    const service = new OrderService(
+      prismaService as unknown as PrismaService,
+      { notifyBranchOrderUpdated: jest.fn() } as never,
+    );
+
+    await expect(
+      service.updateBranchOrderStatus(
+        courierActor,
+        'branch-order-1',
+        orderStatus.shipping,
+      ),
+    ).rejects.toBeInstanceOf(ForbiddenException);
+
+    expect(tx.branchOrder.updateMany).not.toHaveBeenCalled();
+  });
+
+  it('requires delivery proof before a courier marks an order delivered', async () => {
+    const courierActor: AuthUser = {
+      sub: 'courier-user-1',
+      role: Role.courier,
+    };
+    const tx = {
+      branchOrder: {
+        findFirst: jest.fn().mockResolvedValue({
+          branchOrderId: 'branch-order-1',
+          status: orderStatus.delivering,
+          deliveryCompanyId: 'company-1',
+          courierId: 'courier-1',
+        }),
+        updateMany: jest.fn().mockResolvedValue({ count: 1 }),
+      },
+      courier: {
+        findFirst: jest.fn().mockResolvedValue({
+          id: 'courier-1',
+          deliveryCompanyId: 'company-1',
+          isVerified: true,
+          isBanned: false,
+          isActive: true,
+        }),
+      },
+      deliveryProof: { findFirst: jest.fn().mockResolvedValue(null) },
+    };
+    const prismaService = {
+      prisma: {
+        $transaction: runTransaction(tx),
+      },
+    };
+    const service = new OrderService(
+      prismaService as unknown as PrismaService,
+      { notifyBranchOrderUpdated: jest.fn() } as never,
+    );
+
+    await expect(
+      service.updateBranchOrderStatus(
+        courierActor,
+        'branch-order-1',
+        orderStatus.delivered,
+      ),
+    ).rejects.toBeInstanceOf(BadRequestException);
+
+    expect(tx.branchOrder.updateMany).not.toHaveBeenCalled();
   });
 });

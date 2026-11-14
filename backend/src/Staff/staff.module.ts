@@ -11,5 +11,6 @@ import { StaffService } from './staff.service';
   imports: [ConfigModule, PrismaModule, MailModule],
   controllers: [StaffController],
   providers: [StaffService, AuthGuard, RolesGuard],
+  exports: [StaffService],
 })
 export class StaffModule {}

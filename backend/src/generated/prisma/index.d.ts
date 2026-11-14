@@ -159,6 +159,16 @@ export type ParentOrder = $Result.DefaultSelection<Prisma.$ParentOrderPayload>
  */
 export type BranchOrder = $Result.DefaultSelection<Prisma.$BranchOrderPayload>
 /**
+ * Model BranchOrderStatusHistory
+ * 
+ */
+export type BranchOrderStatusHistory = $Result.DefaultSelection<Prisma.$BranchOrderStatusHistoryPayload>
+/**
+ * Model DeliveryProof
+ * 
+ */
+export type DeliveryProof = $Result.DefaultSelection<Prisma.$DeliveryProofPayload>
+/**
  * Model OrderItem
  * 
  */
@@ -892,6 +902,26 @@ export class PrismaClient<
   get branchOrder(): Prisma.BranchOrderDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.branchOrderStatusHistory`: Exposes CRUD operations for the **BranchOrderStatusHistory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BranchOrderStatusHistories
+    * const branchOrderStatusHistories = await prisma.branchOrderStatusHistory.findMany()
+    * ```
+    */
+  get branchOrderStatusHistory(): Prisma.BranchOrderStatusHistoryDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.deliveryProof`: Exposes CRUD operations for the **DeliveryProof** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DeliveryProofs
+    * const deliveryProofs = await prisma.deliveryProof.findMany()
+    * ```
+    */
+  get deliveryProof(): Prisma.DeliveryProofDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.orderItem`: Exposes CRUD operations for the **OrderItem** model.
     * Example usage:
     * ```ts
@@ -1406,6 +1436,8 @@ export namespace Prisma {
     ProductAvailability: 'ProductAvailability',
     ParentOrder: 'ParentOrder',
     BranchOrder: 'BranchOrder',
+    BranchOrderStatusHistory: 'BranchOrderStatusHistory',
+    DeliveryProof: 'DeliveryProof',
     OrderItem: 'OrderItem',
     D_Company: 'D_Company',
     DeliveryCompanyTransaction: 'DeliveryCompanyTransaction',
@@ -1425,7 +1457,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "address" | "brand" | "brandTransaction" | "branchStaff" | "brandBranch" | "brandDocument" | "staffInvitation" | "brandSocialLink" | "brandFollower" | "category" | "product" | "variant" | "branchVariant" | "review" | "cart" | "cartProducts" | "checkoutSession" | "wishlist" | "inventory" | "inventoryStock" | "stockLedger" | "stockTransfer" | "stockTransferItem" | "reservation" | "variantAvailability" | "productAvailability" | "parentOrder" | "branchOrder" | "orderItem" | "d_Company" | "deliveryCompanyTransaction" | "courier"
+      modelProps: "user" | "address" | "brand" | "brandTransaction" | "branchStaff" | "brandBranch" | "brandDocument" | "staffInvitation" | "brandSocialLink" | "brandFollower" | "category" | "product" | "variant" | "branchVariant" | "review" | "cart" | "cartProducts" | "checkoutSession" | "wishlist" | "inventory" | "inventoryStock" | "stockLedger" | "stockTransfer" | "stockTransferItem" | "reservation" | "variantAvailability" | "productAvailability" | "parentOrder" | "branchOrder" | "branchOrderStatusHistory" | "deliveryProof" | "orderItem" | "d_Company" | "deliveryCompanyTransaction" | "courier"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3575,6 +3607,154 @@ export namespace Prisma {
           }
         }
       }
+      BranchOrderStatusHistory: {
+        payload: Prisma.$BranchOrderStatusHistoryPayload<ExtArgs>
+        fields: Prisma.BranchOrderStatusHistoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BranchOrderStatusHistoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchOrderStatusHistoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BranchOrderStatusHistoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchOrderStatusHistoryPayload>
+          }
+          findFirst: {
+            args: Prisma.BranchOrderStatusHistoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchOrderStatusHistoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BranchOrderStatusHistoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchOrderStatusHistoryPayload>
+          }
+          findMany: {
+            args: Prisma.BranchOrderStatusHistoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchOrderStatusHistoryPayload>[]
+          }
+          create: {
+            args: Prisma.BranchOrderStatusHistoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchOrderStatusHistoryPayload>
+          }
+          createMany: {
+            args: Prisma.BranchOrderStatusHistoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BranchOrderStatusHistoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchOrderStatusHistoryPayload>[]
+          }
+          delete: {
+            args: Prisma.BranchOrderStatusHistoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchOrderStatusHistoryPayload>
+          }
+          update: {
+            args: Prisma.BranchOrderStatusHistoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchOrderStatusHistoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.BranchOrderStatusHistoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BranchOrderStatusHistoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.BranchOrderStatusHistoryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchOrderStatusHistoryPayload>[]
+          }
+          upsert: {
+            args: Prisma.BranchOrderStatusHistoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchOrderStatusHistoryPayload>
+          }
+          aggregate: {
+            args: Prisma.BranchOrderStatusHistoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBranchOrderStatusHistory>
+          }
+          groupBy: {
+            args: Prisma.BranchOrderStatusHistoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BranchOrderStatusHistoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BranchOrderStatusHistoryCountArgs<ExtArgs>
+            result: $Utils.Optional<BranchOrderStatusHistoryCountAggregateOutputType> | number
+          }
+        }
+      }
+      DeliveryProof: {
+        payload: Prisma.$DeliveryProofPayload<ExtArgs>
+        fields: Prisma.DeliveryProofFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DeliveryProofFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryProofPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DeliveryProofFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryProofPayload>
+          }
+          findFirst: {
+            args: Prisma.DeliveryProofFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryProofPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DeliveryProofFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryProofPayload>
+          }
+          findMany: {
+            args: Prisma.DeliveryProofFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryProofPayload>[]
+          }
+          create: {
+            args: Prisma.DeliveryProofCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryProofPayload>
+          }
+          createMany: {
+            args: Prisma.DeliveryProofCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DeliveryProofCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryProofPayload>[]
+          }
+          delete: {
+            args: Prisma.DeliveryProofDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryProofPayload>
+          }
+          update: {
+            args: Prisma.DeliveryProofUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryProofPayload>
+          }
+          deleteMany: {
+            args: Prisma.DeliveryProofDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DeliveryProofUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DeliveryProofUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryProofPayload>[]
+          }
+          upsert: {
+            args: Prisma.DeliveryProofUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryProofPayload>
+          }
+          aggregate: {
+            args: Prisma.DeliveryProofAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDeliveryProof>
+          }
+          groupBy: {
+            args: Prisma.DeliveryProofGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DeliveryProofGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DeliveryProofCountArgs<ExtArgs>
+            result: $Utils.Optional<DeliveryProofCountAggregateOutputType> | number
+          }
+        }
+      }
       OrderItem: {
         payload: Prisma.$OrderItemPayload<ExtArgs>
         fields: Prisma.OrderItemFieldRefs
@@ -4023,6 +4203,8 @@ export namespace Prisma {
     productAvailability?: ProductAvailabilityOmit
     parentOrder?: ParentOrderOmit
     branchOrder?: BranchOrderOmit
+    branchOrderStatusHistory?: BranchOrderStatusHistoryOmit
+    deliveryProof?: DeliveryProofOmit
     orderItem?: OrderItemOmit
     d_Company?: D_CompanyOmit
     deliveryCompanyTransaction?: DeliveryCompanyTransactionOmit
@@ -4115,6 +4297,7 @@ export namespace Prisma {
     branchStaffs: number
     createdStaffInvitations: number
     checkoutSessions: number
+    branchOrderStatusChanges: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4126,6 +4309,7 @@ export namespace Prisma {
     branchStaffs?: boolean | UserCountOutputTypeCountBranchStaffsArgs
     createdStaffInvitations?: boolean | UserCountOutputTypeCountCreatedStaffInvitationsArgs
     checkoutSessions?: boolean | UserCountOutputTypeCountCheckoutSessionsArgs
+    branchOrderStatusChanges?: boolean | UserCountOutputTypeCountBranchOrderStatusChangesArgs
   }
 
   // Custom InputTypes
@@ -4193,6 +4377,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountCheckoutSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CheckoutSessionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountBranchOrderStatusChangesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BranchOrderStatusHistoryWhereInput
   }
 
 
@@ -4773,10 +4964,14 @@ export namespace Prisma {
 
   export type BranchOrderCountOutputType = {
     orderItems: number
+    statusHistory: number
+    deliveryProofs: number
   }
 
   export type BranchOrderCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     orderItems?: boolean | BranchOrderCountOutputTypeCountOrderItemsArgs
+    statusHistory?: boolean | BranchOrderCountOutputTypeCountStatusHistoryArgs
+    deliveryProofs?: boolean | BranchOrderCountOutputTypeCountDeliveryProofsArgs
   }
 
   // Custom InputTypes
@@ -4797,6 +4992,20 @@ export namespace Prisma {
     where?: OrderItemWhereInput
   }
 
+  /**
+   * BranchOrderCountOutputType without action
+   */
+  export type BranchOrderCountOutputTypeCountStatusHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BranchOrderStatusHistoryWhereInput
+  }
+
+  /**
+   * BranchOrderCountOutputType without action
+   */
+  export type BranchOrderCountOutputTypeCountDeliveryProofsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeliveryProofWhereInput
+  }
+
 
   /**
    * Count Type D_CompanyCountOutputType
@@ -4805,12 +5014,14 @@ export namespace Prisma {
   export type D_CompanyCountOutputType = {
     couriers: number
     orders: number
+    invitations: number
     transactions: number
   }
 
   export type D_CompanyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     couriers?: boolean | D_CompanyCountOutputTypeCountCouriersArgs
     orders?: boolean | D_CompanyCountOutputTypeCountOrdersArgs
+    invitations?: boolean | D_CompanyCountOutputTypeCountInvitationsArgs
     transactions?: boolean | D_CompanyCountOutputTypeCountTransactionsArgs
   }
 
@@ -4842,6 +5053,13 @@ export namespace Prisma {
   /**
    * D_CompanyCountOutputType without action
    */
+  export type D_CompanyCountOutputTypeCountInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StaffInvitationWhereInput
+  }
+
+  /**
+   * D_CompanyCountOutputType without action
+   */
   export type D_CompanyCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DeliveryCompanyTransactionWhereInput
   }
@@ -4853,10 +5071,12 @@ export namespace Prisma {
 
   export type CourierCountOutputType = {
     orders: number
+    proofs: number
   }
 
   export type CourierCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     orders?: boolean | CourierCountOutputTypeCountOrdersArgs
+    proofs?: boolean | CourierCountOutputTypeCountProofsArgs
   }
 
   // Custom InputTypes
@@ -4875,6 +5095,13 @@ export namespace Prisma {
    */
   export type CourierCountOutputTypeCountOrdersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BranchOrderWhereInput
+  }
+
+  /**
+   * CourierCountOutputType without action
+   */
+  export type CourierCountOutputTypeCountProofsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeliveryProofWhereInput
   }
 
 
@@ -5270,6 +5497,9 @@ export namespace Prisma {
     branchStaffs?: boolean | User$branchStaffsArgs<ExtArgs>
     createdStaffInvitations?: boolean | User$createdStaffInvitationsArgs<ExtArgs>
     checkoutSessions?: boolean | User$checkoutSessionsArgs<ExtArgs>
+    deliveryCompany?: boolean | User$deliveryCompanyArgs<ExtArgs>
+    courierProfile?: boolean | User$courierProfileArgs<ExtArgs>
+    branchOrderStatusChanges?: boolean | User$branchOrderStatusChangesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -5385,6 +5615,9 @@ export namespace Prisma {
     branchStaffs?: boolean | User$branchStaffsArgs<ExtArgs>
     createdStaffInvitations?: boolean | User$createdStaffInvitationsArgs<ExtArgs>
     checkoutSessions?: boolean | User$checkoutSessionsArgs<ExtArgs>
+    deliveryCompany?: boolean | User$deliveryCompanyArgs<ExtArgs>
+    courierProfile?: boolean | User$courierProfileArgs<ExtArgs>
+    branchOrderStatusChanges?: boolean | User$branchOrderStatusChangesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5415,6 +5648,9 @@ export namespace Prisma {
       branchStaffs: Prisma.$branchStaffPayload<ExtArgs>[]
       createdStaffInvitations: Prisma.$StaffInvitationPayload<ExtArgs>[]
       checkoutSessions: Prisma.$CheckoutSessionPayload<ExtArgs>[]
+      deliveryCompany: Prisma.$D_CompanyPayload<ExtArgs> | null
+      courierProfile: Prisma.$CourierPayload<ExtArgs> | null
+      branchOrderStatusChanges: Prisma.$BranchOrderStatusHistoryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5852,6 +6088,9 @@ export namespace Prisma {
     branchStaffs<T extends User$branchStaffsArgs<ExtArgs> = {}>(args?: Subset<T, User$branchStaffsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$branchStaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     createdStaffInvitations<T extends User$createdStaffInvitationsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdStaffInvitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     checkoutSessions<T extends User$checkoutSessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$checkoutSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheckoutSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    deliveryCompany<T extends User$deliveryCompanyArgs<ExtArgs> = {}>(args?: Subset<T, User$deliveryCompanyArgs<ExtArgs>>): Prisma__D_CompanyClient<$Result.GetResult<Prisma.$D_CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    courierProfile<T extends User$courierProfileArgs<ExtArgs> = {}>(args?: Subset<T, User$courierProfileArgs<ExtArgs>>): Prisma__CourierClient<$Result.GetResult<Prisma.$CourierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    branchOrderStatusChanges<T extends User$branchOrderStatusChangesArgs<ExtArgs> = {}>(args?: Subset<T, User$branchOrderStatusChangesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BranchOrderStatusHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6612,6 +6851,68 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CheckoutSessionScalarFieldEnum | CheckoutSessionScalarFieldEnum[]
+  }
+
+  /**
+   * User.deliveryCompany
+   */
+  export type User$deliveryCompanyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the D_Company
+     */
+    select?: D_CompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the D_Company
+     */
+    omit?: D_CompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: D_CompanyInclude<ExtArgs> | null
+    where?: D_CompanyWhereInput
+  }
+
+  /**
+   * User.courierProfile
+   */
+  export type User$courierProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Courier
+     */
+    select?: CourierSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Courier
+     */
+    omit?: CourierOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourierInclude<ExtArgs> | null
+    where?: CourierWhereInput
+  }
+
+  /**
+   * User.branchOrderStatusChanges
+   */
+  export type User$branchOrderStatusChangesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BranchOrderStatusHistory
+     */
+    select?: BranchOrderStatusHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BranchOrderStatusHistory
+     */
+    omit?: BranchOrderStatusHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchOrderStatusHistoryInclude<ExtArgs> | null
+    where?: BranchOrderStatusHistoryWhereInput
+    orderBy?: BranchOrderStatusHistoryOrderByWithRelationInput | BranchOrderStatusHistoryOrderByWithRelationInput[]
+    cursor?: BranchOrderStatusHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BranchOrderStatusHistoryScalarFieldEnum | BranchOrderStatusHistoryScalarFieldEnum[]
   }
 
   /**
@@ -14402,6 +14703,7 @@ export namespace Prisma {
     role: $Enums.Role | null
     brandId: string | null
     branchId: string | null
+    deliveryCompanyId: string | null
     tokenHash: string | null
     expiresAt: Date | null
     acceptedAt: Date | null
@@ -14416,6 +14718,7 @@ export namespace Prisma {
     role: $Enums.Role | null
     brandId: string | null
     branchId: string | null
+    deliveryCompanyId: string | null
     tokenHash: string | null
     expiresAt: Date | null
     acceptedAt: Date | null
@@ -14430,6 +14733,8 @@ export namespace Prisma {
     role: number
     brandId: number
     branchId: number
+    deliveryCompanyId: number
+    courierProfile: number
     tokenHash: number
     expiresAt: number
     acceptedAt: number
@@ -14446,6 +14751,7 @@ export namespace Prisma {
     role?: true
     brandId?: true
     branchId?: true
+    deliveryCompanyId?: true
     tokenHash?: true
     expiresAt?: true
     acceptedAt?: true
@@ -14460,6 +14766,7 @@ export namespace Prisma {
     role?: true
     brandId?: true
     branchId?: true
+    deliveryCompanyId?: true
     tokenHash?: true
     expiresAt?: true
     acceptedAt?: true
@@ -14474,6 +14781,8 @@ export namespace Prisma {
     role?: true
     brandId?: true
     branchId?: true
+    deliveryCompanyId?: true
+    courierProfile?: true
     tokenHash?: true
     expiresAt?: true
     acceptedAt?: true
@@ -14561,6 +14870,8 @@ export namespace Prisma {
     role: $Enums.Role
     brandId: string | null
     branchId: string | null
+    deliveryCompanyId: string | null
+    courierProfile: JsonValue | null
     tokenHash: string
     expiresAt: Date
     acceptedAt: Date | null
@@ -14592,6 +14903,8 @@ export namespace Prisma {
     role?: boolean
     brandId?: boolean
     branchId?: boolean
+    deliveryCompanyId?: boolean
+    courierProfile?: boolean
     tokenHash?: boolean
     expiresAt?: boolean
     acceptedAt?: boolean
@@ -14600,6 +14913,7 @@ export namespace Prisma {
     createdAt?: boolean
     brand?: boolean | StaffInvitation$brandArgs<ExtArgs>
     branch?: boolean | StaffInvitation$branchArgs<ExtArgs>
+    deliveryCompany?: boolean | StaffInvitation$deliveryCompanyArgs<ExtArgs>
     creator?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["staffInvitation"]>
 
@@ -14609,6 +14923,8 @@ export namespace Prisma {
     role?: boolean
     brandId?: boolean
     branchId?: boolean
+    deliveryCompanyId?: boolean
+    courierProfile?: boolean
     tokenHash?: boolean
     expiresAt?: boolean
     acceptedAt?: boolean
@@ -14617,6 +14933,7 @@ export namespace Prisma {
     createdAt?: boolean
     brand?: boolean | StaffInvitation$brandArgs<ExtArgs>
     branch?: boolean | StaffInvitation$branchArgs<ExtArgs>
+    deliveryCompany?: boolean | StaffInvitation$deliveryCompanyArgs<ExtArgs>
     creator?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["staffInvitation"]>
 
@@ -14626,6 +14943,8 @@ export namespace Prisma {
     role?: boolean
     brandId?: boolean
     branchId?: boolean
+    deliveryCompanyId?: boolean
+    courierProfile?: boolean
     tokenHash?: boolean
     expiresAt?: boolean
     acceptedAt?: boolean
@@ -14634,6 +14953,7 @@ export namespace Prisma {
     createdAt?: boolean
     brand?: boolean | StaffInvitation$brandArgs<ExtArgs>
     branch?: boolean | StaffInvitation$branchArgs<ExtArgs>
+    deliveryCompany?: boolean | StaffInvitation$deliveryCompanyArgs<ExtArgs>
     creator?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["staffInvitation"]>
 
@@ -14643,6 +14963,8 @@ export namespace Prisma {
     role?: boolean
     brandId?: boolean
     branchId?: boolean
+    deliveryCompanyId?: boolean
+    courierProfile?: boolean
     tokenHash?: boolean
     expiresAt?: boolean
     acceptedAt?: boolean
@@ -14651,20 +14973,23 @@ export namespace Prisma {
     createdAt?: boolean
   }
 
-  export type StaffInvitationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "role" | "brandId" | "branchId" | "tokenHash" | "expiresAt" | "acceptedAt" | "revokedAt" | "createdById" | "createdAt", ExtArgs["result"]["staffInvitation"]>
+  export type StaffInvitationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "role" | "brandId" | "branchId" | "deliveryCompanyId" | "courierProfile" | "tokenHash" | "expiresAt" | "acceptedAt" | "revokedAt" | "createdById" | "createdAt", ExtArgs["result"]["staffInvitation"]>
   export type StaffInvitationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     brand?: boolean | StaffInvitation$brandArgs<ExtArgs>
     branch?: boolean | StaffInvitation$branchArgs<ExtArgs>
+    deliveryCompany?: boolean | StaffInvitation$deliveryCompanyArgs<ExtArgs>
     creator?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type StaffInvitationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     brand?: boolean | StaffInvitation$brandArgs<ExtArgs>
     branch?: boolean | StaffInvitation$branchArgs<ExtArgs>
+    deliveryCompany?: boolean | StaffInvitation$deliveryCompanyArgs<ExtArgs>
     creator?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type StaffInvitationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     brand?: boolean | StaffInvitation$brandArgs<ExtArgs>
     branch?: boolean | StaffInvitation$branchArgs<ExtArgs>
+    deliveryCompany?: boolean | StaffInvitation$deliveryCompanyArgs<ExtArgs>
     creator?: boolean | UserDefaultArgs<ExtArgs>
   }
 
@@ -14673,6 +14998,7 @@ export namespace Prisma {
     objects: {
       brand: Prisma.$BrandPayload<ExtArgs> | null
       branch: Prisma.$BrandBranchPayload<ExtArgs> | null
+      deliveryCompany: Prisma.$D_CompanyPayload<ExtArgs> | null
       creator: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -14681,6 +15007,8 @@ export namespace Prisma {
       role: $Enums.Role
       brandId: string | null
       branchId: string | null
+      deliveryCompanyId: string | null
+      courierProfile: Prisma.JsonValue | null
       tokenHash: string
       expiresAt: Date
       acceptedAt: Date | null
@@ -15083,6 +15411,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     brand<T extends StaffInvitation$brandArgs<ExtArgs> = {}>(args?: Subset<T, StaffInvitation$brandArgs<ExtArgs>>): Prisma__BrandClient<$Result.GetResult<Prisma.$BrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     branch<T extends StaffInvitation$branchArgs<ExtArgs> = {}>(args?: Subset<T, StaffInvitation$branchArgs<ExtArgs>>): Prisma__BrandBranchClient<$Result.GetResult<Prisma.$BrandBranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    deliveryCompany<T extends StaffInvitation$deliveryCompanyArgs<ExtArgs> = {}>(args?: Subset<T, StaffInvitation$deliveryCompanyArgs<ExtArgs>>): Prisma__D_CompanyClient<$Result.GetResult<Prisma.$D_CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     creator<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -15118,6 +15447,8 @@ export namespace Prisma {
     readonly role: FieldRef<"StaffInvitation", 'Role'>
     readonly brandId: FieldRef<"StaffInvitation", 'String'>
     readonly branchId: FieldRef<"StaffInvitation", 'String'>
+    readonly deliveryCompanyId: FieldRef<"StaffInvitation", 'String'>
+    readonly courierProfile: FieldRef<"StaffInvitation", 'Json'>
     readonly tokenHash: FieldRef<"StaffInvitation", 'String'>
     readonly expiresAt: FieldRef<"StaffInvitation", 'DateTime'>
     readonly acceptedAt: FieldRef<"StaffInvitation", 'DateTime'>
@@ -15560,6 +15891,25 @@ export namespace Prisma {
      */
     include?: BrandBranchInclude<ExtArgs> | null
     where?: BrandBranchWhereInput
+  }
+
+  /**
+   * StaffInvitation.deliveryCompany
+   */
+  export type StaffInvitation$deliveryCompanyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the D_Company
+     */
+    select?: D_CompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the D_Company
+     */
+    omit?: D_CompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: D_CompanyInclude<ExtArgs> | null
+    where?: D_CompanyWhereInput
   }
 
   /**
@@ -39044,6 +39394,8 @@ export namespace Prisma {
     deliveryCompany?: boolean | BranchOrder$deliveryCompanyArgs<ExtArgs>
     courier?: boolean | BranchOrder$courierArgs<ExtArgs>
     orderItems?: boolean | BranchOrder$orderItemsArgs<ExtArgs>
+    statusHistory?: boolean | BranchOrder$statusHistoryArgs<ExtArgs>
+    deliveryProofs?: boolean | BranchOrder$deliveryProofsArgs<ExtArgs>
     _count?: boolean | BranchOrderCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["branchOrder"]>
 
@@ -39116,6 +39468,8 @@ export namespace Prisma {
     deliveryCompany?: boolean | BranchOrder$deliveryCompanyArgs<ExtArgs>
     courier?: boolean | BranchOrder$courierArgs<ExtArgs>
     orderItems?: boolean | BranchOrder$orderItemsArgs<ExtArgs>
+    statusHistory?: boolean | BranchOrder$statusHistoryArgs<ExtArgs>
+    deliveryProofs?: boolean | BranchOrder$deliveryProofsArgs<ExtArgs>
     _count?: boolean | BranchOrderCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BranchOrderIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -39142,6 +39496,8 @@ export namespace Prisma {
       deliveryCompany: Prisma.$D_CompanyPayload<ExtArgs> | null
       courier: Prisma.$CourierPayload<ExtArgs> | null
       orderItems: Prisma.$OrderItemPayload<ExtArgs>[]
+      statusHistory: Prisma.$BranchOrderStatusHistoryPayload<ExtArgs>[]
+      deliveryProofs: Prisma.$DeliveryProofPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       branchOrderId: string
@@ -39558,6 +39914,8 @@ export namespace Prisma {
     deliveryCompany<T extends BranchOrder$deliveryCompanyArgs<ExtArgs> = {}>(args?: Subset<T, BranchOrder$deliveryCompanyArgs<ExtArgs>>): Prisma__D_CompanyClient<$Result.GetResult<Prisma.$D_CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     courier<T extends BranchOrder$courierArgs<ExtArgs> = {}>(args?: Subset<T, BranchOrder$courierArgs<ExtArgs>>): Prisma__CourierClient<$Result.GetResult<Prisma.$CourierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     orderItems<T extends BranchOrder$orderItemsArgs<ExtArgs> = {}>(args?: Subset<T, BranchOrder$orderItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    statusHistory<T extends BranchOrder$statusHistoryArgs<ExtArgs> = {}>(args?: Subset<T, BranchOrder$statusHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BranchOrderStatusHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    deliveryProofs<T extends BranchOrder$deliveryProofsArgs<ExtArgs> = {}>(args?: Subset<T, BranchOrder$deliveryProofsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliveryProofPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -40064,6 +40422,54 @@ export namespace Prisma {
   }
 
   /**
+   * BranchOrder.statusHistory
+   */
+  export type BranchOrder$statusHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BranchOrderStatusHistory
+     */
+    select?: BranchOrderStatusHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BranchOrderStatusHistory
+     */
+    omit?: BranchOrderStatusHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchOrderStatusHistoryInclude<ExtArgs> | null
+    where?: BranchOrderStatusHistoryWhereInput
+    orderBy?: BranchOrderStatusHistoryOrderByWithRelationInput | BranchOrderStatusHistoryOrderByWithRelationInput[]
+    cursor?: BranchOrderStatusHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BranchOrderStatusHistoryScalarFieldEnum | BranchOrderStatusHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * BranchOrder.deliveryProofs
+   */
+  export type BranchOrder$deliveryProofsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryProof
+     */
+    select?: DeliveryProofSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryProof
+     */
+    omit?: DeliveryProofOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryProofInclude<ExtArgs> | null
+    where?: DeliveryProofWhereInput
+    orderBy?: DeliveryProofOrderByWithRelationInput | DeliveryProofOrderByWithRelationInput[]
+    cursor?: DeliveryProofWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DeliveryProofScalarFieldEnum | DeliveryProofScalarFieldEnum[]
+  }
+
+  /**
    * BranchOrder without action
    */
   export type BranchOrderDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -40079,6 +40485,2196 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: BranchOrderInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model BranchOrderStatusHistory
+   */
+
+  export type AggregateBranchOrderStatusHistory = {
+    _count: BranchOrderStatusHistoryCountAggregateOutputType | null
+    _min: BranchOrderStatusHistoryMinAggregateOutputType | null
+    _max: BranchOrderStatusHistoryMaxAggregateOutputType | null
+  }
+
+  export type BranchOrderStatusHistoryMinAggregateOutputType = {
+    id: string | null
+    branchOrderId: string | null
+    fromStatus: $Enums.orderStatus | null
+    toStatus: $Enums.orderStatus | null
+    changedByUserId: string | null
+    changedByRole: $Enums.Role | null
+    createdAt: Date | null
+  }
+
+  export type BranchOrderStatusHistoryMaxAggregateOutputType = {
+    id: string | null
+    branchOrderId: string | null
+    fromStatus: $Enums.orderStatus | null
+    toStatus: $Enums.orderStatus | null
+    changedByUserId: string | null
+    changedByRole: $Enums.Role | null
+    createdAt: Date | null
+  }
+
+  export type BranchOrderStatusHistoryCountAggregateOutputType = {
+    id: number
+    branchOrderId: number
+    fromStatus: number
+    toStatus: number
+    changedByUserId: number
+    changedByRole: number
+    metadata: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type BranchOrderStatusHistoryMinAggregateInputType = {
+    id?: true
+    branchOrderId?: true
+    fromStatus?: true
+    toStatus?: true
+    changedByUserId?: true
+    changedByRole?: true
+    createdAt?: true
+  }
+
+  export type BranchOrderStatusHistoryMaxAggregateInputType = {
+    id?: true
+    branchOrderId?: true
+    fromStatus?: true
+    toStatus?: true
+    changedByUserId?: true
+    changedByRole?: true
+    createdAt?: true
+  }
+
+  export type BranchOrderStatusHistoryCountAggregateInputType = {
+    id?: true
+    branchOrderId?: true
+    fromStatus?: true
+    toStatus?: true
+    changedByUserId?: true
+    changedByRole?: true
+    metadata?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type BranchOrderStatusHistoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BranchOrderStatusHistory to aggregate.
+     */
+    where?: BranchOrderStatusHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BranchOrderStatusHistories to fetch.
+     */
+    orderBy?: BranchOrderStatusHistoryOrderByWithRelationInput | BranchOrderStatusHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BranchOrderStatusHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BranchOrderStatusHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BranchOrderStatusHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BranchOrderStatusHistories
+    **/
+    _count?: true | BranchOrderStatusHistoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BranchOrderStatusHistoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BranchOrderStatusHistoryMaxAggregateInputType
+  }
+
+  export type GetBranchOrderStatusHistoryAggregateType<T extends BranchOrderStatusHistoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateBranchOrderStatusHistory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBranchOrderStatusHistory[P]>
+      : GetScalarType<T[P], AggregateBranchOrderStatusHistory[P]>
+  }
+
+
+
+
+  export type BranchOrderStatusHistoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BranchOrderStatusHistoryWhereInput
+    orderBy?: BranchOrderStatusHistoryOrderByWithAggregationInput | BranchOrderStatusHistoryOrderByWithAggregationInput[]
+    by: BranchOrderStatusHistoryScalarFieldEnum[] | BranchOrderStatusHistoryScalarFieldEnum
+    having?: BranchOrderStatusHistoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BranchOrderStatusHistoryCountAggregateInputType | true
+    _min?: BranchOrderStatusHistoryMinAggregateInputType
+    _max?: BranchOrderStatusHistoryMaxAggregateInputType
+  }
+
+  export type BranchOrderStatusHistoryGroupByOutputType = {
+    id: string
+    branchOrderId: string
+    fromStatus: $Enums.orderStatus | null
+    toStatus: $Enums.orderStatus
+    changedByUserId: string
+    changedByRole: $Enums.Role
+    metadata: JsonValue | null
+    createdAt: Date
+    _count: BranchOrderStatusHistoryCountAggregateOutputType | null
+    _min: BranchOrderStatusHistoryMinAggregateOutputType | null
+    _max: BranchOrderStatusHistoryMaxAggregateOutputType | null
+  }
+
+  type GetBranchOrderStatusHistoryGroupByPayload<T extends BranchOrderStatusHistoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BranchOrderStatusHistoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BranchOrderStatusHistoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BranchOrderStatusHistoryGroupByOutputType[P]>
+            : GetScalarType<T[P], BranchOrderStatusHistoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BranchOrderStatusHistorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    branchOrderId?: boolean
+    fromStatus?: boolean
+    toStatus?: boolean
+    changedByUserId?: boolean
+    changedByRole?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    branchOrder?: boolean | BranchOrderDefaultArgs<ExtArgs>
+    changedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["branchOrderStatusHistory"]>
+
+  export type BranchOrderStatusHistorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    branchOrderId?: boolean
+    fromStatus?: boolean
+    toStatus?: boolean
+    changedByUserId?: boolean
+    changedByRole?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    branchOrder?: boolean | BranchOrderDefaultArgs<ExtArgs>
+    changedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["branchOrderStatusHistory"]>
+
+  export type BranchOrderStatusHistorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    branchOrderId?: boolean
+    fromStatus?: boolean
+    toStatus?: boolean
+    changedByUserId?: boolean
+    changedByRole?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    branchOrder?: boolean | BranchOrderDefaultArgs<ExtArgs>
+    changedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["branchOrderStatusHistory"]>
+
+  export type BranchOrderStatusHistorySelectScalar = {
+    id?: boolean
+    branchOrderId?: boolean
+    fromStatus?: boolean
+    toStatus?: boolean
+    changedByUserId?: boolean
+    changedByRole?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+  }
+
+  export type BranchOrderStatusHistoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "branchOrderId" | "fromStatus" | "toStatus" | "changedByUserId" | "changedByRole" | "metadata" | "createdAt", ExtArgs["result"]["branchOrderStatusHistory"]>
+  export type BranchOrderStatusHistoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    branchOrder?: boolean | BranchOrderDefaultArgs<ExtArgs>
+    changedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type BranchOrderStatusHistoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    branchOrder?: boolean | BranchOrderDefaultArgs<ExtArgs>
+    changedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type BranchOrderStatusHistoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    branchOrder?: boolean | BranchOrderDefaultArgs<ExtArgs>
+    changedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $BranchOrderStatusHistoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BranchOrderStatusHistory"
+    objects: {
+      branchOrder: Prisma.$BranchOrderPayload<ExtArgs>
+      changedBy: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      branchOrderId: string
+      fromStatus: $Enums.orderStatus | null
+      toStatus: $Enums.orderStatus
+      changedByUserId: string
+      changedByRole: $Enums.Role
+      metadata: Prisma.JsonValue | null
+      createdAt: Date
+    }, ExtArgs["result"]["branchOrderStatusHistory"]>
+    composites: {}
+  }
+
+  type BranchOrderStatusHistoryGetPayload<S extends boolean | null | undefined | BranchOrderStatusHistoryDefaultArgs> = $Result.GetResult<Prisma.$BranchOrderStatusHistoryPayload, S>
+
+  type BranchOrderStatusHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BranchOrderStatusHistoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BranchOrderStatusHistoryCountAggregateInputType | true
+    }
+
+  export interface BranchOrderStatusHistoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BranchOrderStatusHistory'], meta: { name: 'BranchOrderStatusHistory' } }
+    /**
+     * Find zero or one BranchOrderStatusHistory that matches the filter.
+     * @param {BranchOrderStatusHistoryFindUniqueArgs} args - Arguments to find a BranchOrderStatusHistory
+     * @example
+     * // Get one BranchOrderStatusHistory
+     * const branchOrderStatusHistory = await prisma.branchOrderStatusHistory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BranchOrderStatusHistoryFindUniqueArgs>(args: SelectSubset<T, BranchOrderStatusHistoryFindUniqueArgs<ExtArgs>>): Prisma__BranchOrderStatusHistoryClient<$Result.GetResult<Prisma.$BranchOrderStatusHistoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BranchOrderStatusHistory that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BranchOrderStatusHistoryFindUniqueOrThrowArgs} args - Arguments to find a BranchOrderStatusHistory
+     * @example
+     * // Get one BranchOrderStatusHistory
+     * const branchOrderStatusHistory = await prisma.branchOrderStatusHistory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BranchOrderStatusHistoryFindUniqueOrThrowArgs>(args: SelectSubset<T, BranchOrderStatusHistoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BranchOrderStatusHistoryClient<$Result.GetResult<Prisma.$BranchOrderStatusHistoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BranchOrderStatusHistory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchOrderStatusHistoryFindFirstArgs} args - Arguments to find a BranchOrderStatusHistory
+     * @example
+     * // Get one BranchOrderStatusHistory
+     * const branchOrderStatusHistory = await prisma.branchOrderStatusHistory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BranchOrderStatusHistoryFindFirstArgs>(args?: SelectSubset<T, BranchOrderStatusHistoryFindFirstArgs<ExtArgs>>): Prisma__BranchOrderStatusHistoryClient<$Result.GetResult<Prisma.$BranchOrderStatusHistoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BranchOrderStatusHistory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchOrderStatusHistoryFindFirstOrThrowArgs} args - Arguments to find a BranchOrderStatusHistory
+     * @example
+     * // Get one BranchOrderStatusHistory
+     * const branchOrderStatusHistory = await prisma.branchOrderStatusHistory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BranchOrderStatusHistoryFindFirstOrThrowArgs>(args?: SelectSubset<T, BranchOrderStatusHistoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__BranchOrderStatusHistoryClient<$Result.GetResult<Prisma.$BranchOrderStatusHistoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BranchOrderStatusHistories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchOrderStatusHistoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BranchOrderStatusHistories
+     * const branchOrderStatusHistories = await prisma.branchOrderStatusHistory.findMany()
+     * 
+     * // Get first 10 BranchOrderStatusHistories
+     * const branchOrderStatusHistories = await prisma.branchOrderStatusHistory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const branchOrderStatusHistoryWithIdOnly = await prisma.branchOrderStatusHistory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BranchOrderStatusHistoryFindManyArgs>(args?: SelectSubset<T, BranchOrderStatusHistoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BranchOrderStatusHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BranchOrderStatusHistory.
+     * @param {BranchOrderStatusHistoryCreateArgs} args - Arguments to create a BranchOrderStatusHistory.
+     * @example
+     * // Create one BranchOrderStatusHistory
+     * const BranchOrderStatusHistory = await prisma.branchOrderStatusHistory.create({
+     *   data: {
+     *     // ... data to create a BranchOrderStatusHistory
+     *   }
+     * })
+     * 
+     */
+    create<T extends BranchOrderStatusHistoryCreateArgs>(args: SelectSubset<T, BranchOrderStatusHistoryCreateArgs<ExtArgs>>): Prisma__BranchOrderStatusHistoryClient<$Result.GetResult<Prisma.$BranchOrderStatusHistoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BranchOrderStatusHistories.
+     * @param {BranchOrderStatusHistoryCreateManyArgs} args - Arguments to create many BranchOrderStatusHistories.
+     * @example
+     * // Create many BranchOrderStatusHistories
+     * const branchOrderStatusHistory = await prisma.branchOrderStatusHistory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BranchOrderStatusHistoryCreateManyArgs>(args?: SelectSubset<T, BranchOrderStatusHistoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many BranchOrderStatusHistories and returns the data saved in the database.
+     * @param {BranchOrderStatusHistoryCreateManyAndReturnArgs} args - Arguments to create many BranchOrderStatusHistories.
+     * @example
+     * // Create many BranchOrderStatusHistories
+     * const branchOrderStatusHistory = await prisma.branchOrderStatusHistory.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many BranchOrderStatusHistories and only return the `id`
+     * const branchOrderStatusHistoryWithIdOnly = await prisma.branchOrderStatusHistory.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BranchOrderStatusHistoryCreateManyAndReturnArgs>(args?: SelectSubset<T, BranchOrderStatusHistoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BranchOrderStatusHistoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a BranchOrderStatusHistory.
+     * @param {BranchOrderStatusHistoryDeleteArgs} args - Arguments to delete one BranchOrderStatusHistory.
+     * @example
+     * // Delete one BranchOrderStatusHistory
+     * const BranchOrderStatusHistory = await prisma.branchOrderStatusHistory.delete({
+     *   where: {
+     *     // ... filter to delete one BranchOrderStatusHistory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BranchOrderStatusHistoryDeleteArgs>(args: SelectSubset<T, BranchOrderStatusHistoryDeleteArgs<ExtArgs>>): Prisma__BranchOrderStatusHistoryClient<$Result.GetResult<Prisma.$BranchOrderStatusHistoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BranchOrderStatusHistory.
+     * @param {BranchOrderStatusHistoryUpdateArgs} args - Arguments to update one BranchOrderStatusHistory.
+     * @example
+     * // Update one BranchOrderStatusHistory
+     * const branchOrderStatusHistory = await prisma.branchOrderStatusHistory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BranchOrderStatusHistoryUpdateArgs>(args: SelectSubset<T, BranchOrderStatusHistoryUpdateArgs<ExtArgs>>): Prisma__BranchOrderStatusHistoryClient<$Result.GetResult<Prisma.$BranchOrderStatusHistoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BranchOrderStatusHistories.
+     * @param {BranchOrderStatusHistoryDeleteManyArgs} args - Arguments to filter BranchOrderStatusHistories to delete.
+     * @example
+     * // Delete a few BranchOrderStatusHistories
+     * const { count } = await prisma.branchOrderStatusHistory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BranchOrderStatusHistoryDeleteManyArgs>(args?: SelectSubset<T, BranchOrderStatusHistoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BranchOrderStatusHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchOrderStatusHistoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BranchOrderStatusHistories
+     * const branchOrderStatusHistory = await prisma.branchOrderStatusHistory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BranchOrderStatusHistoryUpdateManyArgs>(args: SelectSubset<T, BranchOrderStatusHistoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BranchOrderStatusHistories and returns the data updated in the database.
+     * @param {BranchOrderStatusHistoryUpdateManyAndReturnArgs} args - Arguments to update many BranchOrderStatusHistories.
+     * @example
+     * // Update many BranchOrderStatusHistories
+     * const branchOrderStatusHistory = await prisma.branchOrderStatusHistory.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more BranchOrderStatusHistories and only return the `id`
+     * const branchOrderStatusHistoryWithIdOnly = await prisma.branchOrderStatusHistory.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends BranchOrderStatusHistoryUpdateManyAndReturnArgs>(args: SelectSubset<T, BranchOrderStatusHistoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BranchOrderStatusHistoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one BranchOrderStatusHistory.
+     * @param {BranchOrderStatusHistoryUpsertArgs} args - Arguments to update or create a BranchOrderStatusHistory.
+     * @example
+     * // Update or create a BranchOrderStatusHistory
+     * const branchOrderStatusHistory = await prisma.branchOrderStatusHistory.upsert({
+     *   create: {
+     *     // ... data to create a BranchOrderStatusHistory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BranchOrderStatusHistory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BranchOrderStatusHistoryUpsertArgs>(args: SelectSubset<T, BranchOrderStatusHistoryUpsertArgs<ExtArgs>>): Prisma__BranchOrderStatusHistoryClient<$Result.GetResult<Prisma.$BranchOrderStatusHistoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of BranchOrderStatusHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchOrderStatusHistoryCountArgs} args - Arguments to filter BranchOrderStatusHistories to count.
+     * @example
+     * // Count the number of BranchOrderStatusHistories
+     * const count = await prisma.branchOrderStatusHistory.count({
+     *   where: {
+     *     // ... the filter for the BranchOrderStatusHistories we want to count
+     *   }
+     * })
+    **/
+    count<T extends BranchOrderStatusHistoryCountArgs>(
+      args?: Subset<T, BranchOrderStatusHistoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BranchOrderStatusHistoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BranchOrderStatusHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchOrderStatusHistoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BranchOrderStatusHistoryAggregateArgs>(args: Subset<T, BranchOrderStatusHistoryAggregateArgs>): Prisma.PrismaPromise<GetBranchOrderStatusHistoryAggregateType<T>>
+
+    /**
+     * Group by BranchOrderStatusHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchOrderStatusHistoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BranchOrderStatusHistoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BranchOrderStatusHistoryGroupByArgs['orderBy'] }
+        : { orderBy?: BranchOrderStatusHistoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BranchOrderStatusHistoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBranchOrderStatusHistoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BranchOrderStatusHistory model
+   */
+  readonly fields: BranchOrderStatusHistoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BranchOrderStatusHistory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BranchOrderStatusHistoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    branchOrder<T extends BranchOrderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BranchOrderDefaultArgs<ExtArgs>>): Prisma__BranchOrderClient<$Result.GetResult<Prisma.$BranchOrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    changedBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BranchOrderStatusHistory model
+   */
+  interface BranchOrderStatusHistoryFieldRefs {
+    readonly id: FieldRef<"BranchOrderStatusHistory", 'String'>
+    readonly branchOrderId: FieldRef<"BranchOrderStatusHistory", 'String'>
+    readonly fromStatus: FieldRef<"BranchOrderStatusHistory", 'orderStatus'>
+    readonly toStatus: FieldRef<"BranchOrderStatusHistory", 'orderStatus'>
+    readonly changedByUserId: FieldRef<"BranchOrderStatusHistory", 'String'>
+    readonly changedByRole: FieldRef<"BranchOrderStatusHistory", 'Role'>
+    readonly metadata: FieldRef<"BranchOrderStatusHistory", 'Json'>
+    readonly createdAt: FieldRef<"BranchOrderStatusHistory", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BranchOrderStatusHistory findUnique
+   */
+  export type BranchOrderStatusHistoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BranchOrderStatusHistory
+     */
+    select?: BranchOrderStatusHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BranchOrderStatusHistory
+     */
+    omit?: BranchOrderStatusHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchOrderStatusHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which BranchOrderStatusHistory to fetch.
+     */
+    where: BranchOrderStatusHistoryWhereUniqueInput
+  }
+
+  /**
+   * BranchOrderStatusHistory findUniqueOrThrow
+   */
+  export type BranchOrderStatusHistoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BranchOrderStatusHistory
+     */
+    select?: BranchOrderStatusHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BranchOrderStatusHistory
+     */
+    omit?: BranchOrderStatusHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchOrderStatusHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which BranchOrderStatusHistory to fetch.
+     */
+    where: BranchOrderStatusHistoryWhereUniqueInput
+  }
+
+  /**
+   * BranchOrderStatusHistory findFirst
+   */
+  export type BranchOrderStatusHistoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BranchOrderStatusHistory
+     */
+    select?: BranchOrderStatusHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BranchOrderStatusHistory
+     */
+    omit?: BranchOrderStatusHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchOrderStatusHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which BranchOrderStatusHistory to fetch.
+     */
+    where?: BranchOrderStatusHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BranchOrderStatusHistories to fetch.
+     */
+    orderBy?: BranchOrderStatusHistoryOrderByWithRelationInput | BranchOrderStatusHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BranchOrderStatusHistories.
+     */
+    cursor?: BranchOrderStatusHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BranchOrderStatusHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BranchOrderStatusHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BranchOrderStatusHistories.
+     */
+    distinct?: BranchOrderStatusHistoryScalarFieldEnum | BranchOrderStatusHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * BranchOrderStatusHistory findFirstOrThrow
+   */
+  export type BranchOrderStatusHistoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BranchOrderStatusHistory
+     */
+    select?: BranchOrderStatusHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BranchOrderStatusHistory
+     */
+    omit?: BranchOrderStatusHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchOrderStatusHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which BranchOrderStatusHistory to fetch.
+     */
+    where?: BranchOrderStatusHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BranchOrderStatusHistories to fetch.
+     */
+    orderBy?: BranchOrderStatusHistoryOrderByWithRelationInput | BranchOrderStatusHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BranchOrderStatusHistories.
+     */
+    cursor?: BranchOrderStatusHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BranchOrderStatusHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BranchOrderStatusHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BranchOrderStatusHistories.
+     */
+    distinct?: BranchOrderStatusHistoryScalarFieldEnum | BranchOrderStatusHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * BranchOrderStatusHistory findMany
+   */
+  export type BranchOrderStatusHistoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BranchOrderStatusHistory
+     */
+    select?: BranchOrderStatusHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BranchOrderStatusHistory
+     */
+    omit?: BranchOrderStatusHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchOrderStatusHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which BranchOrderStatusHistories to fetch.
+     */
+    where?: BranchOrderStatusHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BranchOrderStatusHistories to fetch.
+     */
+    orderBy?: BranchOrderStatusHistoryOrderByWithRelationInput | BranchOrderStatusHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BranchOrderStatusHistories.
+     */
+    cursor?: BranchOrderStatusHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BranchOrderStatusHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BranchOrderStatusHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BranchOrderStatusHistories.
+     */
+    distinct?: BranchOrderStatusHistoryScalarFieldEnum | BranchOrderStatusHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * BranchOrderStatusHistory create
+   */
+  export type BranchOrderStatusHistoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BranchOrderStatusHistory
+     */
+    select?: BranchOrderStatusHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BranchOrderStatusHistory
+     */
+    omit?: BranchOrderStatusHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchOrderStatusHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a BranchOrderStatusHistory.
+     */
+    data: XOR<BranchOrderStatusHistoryCreateInput, BranchOrderStatusHistoryUncheckedCreateInput>
+  }
+
+  /**
+   * BranchOrderStatusHistory createMany
+   */
+  export type BranchOrderStatusHistoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BranchOrderStatusHistories.
+     */
+    data: BranchOrderStatusHistoryCreateManyInput | BranchOrderStatusHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * BranchOrderStatusHistory createManyAndReturn
+   */
+  export type BranchOrderStatusHistoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BranchOrderStatusHistory
+     */
+    select?: BranchOrderStatusHistorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BranchOrderStatusHistory
+     */
+    omit?: BranchOrderStatusHistoryOmit<ExtArgs> | null
+    /**
+     * The data used to create many BranchOrderStatusHistories.
+     */
+    data: BranchOrderStatusHistoryCreateManyInput | BranchOrderStatusHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchOrderStatusHistoryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BranchOrderStatusHistory update
+   */
+  export type BranchOrderStatusHistoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BranchOrderStatusHistory
+     */
+    select?: BranchOrderStatusHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BranchOrderStatusHistory
+     */
+    omit?: BranchOrderStatusHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchOrderStatusHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a BranchOrderStatusHistory.
+     */
+    data: XOR<BranchOrderStatusHistoryUpdateInput, BranchOrderStatusHistoryUncheckedUpdateInput>
+    /**
+     * Choose, which BranchOrderStatusHistory to update.
+     */
+    where: BranchOrderStatusHistoryWhereUniqueInput
+  }
+
+  /**
+   * BranchOrderStatusHistory updateMany
+   */
+  export type BranchOrderStatusHistoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BranchOrderStatusHistories.
+     */
+    data: XOR<BranchOrderStatusHistoryUpdateManyMutationInput, BranchOrderStatusHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which BranchOrderStatusHistories to update
+     */
+    where?: BranchOrderStatusHistoryWhereInput
+    /**
+     * Limit how many BranchOrderStatusHistories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BranchOrderStatusHistory updateManyAndReturn
+   */
+  export type BranchOrderStatusHistoryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BranchOrderStatusHistory
+     */
+    select?: BranchOrderStatusHistorySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BranchOrderStatusHistory
+     */
+    omit?: BranchOrderStatusHistoryOmit<ExtArgs> | null
+    /**
+     * The data used to update BranchOrderStatusHistories.
+     */
+    data: XOR<BranchOrderStatusHistoryUpdateManyMutationInput, BranchOrderStatusHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which BranchOrderStatusHistories to update
+     */
+    where?: BranchOrderStatusHistoryWhereInput
+    /**
+     * Limit how many BranchOrderStatusHistories to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchOrderStatusHistoryIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BranchOrderStatusHistory upsert
+   */
+  export type BranchOrderStatusHistoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BranchOrderStatusHistory
+     */
+    select?: BranchOrderStatusHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BranchOrderStatusHistory
+     */
+    omit?: BranchOrderStatusHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchOrderStatusHistoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the BranchOrderStatusHistory to update in case it exists.
+     */
+    where: BranchOrderStatusHistoryWhereUniqueInput
+    /**
+     * In case the BranchOrderStatusHistory found by the `where` argument doesn't exist, create a new BranchOrderStatusHistory with this data.
+     */
+    create: XOR<BranchOrderStatusHistoryCreateInput, BranchOrderStatusHistoryUncheckedCreateInput>
+    /**
+     * In case the BranchOrderStatusHistory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BranchOrderStatusHistoryUpdateInput, BranchOrderStatusHistoryUncheckedUpdateInput>
+  }
+
+  /**
+   * BranchOrderStatusHistory delete
+   */
+  export type BranchOrderStatusHistoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BranchOrderStatusHistory
+     */
+    select?: BranchOrderStatusHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BranchOrderStatusHistory
+     */
+    omit?: BranchOrderStatusHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchOrderStatusHistoryInclude<ExtArgs> | null
+    /**
+     * Filter which BranchOrderStatusHistory to delete.
+     */
+    where: BranchOrderStatusHistoryWhereUniqueInput
+  }
+
+  /**
+   * BranchOrderStatusHistory deleteMany
+   */
+  export type BranchOrderStatusHistoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BranchOrderStatusHistories to delete
+     */
+    where?: BranchOrderStatusHistoryWhereInput
+    /**
+     * Limit how many BranchOrderStatusHistories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * BranchOrderStatusHistory without action
+   */
+  export type BranchOrderStatusHistoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BranchOrderStatusHistory
+     */
+    select?: BranchOrderStatusHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BranchOrderStatusHistory
+     */
+    omit?: BranchOrderStatusHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchOrderStatusHistoryInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DeliveryProof
+   */
+
+  export type AggregateDeliveryProof = {
+    _count: DeliveryProofCountAggregateOutputType | null
+    _min: DeliveryProofMinAggregateOutputType | null
+    _max: DeliveryProofMaxAggregateOutputType | null
+  }
+
+  export type DeliveryProofMinAggregateOutputType = {
+    id: string | null
+    branchOrderId: string | null
+    courierId: string | null
+    proofUrl: string | null
+    proofStorageId: string | null
+    createdAt: Date | null
+  }
+
+  export type DeliveryProofMaxAggregateOutputType = {
+    id: string | null
+    branchOrderId: string | null
+    courierId: string | null
+    proofUrl: string | null
+    proofStorageId: string | null
+    createdAt: Date | null
+  }
+
+  export type DeliveryProofCountAggregateOutputType = {
+    id: number
+    branchOrderId: number
+    courierId: number
+    proofUrl: number
+    proofStorageId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type DeliveryProofMinAggregateInputType = {
+    id?: true
+    branchOrderId?: true
+    courierId?: true
+    proofUrl?: true
+    proofStorageId?: true
+    createdAt?: true
+  }
+
+  export type DeliveryProofMaxAggregateInputType = {
+    id?: true
+    branchOrderId?: true
+    courierId?: true
+    proofUrl?: true
+    proofStorageId?: true
+    createdAt?: true
+  }
+
+  export type DeliveryProofCountAggregateInputType = {
+    id?: true
+    branchOrderId?: true
+    courierId?: true
+    proofUrl?: true
+    proofStorageId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type DeliveryProofAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DeliveryProof to aggregate.
+     */
+    where?: DeliveryProofWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeliveryProofs to fetch.
+     */
+    orderBy?: DeliveryProofOrderByWithRelationInput | DeliveryProofOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DeliveryProofWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeliveryProofs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeliveryProofs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DeliveryProofs
+    **/
+    _count?: true | DeliveryProofCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DeliveryProofMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DeliveryProofMaxAggregateInputType
+  }
+
+  export type GetDeliveryProofAggregateType<T extends DeliveryProofAggregateArgs> = {
+        [P in keyof T & keyof AggregateDeliveryProof]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDeliveryProof[P]>
+      : GetScalarType<T[P], AggregateDeliveryProof[P]>
+  }
+
+
+
+
+  export type DeliveryProofGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeliveryProofWhereInput
+    orderBy?: DeliveryProofOrderByWithAggregationInput | DeliveryProofOrderByWithAggregationInput[]
+    by: DeliveryProofScalarFieldEnum[] | DeliveryProofScalarFieldEnum
+    having?: DeliveryProofScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DeliveryProofCountAggregateInputType | true
+    _min?: DeliveryProofMinAggregateInputType
+    _max?: DeliveryProofMaxAggregateInputType
+  }
+
+  export type DeliveryProofGroupByOutputType = {
+    id: string
+    branchOrderId: string
+    courierId: string
+    proofUrl: string
+    proofStorageId: string
+    createdAt: Date
+    _count: DeliveryProofCountAggregateOutputType | null
+    _min: DeliveryProofMinAggregateOutputType | null
+    _max: DeliveryProofMaxAggregateOutputType | null
+  }
+
+  type GetDeliveryProofGroupByPayload<T extends DeliveryProofGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DeliveryProofGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DeliveryProofGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DeliveryProofGroupByOutputType[P]>
+            : GetScalarType<T[P], DeliveryProofGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DeliveryProofSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    branchOrderId?: boolean
+    courierId?: boolean
+    proofUrl?: boolean
+    proofStorageId?: boolean
+    createdAt?: boolean
+    branchOrder?: boolean | BranchOrderDefaultArgs<ExtArgs>
+    courier?: boolean | CourierDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deliveryProof"]>
+
+  export type DeliveryProofSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    branchOrderId?: boolean
+    courierId?: boolean
+    proofUrl?: boolean
+    proofStorageId?: boolean
+    createdAt?: boolean
+    branchOrder?: boolean | BranchOrderDefaultArgs<ExtArgs>
+    courier?: boolean | CourierDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deliveryProof"]>
+
+  export type DeliveryProofSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    branchOrderId?: boolean
+    courierId?: boolean
+    proofUrl?: boolean
+    proofStorageId?: boolean
+    createdAt?: boolean
+    branchOrder?: boolean | BranchOrderDefaultArgs<ExtArgs>
+    courier?: boolean | CourierDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deliveryProof"]>
+
+  export type DeliveryProofSelectScalar = {
+    id?: boolean
+    branchOrderId?: boolean
+    courierId?: boolean
+    proofUrl?: boolean
+    proofStorageId?: boolean
+    createdAt?: boolean
+  }
+
+  export type DeliveryProofOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "branchOrderId" | "courierId" | "proofUrl" | "proofStorageId" | "createdAt", ExtArgs["result"]["deliveryProof"]>
+  export type DeliveryProofInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    branchOrder?: boolean | BranchOrderDefaultArgs<ExtArgs>
+    courier?: boolean | CourierDefaultArgs<ExtArgs>
+  }
+  export type DeliveryProofIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    branchOrder?: boolean | BranchOrderDefaultArgs<ExtArgs>
+    courier?: boolean | CourierDefaultArgs<ExtArgs>
+  }
+  export type DeliveryProofIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    branchOrder?: boolean | BranchOrderDefaultArgs<ExtArgs>
+    courier?: boolean | CourierDefaultArgs<ExtArgs>
+  }
+
+  export type $DeliveryProofPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DeliveryProof"
+    objects: {
+      branchOrder: Prisma.$BranchOrderPayload<ExtArgs>
+      courier: Prisma.$CourierPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      branchOrderId: string
+      courierId: string
+      proofUrl: string
+      proofStorageId: string
+      createdAt: Date
+    }, ExtArgs["result"]["deliveryProof"]>
+    composites: {}
+  }
+
+  type DeliveryProofGetPayload<S extends boolean | null | undefined | DeliveryProofDefaultArgs> = $Result.GetResult<Prisma.$DeliveryProofPayload, S>
+
+  type DeliveryProofCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DeliveryProofFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DeliveryProofCountAggregateInputType | true
+    }
+
+  export interface DeliveryProofDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DeliveryProof'], meta: { name: 'DeliveryProof' } }
+    /**
+     * Find zero or one DeliveryProof that matches the filter.
+     * @param {DeliveryProofFindUniqueArgs} args - Arguments to find a DeliveryProof
+     * @example
+     * // Get one DeliveryProof
+     * const deliveryProof = await prisma.deliveryProof.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DeliveryProofFindUniqueArgs>(args: SelectSubset<T, DeliveryProofFindUniqueArgs<ExtArgs>>): Prisma__DeliveryProofClient<$Result.GetResult<Prisma.$DeliveryProofPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DeliveryProof that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DeliveryProofFindUniqueOrThrowArgs} args - Arguments to find a DeliveryProof
+     * @example
+     * // Get one DeliveryProof
+     * const deliveryProof = await prisma.deliveryProof.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DeliveryProofFindUniqueOrThrowArgs>(args: SelectSubset<T, DeliveryProofFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DeliveryProofClient<$Result.GetResult<Prisma.$DeliveryProofPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DeliveryProof that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryProofFindFirstArgs} args - Arguments to find a DeliveryProof
+     * @example
+     * // Get one DeliveryProof
+     * const deliveryProof = await prisma.deliveryProof.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DeliveryProofFindFirstArgs>(args?: SelectSubset<T, DeliveryProofFindFirstArgs<ExtArgs>>): Prisma__DeliveryProofClient<$Result.GetResult<Prisma.$DeliveryProofPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DeliveryProof that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryProofFindFirstOrThrowArgs} args - Arguments to find a DeliveryProof
+     * @example
+     * // Get one DeliveryProof
+     * const deliveryProof = await prisma.deliveryProof.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DeliveryProofFindFirstOrThrowArgs>(args?: SelectSubset<T, DeliveryProofFindFirstOrThrowArgs<ExtArgs>>): Prisma__DeliveryProofClient<$Result.GetResult<Prisma.$DeliveryProofPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DeliveryProofs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryProofFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DeliveryProofs
+     * const deliveryProofs = await prisma.deliveryProof.findMany()
+     * 
+     * // Get first 10 DeliveryProofs
+     * const deliveryProofs = await prisma.deliveryProof.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const deliveryProofWithIdOnly = await prisma.deliveryProof.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DeliveryProofFindManyArgs>(args?: SelectSubset<T, DeliveryProofFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliveryProofPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DeliveryProof.
+     * @param {DeliveryProofCreateArgs} args - Arguments to create a DeliveryProof.
+     * @example
+     * // Create one DeliveryProof
+     * const DeliveryProof = await prisma.deliveryProof.create({
+     *   data: {
+     *     // ... data to create a DeliveryProof
+     *   }
+     * })
+     * 
+     */
+    create<T extends DeliveryProofCreateArgs>(args: SelectSubset<T, DeliveryProofCreateArgs<ExtArgs>>): Prisma__DeliveryProofClient<$Result.GetResult<Prisma.$DeliveryProofPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DeliveryProofs.
+     * @param {DeliveryProofCreateManyArgs} args - Arguments to create many DeliveryProofs.
+     * @example
+     * // Create many DeliveryProofs
+     * const deliveryProof = await prisma.deliveryProof.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DeliveryProofCreateManyArgs>(args?: SelectSubset<T, DeliveryProofCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DeliveryProofs and returns the data saved in the database.
+     * @param {DeliveryProofCreateManyAndReturnArgs} args - Arguments to create many DeliveryProofs.
+     * @example
+     * // Create many DeliveryProofs
+     * const deliveryProof = await prisma.deliveryProof.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DeliveryProofs and only return the `id`
+     * const deliveryProofWithIdOnly = await prisma.deliveryProof.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DeliveryProofCreateManyAndReturnArgs>(args?: SelectSubset<T, DeliveryProofCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliveryProofPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DeliveryProof.
+     * @param {DeliveryProofDeleteArgs} args - Arguments to delete one DeliveryProof.
+     * @example
+     * // Delete one DeliveryProof
+     * const DeliveryProof = await prisma.deliveryProof.delete({
+     *   where: {
+     *     // ... filter to delete one DeliveryProof
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DeliveryProofDeleteArgs>(args: SelectSubset<T, DeliveryProofDeleteArgs<ExtArgs>>): Prisma__DeliveryProofClient<$Result.GetResult<Prisma.$DeliveryProofPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DeliveryProof.
+     * @param {DeliveryProofUpdateArgs} args - Arguments to update one DeliveryProof.
+     * @example
+     * // Update one DeliveryProof
+     * const deliveryProof = await prisma.deliveryProof.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DeliveryProofUpdateArgs>(args: SelectSubset<T, DeliveryProofUpdateArgs<ExtArgs>>): Prisma__DeliveryProofClient<$Result.GetResult<Prisma.$DeliveryProofPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DeliveryProofs.
+     * @param {DeliveryProofDeleteManyArgs} args - Arguments to filter DeliveryProofs to delete.
+     * @example
+     * // Delete a few DeliveryProofs
+     * const { count } = await prisma.deliveryProof.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DeliveryProofDeleteManyArgs>(args?: SelectSubset<T, DeliveryProofDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DeliveryProofs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryProofUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DeliveryProofs
+     * const deliveryProof = await prisma.deliveryProof.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DeliveryProofUpdateManyArgs>(args: SelectSubset<T, DeliveryProofUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DeliveryProofs and returns the data updated in the database.
+     * @param {DeliveryProofUpdateManyAndReturnArgs} args - Arguments to update many DeliveryProofs.
+     * @example
+     * // Update many DeliveryProofs
+     * const deliveryProof = await prisma.deliveryProof.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DeliveryProofs and only return the `id`
+     * const deliveryProofWithIdOnly = await prisma.deliveryProof.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DeliveryProofUpdateManyAndReturnArgs>(args: SelectSubset<T, DeliveryProofUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliveryProofPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DeliveryProof.
+     * @param {DeliveryProofUpsertArgs} args - Arguments to update or create a DeliveryProof.
+     * @example
+     * // Update or create a DeliveryProof
+     * const deliveryProof = await prisma.deliveryProof.upsert({
+     *   create: {
+     *     // ... data to create a DeliveryProof
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DeliveryProof we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DeliveryProofUpsertArgs>(args: SelectSubset<T, DeliveryProofUpsertArgs<ExtArgs>>): Prisma__DeliveryProofClient<$Result.GetResult<Prisma.$DeliveryProofPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DeliveryProofs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryProofCountArgs} args - Arguments to filter DeliveryProofs to count.
+     * @example
+     * // Count the number of DeliveryProofs
+     * const count = await prisma.deliveryProof.count({
+     *   where: {
+     *     // ... the filter for the DeliveryProofs we want to count
+     *   }
+     * })
+    **/
+    count<T extends DeliveryProofCountArgs>(
+      args?: Subset<T, DeliveryProofCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DeliveryProofCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DeliveryProof.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryProofAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DeliveryProofAggregateArgs>(args: Subset<T, DeliveryProofAggregateArgs>): Prisma.PrismaPromise<GetDeliveryProofAggregateType<T>>
+
+    /**
+     * Group by DeliveryProof.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryProofGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DeliveryProofGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DeliveryProofGroupByArgs['orderBy'] }
+        : { orderBy?: DeliveryProofGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DeliveryProofGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDeliveryProofGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DeliveryProof model
+   */
+  readonly fields: DeliveryProofFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DeliveryProof.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DeliveryProofClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    branchOrder<T extends BranchOrderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BranchOrderDefaultArgs<ExtArgs>>): Prisma__BranchOrderClient<$Result.GetResult<Prisma.$BranchOrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    courier<T extends CourierDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CourierDefaultArgs<ExtArgs>>): Prisma__CourierClient<$Result.GetResult<Prisma.$CourierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DeliveryProof model
+   */
+  interface DeliveryProofFieldRefs {
+    readonly id: FieldRef<"DeliveryProof", 'String'>
+    readonly branchOrderId: FieldRef<"DeliveryProof", 'String'>
+    readonly courierId: FieldRef<"DeliveryProof", 'String'>
+    readonly proofUrl: FieldRef<"DeliveryProof", 'String'>
+    readonly proofStorageId: FieldRef<"DeliveryProof", 'String'>
+    readonly createdAt: FieldRef<"DeliveryProof", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DeliveryProof findUnique
+   */
+  export type DeliveryProofFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryProof
+     */
+    select?: DeliveryProofSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryProof
+     */
+    omit?: DeliveryProofOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryProofInclude<ExtArgs> | null
+    /**
+     * Filter, which DeliveryProof to fetch.
+     */
+    where: DeliveryProofWhereUniqueInput
+  }
+
+  /**
+   * DeliveryProof findUniqueOrThrow
+   */
+  export type DeliveryProofFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryProof
+     */
+    select?: DeliveryProofSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryProof
+     */
+    omit?: DeliveryProofOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryProofInclude<ExtArgs> | null
+    /**
+     * Filter, which DeliveryProof to fetch.
+     */
+    where: DeliveryProofWhereUniqueInput
+  }
+
+  /**
+   * DeliveryProof findFirst
+   */
+  export type DeliveryProofFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryProof
+     */
+    select?: DeliveryProofSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryProof
+     */
+    omit?: DeliveryProofOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryProofInclude<ExtArgs> | null
+    /**
+     * Filter, which DeliveryProof to fetch.
+     */
+    where?: DeliveryProofWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeliveryProofs to fetch.
+     */
+    orderBy?: DeliveryProofOrderByWithRelationInput | DeliveryProofOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DeliveryProofs.
+     */
+    cursor?: DeliveryProofWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeliveryProofs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeliveryProofs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DeliveryProofs.
+     */
+    distinct?: DeliveryProofScalarFieldEnum | DeliveryProofScalarFieldEnum[]
+  }
+
+  /**
+   * DeliveryProof findFirstOrThrow
+   */
+  export type DeliveryProofFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryProof
+     */
+    select?: DeliveryProofSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryProof
+     */
+    omit?: DeliveryProofOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryProofInclude<ExtArgs> | null
+    /**
+     * Filter, which DeliveryProof to fetch.
+     */
+    where?: DeliveryProofWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeliveryProofs to fetch.
+     */
+    orderBy?: DeliveryProofOrderByWithRelationInput | DeliveryProofOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DeliveryProofs.
+     */
+    cursor?: DeliveryProofWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeliveryProofs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeliveryProofs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DeliveryProofs.
+     */
+    distinct?: DeliveryProofScalarFieldEnum | DeliveryProofScalarFieldEnum[]
+  }
+
+  /**
+   * DeliveryProof findMany
+   */
+  export type DeliveryProofFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryProof
+     */
+    select?: DeliveryProofSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryProof
+     */
+    omit?: DeliveryProofOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryProofInclude<ExtArgs> | null
+    /**
+     * Filter, which DeliveryProofs to fetch.
+     */
+    where?: DeliveryProofWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeliveryProofs to fetch.
+     */
+    orderBy?: DeliveryProofOrderByWithRelationInput | DeliveryProofOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DeliveryProofs.
+     */
+    cursor?: DeliveryProofWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeliveryProofs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeliveryProofs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DeliveryProofs.
+     */
+    distinct?: DeliveryProofScalarFieldEnum | DeliveryProofScalarFieldEnum[]
+  }
+
+  /**
+   * DeliveryProof create
+   */
+  export type DeliveryProofCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryProof
+     */
+    select?: DeliveryProofSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryProof
+     */
+    omit?: DeliveryProofOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryProofInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DeliveryProof.
+     */
+    data: XOR<DeliveryProofCreateInput, DeliveryProofUncheckedCreateInput>
+  }
+
+  /**
+   * DeliveryProof createMany
+   */
+  export type DeliveryProofCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DeliveryProofs.
+     */
+    data: DeliveryProofCreateManyInput | DeliveryProofCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DeliveryProof createManyAndReturn
+   */
+  export type DeliveryProofCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryProof
+     */
+    select?: DeliveryProofSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryProof
+     */
+    omit?: DeliveryProofOmit<ExtArgs> | null
+    /**
+     * The data used to create many DeliveryProofs.
+     */
+    data: DeliveryProofCreateManyInput | DeliveryProofCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryProofIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DeliveryProof update
+   */
+  export type DeliveryProofUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryProof
+     */
+    select?: DeliveryProofSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryProof
+     */
+    omit?: DeliveryProofOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryProofInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DeliveryProof.
+     */
+    data: XOR<DeliveryProofUpdateInput, DeliveryProofUncheckedUpdateInput>
+    /**
+     * Choose, which DeliveryProof to update.
+     */
+    where: DeliveryProofWhereUniqueInput
+  }
+
+  /**
+   * DeliveryProof updateMany
+   */
+  export type DeliveryProofUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DeliveryProofs.
+     */
+    data: XOR<DeliveryProofUpdateManyMutationInput, DeliveryProofUncheckedUpdateManyInput>
+    /**
+     * Filter which DeliveryProofs to update
+     */
+    where?: DeliveryProofWhereInput
+    /**
+     * Limit how many DeliveryProofs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DeliveryProof updateManyAndReturn
+   */
+  export type DeliveryProofUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryProof
+     */
+    select?: DeliveryProofSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryProof
+     */
+    omit?: DeliveryProofOmit<ExtArgs> | null
+    /**
+     * The data used to update DeliveryProofs.
+     */
+    data: XOR<DeliveryProofUpdateManyMutationInput, DeliveryProofUncheckedUpdateManyInput>
+    /**
+     * Filter which DeliveryProofs to update
+     */
+    where?: DeliveryProofWhereInput
+    /**
+     * Limit how many DeliveryProofs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryProofIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DeliveryProof upsert
+   */
+  export type DeliveryProofUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryProof
+     */
+    select?: DeliveryProofSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryProof
+     */
+    omit?: DeliveryProofOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryProofInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DeliveryProof to update in case it exists.
+     */
+    where: DeliveryProofWhereUniqueInput
+    /**
+     * In case the DeliveryProof found by the `where` argument doesn't exist, create a new DeliveryProof with this data.
+     */
+    create: XOR<DeliveryProofCreateInput, DeliveryProofUncheckedCreateInput>
+    /**
+     * In case the DeliveryProof was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DeliveryProofUpdateInput, DeliveryProofUncheckedUpdateInput>
+  }
+
+  /**
+   * DeliveryProof delete
+   */
+  export type DeliveryProofDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryProof
+     */
+    select?: DeliveryProofSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryProof
+     */
+    omit?: DeliveryProofOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryProofInclude<ExtArgs> | null
+    /**
+     * Filter which DeliveryProof to delete.
+     */
+    where: DeliveryProofWhereUniqueInput
+  }
+
+  /**
+   * DeliveryProof deleteMany
+   */
+  export type DeliveryProofDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DeliveryProofs to delete
+     */
+    where?: DeliveryProofWhereInput
+    /**
+     * Limit how many DeliveryProofs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DeliveryProof without action
+   */
+  export type DeliveryProofDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryProof
+     */
+    select?: DeliveryProofSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryProof
+     */
+    omit?: DeliveryProofOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryProofInclude<ExtArgs> | null
   }
 
 
@@ -41242,6 +43838,7 @@ export namespace Prisma {
     name: string | null
     address: string | null
     phoneNumber: string | null
+    ownerUserId: string | null
     isVerified: boolean | null
     isBanned: boolean | null
     balance: number | null
@@ -41252,6 +43849,7 @@ export namespace Prisma {
     name: string | null
     address: string | null
     phoneNumber: string | null
+    ownerUserId: string | null
     isVerified: boolean | null
     isBanned: boolean | null
     balance: number | null
@@ -41262,6 +43860,7 @@ export namespace Prisma {
     name: number
     address: number
     phoneNumber: number
+    ownerUserId: number
     isVerified: number
     isBanned: number
     balance: number
@@ -41282,6 +43881,7 @@ export namespace Prisma {
     name?: true
     address?: true
     phoneNumber?: true
+    ownerUserId?: true
     isVerified?: true
     isBanned?: true
     balance?: true
@@ -41292,6 +43892,7 @@ export namespace Prisma {
     name?: true
     address?: true
     phoneNumber?: true
+    ownerUserId?: true
     isVerified?: true
     isBanned?: true
     balance?: true
@@ -41302,6 +43903,7 @@ export namespace Prisma {
     name?: true
     address?: true
     phoneNumber?: true
+    ownerUserId?: true
     isVerified?: true
     isBanned?: true
     balance?: true
@@ -41399,6 +44001,7 @@ export namespace Prisma {
     name: string
     address: string
     phoneNumber: string
+    ownerUserId: string | null
     isVerified: boolean
     isBanned: boolean
     balance: number
@@ -41428,11 +44031,14 @@ export namespace Prisma {
     name?: boolean
     address?: boolean
     phoneNumber?: boolean
+    ownerUserId?: boolean
     isVerified?: boolean
     isBanned?: boolean
     balance?: boolean
+    owner?: boolean | D_Company$ownerArgs<ExtArgs>
     couriers?: boolean | D_Company$couriersArgs<ExtArgs>
     orders?: boolean | D_Company$ordersArgs<ExtArgs>
+    invitations?: boolean | D_Company$invitationsArgs<ExtArgs>
     transactions?: boolean | D_Company$transactionsArgs<ExtArgs>
     _count?: boolean | D_CompanyCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["d_Company"]>
@@ -41442,9 +44048,11 @@ export namespace Prisma {
     name?: boolean
     address?: boolean
     phoneNumber?: boolean
+    ownerUserId?: boolean
     isVerified?: boolean
     isBanned?: boolean
     balance?: boolean
+    owner?: boolean | D_Company$ownerArgs<ExtArgs>
   }, ExtArgs["result"]["d_Company"]>
 
   export type D_CompanySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -41452,9 +44060,11 @@ export namespace Prisma {
     name?: boolean
     address?: boolean
     phoneNumber?: boolean
+    ownerUserId?: boolean
     isVerified?: boolean
     isBanned?: boolean
     balance?: boolean
+    owner?: boolean | D_Company$ownerArgs<ExtArgs>
   }, ExtArgs["result"]["d_Company"]>
 
   export type D_CompanySelectScalar = {
@@ -41462,26 +44072,35 @@ export namespace Prisma {
     name?: boolean
     address?: boolean
     phoneNumber?: boolean
+    ownerUserId?: boolean
     isVerified?: boolean
     isBanned?: boolean
     balance?: boolean
   }
 
-  export type D_CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"deliveryCompany" | "name" | "address" | "phoneNumber" | "isVerified" | "isBanned" | "balance", ExtArgs["result"]["d_Company"]>
+  export type D_CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"deliveryCompany" | "name" | "address" | "phoneNumber" | "ownerUserId" | "isVerified" | "isBanned" | "balance", ExtArgs["result"]["d_Company"]>
   export type D_CompanyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | D_Company$ownerArgs<ExtArgs>
     couriers?: boolean | D_Company$couriersArgs<ExtArgs>
     orders?: boolean | D_Company$ordersArgs<ExtArgs>
+    invitations?: boolean | D_Company$invitationsArgs<ExtArgs>
     transactions?: boolean | D_Company$transactionsArgs<ExtArgs>
     _count?: boolean | D_CompanyCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type D_CompanyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type D_CompanyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type D_CompanyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | D_Company$ownerArgs<ExtArgs>
+  }
+  export type D_CompanyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | D_Company$ownerArgs<ExtArgs>
+  }
 
   export type $D_CompanyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "D_Company"
     objects: {
+      owner: Prisma.$UserPayload<ExtArgs> | null
       couriers: Prisma.$CourierPayload<ExtArgs>[]
       orders: Prisma.$BranchOrderPayload<ExtArgs>[]
+      invitations: Prisma.$StaffInvitationPayload<ExtArgs>[]
       transactions: Prisma.$DeliveryCompanyTransactionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -41489,6 +44108,7 @@ export namespace Prisma {
       name: string
       address: string
       phoneNumber: string
+      ownerUserId: string | null
       isVerified: boolean
       isBanned: boolean
       balance: number
@@ -41886,8 +44506,10 @@ export namespace Prisma {
    */
   export interface Prisma__D_CompanyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    owner<T extends D_Company$ownerArgs<ExtArgs> = {}>(args?: Subset<T, D_Company$ownerArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     couriers<T extends D_Company$couriersArgs<ExtArgs> = {}>(args?: Subset<T, D_Company$couriersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CourierPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     orders<T extends D_Company$ordersArgs<ExtArgs> = {}>(args?: Subset<T, D_Company$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BranchOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    invitations<T extends D_Company$invitationsArgs<ExtArgs> = {}>(args?: Subset<T, D_Company$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StaffInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     transactions<T extends D_Company$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, D_Company$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliveryCompanyTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -41922,6 +44544,7 @@ export namespace Prisma {
     readonly name: FieldRef<"D_Company", 'String'>
     readonly address: FieldRef<"D_Company", 'String'>
     readonly phoneNumber: FieldRef<"D_Company", 'String'>
+    readonly ownerUserId: FieldRef<"D_Company", 'String'>
     readonly isVerified: FieldRef<"D_Company", 'Boolean'>
     readonly isBanned: FieldRef<"D_Company", 'Boolean'>
     readonly balance: FieldRef<"D_Company", 'Int'>
@@ -42179,6 +44802,10 @@ export namespace Prisma {
      */
     data: D_CompanyCreateManyInput | D_CompanyCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: D_CompanyIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -42249,6 +44876,10 @@ export namespace Prisma {
      * Limit how many D_Companies to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: D_CompanyIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -42318,6 +44949,25 @@ export namespace Prisma {
   }
 
   /**
+   * D_Company.owner
+   */
+  export type D_Company$ownerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
    * D_Company.couriers
    */
   export type D_Company$couriersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -42363,6 +45013,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: BranchOrderScalarFieldEnum | BranchOrderScalarFieldEnum[]
+  }
+
+  /**
+   * D_Company.invitations
+   */
+  export type D_Company$invitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StaffInvitation
+     */
+    select?: StaffInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StaffInvitation
+     */
+    omit?: StaffInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StaffInvitationInclude<ExtArgs> | null
+    where?: StaffInvitationWhereInput
+    orderBy?: StaffInvitationOrderByWithRelationInput | StaffInvitationOrderByWithRelationInput[]
+    cursor?: StaffInvitationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StaffInvitationScalarFieldEnum | StaffInvitationScalarFieldEnum[]
   }
 
   /**
@@ -43569,28 +46243,33 @@ export namespace Prisma {
 
   export type CourierMinAggregateOutputType = {
     id: string | null
+    userId: string | null
     photo_url: string | null
     photo_id: string | null
     phoneNumber: string | null
     plateNumber: string | null
     isVerified: boolean | null
     isBanned: boolean | null
+    isActive: boolean | null
     deliveryCompanyId: string | null
   }
 
   export type CourierMaxAggregateOutputType = {
     id: string | null
+    userId: string | null
     photo_url: string | null
     photo_id: string | null
     phoneNumber: string | null
     plateNumber: string | null
     isVerified: boolean | null
     isBanned: boolean | null
+    isActive: boolean | null
     deliveryCompanyId: string | null
   }
 
   export type CourierCountAggregateOutputType = {
     id: number
+    userId: number
     photo_url: number
     photo_id: number
     phoneNumber: number
@@ -43598,6 +46277,7 @@ export namespace Prisma {
     plateNumber: number
     isVerified: number
     isBanned: number
+    isActive: number
     deliveryCompanyId: number
     _all: number
   }
@@ -43605,28 +46285,33 @@ export namespace Prisma {
 
   export type CourierMinAggregateInputType = {
     id?: true
+    userId?: true
     photo_url?: true
     photo_id?: true
     phoneNumber?: true
     plateNumber?: true
     isVerified?: true
     isBanned?: true
+    isActive?: true
     deliveryCompanyId?: true
   }
 
   export type CourierMaxAggregateInputType = {
     id?: true
+    userId?: true
     photo_url?: true
     photo_id?: true
     phoneNumber?: true
     plateNumber?: true
     isVerified?: true
     isBanned?: true
+    isActive?: true
     deliveryCompanyId?: true
   }
 
   export type CourierCountAggregateInputType = {
     id?: true
+    userId?: true
     photo_url?: true
     photo_id?: true
     phoneNumber?: true
@@ -43634,6 +46319,7 @@ export namespace Prisma {
     plateNumber?: true
     isVerified?: true
     isBanned?: true
+    isActive?: true
     deliveryCompanyId?: true
     _all?: true
   }
@@ -43712,6 +46398,7 @@ export namespace Prisma {
 
   export type CourierGroupByOutputType = {
     id: string
+    userId: string | null
     photo_url: string
     photo_id: string
     phoneNumber: string
@@ -43719,6 +46406,7 @@ export namespace Prisma {
     plateNumber: string
     isVerified: boolean
     isBanned: boolean
+    isActive: boolean
     deliveryCompanyId: string
     _count: CourierCountAggregateOutputType | null
     _min: CourierMinAggregateOutputType | null
@@ -43741,6 +46429,7 @@ export namespace Prisma {
 
   export type CourierSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    userId?: boolean
     photo_url?: boolean
     photo_id?: boolean
     phoneNumber?: boolean
@@ -43748,14 +46437,18 @@ export namespace Prisma {
     plateNumber?: boolean
     isVerified?: boolean
     isBanned?: boolean
+    isActive?: boolean
     deliveryCompanyId?: boolean
+    user?: boolean | Courier$userArgs<ExtArgs>
     deliveryCompany?: boolean | D_CompanyDefaultArgs<ExtArgs>
     orders?: boolean | Courier$ordersArgs<ExtArgs>
+    proofs?: boolean | Courier$proofsArgs<ExtArgs>
     _count?: boolean | CourierCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["courier"]>
 
   export type CourierSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    userId?: boolean
     photo_url?: boolean
     photo_id?: boolean
     phoneNumber?: boolean
@@ -43763,12 +46456,15 @@ export namespace Prisma {
     plateNumber?: boolean
     isVerified?: boolean
     isBanned?: boolean
+    isActive?: boolean
     deliveryCompanyId?: boolean
+    user?: boolean | Courier$userArgs<ExtArgs>
     deliveryCompany?: boolean | D_CompanyDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["courier"]>
 
   export type CourierSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    userId?: boolean
     photo_url?: boolean
     photo_id?: boolean
     phoneNumber?: boolean
@@ -43776,12 +46472,15 @@ export namespace Prisma {
     plateNumber?: boolean
     isVerified?: boolean
     isBanned?: boolean
+    isActive?: boolean
     deliveryCompanyId?: boolean
+    user?: boolean | Courier$userArgs<ExtArgs>
     deliveryCompany?: boolean | D_CompanyDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["courier"]>
 
   export type CourierSelectScalar = {
     id?: boolean
+    userId?: boolean
     photo_url?: boolean
     photo_id?: boolean
     phoneNumber?: boolean
@@ -43789,30 +46488,38 @@ export namespace Prisma {
     plateNumber?: boolean
     isVerified?: boolean
     isBanned?: boolean
+    isActive?: boolean
     deliveryCompanyId?: boolean
   }
 
-  export type CourierOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "photo_url" | "photo_id" | "phoneNumber" | "documents" | "plateNumber" | "isVerified" | "isBanned" | "deliveryCompanyId", ExtArgs["result"]["courier"]>
+  export type CourierOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "photo_url" | "photo_id" | "phoneNumber" | "documents" | "plateNumber" | "isVerified" | "isBanned" | "isActive" | "deliveryCompanyId", ExtArgs["result"]["courier"]>
   export type CourierInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | Courier$userArgs<ExtArgs>
     deliveryCompany?: boolean | D_CompanyDefaultArgs<ExtArgs>
     orders?: boolean | Courier$ordersArgs<ExtArgs>
+    proofs?: boolean | Courier$proofsArgs<ExtArgs>
     _count?: boolean | CourierCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CourierIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | Courier$userArgs<ExtArgs>
     deliveryCompany?: boolean | D_CompanyDefaultArgs<ExtArgs>
   }
   export type CourierIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | Courier$userArgs<ExtArgs>
     deliveryCompany?: boolean | D_CompanyDefaultArgs<ExtArgs>
   }
 
   export type $CourierPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Courier"
     objects: {
+      user: Prisma.$UserPayload<ExtArgs> | null
       deliveryCompany: Prisma.$D_CompanyPayload<ExtArgs>
       orders: Prisma.$BranchOrderPayload<ExtArgs>[]
+      proofs: Prisma.$DeliveryProofPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      userId: string | null
       photo_url: string
       photo_id: string
       phoneNumber: string
@@ -43820,6 +46527,7 @@ export namespace Prisma {
       plateNumber: string
       isVerified: boolean
       isBanned: boolean
+      isActive: boolean
       deliveryCompanyId: string
     }, ExtArgs["result"]["courier"]>
     composites: {}
@@ -44215,8 +46923,10 @@ export namespace Prisma {
    */
   export interface Prisma__CourierClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends Courier$userArgs<ExtArgs> = {}>(args?: Subset<T, Courier$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     deliveryCompany<T extends D_CompanyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, D_CompanyDefaultArgs<ExtArgs>>): Prisma__D_CompanyClient<$Result.GetResult<Prisma.$D_CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     orders<T extends Courier$ordersArgs<ExtArgs> = {}>(args?: Subset<T, Courier$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BranchOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    proofs<T extends Courier$proofsArgs<ExtArgs> = {}>(args?: Subset<T, Courier$proofsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliveryProofPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -44247,6 +46957,7 @@ export namespace Prisma {
    */
   interface CourierFieldRefs {
     readonly id: FieldRef<"Courier", 'String'>
+    readonly userId: FieldRef<"Courier", 'String'>
     readonly photo_url: FieldRef<"Courier", 'String'>
     readonly photo_id: FieldRef<"Courier", 'String'>
     readonly phoneNumber: FieldRef<"Courier", 'String'>
@@ -44254,6 +46965,7 @@ export namespace Prisma {
     readonly plateNumber: FieldRef<"Courier", 'String'>
     readonly isVerified: FieldRef<"Courier", 'Boolean'>
     readonly isBanned: FieldRef<"Courier", 'Boolean'>
+    readonly isActive: FieldRef<"Courier", 'Boolean'>
     readonly deliveryCompanyId: FieldRef<"Courier", 'String'>
   }
     
@@ -44656,6 +47368,25 @@ export namespace Prisma {
   }
 
   /**
+   * Courier.user
+   */
+  export type Courier$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
    * Courier.orders
    */
   export type Courier$ordersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -44677,6 +47408,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: BranchOrderScalarFieldEnum | BranchOrderScalarFieldEnum[]
+  }
+
+  /**
+   * Courier.proofs
+   */
+  export type Courier$proofsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryProof
+     */
+    select?: DeliveryProofSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryProof
+     */
+    omit?: DeliveryProofOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryProofInclude<ExtArgs> | null
+    where?: DeliveryProofWhereInput
+    orderBy?: DeliveryProofOrderByWithRelationInput | DeliveryProofOrderByWithRelationInput[]
+    cursor?: DeliveryProofWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DeliveryProofScalarFieldEnum | DeliveryProofScalarFieldEnum[]
   }
 
   /**
@@ -44866,6 +47621,8 @@ export namespace Prisma {
     role: 'role',
     brandId: 'brandId',
     branchId: 'branchId',
+    deliveryCompanyId: 'deliveryCompanyId',
+    courierProfile: 'courierProfile',
     tokenHash: 'tokenHash',
     expiresAt: 'expiresAt',
     acceptedAt: 'acceptedAt',
@@ -45168,6 +47925,32 @@ export namespace Prisma {
   export type BranchOrderScalarFieldEnum = (typeof BranchOrderScalarFieldEnum)[keyof typeof BranchOrderScalarFieldEnum]
 
 
+  export const BranchOrderStatusHistoryScalarFieldEnum: {
+    id: 'id',
+    branchOrderId: 'branchOrderId',
+    fromStatus: 'fromStatus',
+    toStatus: 'toStatus',
+    changedByUserId: 'changedByUserId',
+    changedByRole: 'changedByRole',
+    metadata: 'metadata',
+    createdAt: 'createdAt'
+  };
+
+  export type BranchOrderStatusHistoryScalarFieldEnum = (typeof BranchOrderStatusHistoryScalarFieldEnum)[keyof typeof BranchOrderStatusHistoryScalarFieldEnum]
+
+
+  export const DeliveryProofScalarFieldEnum: {
+    id: 'id',
+    branchOrderId: 'branchOrderId',
+    courierId: 'courierId',
+    proofUrl: 'proofUrl',
+    proofStorageId: 'proofStorageId',
+    createdAt: 'createdAt'
+  };
+
+  export type DeliveryProofScalarFieldEnum = (typeof DeliveryProofScalarFieldEnum)[keyof typeof DeliveryProofScalarFieldEnum]
+
+
   export const OrderItemScalarFieldEnum: {
     id: 'id',
     branchOrderId: 'branchOrderId',
@@ -45186,6 +47969,7 @@ export namespace Prisma {
     name: 'name',
     address: 'address',
     phoneNumber: 'phoneNumber',
+    ownerUserId: 'ownerUserId',
     isVerified: 'isVerified',
     isBanned: 'isBanned',
     balance: 'balance'
@@ -45211,6 +47995,7 @@ export namespace Prisma {
 
   export const CourierScalarFieldEnum: {
     id: 'id',
+    userId: 'userId',
     photo_url: 'photo_url',
     photo_id: 'photo_id',
     phoneNumber: 'phoneNumber',
@@ -45218,6 +48003,7 @@ export namespace Prisma {
     plateNumber: 'plateNumber',
     isVerified: 'isVerified',
     isBanned: 'isBanned',
+    isActive: 'isActive',
     deliveryCompanyId: 'deliveryCompanyId'
   };
 
@@ -45703,6 +48489,9 @@ export namespace Prisma {
     branchStaffs?: BranchStaffListRelationFilter
     createdStaffInvitations?: StaffInvitationListRelationFilter
     checkoutSessions?: CheckoutSessionListRelationFilter
+    deliveryCompany?: XOR<D_CompanyNullableScalarRelationFilter, D_CompanyWhereInput> | null
+    courierProfile?: XOR<CourierNullableScalarRelationFilter, CourierWhereInput> | null
+    branchOrderStatusChanges?: BranchOrderStatusHistoryListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -45747,6 +48536,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffOrderByRelationAggregateInput
     createdStaffInvitations?: StaffInvitationOrderByRelationAggregateInput
     checkoutSessions?: CheckoutSessionOrderByRelationAggregateInput
+    deliveryCompany?: D_CompanyOrderByWithRelationInput
+    courierProfile?: CourierOrderByWithRelationInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -45795,6 +48587,9 @@ export namespace Prisma {
     branchStaffs?: BranchStaffListRelationFilter
     createdStaffInvitations?: StaffInvitationListRelationFilter
     checkoutSessions?: CheckoutSessionListRelationFilter
+    deliveryCompany?: XOR<D_CompanyNullableScalarRelationFilter, D_CompanyWhereInput> | null
+    courierProfile?: XOR<CourierNullableScalarRelationFilter, CourierWhereInput> | null
+    branchOrderStatusChanges?: BranchOrderStatusHistoryListRelationFilter
   }, "id" | "phone" | "email" | "accountId" | "provider_providerCustomerId">
 
   export type UserOrderByWithAggregationInput = {
@@ -46525,6 +49320,8 @@ export namespace Prisma {
     role?: EnumRoleFilter<"StaffInvitation"> | $Enums.Role
     brandId?: UuidNullableFilter<"StaffInvitation"> | string | null
     branchId?: UuidNullableFilter<"StaffInvitation"> | string | null
+    deliveryCompanyId?: UuidNullableFilter<"StaffInvitation"> | string | null
+    courierProfile?: JsonNullableFilter<"StaffInvitation">
     tokenHash?: StringFilter<"StaffInvitation"> | string
     expiresAt?: DateTimeFilter<"StaffInvitation"> | Date | string
     acceptedAt?: DateTimeNullableFilter<"StaffInvitation"> | Date | string | null
@@ -46533,6 +49330,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"StaffInvitation"> | Date | string
     brand?: XOR<BrandNullableScalarRelationFilter, BrandWhereInput> | null
     branch?: XOR<BrandBranchNullableScalarRelationFilter, BrandBranchWhereInput> | null
+    deliveryCompany?: XOR<D_CompanyNullableScalarRelationFilter, D_CompanyWhereInput> | null
     creator?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -46542,6 +49340,8 @@ export namespace Prisma {
     role?: SortOrder
     brandId?: SortOrderInput | SortOrder
     branchId?: SortOrderInput | SortOrder
+    deliveryCompanyId?: SortOrderInput | SortOrder
+    courierProfile?: SortOrderInput | SortOrder
     tokenHash?: SortOrder
     expiresAt?: SortOrder
     acceptedAt?: SortOrderInput | SortOrder
@@ -46550,6 +49350,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     brand?: BrandOrderByWithRelationInput
     branch?: BrandBranchOrderByWithRelationInput
+    deliveryCompany?: D_CompanyOrderByWithRelationInput
     creator?: UserOrderByWithRelationInput
   }
 
@@ -46563,6 +49364,8 @@ export namespace Prisma {
     role?: EnumRoleFilter<"StaffInvitation"> | $Enums.Role
     brandId?: UuidNullableFilter<"StaffInvitation"> | string | null
     branchId?: UuidNullableFilter<"StaffInvitation"> | string | null
+    deliveryCompanyId?: UuidNullableFilter<"StaffInvitation"> | string | null
+    courierProfile?: JsonNullableFilter<"StaffInvitation">
     expiresAt?: DateTimeFilter<"StaffInvitation"> | Date | string
     acceptedAt?: DateTimeNullableFilter<"StaffInvitation"> | Date | string | null
     revokedAt?: DateTimeNullableFilter<"StaffInvitation"> | Date | string | null
@@ -46570,6 +49373,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"StaffInvitation"> | Date | string
     brand?: XOR<BrandNullableScalarRelationFilter, BrandWhereInput> | null
     branch?: XOR<BrandBranchNullableScalarRelationFilter, BrandBranchWhereInput> | null
+    deliveryCompany?: XOR<D_CompanyNullableScalarRelationFilter, D_CompanyWhereInput> | null
     creator?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "tokenHash">
 
@@ -46579,6 +49383,8 @@ export namespace Prisma {
     role?: SortOrder
     brandId?: SortOrderInput | SortOrder
     branchId?: SortOrderInput | SortOrder
+    deliveryCompanyId?: SortOrderInput | SortOrder
+    courierProfile?: SortOrderInput | SortOrder
     tokenHash?: SortOrder
     expiresAt?: SortOrder
     acceptedAt?: SortOrderInput | SortOrder
@@ -46599,6 +49405,8 @@ export namespace Prisma {
     role?: EnumRoleWithAggregatesFilter<"StaffInvitation"> | $Enums.Role
     brandId?: UuidNullableWithAggregatesFilter<"StaffInvitation"> | string | null
     branchId?: UuidNullableWithAggregatesFilter<"StaffInvitation"> | string | null
+    deliveryCompanyId?: UuidNullableWithAggregatesFilter<"StaffInvitation"> | string | null
+    courierProfile?: JsonNullableWithAggregatesFilter<"StaffInvitation">
     tokenHash?: StringWithAggregatesFilter<"StaffInvitation"> | string
     expiresAt?: DateTimeWithAggregatesFilter<"StaffInvitation"> | Date | string
     acceptedAt?: DateTimeNullableWithAggregatesFilter<"StaffInvitation"> | Date | string | null
@@ -48124,6 +50932,8 @@ export namespace Prisma {
     deliveryCompany?: XOR<D_CompanyNullableScalarRelationFilter, D_CompanyWhereInput> | null
     courier?: XOR<CourierNullableScalarRelationFilter, CourierWhereInput> | null
     orderItems?: OrderItemListRelationFilter
+    statusHistory?: BranchOrderStatusHistoryListRelationFilter
+    deliveryProofs?: DeliveryProofListRelationFilter
   }
 
   export type BranchOrderOrderByWithRelationInput = {
@@ -48147,6 +50957,8 @@ export namespace Prisma {
     deliveryCompany?: D_CompanyOrderByWithRelationInput
     courier?: CourierOrderByWithRelationInput
     orderItems?: OrderItemOrderByRelationAggregateInput
+    statusHistory?: BranchOrderStatusHistoryOrderByRelationAggregateInput
+    deliveryProofs?: DeliveryProofOrderByRelationAggregateInput
   }
 
   export type BranchOrderWhereUniqueInput = Prisma.AtLeast<{
@@ -48173,6 +50985,8 @@ export namespace Prisma {
     deliveryCompany?: XOR<D_CompanyNullableScalarRelationFilter, D_CompanyWhereInput> | null
     courier?: XOR<CourierNullableScalarRelationFilter, CourierWhereInput> | null
     orderItems?: OrderItemListRelationFilter
+    statusHistory?: BranchOrderStatusHistoryListRelationFilter
+    deliveryProofs?: DeliveryProofListRelationFilter
   }, "branchOrderId">
 
   export type BranchOrderOrderByWithAggregationInput = {
@@ -48215,6 +51029,142 @@ export namespace Prisma {
     courierId?: UuidNullableWithAggregatesFilter<"BranchOrder"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"BranchOrder"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"BranchOrder"> | Date | string
+  }
+
+  export type BranchOrderStatusHistoryWhereInput = {
+    AND?: BranchOrderStatusHistoryWhereInput | BranchOrderStatusHistoryWhereInput[]
+    OR?: BranchOrderStatusHistoryWhereInput[]
+    NOT?: BranchOrderStatusHistoryWhereInput | BranchOrderStatusHistoryWhereInput[]
+    id?: UuidFilter<"BranchOrderStatusHistory"> | string
+    branchOrderId?: UuidFilter<"BranchOrderStatusHistory"> | string
+    fromStatus?: EnumorderStatusNullableFilter<"BranchOrderStatusHistory"> | $Enums.orderStatus | null
+    toStatus?: EnumorderStatusFilter<"BranchOrderStatusHistory"> | $Enums.orderStatus
+    changedByUserId?: UuidFilter<"BranchOrderStatusHistory"> | string
+    changedByRole?: EnumRoleFilter<"BranchOrderStatusHistory"> | $Enums.Role
+    metadata?: JsonNullableFilter<"BranchOrderStatusHistory">
+    createdAt?: DateTimeFilter<"BranchOrderStatusHistory"> | Date | string
+    branchOrder?: XOR<BranchOrderScalarRelationFilter, BranchOrderWhereInput>
+    changedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type BranchOrderStatusHistoryOrderByWithRelationInput = {
+    id?: SortOrder
+    branchOrderId?: SortOrder
+    fromStatus?: SortOrderInput | SortOrder
+    toStatus?: SortOrder
+    changedByUserId?: SortOrder
+    changedByRole?: SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    branchOrder?: BranchOrderOrderByWithRelationInput
+    changedBy?: UserOrderByWithRelationInput
+  }
+
+  export type BranchOrderStatusHistoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: BranchOrderStatusHistoryWhereInput | BranchOrderStatusHistoryWhereInput[]
+    OR?: BranchOrderStatusHistoryWhereInput[]
+    NOT?: BranchOrderStatusHistoryWhereInput | BranchOrderStatusHistoryWhereInput[]
+    branchOrderId?: UuidFilter<"BranchOrderStatusHistory"> | string
+    fromStatus?: EnumorderStatusNullableFilter<"BranchOrderStatusHistory"> | $Enums.orderStatus | null
+    toStatus?: EnumorderStatusFilter<"BranchOrderStatusHistory"> | $Enums.orderStatus
+    changedByUserId?: UuidFilter<"BranchOrderStatusHistory"> | string
+    changedByRole?: EnumRoleFilter<"BranchOrderStatusHistory"> | $Enums.Role
+    metadata?: JsonNullableFilter<"BranchOrderStatusHistory">
+    createdAt?: DateTimeFilter<"BranchOrderStatusHistory"> | Date | string
+    branchOrder?: XOR<BranchOrderScalarRelationFilter, BranchOrderWhereInput>
+    changedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type BranchOrderStatusHistoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    branchOrderId?: SortOrder
+    fromStatus?: SortOrderInput | SortOrder
+    toStatus?: SortOrder
+    changedByUserId?: SortOrder
+    changedByRole?: SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: BranchOrderStatusHistoryCountOrderByAggregateInput
+    _max?: BranchOrderStatusHistoryMaxOrderByAggregateInput
+    _min?: BranchOrderStatusHistoryMinOrderByAggregateInput
+  }
+
+  export type BranchOrderStatusHistoryScalarWhereWithAggregatesInput = {
+    AND?: BranchOrderStatusHistoryScalarWhereWithAggregatesInput | BranchOrderStatusHistoryScalarWhereWithAggregatesInput[]
+    OR?: BranchOrderStatusHistoryScalarWhereWithAggregatesInput[]
+    NOT?: BranchOrderStatusHistoryScalarWhereWithAggregatesInput | BranchOrderStatusHistoryScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"BranchOrderStatusHistory"> | string
+    branchOrderId?: UuidWithAggregatesFilter<"BranchOrderStatusHistory"> | string
+    fromStatus?: EnumorderStatusNullableWithAggregatesFilter<"BranchOrderStatusHistory"> | $Enums.orderStatus | null
+    toStatus?: EnumorderStatusWithAggregatesFilter<"BranchOrderStatusHistory"> | $Enums.orderStatus
+    changedByUserId?: UuidWithAggregatesFilter<"BranchOrderStatusHistory"> | string
+    changedByRole?: EnumRoleWithAggregatesFilter<"BranchOrderStatusHistory"> | $Enums.Role
+    metadata?: JsonNullableWithAggregatesFilter<"BranchOrderStatusHistory">
+    createdAt?: DateTimeWithAggregatesFilter<"BranchOrderStatusHistory"> | Date | string
+  }
+
+  export type DeliveryProofWhereInput = {
+    AND?: DeliveryProofWhereInput | DeliveryProofWhereInput[]
+    OR?: DeliveryProofWhereInput[]
+    NOT?: DeliveryProofWhereInput | DeliveryProofWhereInput[]
+    id?: UuidFilter<"DeliveryProof"> | string
+    branchOrderId?: UuidFilter<"DeliveryProof"> | string
+    courierId?: UuidFilter<"DeliveryProof"> | string
+    proofUrl?: StringFilter<"DeliveryProof"> | string
+    proofStorageId?: StringFilter<"DeliveryProof"> | string
+    createdAt?: DateTimeFilter<"DeliveryProof"> | Date | string
+    branchOrder?: XOR<BranchOrderScalarRelationFilter, BranchOrderWhereInput>
+    courier?: XOR<CourierScalarRelationFilter, CourierWhereInput>
+  }
+
+  export type DeliveryProofOrderByWithRelationInput = {
+    id?: SortOrder
+    branchOrderId?: SortOrder
+    courierId?: SortOrder
+    proofUrl?: SortOrder
+    proofStorageId?: SortOrder
+    createdAt?: SortOrder
+    branchOrder?: BranchOrderOrderByWithRelationInput
+    courier?: CourierOrderByWithRelationInput
+  }
+
+  export type DeliveryProofWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DeliveryProofWhereInput | DeliveryProofWhereInput[]
+    OR?: DeliveryProofWhereInput[]
+    NOT?: DeliveryProofWhereInput | DeliveryProofWhereInput[]
+    branchOrderId?: UuidFilter<"DeliveryProof"> | string
+    courierId?: UuidFilter<"DeliveryProof"> | string
+    proofUrl?: StringFilter<"DeliveryProof"> | string
+    proofStorageId?: StringFilter<"DeliveryProof"> | string
+    createdAt?: DateTimeFilter<"DeliveryProof"> | Date | string
+    branchOrder?: XOR<BranchOrderScalarRelationFilter, BranchOrderWhereInput>
+    courier?: XOR<CourierScalarRelationFilter, CourierWhereInput>
+  }, "id">
+
+  export type DeliveryProofOrderByWithAggregationInput = {
+    id?: SortOrder
+    branchOrderId?: SortOrder
+    courierId?: SortOrder
+    proofUrl?: SortOrder
+    proofStorageId?: SortOrder
+    createdAt?: SortOrder
+    _count?: DeliveryProofCountOrderByAggregateInput
+    _max?: DeliveryProofMaxOrderByAggregateInput
+    _min?: DeliveryProofMinOrderByAggregateInput
+  }
+
+  export type DeliveryProofScalarWhereWithAggregatesInput = {
+    AND?: DeliveryProofScalarWhereWithAggregatesInput | DeliveryProofScalarWhereWithAggregatesInput[]
+    OR?: DeliveryProofScalarWhereWithAggregatesInput[]
+    NOT?: DeliveryProofScalarWhereWithAggregatesInput | DeliveryProofScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"DeliveryProof"> | string
+    branchOrderId?: UuidWithAggregatesFilter<"DeliveryProof"> | string
+    courierId?: UuidWithAggregatesFilter<"DeliveryProof"> | string
+    proofUrl?: StringWithAggregatesFilter<"DeliveryProof"> | string
+    proofStorageId?: StringWithAggregatesFilter<"DeliveryProof"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"DeliveryProof"> | Date | string
   }
 
   export type OrderItemWhereInput = {
@@ -48295,11 +51245,14 @@ export namespace Prisma {
     name?: StringFilter<"D_Company"> | string
     address?: StringFilter<"D_Company"> | string
     phoneNumber?: StringFilter<"D_Company"> | string
+    ownerUserId?: UuidNullableFilter<"D_Company"> | string | null
     isVerified?: BoolFilter<"D_Company"> | boolean
     isBanned?: BoolFilter<"D_Company"> | boolean
     balance?: IntFilter<"D_Company"> | number
+    owner?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     couriers?: CourierListRelationFilter
     orders?: BranchOrderListRelationFilter
+    invitations?: StaffInvitationListRelationFilter
     transactions?: DeliveryCompanyTransactionListRelationFilter
   }
 
@@ -48308,16 +51261,20 @@ export namespace Prisma {
     name?: SortOrder
     address?: SortOrder
     phoneNumber?: SortOrder
+    ownerUserId?: SortOrderInput | SortOrder
     isVerified?: SortOrder
     isBanned?: SortOrder
     balance?: SortOrder
+    owner?: UserOrderByWithRelationInput
     couriers?: CourierOrderByRelationAggregateInput
     orders?: BranchOrderOrderByRelationAggregateInput
+    invitations?: StaffInvitationOrderByRelationAggregateInput
     transactions?: DeliveryCompanyTransactionOrderByRelationAggregateInput
   }
 
   export type D_CompanyWhereUniqueInput = Prisma.AtLeast<{
     deliveryCompany?: string
+    ownerUserId?: string
     AND?: D_CompanyWhereInput | D_CompanyWhereInput[]
     OR?: D_CompanyWhereInput[]
     NOT?: D_CompanyWhereInput | D_CompanyWhereInput[]
@@ -48327,16 +51284,19 @@ export namespace Prisma {
     isVerified?: BoolFilter<"D_Company"> | boolean
     isBanned?: BoolFilter<"D_Company"> | boolean
     balance?: IntFilter<"D_Company"> | number
+    owner?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     couriers?: CourierListRelationFilter
     orders?: BranchOrderListRelationFilter
+    invitations?: StaffInvitationListRelationFilter
     transactions?: DeliveryCompanyTransactionListRelationFilter
-  }, "deliveryCompany">
+  }, "deliveryCompany" | "ownerUserId">
 
   export type D_CompanyOrderByWithAggregationInput = {
     deliveryCompany?: SortOrder
     name?: SortOrder
     address?: SortOrder
     phoneNumber?: SortOrder
+    ownerUserId?: SortOrderInput | SortOrder
     isVerified?: SortOrder
     isBanned?: SortOrder
     balance?: SortOrder
@@ -48355,6 +51315,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"D_Company"> | string
     address?: StringWithAggregatesFilter<"D_Company"> | string
     phoneNumber?: StringWithAggregatesFilter<"D_Company"> | string
+    ownerUserId?: UuidNullableWithAggregatesFilter<"D_Company"> | string | null
     isVerified?: BoolWithAggregatesFilter<"D_Company"> | boolean
     isBanned?: BoolWithAggregatesFilter<"D_Company"> | boolean
     balance?: IntWithAggregatesFilter<"D_Company"> | number
@@ -48442,6 +51403,7 @@ export namespace Prisma {
     OR?: CourierWhereInput[]
     NOT?: CourierWhereInput | CourierWhereInput[]
     id?: UuidFilter<"Courier"> | string
+    userId?: UuidNullableFilter<"Courier"> | string | null
     photo_url?: StringFilter<"Courier"> | string
     photo_id?: StringFilter<"Courier"> | string
     phoneNumber?: StringFilter<"Courier"> | string
@@ -48449,13 +51411,17 @@ export namespace Prisma {
     plateNumber?: StringFilter<"Courier"> | string
     isVerified?: BoolFilter<"Courier"> | boolean
     isBanned?: BoolFilter<"Courier"> | boolean
+    isActive?: BoolFilter<"Courier"> | boolean
     deliveryCompanyId?: UuidFilter<"Courier"> | string
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     deliveryCompany?: XOR<D_CompanyScalarRelationFilter, D_CompanyWhereInput>
     orders?: BranchOrderListRelationFilter
+    proofs?: DeliveryProofListRelationFilter
   }
 
   export type CourierOrderByWithRelationInput = {
     id?: SortOrder
+    userId?: SortOrderInput | SortOrder
     photo_url?: SortOrder
     photo_id?: SortOrder
     phoneNumber?: SortOrder
@@ -48463,13 +51429,17 @@ export namespace Prisma {
     plateNumber?: SortOrder
     isVerified?: SortOrder
     isBanned?: SortOrder
+    isActive?: SortOrder
     deliveryCompanyId?: SortOrder
+    user?: UserOrderByWithRelationInput
     deliveryCompany?: D_CompanyOrderByWithRelationInput
     orders?: BranchOrderOrderByRelationAggregateInput
+    proofs?: DeliveryProofOrderByRelationAggregateInput
   }
 
   export type CourierWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    userId?: string
     AND?: CourierWhereInput | CourierWhereInput[]
     OR?: CourierWhereInput[]
     NOT?: CourierWhereInput | CourierWhereInput[]
@@ -48480,13 +51450,17 @@ export namespace Prisma {
     plateNumber?: StringFilter<"Courier"> | string
     isVerified?: BoolFilter<"Courier"> | boolean
     isBanned?: BoolFilter<"Courier"> | boolean
+    isActive?: BoolFilter<"Courier"> | boolean
     deliveryCompanyId?: UuidFilter<"Courier"> | string
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     deliveryCompany?: XOR<D_CompanyScalarRelationFilter, D_CompanyWhereInput>
     orders?: BranchOrderListRelationFilter
-  }, "id">
+    proofs?: DeliveryProofListRelationFilter
+  }, "id" | "userId">
 
   export type CourierOrderByWithAggregationInput = {
     id?: SortOrder
+    userId?: SortOrderInput | SortOrder
     photo_url?: SortOrder
     photo_id?: SortOrder
     phoneNumber?: SortOrder
@@ -48494,6 +51468,7 @@ export namespace Prisma {
     plateNumber?: SortOrder
     isVerified?: SortOrder
     isBanned?: SortOrder
+    isActive?: SortOrder
     deliveryCompanyId?: SortOrder
     _count?: CourierCountOrderByAggregateInput
     _max?: CourierMaxOrderByAggregateInput
@@ -48505,6 +51480,7 @@ export namespace Prisma {
     OR?: CourierScalarWhereWithAggregatesInput[]
     NOT?: CourierScalarWhereWithAggregatesInput | CourierScalarWhereWithAggregatesInput[]
     id?: UuidWithAggregatesFilter<"Courier"> | string
+    userId?: UuidNullableWithAggregatesFilter<"Courier"> | string | null
     photo_url?: StringWithAggregatesFilter<"Courier"> | string
     photo_id?: StringWithAggregatesFilter<"Courier"> | string
     phoneNumber?: StringWithAggregatesFilter<"Courier"> | string
@@ -48512,6 +51488,7 @@ export namespace Prisma {
     plateNumber?: StringWithAggregatesFilter<"Courier"> | string
     isVerified?: BoolWithAggregatesFilter<"Courier"> | boolean
     isBanned?: BoolWithAggregatesFilter<"Courier"> | boolean
+    isActive?: BoolWithAggregatesFilter<"Courier"> | boolean
     deliveryCompanyId?: UuidWithAggregatesFilter<"Courier"> | string
   }
 
@@ -48554,6 +51531,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -48595,6 +51575,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyUncheckedCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierUncheckedCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   }
 
   export type UserUpdateInput = {
@@ -48636,6 +51619,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -48677,6 +51663,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUncheckedUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -49521,6 +52510,7 @@ export namespace Prisma {
     id?: string
     email: string
     role: $Enums.Role
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash: string
     expiresAt: Date | string
     acceptedAt?: Date | string | null
@@ -49528,6 +52518,7 @@ export namespace Prisma {
     createdAt?: Date | string
     brand?: BrandCreateNestedOneWithoutStaffInvitationsInput
     branch?: BrandBranchCreateNestedOneWithoutStaffInvitationsInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutInvitationsInput
     creator: UserCreateNestedOneWithoutCreatedStaffInvitationsInput
   }
 
@@ -49537,6 +52528,8 @@ export namespace Prisma {
     role: $Enums.Role
     brandId?: string | null
     branchId?: string | null
+    deliveryCompanyId?: string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash: string
     expiresAt: Date | string
     acceptedAt?: Date | string | null
@@ -49549,6 +52542,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -49556,6 +52550,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brand?: BrandUpdateOneWithoutStaffInvitationsNestedInput
     branch?: BrandBranchUpdateOneWithoutStaffInvitationsNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutInvitationsNestedInput
     creator?: UserUpdateOneRequiredWithoutCreatedStaffInvitationsNestedInput
   }
 
@@ -49565,6 +52560,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     brandId?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryCompanyId?: NullableStringFieldUpdateOperationsInput | string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -49579,6 +52576,8 @@ export namespace Prisma {
     role: $Enums.Role
     brandId?: string | null
     branchId?: string | null
+    deliveryCompanyId?: string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash: string
     expiresAt: Date | string
     acceptedAt?: Date | string | null
@@ -49591,6 +52590,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -49604,6 +52604,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     brandId?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryCompanyId?: NullableStringFieldUpdateOperationsInput | string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -51161,6 +54163,8 @@ export namespace Prisma {
     deliveryCompany?: D_CompanyCreateNestedOneWithoutOrdersInput
     courier?: CourierCreateNestedOneWithoutOrdersInput
     orderItems?: OrderItemCreateNestedManyWithoutBranchOrderInput
+    statusHistory?: BranchOrderStatusHistoryCreateNestedManyWithoutBranchOrderInput
+    deliveryProofs?: DeliveryProofCreateNestedManyWithoutBranchOrderInput
   }
 
   export type BranchOrderUncheckedCreateInput = {
@@ -51179,6 +54183,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutBranchOrderInput
+    statusHistory?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutBranchOrderInput
+    deliveryProofs?: DeliveryProofUncheckedCreateNestedManyWithoutBranchOrderInput
   }
 
   export type BranchOrderUpdateInput = {
@@ -51197,6 +54203,8 @@ export namespace Prisma {
     deliveryCompany?: D_CompanyUpdateOneWithoutOrdersNestedInput
     courier?: CourierUpdateOneWithoutOrdersNestedInput
     orderItems?: OrderItemUpdateManyWithoutBranchOrderNestedInput
+    statusHistory?: BranchOrderStatusHistoryUpdateManyWithoutBranchOrderNestedInput
+    deliveryProofs?: DeliveryProofUpdateManyWithoutBranchOrderNestedInput
   }
 
   export type BranchOrderUncheckedUpdateInput = {
@@ -51215,6 +54223,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderItems?: OrderItemUncheckedUpdateManyWithoutBranchOrderNestedInput
+    statusHistory?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutBranchOrderNestedInput
+    deliveryProofs?: DeliveryProofUncheckedUpdateManyWithoutBranchOrderNestedInput
   }
 
   export type BranchOrderCreateManyInput = {
@@ -51261,6 +54271,142 @@ export namespace Prisma {
     courierId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BranchOrderStatusHistoryCreateInput = {
+    id?: string
+    fromStatus?: $Enums.orderStatus | null
+    toStatus: $Enums.orderStatus
+    changedByRole: $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    branchOrder: BranchOrderCreateNestedOneWithoutStatusHistoryInput
+    changedBy: UserCreateNestedOneWithoutBranchOrderStatusChangesInput
+  }
+
+  export type BranchOrderStatusHistoryUncheckedCreateInput = {
+    id?: string
+    branchOrderId: string
+    fromStatus?: $Enums.orderStatus | null
+    toStatus: $Enums.orderStatus
+    changedByUserId: string
+    changedByRole: $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type BranchOrderStatusHistoryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableEnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus | null
+    toStatus?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
+    changedByRole?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branchOrder?: BranchOrderUpdateOneRequiredWithoutStatusHistoryNestedInput
+    changedBy?: UserUpdateOneRequiredWithoutBranchOrderStatusChangesNestedInput
+  }
+
+  export type BranchOrderStatusHistoryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    branchOrderId?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableEnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus | null
+    toStatus?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
+    changedByUserId?: StringFieldUpdateOperationsInput | string
+    changedByRole?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BranchOrderStatusHistoryCreateManyInput = {
+    id?: string
+    branchOrderId: string
+    fromStatus?: $Enums.orderStatus | null
+    toStatus: $Enums.orderStatus
+    changedByUserId: string
+    changedByRole: $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type BranchOrderStatusHistoryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableEnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus | null
+    toStatus?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
+    changedByRole?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BranchOrderStatusHistoryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    branchOrderId?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableEnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus | null
+    toStatus?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
+    changedByUserId?: StringFieldUpdateOperationsInput | string
+    changedByRole?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliveryProofCreateInput = {
+    id?: string
+    proofUrl: string
+    proofStorageId: string
+    createdAt?: Date | string
+    branchOrder: BranchOrderCreateNestedOneWithoutDeliveryProofsInput
+    courier: CourierCreateNestedOneWithoutProofsInput
+  }
+
+  export type DeliveryProofUncheckedCreateInput = {
+    id?: string
+    branchOrderId: string
+    courierId: string
+    proofUrl: string
+    proofStorageId: string
+    createdAt?: Date | string
+  }
+
+  export type DeliveryProofUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    proofUrl?: StringFieldUpdateOperationsInput | string
+    proofStorageId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branchOrder?: BranchOrderUpdateOneRequiredWithoutDeliveryProofsNestedInput
+    courier?: CourierUpdateOneRequiredWithoutProofsNestedInput
+  }
+
+  export type DeliveryProofUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    branchOrderId?: StringFieldUpdateOperationsInput | string
+    courierId?: StringFieldUpdateOperationsInput | string
+    proofUrl?: StringFieldUpdateOperationsInput | string
+    proofStorageId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliveryProofCreateManyInput = {
+    id?: string
+    branchOrderId: string
+    courierId: string
+    proofUrl: string
+    proofStorageId: string
+    createdAt?: Date | string
+  }
+
+  export type DeliveryProofUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    proofUrl?: StringFieldUpdateOperationsInput | string
+    proofStorageId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliveryProofUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    branchOrderId?: StringFieldUpdateOperationsInput | string
+    courierId?: StringFieldUpdateOperationsInput | string
+    proofUrl?: StringFieldUpdateOperationsInput | string
+    proofStorageId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type OrderItemCreateInput = {
@@ -51339,8 +54485,10 @@ export namespace Prisma {
     isVerified?: boolean
     isBanned?: boolean
     balance?: number
+    owner?: UserCreateNestedOneWithoutDeliveryCompanyInput
     couriers?: CourierCreateNestedManyWithoutDeliveryCompanyInput
     orders?: BranchOrderCreateNestedManyWithoutDeliveryCompanyInput
+    invitations?: StaffInvitationCreateNestedManyWithoutDeliveryCompanyInput
     transactions?: DeliveryCompanyTransactionCreateNestedManyWithoutDeliveryCompanyInput
   }
 
@@ -51349,11 +54497,13 @@ export namespace Prisma {
     name: string
     address: string
     phoneNumber: string
+    ownerUserId?: string | null
     isVerified?: boolean
     isBanned?: boolean
     balance?: number
     couriers?: CourierUncheckedCreateNestedManyWithoutDeliveryCompanyInput
     orders?: BranchOrderUncheckedCreateNestedManyWithoutDeliveryCompanyInput
+    invitations?: StaffInvitationUncheckedCreateNestedManyWithoutDeliveryCompanyInput
     transactions?: DeliveryCompanyTransactionUncheckedCreateNestedManyWithoutDeliveryCompanyInput
   }
 
@@ -51365,8 +54515,10 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
     balance?: IntFieldUpdateOperationsInput | number
+    owner?: UserUpdateOneWithoutDeliveryCompanyNestedInput
     couriers?: CourierUpdateManyWithoutDeliveryCompanyNestedInput
     orders?: BranchOrderUpdateManyWithoutDeliveryCompanyNestedInput
+    invitations?: StaffInvitationUpdateManyWithoutDeliveryCompanyNestedInput
     transactions?: DeliveryCompanyTransactionUpdateManyWithoutDeliveryCompanyNestedInput
   }
 
@@ -51375,11 +54527,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
+    ownerUserId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
     balance?: IntFieldUpdateOperationsInput | number
     couriers?: CourierUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
     orders?: BranchOrderUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
+    invitations?: StaffInvitationUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
     transactions?: DeliveryCompanyTransactionUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
   }
 
@@ -51388,6 +54542,7 @@ export namespace Prisma {
     name: string
     address: string
     phoneNumber: string
+    ownerUserId?: string | null
     isVerified?: boolean
     isBanned?: boolean
     balance?: number
@@ -51408,6 +54563,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
+    ownerUserId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
     balance?: IntFieldUpdateOperationsInput | number
@@ -51505,12 +54661,16 @@ export namespace Prisma {
     plateNumber: string
     isVerified?: boolean
     isBanned?: boolean
+    isActive?: boolean
+    user?: UserCreateNestedOneWithoutCourierProfileInput
     deliveryCompany: D_CompanyCreateNestedOneWithoutCouriersInput
     orders?: BranchOrderCreateNestedManyWithoutCourierInput
+    proofs?: DeliveryProofCreateNestedManyWithoutCourierInput
   }
 
   export type CourierUncheckedCreateInput = {
     id?: string
+    userId?: string | null
     photo_url: string
     photo_id: string
     phoneNumber: string
@@ -51518,8 +54678,10 @@ export namespace Prisma {
     plateNumber: string
     isVerified?: boolean
     isBanned?: boolean
+    isActive?: boolean
     deliveryCompanyId: string
     orders?: BranchOrderUncheckedCreateNestedManyWithoutCourierInput
+    proofs?: DeliveryProofUncheckedCreateNestedManyWithoutCourierInput
   }
 
   export type CourierUpdateInput = {
@@ -51531,12 +54693,16 @@ export namespace Prisma {
     plateNumber?: StringFieldUpdateOperationsInput | string
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneWithoutCourierProfileNestedInput
     deliveryCompany?: D_CompanyUpdateOneRequiredWithoutCouriersNestedInput
     orders?: BranchOrderUpdateManyWithoutCourierNestedInput
+    proofs?: DeliveryProofUpdateManyWithoutCourierNestedInput
   }
 
   export type CourierUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     photo_url?: StringFieldUpdateOperationsInput | string
     photo_id?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -51544,12 +54710,15 @@ export namespace Prisma {
     plateNumber?: StringFieldUpdateOperationsInput | string
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     deliveryCompanyId?: StringFieldUpdateOperationsInput | string
     orders?: BranchOrderUncheckedUpdateManyWithoutCourierNestedInput
+    proofs?: DeliveryProofUncheckedUpdateManyWithoutCourierNestedInput
   }
 
   export type CourierCreateManyInput = {
     id?: string
+    userId?: string | null
     photo_url: string
     photo_id: string
     phoneNumber: string
@@ -51557,6 +54726,7 @@ export namespace Prisma {
     plateNumber: string
     isVerified?: boolean
     isBanned?: boolean
+    isActive?: boolean
     deliveryCompanyId: string
   }
 
@@ -51569,10 +54739,12 @@ export namespace Prisma {
     plateNumber?: StringFieldUpdateOperationsInput | string
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CourierUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     photo_url?: StringFieldUpdateOperationsInput | string
     photo_id?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -51580,6 +54752,7 @@ export namespace Prisma {
     plateNumber?: StringFieldUpdateOperationsInput | string
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     deliveryCompanyId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -51764,6 +54937,22 @@ export namespace Prisma {
     none?: CheckoutSessionWhereInput
   }
 
+  export type D_CompanyNullableScalarRelationFilter = {
+    is?: D_CompanyWhereInput | null
+    isNot?: D_CompanyWhereInput | null
+  }
+
+  export type CourierNullableScalarRelationFilter = {
+    is?: CourierWhereInput | null
+    isNot?: CourierWhereInput | null
+  }
+
+  export type BranchOrderStatusHistoryListRelationFilter = {
+    every?: BranchOrderStatusHistoryWhereInput
+    some?: BranchOrderStatusHistoryWhereInput
+    none?: BranchOrderStatusHistoryWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -51798,6 +54987,10 @@ export namespace Prisma {
   }
 
   export type CheckoutSessionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BranchOrderStatusHistoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -52696,6 +55889,8 @@ export namespace Prisma {
     role?: SortOrder
     brandId?: SortOrder
     branchId?: SortOrder
+    deliveryCompanyId?: SortOrder
+    courierProfile?: SortOrder
     tokenHash?: SortOrder
     expiresAt?: SortOrder
     acceptedAt?: SortOrder
@@ -52710,6 +55905,7 @@ export namespace Prisma {
     role?: SortOrder
     brandId?: SortOrder
     branchId?: SortOrder
+    deliveryCompanyId?: SortOrder
     tokenHash?: SortOrder
     expiresAt?: SortOrder
     acceptedAt?: SortOrder
@@ -52724,6 +55920,7 @@ export namespace Prisma {
     role?: SortOrder
     brandId?: SortOrder
     branchId?: SortOrder
+    deliveryCompanyId?: SortOrder
     tokenHash?: SortOrder
     expiresAt?: SortOrder
     acceptedAt?: SortOrder
@@ -53927,14 +57124,14 @@ export namespace Prisma {
     isNot?: ParentOrderWhereInput
   }
 
-  export type D_CompanyNullableScalarRelationFilter = {
-    is?: D_CompanyWhereInput | null
-    isNot?: D_CompanyWhereInput | null
+  export type DeliveryProofListRelationFilter = {
+    every?: DeliveryProofWhereInput
+    some?: DeliveryProofWhereInput
+    none?: DeliveryProofWhereInput
   }
 
-  export type CourierNullableScalarRelationFilter = {
-    is?: CourierWhereInput | null
-    isNot?: CourierWhereInput | null
+  export type DeliveryProofOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type BranchOrderCountOrderByAggregateInput = {
@@ -54002,9 +57199,89 @@ export namespace Prisma {
     total?: SortOrder
   }
 
+  export type EnumorderStatusNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.orderStatus | EnumorderStatusFieldRefInput<$PrismaModel> | null
+    in?: $Enums.orderStatus[] | ListEnumorderStatusFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.orderStatus[] | ListEnumorderStatusFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumorderStatusNullableFilter<$PrismaModel> | $Enums.orderStatus | null
+  }
+
   export type BranchOrderScalarRelationFilter = {
     is?: BranchOrderWhereInput
     isNot?: BranchOrderWhereInput
+  }
+
+  export type BranchOrderStatusHistoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    branchOrderId?: SortOrder
+    fromStatus?: SortOrder
+    toStatus?: SortOrder
+    changedByUserId?: SortOrder
+    changedByRole?: SortOrder
+    metadata?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type BranchOrderStatusHistoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    branchOrderId?: SortOrder
+    fromStatus?: SortOrder
+    toStatus?: SortOrder
+    changedByUserId?: SortOrder
+    changedByRole?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type BranchOrderStatusHistoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    branchOrderId?: SortOrder
+    fromStatus?: SortOrder
+    toStatus?: SortOrder
+    changedByUserId?: SortOrder
+    changedByRole?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type EnumorderStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.orderStatus | EnumorderStatusFieldRefInput<$PrismaModel> | null
+    in?: $Enums.orderStatus[] | ListEnumorderStatusFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.orderStatus[] | ListEnumorderStatusFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumorderStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.orderStatus | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumorderStatusNullableFilter<$PrismaModel>
+    _max?: NestedEnumorderStatusNullableFilter<$PrismaModel>
+  }
+
+  export type CourierScalarRelationFilter = {
+    is?: CourierWhereInput
+    isNot?: CourierWhereInput
+  }
+
+  export type DeliveryProofCountOrderByAggregateInput = {
+    id?: SortOrder
+    branchOrderId?: SortOrder
+    courierId?: SortOrder
+    proofUrl?: SortOrder
+    proofStorageId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DeliveryProofMaxOrderByAggregateInput = {
+    id?: SortOrder
+    branchOrderId?: SortOrder
+    courierId?: SortOrder
+    proofUrl?: SortOrder
+    proofStorageId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DeliveryProofMinOrderByAggregateInput = {
+    id?: SortOrder
+    branchOrderId?: SortOrder
+    courierId?: SortOrder
+    proofUrl?: SortOrder
+    proofStorageId?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type OrderItemCountOrderByAggregateInput = {
@@ -54072,6 +57349,7 @@ export namespace Prisma {
     name?: SortOrder
     address?: SortOrder
     phoneNumber?: SortOrder
+    ownerUserId?: SortOrder
     isVerified?: SortOrder
     isBanned?: SortOrder
     balance?: SortOrder
@@ -54086,6 +57364,7 @@ export namespace Prisma {
     name?: SortOrder
     address?: SortOrder
     phoneNumber?: SortOrder
+    ownerUserId?: SortOrder
     isVerified?: SortOrder
     isBanned?: SortOrder
     balance?: SortOrder
@@ -54096,6 +57375,7 @@ export namespace Prisma {
     name?: SortOrder
     address?: SortOrder
     phoneNumber?: SortOrder
+    ownerUserId?: SortOrder
     isVerified?: SortOrder
     isBanned?: SortOrder
     balance?: SortOrder
@@ -54198,6 +57478,7 @@ export namespace Prisma {
 
   export type CourierCountOrderByAggregateInput = {
     id?: SortOrder
+    userId?: SortOrder
     photo_url?: SortOrder
     photo_id?: SortOrder
     phoneNumber?: SortOrder
@@ -54205,28 +57486,33 @@ export namespace Prisma {
     plateNumber?: SortOrder
     isVerified?: SortOrder
     isBanned?: SortOrder
+    isActive?: SortOrder
     deliveryCompanyId?: SortOrder
   }
 
   export type CourierMaxOrderByAggregateInput = {
     id?: SortOrder
+    userId?: SortOrder
     photo_url?: SortOrder
     photo_id?: SortOrder
     phoneNumber?: SortOrder
     plateNumber?: SortOrder
     isVerified?: SortOrder
     isBanned?: SortOrder
+    isActive?: SortOrder
     deliveryCompanyId?: SortOrder
   }
 
   export type CourierMinOrderByAggregateInput = {
     id?: SortOrder
+    userId?: SortOrder
     photo_url?: SortOrder
     photo_id?: SortOrder
     phoneNumber?: SortOrder
     plateNumber?: SortOrder
     isVerified?: SortOrder
     isBanned?: SortOrder
+    isActive?: SortOrder
     deliveryCompanyId?: SortOrder
   }
 
@@ -54322,6 +57608,25 @@ export namespace Prisma {
     connect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
   }
 
+  export type D_CompanyCreateNestedOneWithoutOwnerInput = {
+    create?: XOR<D_CompanyCreateWithoutOwnerInput, D_CompanyUncheckedCreateWithoutOwnerInput>
+    connectOrCreate?: D_CompanyCreateOrConnectWithoutOwnerInput
+    connect?: D_CompanyWhereUniqueInput
+  }
+
+  export type CourierCreateNestedOneWithoutUserInput = {
+    create?: XOR<CourierCreateWithoutUserInput, CourierUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CourierCreateOrConnectWithoutUserInput
+    connect?: CourierWhereUniqueInput
+  }
+
+  export type BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput = {
+    create?: XOR<BranchOrderStatusHistoryCreateWithoutChangedByInput, BranchOrderStatusHistoryUncheckedCreateWithoutChangedByInput> | BranchOrderStatusHistoryCreateWithoutChangedByInput[] | BranchOrderStatusHistoryUncheckedCreateWithoutChangedByInput[]
+    connectOrCreate?: BranchOrderStatusHistoryCreateOrConnectWithoutChangedByInput | BranchOrderStatusHistoryCreateOrConnectWithoutChangedByInput[]
+    createMany?: BranchOrderStatusHistoryCreateManyChangedByInputEnvelope
+    connect?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+  }
+
   export type CartUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<CartCreateWithoutUserInput, CartUncheckedCreateWithoutUserInput>
     connectOrCreate?: CartCreateOrConnectWithoutUserInput
@@ -54394,6 +57699,25 @@ export namespace Prisma {
     connectOrCreate?: CheckoutSessionCreateOrConnectWithoutUserInput | CheckoutSessionCreateOrConnectWithoutUserInput[]
     createMany?: CheckoutSessionCreateManyUserInputEnvelope
     connect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
+  }
+
+  export type D_CompanyUncheckedCreateNestedOneWithoutOwnerInput = {
+    create?: XOR<D_CompanyCreateWithoutOwnerInput, D_CompanyUncheckedCreateWithoutOwnerInput>
+    connectOrCreate?: D_CompanyCreateOrConnectWithoutOwnerInput
+    connect?: D_CompanyWhereUniqueInput
+  }
+
+  export type CourierUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<CourierCreateWithoutUserInput, CourierUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CourierCreateOrConnectWithoutUserInput
+    connect?: CourierWhereUniqueInput
+  }
+
+  export type BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput = {
+    create?: XOR<BranchOrderStatusHistoryCreateWithoutChangedByInput, BranchOrderStatusHistoryUncheckedCreateWithoutChangedByInput> | BranchOrderStatusHistoryCreateWithoutChangedByInput[] | BranchOrderStatusHistoryUncheckedCreateWithoutChangedByInput[]
+    connectOrCreate?: BranchOrderStatusHistoryCreateOrConnectWithoutChangedByInput | BranchOrderStatusHistoryCreateOrConnectWithoutChangedByInput[]
+    createMany?: BranchOrderStatusHistoryCreateManyChangedByInputEnvelope
+    connect?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -54608,6 +57932,40 @@ export namespace Prisma {
     deleteMany?: CheckoutSessionScalarWhereInput | CheckoutSessionScalarWhereInput[]
   }
 
+  export type D_CompanyUpdateOneWithoutOwnerNestedInput = {
+    create?: XOR<D_CompanyCreateWithoutOwnerInput, D_CompanyUncheckedCreateWithoutOwnerInput>
+    connectOrCreate?: D_CompanyCreateOrConnectWithoutOwnerInput
+    upsert?: D_CompanyUpsertWithoutOwnerInput
+    disconnect?: D_CompanyWhereInput | boolean
+    delete?: D_CompanyWhereInput | boolean
+    connect?: D_CompanyWhereUniqueInput
+    update?: XOR<XOR<D_CompanyUpdateToOneWithWhereWithoutOwnerInput, D_CompanyUpdateWithoutOwnerInput>, D_CompanyUncheckedUpdateWithoutOwnerInput>
+  }
+
+  export type CourierUpdateOneWithoutUserNestedInput = {
+    create?: XOR<CourierCreateWithoutUserInput, CourierUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CourierCreateOrConnectWithoutUserInput
+    upsert?: CourierUpsertWithoutUserInput
+    disconnect?: CourierWhereInput | boolean
+    delete?: CourierWhereInput | boolean
+    connect?: CourierWhereUniqueInput
+    update?: XOR<XOR<CourierUpdateToOneWithWhereWithoutUserInput, CourierUpdateWithoutUserInput>, CourierUncheckedUpdateWithoutUserInput>
+  }
+
+  export type BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput = {
+    create?: XOR<BranchOrderStatusHistoryCreateWithoutChangedByInput, BranchOrderStatusHistoryUncheckedCreateWithoutChangedByInput> | BranchOrderStatusHistoryCreateWithoutChangedByInput[] | BranchOrderStatusHistoryUncheckedCreateWithoutChangedByInput[]
+    connectOrCreate?: BranchOrderStatusHistoryCreateOrConnectWithoutChangedByInput | BranchOrderStatusHistoryCreateOrConnectWithoutChangedByInput[]
+    upsert?: BranchOrderStatusHistoryUpsertWithWhereUniqueWithoutChangedByInput | BranchOrderStatusHistoryUpsertWithWhereUniqueWithoutChangedByInput[]
+    createMany?: BranchOrderStatusHistoryCreateManyChangedByInputEnvelope
+    set?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+    disconnect?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+    delete?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+    connect?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+    update?: BranchOrderStatusHistoryUpdateWithWhereUniqueWithoutChangedByInput | BranchOrderStatusHistoryUpdateWithWhereUniqueWithoutChangedByInput[]
+    updateMany?: BranchOrderStatusHistoryUpdateManyWithWhereWithoutChangedByInput | BranchOrderStatusHistoryUpdateManyWithWhereWithoutChangedByInput[]
+    deleteMany?: BranchOrderStatusHistoryScalarWhereInput | BranchOrderStatusHistoryScalarWhereInput[]
+  }
+
   export type CartUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<CartCreateWithoutUserInput, CartUncheckedCreateWithoutUserInput>
     connectOrCreate?: CartCreateOrConnectWithoutUserInput
@@ -54748,6 +58106,40 @@ export namespace Prisma {
     update?: CheckoutSessionUpdateWithWhereUniqueWithoutUserInput | CheckoutSessionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: CheckoutSessionUpdateManyWithWhereWithoutUserInput | CheckoutSessionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: CheckoutSessionScalarWhereInput | CheckoutSessionScalarWhereInput[]
+  }
+
+  export type D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput = {
+    create?: XOR<D_CompanyCreateWithoutOwnerInput, D_CompanyUncheckedCreateWithoutOwnerInput>
+    connectOrCreate?: D_CompanyCreateOrConnectWithoutOwnerInput
+    upsert?: D_CompanyUpsertWithoutOwnerInput
+    disconnect?: D_CompanyWhereInput | boolean
+    delete?: D_CompanyWhereInput | boolean
+    connect?: D_CompanyWhereUniqueInput
+    update?: XOR<XOR<D_CompanyUpdateToOneWithWhereWithoutOwnerInput, D_CompanyUpdateWithoutOwnerInput>, D_CompanyUncheckedUpdateWithoutOwnerInput>
+  }
+
+  export type CourierUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<CourierCreateWithoutUserInput, CourierUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CourierCreateOrConnectWithoutUserInput
+    upsert?: CourierUpsertWithoutUserInput
+    disconnect?: CourierWhereInput | boolean
+    delete?: CourierWhereInput | boolean
+    connect?: CourierWhereUniqueInput
+    update?: XOR<XOR<CourierUpdateToOneWithWhereWithoutUserInput, CourierUpdateWithoutUserInput>, CourierUncheckedUpdateWithoutUserInput>
+  }
+
+  export type BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput = {
+    create?: XOR<BranchOrderStatusHistoryCreateWithoutChangedByInput, BranchOrderStatusHistoryUncheckedCreateWithoutChangedByInput> | BranchOrderStatusHistoryCreateWithoutChangedByInput[] | BranchOrderStatusHistoryUncheckedCreateWithoutChangedByInput[]
+    connectOrCreate?: BranchOrderStatusHistoryCreateOrConnectWithoutChangedByInput | BranchOrderStatusHistoryCreateOrConnectWithoutChangedByInput[]
+    upsert?: BranchOrderStatusHistoryUpsertWithWhereUniqueWithoutChangedByInput | BranchOrderStatusHistoryUpsertWithWhereUniqueWithoutChangedByInput[]
+    createMany?: BranchOrderStatusHistoryCreateManyChangedByInputEnvelope
+    set?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+    disconnect?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+    delete?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+    connect?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+    update?: BranchOrderStatusHistoryUpdateWithWhereUniqueWithoutChangedByInput | BranchOrderStatusHistoryUpdateWithWhereUniqueWithoutChangedByInput[]
+    updateMany?: BranchOrderStatusHistoryUpdateManyWithWhereWithoutChangedByInput | BranchOrderStatusHistoryUpdateManyWithWhereWithoutChangedByInput[]
+    deleteMany?: BranchOrderStatusHistoryScalarWhereInput | BranchOrderStatusHistoryScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAddressesInput = {
@@ -55747,6 +59139,12 @@ export namespace Prisma {
     connect?: BrandBranchWhereUniqueInput
   }
 
+  export type D_CompanyCreateNestedOneWithoutInvitationsInput = {
+    create?: XOR<D_CompanyCreateWithoutInvitationsInput, D_CompanyUncheckedCreateWithoutInvitationsInput>
+    connectOrCreate?: D_CompanyCreateOrConnectWithoutInvitationsInput
+    connect?: D_CompanyWhereUniqueInput
+  }
+
   export type UserCreateNestedOneWithoutCreatedStaffInvitationsInput = {
     create?: XOR<UserCreateWithoutCreatedStaffInvitationsInput, UserUncheckedCreateWithoutCreatedStaffInvitationsInput>
     connectOrCreate?: UserCreateOrConnectWithoutCreatedStaffInvitationsInput
@@ -55771,6 +59169,16 @@ export namespace Prisma {
     delete?: BrandBranchWhereInput | boolean
     connect?: BrandBranchWhereUniqueInput
     update?: XOR<XOR<BrandBranchUpdateToOneWithWhereWithoutStaffInvitationsInput, BrandBranchUpdateWithoutStaffInvitationsInput>, BrandBranchUncheckedUpdateWithoutStaffInvitationsInput>
+  }
+
+  export type D_CompanyUpdateOneWithoutInvitationsNestedInput = {
+    create?: XOR<D_CompanyCreateWithoutInvitationsInput, D_CompanyUncheckedCreateWithoutInvitationsInput>
+    connectOrCreate?: D_CompanyCreateOrConnectWithoutInvitationsInput
+    upsert?: D_CompanyUpsertWithoutInvitationsInput
+    disconnect?: D_CompanyWhereInput | boolean
+    delete?: D_CompanyWhereInput | boolean
+    connect?: D_CompanyWhereUniqueInput
+    update?: XOR<XOR<D_CompanyUpdateToOneWithWhereWithoutInvitationsInput, D_CompanyUpdateWithoutInvitationsInput>, D_CompanyUncheckedUpdateWithoutInvitationsInput>
   }
 
   export type UserUpdateOneRequiredWithoutCreatedStaffInvitationsNestedInput = {
@@ -57241,11 +60649,39 @@ export namespace Prisma {
     connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
   }
 
+  export type BranchOrderStatusHistoryCreateNestedManyWithoutBranchOrderInput = {
+    create?: XOR<BranchOrderStatusHistoryCreateWithoutBranchOrderInput, BranchOrderStatusHistoryUncheckedCreateWithoutBranchOrderInput> | BranchOrderStatusHistoryCreateWithoutBranchOrderInput[] | BranchOrderStatusHistoryUncheckedCreateWithoutBranchOrderInput[]
+    connectOrCreate?: BranchOrderStatusHistoryCreateOrConnectWithoutBranchOrderInput | BranchOrderStatusHistoryCreateOrConnectWithoutBranchOrderInput[]
+    createMany?: BranchOrderStatusHistoryCreateManyBranchOrderInputEnvelope
+    connect?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+  }
+
+  export type DeliveryProofCreateNestedManyWithoutBranchOrderInput = {
+    create?: XOR<DeliveryProofCreateWithoutBranchOrderInput, DeliveryProofUncheckedCreateWithoutBranchOrderInput> | DeliveryProofCreateWithoutBranchOrderInput[] | DeliveryProofUncheckedCreateWithoutBranchOrderInput[]
+    connectOrCreate?: DeliveryProofCreateOrConnectWithoutBranchOrderInput | DeliveryProofCreateOrConnectWithoutBranchOrderInput[]
+    createMany?: DeliveryProofCreateManyBranchOrderInputEnvelope
+    connect?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+  }
+
   export type OrderItemUncheckedCreateNestedManyWithoutBranchOrderInput = {
     create?: XOR<OrderItemCreateWithoutBranchOrderInput, OrderItemUncheckedCreateWithoutBranchOrderInput> | OrderItemCreateWithoutBranchOrderInput[] | OrderItemUncheckedCreateWithoutBranchOrderInput[]
     connectOrCreate?: OrderItemCreateOrConnectWithoutBranchOrderInput | OrderItemCreateOrConnectWithoutBranchOrderInput[]
     createMany?: OrderItemCreateManyBranchOrderInputEnvelope
     connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+  }
+
+  export type BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutBranchOrderInput = {
+    create?: XOR<BranchOrderStatusHistoryCreateWithoutBranchOrderInput, BranchOrderStatusHistoryUncheckedCreateWithoutBranchOrderInput> | BranchOrderStatusHistoryCreateWithoutBranchOrderInput[] | BranchOrderStatusHistoryUncheckedCreateWithoutBranchOrderInput[]
+    connectOrCreate?: BranchOrderStatusHistoryCreateOrConnectWithoutBranchOrderInput | BranchOrderStatusHistoryCreateOrConnectWithoutBranchOrderInput[]
+    createMany?: BranchOrderStatusHistoryCreateManyBranchOrderInputEnvelope
+    connect?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+  }
+
+  export type DeliveryProofUncheckedCreateNestedManyWithoutBranchOrderInput = {
+    create?: XOR<DeliveryProofCreateWithoutBranchOrderInput, DeliveryProofUncheckedCreateWithoutBranchOrderInput> | DeliveryProofCreateWithoutBranchOrderInput[] | DeliveryProofUncheckedCreateWithoutBranchOrderInput[]
+    connectOrCreate?: DeliveryProofCreateOrConnectWithoutBranchOrderInput | DeliveryProofCreateOrConnectWithoutBranchOrderInput[]
+    createMany?: DeliveryProofCreateManyBranchOrderInputEnvelope
+    connect?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
   }
 
   export type ParentOrderUpdateOneRequiredWithoutBranchOrdersNestedInput = {
@@ -57306,6 +60742,34 @@ export namespace Prisma {
     deleteMany?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
   }
 
+  export type BranchOrderStatusHistoryUpdateManyWithoutBranchOrderNestedInput = {
+    create?: XOR<BranchOrderStatusHistoryCreateWithoutBranchOrderInput, BranchOrderStatusHistoryUncheckedCreateWithoutBranchOrderInput> | BranchOrderStatusHistoryCreateWithoutBranchOrderInput[] | BranchOrderStatusHistoryUncheckedCreateWithoutBranchOrderInput[]
+    connectOrCreate?: BranchOrderStatusHistoryCreateOrConnectWithoutBranchOrderInput | BranchOrderStatusHistoryCreateOrConnectWithoutBranchOrderInput[]
+    upsert?: BranchOrderStatusHistoryUpsertWithWhereUniqueWithoutBranchOrderInput | BranchOrderStatusHistoryUpsertWithWhereUniqueWithoutBranchOrderInput[]
+    createMany?: BranchOrderStatusHistoryCreateManyBranchOrderInputEnvelope
+    set?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+    disconnect?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+    delete?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+    connect?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+    update?: BranchOrderStatusHistoryUpdateWithWhereUniqueWithoutBranchOrderInput | BranchOrderStatusHistoryUpdateWithWhereUniqueWithoutBranchOrderInput[]
+    updateMany?: BranchOrderStatusHistoryUpdateManyWithWhereWithoutBranchOrderInput | BranchOrderStatusHistoryUpdateManyWithWhereWithoutBranchOrderInput[]
+    deleteMany?: BranchOrderStatusHistoryScalarWhereInput | BranchOrderStatusHistoryScalarWhereInput[]
+  }
+
+  export type DeliveryProofUpdateManyWithoutBranchOrderNestedInput = {
+    create?: XOR<DeliveryProofCreateWithoutBranchOrderInput, DeliveryProofUncheckedCreateWithoutBranchOrderInput> | DeliveryProofCreateWithoutBranchOrderInput[] | DeliveryProofUncheckedCreateWithoutBranchOrderInput[]
+    connectOrCreate?: DeliveryProofCreateOrConnectWithoutBranchOrderInput | DeliveryProofCreateOrConnectWithoutBranchOrderInput[]
+    upsert?: DeliveryProofUpsertWithWhereUniqueWithoutBranchOrderInput | DeliveryProofUpsertWithWhereUniqueWithoutBranchOrderInput[]
+    createMany?: DeliveryProofCreateManyBranchOrderInputEnvelope
+    set?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+    disconnect?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+    delete?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+    connect?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+    update?: DeliveryProofUpdateWithWhereUniqueWithoutBranchOrderInput | DeliveryProofUpdateWithWhereUniqueWithoutBranchOrderInput[]
+    updateMany?: DeliveryProofUpdateManyWithWhereWithoutBranchOrderInput | DeliveryProofUpdateManyWithWhereWithoutBranchOrderInput[]
+    deleteMany?: DeliveryProofScalarWhereInput | DeliveryProofScalarWhereInput[]
+  }
+
   export type OrderItemUncheckedUpdateManyWithoutBranchOrderNestedInput = {
     create?: XOR<OrderItemCreateWithoutBranchOrderInput, OrderItemUncheckedCreateWithoutBranchOrderInput> | OrderItemCreateWithoutBranchOrderInput[] | OrderItemUncheckedCreateWithoutBranchOrderInput[]
     connectOrCreate?: OrderItemCreateOrConnectWithoutBranchOrderInput | OrderItemCreateOrConnectWithoutBranchOrderInput[]
@@ -57318,6 +60782,94 @@ export namespace Prisma {
     update?: OrderItemUpdateWithWhereUniqueWithoutBranchOrderInput | OrderItemUpdateWithWhereUniqueWithoutBranchOrderInput[]
     updateMany?: OrderItemUpdateManyWithWhereWithoutBranchOrderInput | OrderItemUpdateManyWithWhereWithoutBranchOrderInput[]
     deleteMany?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
+  }
+
+  export type BranchOrderStatusHistoryUncheckedUpdateManyWithoutBranchOrderNestedInput = {
+    create?: XOR<BranchOrderStatusHistoryCreateWithoutBranchOrderInput, BranchOrderStatusHistoryUncheckedCreateWithoutBranchOrderInput> | BranchOrderStatusHistoryCreateWithoutBranchOrderInput[] | BranchOrderStatusHistoryUncheckedCreateWithoutBranchOrderInput[]
+    connectOrCreate?: BranchOrderStatusHistoryCreateOrConnectWithoutBranchOrderInput | BranchOrderStatusHistoryCreateOrConnectWithoutBranchOrderInput[]
+    upsert?: BranchOrderStatusHistoryUpsertWithWhereUniqueWithoutBranchOrderInput | BranchOrderStatusHistoryUpsertWithWhereUniqueWithoutBranchOrderInput[]
+    createMany?: BranchOrderStatusHistoryCreateManyBranchOrderInputEnvelope
+    set?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+    disconnect?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+    delete?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+    connect?: BranchOrderStatusHistoryWhereUniqueInput | BranchOrderStatusHistoryWhereUniqueInput[]
+    update?: BranchOrderStatusHistoryUpdateWithWhereUniqueWithoutBranchOrderInput | BranchOrderStatusHistoryUpdateWithWhereUniqueWithoutBranchOrderInput[]
+    updateMany?: BranchOrderStatusHistoryUpdateManyWithWhereWithoutBranchOrderInput | BranchOrderStatusHistoryUpdateManyWithWhereWithoutBranchOrderInput[]
+    deleteMany?: BranchOrderStatusHistoryScalarWhereInput | BranchOrderStatusHistoryScalarWhereInput[]
+  }
+
+  export type DeliveryProofUncheckedUpdateManyWithoutBranchOrderNestedInput = {
+    create?: XOR<DeliveryProofCreateWithoutBranchOrderInput, DeliveryProofUncheckedCreateWithoutBranchOrderInput> | DeliveryProofCreateWithoutBranchOrderInput[] | DeliveryProofUncheckedCreateWithoutBranchOrderInput[]
+    connectOrCreate?: DeliveryProofCreateOrConnectWithoutBranchOrderInput | DeliveryProofCreateOrConnectWithoutBranchOrderInput[]
+    upsert?: DeliveryProofUpsertWithWhereUniqueWithoutBranchOrderInput | DeliveryProofUpsertWithWhereUniqueWithoutBranchOrderInput[]
+    createMany?: DeliveryProofCreateManyBranchOrderInputEnvelope
+    set?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+    disconnect?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+    delete?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+    connect?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+    update?: DeliveryProofUpdateWithWhereUniqueWithoutBranchOrderInput | DeliveryProofUpdateWithWhereUniqueWithoutBranchOrderInput[]
+    updateMany?: DeliveryProofUpdateManyWithWhereWithoutBranchOrderInput | DeliveryProofUpdateManyWithWhereWithoutBranchOrderInput[]
+    deleteMany?: DeliveryProofScalarWhereInput | DeliveryProofScalarWhereInput[]
+  }
+
+  export type BranchOrderCreateNestedOneWithoutStatusHistoryInput = {
+    create?: XOR<BranchOrderCreateWithoutStatusHistoryInput, BranchOrderUncheckedCreateWithoutStatusHistoryInput>
+    connectOrCreate?: BranchOrderCreateOrConnectWithoutStatusHistoryInput
+    connect?: BranchOrderWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutBranchOrderStatusChangesInput = {
+    create?: XOR<UserCreateWithoutBranchOrderStatusChangesInput, UserUncheckedCreateWithoutBranchOrderStatusChangesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBranchOrderStatusChangesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type NullableEnumorderStatusFieldUpdateOperationsInput = {
+    set?: $Enums.orderStatus | null
+  }
+
+  export type BranchOrderUpdateOneRequiredWithoutStatusHistoryNestedInput = {
+    create?: XOR<BranchOrderCreateWithoutStatusHistoryInput, BranchOrderUncheckedCreateWithoutStatusHistoryInput>
+    connectOrCreate?: BranchOrderCreateOrConnectWithoutStatusHistoryInput
+    upsert?: BranchOrderUpsertWithoutStatusHistoryInput
+    connect?: BranchOrderWhereUniqueInput
+    update?: XOR<XOR<BranchOrderUpdateToOneWithWhereWithoutStatusHistoryInput, BranchOrderUpdateWithoutStatusHistoryInput>, BranchOrderUncheckedUpdateWithoutStatusHistoryInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutBranchOrderStatusChangesNestedInput = {
+    create?: XOR<UserCreateWithoutBranchOrderStatusChangesInput, UserUncheckedCreateWithoutBranchOrderStatusChangesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBranchOrderStatusChangesInput
+    upsert?: UserUpsertWithoutBranchOrderStatusChangesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBranchOrderStatusChangesInput, UserUpdateWithoutBranchOrderStatusChangesInput>, UserUncheckedUpdateWithoutBranchOrderStatusChangesInput>
+  }
+
+  export type BranchOrderCreateNestedOneWithoutDeliveryProofsInput = {
+    create?: XOR<BranchOrderCreateWithoutDeliveryProofsInput, BranchOrderUncheckedCreateWithoutDeliveryProofsInput>
+    connectOrCreate?: BranchOrderCreateOrConnectWithoutDeliveryProofsInput
+    connect?: BranchOrderWhereUniqueInput
+  }
+
+  export type CourierCreateNestedOneWithoutProofsInput = {
+    create?: XOR<CourierCreateWithoutProofsInput, CourierUncheckedCreateWithoutProofsInput>
+    connectOrCreate?: CourierCreateOrConnectWithoutProofsInput
+    connect?: CourierWhereUniqueInput
+  }
+
+  export type BranchOrderUpdateOneRequiredWithoutDeliveryProofsNestedInput = {
+    create?: XOR<BranchOrderCreateWithoutDeliveryProofsInput, BranchOrderUncheckedCreateWithoutDeliveryProofsInput>
+    connectOrCreate?: BranchOrderCreateOrConnectWithoutDeliveryProofsInput
+    upsert?: BranchOrderUpsertWithoutDeliveryProofsInput
+    connect?: BranchOrderWhereUniqueInput
+    update?: XOR<XOR<BranchOrderUpdateToOneWithWhereWithoutDeliveryProofsInput, BranchOrderUpdateWithoutDeliveryProofsInput>, BranchOrderUncheckedUpdateWithoutDeliveryProofsInput>
+  }
+
+  export type CourierUpdateOneRequiredWithoutProofsNestedInput = {
+    create?: XOR<CourierCreateWithoutProofsInput, CourierUncheckedCreateWithoutProofsInput>
+    connectOrCreate?: CourierCreateOrConnectWithoutProofsInput
+    upsert?: CourierUpsertWithoutProofsInput
+    connect?: CourierWhereUniqueInput
+    update?: XOR<XOR<CourierUpdateToOneWithWhereWithoutProofsInput, CourierUpdateWithoutProofsInput>, CourierUncheckedUpdateWithoutProofsInput>
   }
 
   export type BranchOrderCreateNestedOneWithoutOrderItemsInput = {
@@ -57348,6 +60900,12 @@ export namespace Prisma {
     update?: XOR<XOR<VariantUpdateToOneWithWhereWithoutOrderItemsInput, VariantUpdateWithoutOrderItemsInput>, VariantUncheckedUpdateWithoutOrderItemsInput>
   }
 
+  export type UserCreateNestedOneWithoutDeliveryCompanyInput = {
+    create?: XOR<UserCreateWithoutDeliveryCompanyInput, UserUncheckedCreateWithoutDeliveryCompanyInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDeliveryCompanyInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type CourierCreateNestedManyWithoutDeliveryCompanyInput = {
     create?: XOR<CourierCreateWithoutDeliveryCompanyInput, CourierUncheckedCreateWithoutDeliveryCompanyInput> | CourierCreateWithoutDeliveryCompanyInput[] | CourierUncheckedCreateWithoutDeliveryCompanyInput[]
     connectOrCreate?: CourierCreateOrConnectWithoutDeliveryCompanyInput | CourierCreateOrConnectWithoutDeliveryCompanyInput[]
@@ -57360,6 +60918,13 @@ export namespace Prisma {
     connectOrCreate?: BranchOrderCreateOrConnectWithoutDeliveryCompanyInput | BranchOrderCreateOrConnectWithoutDeliveryCompanyInput[]
     createMany?: BranchOrderCreateManyDeliveryCompanyInputEnvelope
     connect?: BranchOrderWhereUniqueInput | BranchOrderWhereUniqueInput[]
+  }
+
+  export type StaffInvitationCreateNestedManyWithoutDeliveryCompanyInput = {
+    create?: XOR<StaffInvitationCreateWithoutDeliveryCompanyInput, StaffInvitationUncheckedCreateWithoutDeliveryCompanyInput> | StaffInvitationCreateWithoutDeliveryCompanyInput[] | StaffInvitationUncheckedCreateWithoutDeliveryCompanyInput[]
+    connectOrCreate?: StaffInvitationCreateOrConnectWithoutDeliveryCompanyInput | StaffInvitationCreateOrConnectWithoutDeliveryCompanyInput[]
+    createMany?: StaffInvitationCreateManyDeliveryCompanyInputEnvelope
+    connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
   }
 
   export type DeliveryCompanyTransactionCreateNestedManyWithoutDeliveryCompanyInput = {
@@ -57383,11 +60948,28 @@ export namespace Prisma {
     connect?: BranchOrderWhereUniqueInput | BranchOrderWhereUniqueInput[]
   }
 
+  export type StaffInvitationUncheckedCreateNestedManyWithoutDeliveryCompanyInput = {
+    create?: XOR<StaffInvitationCreateWithoutDeliveryCompanyInput, StaffInvitationUncheckedCreateWithoutDeliveryCompanyInput> | StaffInvitationCreateWithoutDeliveryCompanyInput[] | StaffInvitationUncheckedCreateWithoutDeliveryCompanyInput[]
+    connectOrCreate?: StaffInvitationCreateOrConnectWithoutDeliveryCompanyInput | StaffInvitationCreateOrConnectWithoutDeliveryCompanyInput[]
+    createMany?: StaffInvitationCreateManyDeliveryCompanyInputEnvelope
+    connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+  }
+
   export type DeliveryCompanyTransactionUncheckedCreateNestedManyWithoutDeliveryCompanyInput = {
     create?: XOR<DeliveryCompanyTransactionCreateWithoutDeliveryCompanyInput, DeliveryCompanyTransactionUncheckedCreateWithoutDeliveryCompanyInput> | DeliveryCompanyTransactionCreateWithoutDeliveryCompanyInput[] | DeliveryCompanyTransactionUncheckedCreateWithoutDeliveryCompanyInput[]
     connectOrCreate?: DeliveryCompanyTransactionCreateOrConnectWithoutDeliveryCompanyInput | DeliveryCompanyTransactionCreateOrConnectWithoutDeliveryCompanyInput[]
     createMany?: DeliveryCompanyTransactionCreateManyDeliveryCompanyInputEnvelope
     connect?: DeliveryCompanyTransactionWhereUniqueInput | DeliveryCompanyTransactionWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneWithoutDeliveryCompanyNestedInput = {
+    create?: XOR<UserCreateWithoutDeliveryCompanyInput, UserUncheckedCreateWithoutDeliveryCompanyInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDeliveryCompanyInput
+    upsert?: UserUpsertWithoutDeliveryCompanyInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDeliveryCompanyInput, UserUpdateWithoutDeliveryCompanyInput>, UserUncheckedUpdateWithoutDeliveryCompanyInput>
   }
 
   export type CourierUpdateManyWithoutDeliveryCompanyNestedInput = {
@@ -57416,6 +60998,20 @@ export namespace Prisma {
     update?: BranchOrderUpdateWithWhereUniqueWithoutDeliveryCompanyInput | BranchOrderUpdateWithWhereUniqueWithoutDeliveryCompanyInput[]
     updateMany?: BranchOrderUpdateManyWithWhereWithoutDeliveryCompanyInput | BranchOrderUpdateManyWithWhereWithoutDeliveryCompanyInput[]
     deleteMany?: BranchOrderScalarWhereInput | BranchOrderScalarWhereInput[]
+  }
+
+  export type StaffInvitationUpdateManyWithoutDeliveryCompanyNestedInput = {
+    create?: XOR<StaffInvitationCreateWithoutDeliveryCompanyInput, StaffInvitationUncheckedCreateWithoutDeliveryCompanyInput> | StaffInvitationCreateWithoutDeliveryCompanyInput[] | StaffInvitationUncheckedCreateWithoutDeliveryCompanyInput[]
+    connectOrCreate?: StaffInvitationCreateOrConnectWithoutDeliveryCompanyInput | StaffInvitationCreateOrConnectWithoutDeliveryCompanyInput[]
+    upsert?: StaffInvitationUpsertWithWhereUniqueWithoutDeliveryCompanyInput | StaffInvitationUpsertWithWhereUniqueWithoutDeliveryCompanyInput[]
+    createMany?: StaffInvitationCreateManyDeliveryCompanyInputEnvelope
+    set?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    disconnect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    delete?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    update?: StaffInvitationUpdateWithWhereUniqueWithoutDeliveryCompanyInput | StaffInvitationUpdateWithWhereUniqueWithoutDeliveryCompanyInput[]
+    updateMany?: StaffInvitationUpdateManyWithWhereWithoutDeliveryCompanyInput | StaffInvitationUpdateManyWithWhereWithoutDeliveryCompanyInput[]
+    deleteMany?: StaffInvitationScalarWhereInput | StaffInvitationScalarWhereInput[]
   }
 
   export type DeliveryCompanyTransactionUpdateManyWithoutDeliveryCompanyNestedInput = {
@@ -57460,6 +61056,20 @@ export namespace Prisma {
     deleteMany?: BranchOrderScalarWhereInput | BranchOrderScalarWhereInput[]
   }
 
+  export type StaffInvitationUncheckedUpdateManyWithoutDeliveryCompanyNestedInput = {
+    create?: XOR<StaffInvitationCreateWithoutDeliveryCompanyInput, StaffInvitationUncheckedCreateWithoutDeliveryCompanyInput> | StaffInvitationCreateWithoutDeliveryCompanyInput[] | StaffInvitationUncheckedCreateWithoutDeliveryCompanyInput[]
+    connectOrCreate?: StaffInvitationCreateOrConnectWithoutDeliveryCompanyInput | StaffInvitationCreateOrConnectWithoutDeliveryCompanyInput[]
+    upsert?: StaffInvitationUpsertWithWhereUniqueWithoutDeliveryCompanyInput | StaffInvitationUpsertWithWhereUniqueWithoutDeliveryCompanyInput[]
+    createMany?: StaffInvitationCreateManyDeliveryCompanyInputEnvelope
+    set?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    disconnect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    delete?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    connect?: StaffInvitationWhereUniqueInput | StaffInvitationWhereUniqueInput[]
+    update?: StaffInvitationUpdateWithWhereUniqueWithoutDeliveryCompanyInput | StaffInvitationUpdateWithWhereUniqueWithoutDeliveryCompanyInput[]
+    updateMany?: StaffInvitationUpdateManyWithWhereWithoutDeliveryCompanyInput | StaffInvitationUpdateManyWithWhereWithoutDeliveryCompanyInput[]
+    deleteMany?: StaffInvitationScalarWhereInput | StaffInvitationScalarWhereInput[]
+  }
+
   export type DeliveryCompanyTransactionUncheckedUpdateManyWithoutDeliveryCompanyNestedInput = {
     create?: XOR<DeliveryCompanyTransactionCreateWithoutDeliveryCompanyInput, DeliveryCompanyTransactionUncheckedCreateWithoutDeliveryCompanyInput> | DeliveryCompanyTransactionCreateWithoutDeliveryCompanyInput[] | DeliveryCompanyTransactionUncheckedCreateWithoutDeliveryCompanyInput[]
     connectOrCreate?: DeliveryCompanyTransactionCreateOrConnectWithoutDeliveryCompanyInput | DeliveryCompanyTransactionCreateOrConnectWithoutDeliveryCompanyInput[]
@@ -57500,6 +61110,12 @@ export namespace Prisma {
     set: $Enums.courierDocuments[]
   }
 
+  export type UserCreateNestedOneWithoutCourierProfileInput = {
+    create?: XOR<UserCreateWithoutCourierProfileInput, UserUncheckedCreateWithoutCourierProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCourierProfileInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type D_CompanyCreateNestedOneWithoutCouriersInput = {
     create?: XOR<D_CompanyCreateWithoutCouriersInput, D_CompanyUncheckedCreateWithoutCouriersInput>
     connectOrCreate?: D_CompanyCreateOrConnectWithoutCouriersInput
@@ -57513,6 +61129,13 @@ export namespace Prisma {
     connect?: BranchOrderWhereUniqueInput | BranchOrderWhereUniqueInput[]
   }
 
+  export type DeliveryProofCreateNestedManyWithoutCourierInput = {
+    create?: XOR<DeliveryProofCreateWithoutCourierInput, DeliveryProofUncheckedCreateWithoutCourierInput> | DeliveryProofCreateWithoutCourierInput[] | DeliveryProofUncheckedCreateWithoutCourierInput[]
+    connectOrCreate?: DeliveryProofCreateOrConnectWithoutCourierInput | DeliveryProofCreateOrConnectWithoutCourierInput[]
+    createMany?: DeliveryProofCreateManyCourierInputEnvelope
+    connect?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+  }
+
   export type BranchOrderUncheckedCreateNestedManyWithoutCourierInput = {
     create?: XOR<BranchOrderCreateWithoutCourierInput, BranchOrderUncheckedCreateWithoutCourierInput> | BranchOrderCreateWithoutCourierInput[] | BranchOrderUncheckedCreateWithoutCourierInput[]
     connectOrCreate?: BranchOrderCreateOrConnectWithoutCourierInput | BranchOrderCreateOrConnectWithoutCourierInput[]
@@ -57520,9 +61143,26 @@ export namespace Prisma {
     connect?: BranchOrderWhereUniqueInput | BranchOrderWhereUniqueInput[]
   }
 
+  export type DeliveryProofUncheckedCreateNestedManyWithoutCourierInput = {
+    create?: XOR<DeliveryProofCreateWithoutCourierInput, DeliveryProofUncheckedCreateWithoutCourierInput> | DeliveryProofCreateWithoutCourierInput[] | DeliveryProofUncheckedCreateWithoutCourierInput[]
+    connectOrCreate?: DeliveryProofCreateOrConnectWithoutCourierInput | DeliveryProofCreateOrConnectWithoutCourierInput[]
+    createMany?: DeliveryProofCreateManyCourierInputEnvelope
+    connect?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+  }
+
   export type CourierUpdatedocumentsInput = {
     set?: $Enums.courierDocuments[]
     push?: $Enums.courierDocuments | $Enums.courierDocuments[]
+  }
+
+  export type UserUpdateOneWithoutCourierProfileNestedInput = {
+    create?: XOR<UserCreateWithoutCourierProfileInput, UserUncheckedCreateWithoutCourierProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCourierProfileInput
+    upsert?: UserUpsertWithoutCourierProfileInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCourierProfileInput, UserUpdateWithoutCourierProfileInput>, UserUncheckedUpdateWithoutCourierProfileInput>
   }
 
   export type D_CompanyUpdateOneRequiredWithoutCouriersNestedInput = {
@@ -57547,6 +61187,20 @@ export namespace Prisma {
     deleteMany?: BranchOrderScalarWhereInput | BranchOrderScalarWhereInput[]
   }
 
+  export type DeliveryProofUpdateManyWithoutCourierNestedInput = {
+    create?: XOR<DeliveryProofCreateWithoutCourierInput, DeliveryProofUncheckedCreateWithoutCourierInput> | DeliveryProofCreateWithoutCourierInput[] | DeliveryProofUncheckedCreateWithoutCourierInput[]
+    connectOrCreate?: DeliveryProofCreateOrConnectWithoutCourierInput | DeliveryProofCreateOrConnectWithoutCourierInput[]
+    upsert?: DeliveryProofUpsertWithWhereUniqueWithoutCourierInput | DeliveryProofUpsertWithWhereUniqueWithoutCourierInput[]
+    createMany?: DeliveryProofCreateManyCourierInputEnvelope
+    set?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+    disconnect?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+    delete?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+    connect?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+    update?: DeliveryProofUpdateWithWhereUniqueWithoutCourierInput | DeliveryProofUpdateWithWhereUniqueWithoutCourierInput[]
+    updateMany?: DeliveryProofUpdateManyWithWhereWithoutCourierInput | DeliveryProofUpdateManyWithWhereWithoutCourierInput[]
+    deleteMany?: DeliveryProofScalarWhereInput | DeliveryProofScalarWhereInput[]
+  }
+
   export type BranchOrderUncheckedUpdateManyWithoutCourierNestedInput = {
     create?: XOR<BranchOrderCreateWithoutCourierInput, BranchOrderUncheckedCreateWithoutCourierInput> | BranchOrderCreateWithoutCourierInput[] | BranchOrderUncheckedCreateWithoutCourierInput[]
     connectOrCreate?: BranchOrderCreateOrConnectWithoutCourierInput | BranchOrderCreateOrConnectWithoutCourierInput[]
@@ -57559,6 +61213,20 @@ export namespace Prisma {
     update?: BranchOrderUpdateWithWhereUniqueWithoutCourierInput | BranchOrderUpdateWithWhereUniqueWithoutCourierInput[]
     updateMany?: BranchOrderUpdateManyWithWhereWithoutCourierInput | BranchOrderUpdateManyWithWhereWithoutCourierInput[]
     deleteMany?: BranchOrderScalarWhereInput | BranchOrderScalarWhereInput[]
+  }
+
+  export type DeliveryProofUncheckedUpdateManyWithoutCourierNestedInput = {
+    create?: XOR<DeliveryProofCreateWithoutCourierInput, DeliveryProofUncheckedCreateWithoutCourierInput> | DeliveryProofCreateWithoutCourierInput[] | DeliveryProofUncheckedCreateWithoutCourierInput[]
+    connectOrCreate?: DeliveryProofCreateOrConnectWithoutCourierInput | DeliveryProofCreateOrConnectWithoutCourierInput[]
+    upsert?: DeliveryProofUpsertWithWhereUniqueWithoutCourierInput | DeliveryProofUpsertWithWhereUniqueWithoutCourierInput[]
+    createMany?: DeliveryProofCreateManyCourierInputEnvelope
+    set?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+    disconnect?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+    delete?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+    connect?: DeliveryProofWhereUniqueInput | DeliveryProofWhereUniqueInput[]
+    update?: DeliveryProofUpdateWithWhereUniqueWithoutCourierInput | DeliveryProofUpdateWithWhereUniqueWithoutCourierInput[]
+    updateMany?: DeliveryProofUpdateManyWithWhereWithoutCourierInput | DeliveryProofUpdateManyWithWhereWithoutCourierInput[]
+    deleteMany?: DeliveryProofScalarWhereInput | DeliveryProofScalarWhereInput[]
   }
 
   export type NestedUuidFilter<$PrismaModel = never> = {
@@ -58201,6 +61869,23 @@ export namespace Prisma {
     _max?: NestedEnumorderStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumorderStatusNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.orderStatus | EnumorderStatusFieldRefInput<$PrismaModel> | null
+    in?: $Enums.orderStatus[] | ListEnumorderStatusFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.orderStatus[] | ListEnumorderStatusFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumorderStatusNullableFilter<$PrismaModel> | $Enums.orderStatus | null
+  }
+
+  export type NestedEnumorderStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.orderStatus | EnumorderStatusFieldRefInput<$PrismaModel> | null
+    in?: $Enums.orderStatus[] | ListEnumorderStatusFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.orderStatus[] | ListEnumorderStatusFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumorderStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.orderStatus | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumorderStatusNullableFilter<$PrismaModel>
+    _max?: NestedEnumorderStatusNullableFilter<$PrismaModel>
+  }
+
   export type NestedEnumDeliveryCompanyTransactionDirectionFilter<$PrismaModel = never> = {
     equals?: $Enums.DeliveryCompanyTransactionDirection | EnumDeliveryCompanyTransactionDirectionFieldRefInput<$PrismaModel>
     in?: $Enums.DeliveryCompanyTransactionDirection[] | ListEnumDeliveryCompanyTransactionDirectionFieldRefInput<$PrismaModel>
@@ -58739,6 +62424,7 @@ export namespace Prisma {
     id?: string
     email: string
     role: $Enums.Role
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash: string
     expiresAt: Date | string
     acceptedAt?: Date | string | null
@@ -58746,6 +62432,7 @@ export namespace Prisma {
     createdAt?: Date | string
     brand?: BrandCreateNestedOneWithoutStaffInvitationsInput
     branch?: BrandBranchCreateNestedOneWithoutStaffInvitationsInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutInvitationsInput
   }
 
   export type StaffInvitationUncheckedCreateWithoutCreatorInput = {
@@ -58754,6 +62441,8 @@ export namespace Prisma {
     role: $Enums.Role
     brandId?: string | null
     branchId?: string | null
+    deliveryCompanyId?: string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash: string
     expiresAt: Date | string
     acceptedAt?: Date | string | null
@@ -58824,6 +62513,104 @@ export namespace Prisma {
 
   export type CheckoutSessionCreateManyUserInputEnvelope = {
     data: CheckoutSessionCreateManyUserInput | CheckoutSessionCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type D_CompanyCreateWithoutOwnerInput = {
+    deliveryCompany?: string
+    name: string
+    address: string
+    phoneNumber: string
+    isVerified?: boolean
+    isBanned?: boolean
+    balance?: number
+    couriers?: CourierCreateNestedManyWithoutDeliveryCompanyInput
+    orders?: BranchOrderCreateNestedManyWithoutDeliveryCompanyInput
+    invitations?: StaffInvitationCreateNestedManyWithoutDeliveryCompanyInput
+    transactions?: DeliveryCompanyTransactionCreateNestedManyWithoutDeliveryCompanyInput
+  }
+
+  export type D_CompanyUncheckedCreateWithoutOwnerInput = {
+    deliveryCompany?: string
+    name: string
+    address: string
+    phoneNumber: string
+    isVerified?: boolean
+    isBanned?: boolean
+    balance?: number
+    couriers?: CourierUncheckedCreateNestedManyWithoutDeliveryCompanyInput
+    orders?: BranchOrderUncheckedCreateNestedManyWithoutDeliveryCompanyInput
+    invitations?: StaffInvitationUncheckedCreateNestedManyWithoutDeliveryCompanyInput
+    transactions?: DeliveryCompanyTransactionUncheckedCreateNestedManyWithoutDeliveryCompanyInput
+  }
+
+  export type D_CompanyCreateOrConnectWithoutOwnerInput = {
+    where: D_CompanyWhereUniqueInput
+    create: XOR<D_CompanyCreateWithoutOwnerInput, D_CompanyUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type CourierCreateWithoutUserInput = {
+    id?: string
+    photo_url: string
+    photo_id: string
+    phoneNumber: string
+    documents?: CourierCreatedocumentsInput | $Enums.courierDocuments[]
+    plateNumber: string
+    isVerified?: boolean
+    isBanned?: boolean
+    isActive?: boolean
+    deliveryCompany: D_CompanyCreateNestedOneWithoutCouriersInput
+    orders?: BranchOrderCreateNestedManyWithoutCourierInput
+    proofs?: DeliveryProofCreateNestedManyWithoutCourierInput
+  }
+
+  export type CourierUncheckedCreateWithoutUserInput = {
+    id?: string
+    photo_url: string
+    photo_id: string
+    phoneNumber: string
+    documents?: CourierCreatedocumentsInput | $Enums.courierDocuments[]
+    plateNumber: string
+    isVerified?: boolean
+    isBanned?: boolean
+    isActive?: boolean
+    deliveryCompanyId: string
+    orders?: BranchOrderUncheckedCreateNestedManyWithoutCourierInput
+    proofs?: DeliveryProofUncheckedCreateNestedManyWithoutCourierInput
+  }
+
+  export type CourierCreateOrConnectWithoutUserInput = {
+    where: CourierWhereUniqueInput
+    create: XOR<CourierCreateWithoutUserInput, CourierUncheckedCreateWithoutUserInput>
+  }
+
+  export type BranchOrderStatusHistoryCreateWithoutChangedByInput = {
+    id?: string
+    fromStatus?: $Enums.orderStatus | null
+    toStatus: $Enums.orderStatus
+    changedByRole: $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    branchOrder: BranchOrderCreateNestedOneWithoutStatusHistoryInput
+  }
+
+  export type BranchOrderStatusHistoryUncheckedCreateWithoutChangedByInput = {
+    id?: string
+    branchOrderId: string
+    fromStatus?: $Enums.orderStatus | null
+    toStatus: $Enums.orderStatus
+    changedByRole: $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type BranchOrderStatusHistoryCreateOrConnectWithoutChangedByInput = {
+    where: BranchOrderStatusHistoryWhereUniqueInput
+    create: XOR<BranchOrderStatusHistoryCreateWithoutChangedByInput, BranchOrderStatusHistoryUncheckedCreateWithoutChangedByInput>
+  }
+
+  export type BranchOrderStatusHistoryCreateManyChangedByInputEnvelope = {
+    data: BranchOrderStatusHistoryCreateManyChangedByInput | BranchOrderStatusHistoryCreateManyChangedByInput[]
     skipDuplicates?: boolean
   }
 
@@ -59384,6 +63171,8 @@ export namespace Prisma {
     role?: EnumRoleFilter<"StaffInvitation"> | $Enums.Role
     brandId?: UuidNullableFilter<"StaffInvitation"> | string | null
     branchId?: UuidNullableFilter<"StaffInvitation"> | string | null
+    deliveryCompanyId?: UuidNullableFilter<"StaffInvitation"> | string | null
+    courierProfile?: JsonNullableFilter<"StaffInvitation">
     tokenHash?: StringFilter<"StaffInvitation"> | string
     expiresAt?: DateTimeFilter<"StaffInvitation"> | Date | string
     acceptedAt?: DateTimeNullableFilter<"StaffInvitation"> | Date | string | null
@@ -59435,6 +63224,116 @@ export namespace Prisma {
     brandBranchId?: UuidNullableFilter<"CheckoutSession"> | string | null
   }
 
+  export type D_CompanyUpsertWithoutOwnerInput = {
+    update: XOR<D_CompanyUpdateWithoutOwnerInput, D_CompanyUncheckedUpdateWithoutOwnerInput>
+    create: XOR<D_CompanyCreateWithoutOwnerInput, D_CompanyUncheckedCreateWithoutOwnerInput>
+    where?: D_CompanyWhereInput
+  }
+
+  export type D_CompanyUpdateToOneWithWhereWithoutOwnerInput = {
+    where?: D_CompanyWhereInput
+    data: XOR<D_CompanyUpdateWithoutOwnerInput, D_CompanyUncheckedUpdateWithoutOwnerInput>
+  }
+
+  export type D_CompanyUpdateWithoutOwnerInput = {
+    deliveryCompany?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    balance?: IntFieldUpdateOperationsInput | number
+    couriers?: CourierUpdateManyWithoutDeliveryCompanyNestedInput
+    orders?: BranchOrderUpdateManyWithoutDeliveryCompanyNestedInput
+    invitations?: StaffInvitationUpdateManyWithoutDeliveryCompanyNestedInput
+    transactions?: DeliveryCompanyTransactionUpdateManyWithoutDeliveryCompanyNestedInput
+  }
+
+  export type D_CompanyUncheckedUpdateWithoutOwnerInput = {
+    deliveryCompany?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    balance?: IntFieldUpdateOperationsInput | number
+    couriers?: CourierUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
+    orders?: BranchOrderUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
+    invitations?: StaffInvitationUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
+    transactions?: DeliveryCompanyTransactionUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
+  }
+
+  export type CourierUpsertWithoutUserInput = {
+    update: XOR<CourierUpdateWithoutUserInput, CourierUncheckedUpdateWithoutUserInput>
+    create: XOR<CourierCreateWithoutUserInput, CourierUncheckedCreateWithoutUserInput>
+    where?: CourierWhereInput
+  }
+
+  export type CourierUpdateToOneWithWhereWithoutUserInput = {
+    where?: CourierWhereInput
+    data: XOR<CourierUpdateWithoutUserInput, CourierUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CourierUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    photo_url?: StringFieldUpdateOperationsInput | string
+    photo_id?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    documents?: CourierUpdatedocumentsInput | $Enums.courierDocuments[]
+    plateNumber?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deliveryCompany?: D_CompanyUpdateOneRequiredWithoutCouriersNestedInput
+    orders?: BranchOrderUpdateManyWithoutCourierNestedInput
+    proofs?: DeliveryProofUpdateManyWithoutCourierNestedInput
+  }
+
+  export type CourierUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    photo_url?: StringFieldUpdateOperationsInput | string
+    photo_id?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    documents?: CourierUpdatedocumentsInput | $Enums.courierDocuments[]
+    plateNumber?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deliveryCompanyId?: StringFieldUpdateOperationsInput | string
+    orders?: BranchOrderUncheckedUpdateManyWithoutCourierNestedInput
+    proofs?: DeliveryProofUncheckedUpdateManyWithoutCourierNestedInput
+  }
+
+  export type BranchOrderStatusHistoryUpsertWithWhereUniqueWithoutChangedByInput = {
+    where: BranchOrderStatusHistoryWhereUniqueInput
+    update: XOR<BranchOrderStatusHistoryUpdateWithoutChangedByInput, BranchOrderStatusHistoryUncheckedUpdateWithoutChangedByInput>
+    create: XOR<BranchOrderStatusHistoryCreateWithoutChangedByInput, BranchOrderStatusHistoryUncheckedCreateWithoutChangedByInput>
+  }
+
+  export type BranchOrderStatusHistoryUpdateWithWhereUniqueWithoutChangedByInput = {
+    where: BranchOrderStatusHistoryWhereUniqueInput
+    data: XOR<BranchOrderStatusHistoryUpdateWithoutChangedByInput, BranchOrderStatusHistoryUncheckedUpdateWithoutChangedByInput>
+  }
+
+  export type BranchOrderStatusHistoryUpdateManyWithWhereWithoutChangedByInput = {
+    where: BranchOrderStatusHistoryScalarWhereInput
+    data: XOR<BranchOrderStatusHistoryUpdateManyMutationInput, BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByInput>
+  }
+
+  export type BranchOrderStatusHistoryScalarWhereInput = {
+    AND?: BranchOrderStatusHistoryScalarWhereInput | BranchOrderStatusHistoryScalarWhereInput[]
+    OR?: BranchOrderStatusHistoryScalarWhereInput[]
+    NOT?: BranchOrderStatusHistoryScalarWhereInput | BranchOrderStatusHistoryScalarWhereInput[]
+    id?: UuidFilter<"BranchOrderStatusHistory"> | string
+    branchOrderId?: UuidFilter<"BranchOrderStatusHistory"> | string
+    fromStatus?: EnumorderStatusNullableFilter<"BranchOrderStatusHistory"> | $Enums.orderStatus | null
+    toStatus?: EnumorderStatusFilter<"BranchOrderStatusHistory"> | $Enums.orderStatus
+    changedByUserId?: UuidFilter<"BranchOrderStatusHistory"> | string
+    changedByRole?: EnumRoleFilter<"BranchOrderStatusHistory"> | $Enums.Role
+    metadata?: JsonNullableFilter<"BranchOrderStatusHistory">
+    createdAt?: DateTimeFilter<"BranchOrderStatusHistory"> | Date | string
+  }
+
   export type UserCreateWithoutAddressesInput = {
     id?: string
     username: string
@@ -59473,6 +63372,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput
   }
 
   export type UserUncheckedCreateWithoutAddressesInput = {
@@ -59513,6 +63415,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyUncheckedCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierUncheckedCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   }
 
   export type UserCreateOrConnectWithoutAddressesInput = {
@@ -59569,6 +63474,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAddressesInput = {
@@ -59609,6 +63517,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUncheckedUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserCreateWithoutBrandInput = {
@@ -59649,6 +63560,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput
   }
 
   export type UserUncheckedCreateWithoutBrandInput = {
@@ -59689,6 +63603,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyUncheckedCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierUncheckedCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   }
 
   export type UserCreateOrConnectWithoutBrandInput = {
@@ -59734,6 +63651,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput
   }
 
   export type UserUncheckedCreateWithoutBrandTenantInput = {
@@ -59774,6 +63694,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyUncheckedCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierUncheckedCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   }
 
   export type UserCreateOrConnectWithoutBrandTenantInput = {
@@ -60071,6 +63994,8 @@ export namespace Prisma {
     deliveryCompany?: D_CompanyCreateNestedOneWithoutOrdersInput
     courier?: CourierCreateNestedOneWithoutOrdersInput
     orderItems?: OrderItemCreateNestedManyWithoutBranchOrderInput
+    statusHistory?: BranchOrderStatusHistoryCreateNestedManyWithoutBranchOrderInput
+    deliveryProofs?: DeliveryProofCreateNestedManyWithoutBranchOrderInput
   }
 
   export type BranchOrderUncheckedCreateWithoutBrandInput = {
@@ -60088,6 +64013,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutBranchOrderInput
+    statusHistory?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutBranchOrderInput
+    deliveryProofs?: DeliveryProofUncheckedCreateNestedManyWithoutBranchOrderInput
   }
 
   export type BranchOrderCreateOrConnectWithoutBrandInput = {
@@ -60104,12 +64031,14 @@ export namespace Prisma {
     id?: string
     email: string
     role: $Enums.Role
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash: string
     expiresAt: Date | string
     acceptedAt?: Date | string | null
     revokedAt?: Date | string | null
     createdAt?: Date | string
     branch?: BrandBranchCreateNestedOneWithoutStaffInvitationsInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutInvitationsInput
     creator: UserCreateNestedOneWithoutCreatedStaffInvitationsInput
   }
 
@@ -60118,6 +64047,8 @@ export namespace Prisma {
     email: string
     role: $Enums.Role
     branchId?: string | null
+    deliveryCompanyId?: string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash: string
     expiresAt: Date | string
     acceptedAt?: Date | string | null
@@ -60275,6 +64206,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBrandInput = {
@@ -60315,6 +64249,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUncheckedUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUpsertWithWhereUniqueWithoutBrandTenantInput = {
@@ -60910,6 +64847,9 @@ export namespace Prisma {
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput
   }
 
   export type UserUncheckedCreateWithoutBranchStaffsInput = {
@@ -60950,6 +64890,9 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyUncheckedCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierUncheckedCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   }
 
   export type UserCreateOrConnectWithoutBranchStaffsInput = {
@@ -61081,6 +65024,9 @@ export namespace Prisma {
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBranchStaffsInput = {
@@ -61121,6 +65067,9 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUncheckedUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserCreateWithoutBrandBranchInput = {
@@ -61161,6 +65110,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput
   }
 
   export type UserUncheckedCreateWithoutBrandBranchInput = {
@@ -61201,6 +65153,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyUncheckedCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierUncheckedCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   }
 
   export type UserCreateOrConnectWithoutBrandBranchInput = {
@@ -61318,6 +65273,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput
   }
 
   export type UserUncheckedCreateWithoutBranchTenantInput = {
@@ -61358,6 +65316,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyUncheckedCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierUncheckedCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   }
 
   export type UserCreateOrConnectWithoutBranchTenantInput = {
@@ -61411,6 +65372,8 @@ export namespace Prisma {
     deliveryCompany?: D_CompanyCreateNestedOneWithoutOrdersInput
     courier?: CourierCreateNestedOneWithoutOrdersInput
     orderItems?: OrderItemCreateNestedManyWithoutBranchOrderInput
+    statusHistory?: BranchOrderStatusHistoryCreateNestedManyWithoutBranchOrderInput
+    deliveryProofs?: DeliveryProofCreateNestedManyWithoutBranchOrderInput
   }
 
   export type BranchOrderUncheckedCreateWithoutBrandBranchInput = {
@@ -61428,6 +65391,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutBranchOrderInput
+    statusHistory?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutBranchOrderInput
+    deliveryProofs?: DeliveryProofUncheckedCreateNestedManyWithoutBranchOrderInput
   }
 
   export type BranchOrderCreateOrConnectWithoutBrandBranchInput = {
@@ -61499,12 +65464,14 @@ export namespace Prisma {
     id?: string
     email: string
     role: $Enums.Role
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash: string
     expiresAt: Date | string
     acceptedAt?: Date | string | null
     revokedAt?: Date | string | null
     createdAt?: Date | string
     brand?: BrandCreateNestedOneWithoutStaffInvitationsInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutInvitationsInput
     creator: UserCreateNestedOneWithoutCreatedStaffInvitationsInput
   }
 
@@ -61513,6 +65480,8 @@ export namespace Prisma {
     email: string
     role: $Enums.Role
     brandId?: string | null
+    deliveryCompanyId?: string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash: string
     expiresAt: Date | string
     acceptedAt?: Date | string | null
@@ -61926,6 +65895,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput
   }
 
   export type UserUncheckedCreateWithoutReviewedBrandDocsInput = {
@@ -61966,6 +65938,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyUncheckedCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierUncheckedCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   }
 
   export type UserCreateOrConnectWithoutReviewedBrandDocsInput = {
@@ -62095,6 +66070,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewedBrandDocsInput = {
@@ -62135,6 +66113,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUncheckedUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   }
 
   export type BrandCreateWithoutStaffInvitationsInput = {
@@ -62273,6 +66254,39 @@ export namespace Prisma {
     create: XOR<BrandBranchCreateWithoutStaffInvitationsInput, BrandBranchUncheckedCreateWithoutStaffInvitationsInput>
   }
 
+  export type D_CompanyCreateWithoutInvitationsInput = {
+    deliveryCompany?: string
+    name: string
+    address: string
+    phoneNumber: string
+    isVerified?: boolean
+    isBanned?: boolean
+    balance?: number
+    owner?: UserCreateNestedOneWithoutDeliveryCompanyInput
+    couriers?: CourierCreateNestedManyWithoutDeliveryCompanyInput
+    orders?: BranchOrderCreateNestedManyWithoutDeliveryCompanyInput
+    transactions?: DeliveryCompanyTransactionCreateNestedManyWithoutDeliveryCompanyInput
+  }
+
+  export type D_CompanyUncheckedCreateWithoutInvitationsInput = {
+    deliveryCompany?: string
+    name: string
+    address: string
+    phoneNumber: string
+    ownerUserId?: string | null
+    isVerified?: boolean
+    isBanned?: boolean
+    balance?: number
+    couriers?: CourierUncheckedCreateNestedManyWithoutDeliveryCompanyInput
+    orders?: BranchOrderUncheckedCreateNestedManyWithoutDeliveryCompanyInput
+    transactions?: DeliveryCompanyTransactionUncheckedCreateNestedManyWithoutDeliveryCompanyInput
+  }
+
+  export type D_CompanyCreateOrConnectWithoutInvitationsInput = {
+    where: D_CompanyWhereUniqueInput
+    create: XOR<D_CompanyCreateWithoutInvitationsInput, D_CompanyUncheckedCreateWithoutInvitationsInput>
+  }
+
   export type UserCreateWithoutCreatedStaffInvitationsInput = {
     id?: string
     username: string
@@ -62311,6 +66325,9 @@ export namespace Prisma {
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput
   }
 
   export type UserUncheckedCreateWithoutCreatedStaffInvitationsInput = {
@@ -62351,6 +66368,9 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyUncheckedCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierUncheckedCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   }
 
   export type UserCreateOrConnectWithoutCreatedStaffInvitationsInput = {
@@ -62506,6 +66526,45 @@ export namespace Prisma {
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutBranchesNestedInput
   }
 
+  export type D_CompanyUpsertWithoutInvitationsInput = {
+    update: XOR<D_CompanyUpdateWithoutInvitationsInput, D_CompanyUncheckedUpdateWithoutInvitationsInput>
+    create: XOR<D_CompanyCreateWithoutInvitationsInput, D_CompanyUncheckedCreateWithoutInvitationsInput>
+    where?: D_CompanyWhereInput
+  }
+
+  export type D_CompanyUpdateToOneWithWhereWithoutInvitationsInput = {
+    where?: D_CompanyWhereInput
+    data: XOR<D_CompanyUpdateWithoutInvitationsInput, D_CompanyUncheckedUpdateWithoutInvitationsInput>
+  }
+
+  export type D_CompanyUpdateWithoutInvitationsInput = {
+    deliveryCompany?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    balance?: IntFieldUpdateOperationsInput | number
+    owner?: UserUpdateOneWithoutDeliveryCompanyNestedInput
+    couriers?: CourierUpdateManyWithoutDeliveryCompanyNestedInput
+    orders?: BranchOrderUpdateManyWithoutDeliveryCompanyNestedInput
+    transactions?: DeliveryCompanyTransactionUpdateManyWithoutDeliveryCompanyNestedInput
+  }
+
+  export type D_CompanyUncheckedUpdateWithoutInvitationsInput = {
+    deliveryCompany?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    ownerUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    balance?: IntFieldUpdateOperationsInput | number
+    couriers?: CourierUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
+    orders?: BranchOrderUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
+    transactions?: DeliveryCompanyTransactionUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
+  }
+
   export type UserUpsertWithoutCreatedStaffInvitationsInput = {
     update: XOR<UserUpdateWithoutCreatedStaffInvitationsInput, UserUncheckedUpdateWithoutCreatedStaffInvitationsInput>
     create: XOR<UserCreateWithoutCreatedStaffInvitationsInput, UserUncheckedCreateWithoutCreatedStaffInvitationsInput>
@@ -62555,6 +66614,9 @@ export namespace Prisma {
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedStaffInvitationsInput = {
@@ -62595,6 +66657,9 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUncheckedUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   }
 
   export type BrandCreateWithoutSocialLinksInput = {
@@ -62842,6 +66907,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput
   }
 
   export type UserUncheckedCreateWithoutBrandFollowersInput = {
@@ -62882,6 +66950,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyUncheckedCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierUncheckedCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   }
 
   export type UserCreateOrConnectWithoutBrandFollowersInput = {
@@ -63011,6 +67082,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBrandFollowersInput = {
@@ -63051,6 +67125,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUncheckedUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   }
 
   export type ProductCreateWithoutCategoryInput = {
@@ -64377,6 +68454,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput
   }
 
   export type UserUncheckedCreateWithoutReviewsInput = {
@@ -64417,6 +68497,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyUncheckedCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierUncheckedCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   }
 
   export type UserCreateOrConnectWithoutReviewsInput = {
@@ -64528,6 +68611,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -64568,6 +68654,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUncheckedUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserCreateWithoutCartInput = {
@@ -64608,6 +68697,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput
   }
 
   export type UserUncheckedCreateWithoutCartInput = {
@@ -64648,6 +68740,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyUncheckedCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierUncheckedCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   }
 
   export type UserCreateOrConnectWithoutCartInput = {
@@ -64793,6 +68888,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCartInput = {
@@ -64833,6 +68931,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUncheckedUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   }
 
   export type BrandUpsertWithoutCartsInput = {
@@ -65262,6 +69363,9 @@ export namespace Prisma {
     brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput
   }
 
   export type UserUncheckedCreateWithoutCheckoutSessionsInput = {
@@ -65302,6 +69406,9 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
+    deliveryCompany?: D_CompanyUncheckedCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierUncheckedCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   }
 
   export type UserCreateOrConnectWithoutCheckoutSessionsInput = {
@@ -65506,6 +69613,9 @@ export namespace Prisma {
     brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCheckoutSessionsInput = {
@@ -65546,6 +69656,9 @@ export namespace Prisma {
     reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+    deliveryCompany?: D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUncheckedUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserCreateWithoutWishlistInput = {
@@ -65586,6 +69699,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput
   }
 
   export type UserUncheckedCreateWithoutWishlistInput = {
@@ -65626,6 +69742,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyUncheckedCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierUncheckedCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   }
 
   export type UserCreateOrConnectWithoutWishlistInput = {
@@ -65731,6 +69850,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWishlistInput = {
@@ -65771,6 +69893,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUncheckedUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   }
 
   export type ProductUpsertWithWhereUniqueWithoutWishlistsInput = {
@@ -67416,6 +71541,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput
   }
 
   export type UserUncheckedCreateWithoutOrdersInput = {
@@ -67456,6 +71584,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
     createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyUncheckedCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierUncheckedCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   }
 
   export type UserCreateOrConnectWithoutOrdersInput = {
@@ -67478,6 +71609,8 @@ export namespace Prisma {
     deliveryCompany?: D_CompanyCreateNestedOneWithoutOrdersInput
     courier?: CourierCreateNestedOneWithoutOrdersInput
     orderItems?: OrderItemCreateNestedManyWithoutBranchOrderInput
+    statusHistory?: BranchOrderStatusHistoryCreateNestedManyWithoutBranchOrderInput
+    deliveryProofs?: DeliveryProofCreateNestedManyWithoutBranchOrderInput
   }
 
   export type BranchOrderUncheckedCreateWithoutOrderInput = {
@@ -67495,6 +71628,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutBranchOrderInput
+    statusHistory?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutBranchOrderInput
+    deliveryProofs?: DeliveryProofUncheckedCreateNestedManyWithoutBranchOrderInput
   }
 
   export type BranchOrderCreateOrConnectWithoutOrderInput = {
@@ -67556,6 +71691,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -67596,6 +71734,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUncheckedUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   }
 
   export type BranchOrderUpsertWithWhereUniqueWithoutOrderInput = {
@@ -67793,7 +71934,9 @@ export namespace Prisma {
     isVerified?: boolean
     isBanned?: boolean
     balance?: number
+    owner?: UserCreateNestedOneWithoutDeliveryCompanyInput
     couriers?: CourierCreateNestedManyWithoutDeliveryCompanyInput
+    invitations?: StaffInvitationCreateNestedManyWithoutDeliveryCompanyInput
     transactions?: DeliveryCompanyTransactionCreateNestedManyWithoutDeliveryCompanyInput
   }
 
@@ -67802,10 +71945,12 @@ export namespace Prisma {
     name: string
     address: string
     phoneNumber: string
+    ownerUserId?: string | null
     isVerified?: boolean
     isBanned?: boolean
     balance?: number
     couriers?: CourierUncheckedCreateNestedManyWithoutDeliveryCompanyInput
+    invitations?: StaffInvitationUncheckedCreateNestedManyWithoutDeliveryCompanyInput
     transactions?: DeliveryCompanyTransactionUncheckedCreateNestedManyWithoutDeliveryCompanyInput
   }
 
@@ -67823,11 +71968,15 @@ export namespace Prisma {
     plateNumber: string
     isVerified?: boolean
     isBanned?: boolean
+    isActive?: boolean
+    user?: UserCreateNestedOneWithoutCourierProfileInput
     deliveryCompany: D_CompanyCreateNestedOneWithoutCouriersInput
+    proofs?: DeliveryProofCreateNestedManyWithoutCourierInput
   }
 
   export type CourierUncheckedCreateWithoutOrdersInput = {
     id?: string
+    userId?: string | null
     photo_url: string
     photo_id: string
     phoneNumber: string
@@ -67835,7 +71984,9 @@ export namespace Prisma {
     plateNumber: string
     isVerified?: boolean
     isBanned?: boolean
+    isActive?: boolean
     deliveryCompanyId: string
+    proofs?: DeliveryProofUncheckedCreateNestedManyWithoutCourierInput
   }
 
   export type CourierCreateOrConnectWithoutOrdersInput = {
@@ -67868,6 +72019,62 @@ export namespace Prisma {
 
   export type OrderItemCreateManyBranchOrderInputEnvelope = {
     data: OrderItemCreateManyBranchOrderInput | OrderItemCreateManyBranchOrderInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type BranchOrderStatusHistoryCreateWithoutBranchOrderInput = {
+    id?: string
+    fromStatus?: $Enums.orderStatus | null
+    toStatus: $Enums.orderStatus
+    changedByRole: $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    changedBy: UserCreateNestedOneWithoutBranchOrderStatusChangesInput
+  }
+
+  export type BranchOrderStatusHistoryUncheckedCreateWithoutBranchOrderInput = {
+    id?: string
+    fromStatus?: $Enums.orderStatus | null
+    toStatus: $Enums.orderStatus
+    changedByUserId: string
+    changedByRole: $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type BranchOrderStatusHistoryCreateOrConnectWithoutBranchOrderInput = {
+    where: BranchOrderStatusHistoryWhereUniqueInput
+    create: XOR<BranchOrderStatusHistoryCreateWithoutBranchOrderInput, BranchOrderStatusHistoryUncheckedCreateWithoutBranchOrderInput>
+  }
+
+  export type BranchOrderStatusHistoryCreateManyBranchOrderInputEnvelope = {
+    data: BranchOrderStatusHistoryCreateManyBranchOrderInput | BranchOrderStatusHistoryCreateManyBranchOrderInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DeliveryProofCreateWithoutBranchOrderInput = {
+    id?: string
+    proofUrl: string
+    proofStorageId: string
+    createdAt?: Date | string
+    courier: CourierCreateNestedOneWithoutProofsInput
+  }
+
+  export type DeliveryProofUncheckedCreateWithoutBranchOrderInput = {
+    id?: string
+    courierId: string
+    proofUrl: string
+    proofStorageId: string
+    createdAt?: Date | string
+  }
+
+  export type DeliveryProofCreateOrConnectWithoutBranchOrderInput = {
+    where: DeliveryProofWhereUniqueInput
+    create: XOR<DeliveryProofCreateWithoutBranchOrderInput, DeliveryProofUncheckedCreateWithoutBranchOrderInput>
+  }
+
+  export type DeliveryProofCreateManyBranchOrderInputEnvelope = {
+    data: DeliveryProofCreateManyBranchOrderInput | DeliveryProofCreateManyBranchOrderInput[]
     skipDuplicates?: boolean
   }
 
@@ -68079,7 +72286,9 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
     balance?: IntFieldUpdateOperationsInput | number
+    owner?: UserUpdateOneWithoutDeliveryCompanyNestedInput
     couriers?: CourierUpdateManyWithoutDeliveryCompanyNestedInput
+    invitations?: StaffInvitationUpdateManyWithoutDeliveryCompanyNestedInput
     transactions?: DeliveryCompanyTransactionUpdateManyWithoutDeliveryCompanyNestedInput
   }
 
@@ -68088,10 +72297,12 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
+    ownerUserId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
     balance?: IntFieldUpdateOperationsInput | number
     couriers?: CourierUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
+    invitations?: StaffInvitationUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
     transactions?: DeliveryCompanyTransactionUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
   }
 
@@ -68115,11 +72326,15 @@ export namespace Prisma {
     plateNumber?: StringFieldUpdateOperationsInput | string
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneWithoutCourierProfileNestedInput
     deliveryCompany?: D_CompanyUpdateOneRequiredWithoutCouriersNestedInput
+    proofs?: DeliveryProofUpdateManyWithoutCourierNestedInput
   }
 
   export type CourierUncheckedUpdateWithoutOrdersInput = {
     id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     photo_url?: StringFieldUpdateOperationsInput | string
     photo_id?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -68127,7 +72342,9 @@ export namespace Prisma {
     plateNumber?: StringFieldUpdateOperationsInput | string
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     deliveryCompanyId?: StringFieldUpdateOperationsInput | string
+    proofs?: DeliveryProofUncheckedUpdateManyWithoutCourierNestedInput
   }
 
   export type OrderItemUpsertWithWhereUniqueWithoutBranchOrderInput = {
@@ -68146,6 +72363,498 @@ export namespace Prisma {
     data: XOR<OrderItemUpdateManyMutationInput, OrderItemUncheckedUpdateManyWithoutBranchOrderInput>
   }
 
+  export type BranchOrderStatusHistoryUpsertWithWhereUniqueWithoutBranchOrderInput = {
+    where: BranchOrderStatusHistoryWhereUniqueInput
+    update: XOR<BranchOrderStatusHistoryUpdateWithoutBranchOrderInput, BranchOrderStatusHistoryUncheckedUpdateWithoutBranchOrderInput>
+    create: XOR<BranchOrderStatusHistoryCreateWithoutBranchOrderInput, BranchOrderStatusHistoryUncheckedCreateWithoutBranchOrderInput>
+  }
+
+  export type BranchOrderStatusHistoryUpdateWithWhereUniqueWithoutBranchOrderInput = {
+    where: BranchOrderStatusHistoryWhereUniqueInput
+    data: XOR<BranchOrderStatusHistoryUpdateWithoutBranchOrderInput, BranchOrderStatusHistoryUncheckedUpdateWithoutBranchOrderInput>
+  }
+
+  export type BranchOrderStatusHistoryUpdateManyWithWhereWithoutBranchOrderInput = {
+    where: BranchOrderStatusHistoryScalarWhereInput
+    data: XOR<BranchOrderStatusHistoryUpdateManyMutationInput, BranchOrderStatusHistoryUncheckedUpdateManyWithoutBranchOrderInput>
+  }
+
+  export type DeliveryProofUpsertWithWhereUniqueWithoutBranchOrderInput = {
+    where: DeliveryProofWhereUniqueInput
+    update: XOR<DeliveryProofUpdateWithoutBranchOrderInput, DeliveryProofUncheckedUpdateWithoutBranchOrderInput>
+    create: XOR<DeliveryProofCreateWithoutBranchOrderInput, DeliveryProofUncheckedCreateWithoutBranchOrderInput>
+  }
+
+  export type DeliveryProofUpdateWithWhereUniqueWithoutBranchOrderInput = {
+    where: DeliveryProofWhereUniqueInput
+    data: XOR<DeliveryProofUpdateWithoutBranchOrderInput, DeliveryProofUncheckedUpdateWithoutBranchOrderInput>
+  }
+
+  export type DeliveryProofUpdateManyWithWhereWithoutBranchOrderInput = {
+    where: DeliveryProofScalarWhereInput
+    data: XOR<DeliveryProofUpdateManyMutationInput, DeliveryProofUncheckedUpdateManyWithoutBranchOrderInput>
+  }
+
+  export type DeliveryProofScalarWhereInput = {
+    AND?: DeliveryProofScalarWhereInput | DeliveryProofScalarWhereInput[]
+    OR?: DeliveryProofScalarWhereInput[]
+    NOT?: DeliveryProofScalarWhereInput | DeliveryProofScalarWhereInput[]
+    id?: UuidFilter<"DeliveryProof"> | string
+    branchOrderId?: UuidFilter<"DeliveryProof"> | string
+    courierId?: UuidFilter<"DeliveryProof"> | string
+    proofUrl?: StringFilter<"DeliveryProof"> | string
+    proofStorageId?: StringFilter<"DeliveryProof"> | string
+    createdAt?: DateTimeFilter<"DeliveryProof"> | Date | string
+  }
+
+  export type BranchOrderCreateWithoutStatusHistoryInput = {
+    branchOrderId?: string
+    status?: $Enums.orderStatus
+    subtotal: number
+    deliveryFee?: number
+    discountShare?: number
+    total: number
+    etaAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    order: ParentOrderCreateNestedOneWithoutBranchOrdersInput
+    brand: BrandCreateNestedOneWithoutBranchOrdersInput
+    brandBranch: BrandBranchCreateNestedOneWithoutOrdersInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOrdersInput
+    courier?: CourierCreateNestedOneWithoutOrdersInput
+    orderItems?: OrderItemCreateNestedManyWithoutBranchOrderInput
+    deliveryProofs?: DeliveryProofCreateNestedManyWithoutBranchOrderInput
+  }
+
+  export type BranchOrderUncheckedCreateWithoutStatusHistoryInput = {
+    branchOrderId?: string
+    parentOrderId: string
+    brandId: string
+    brandBranchId: string
+    status?: $Enums.orderStatus
+    subtotal: number
+    deliveryFee?: number
+    discountShare?: number
+    total: number
+    etaAt?: Date | string | null
+    deliveryCompanyId?: string | null
+    courierId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    orderItems?: OrderItemUncheckedCreateNestedManyWithoutBranchOrderInput
+    deliveryProofs?: DeliveryProofUncheckedCreateNestedManyWithoutBranchOrderInput
+  }
+
+  export type BranchOrderCreateOrConnectWithoutStatusHistoryInput = {
+    where: BranchOrderWhereUniqueInput
+    create: XOR<BranchOrderCreateWithoutStatusHistoryInput, BranchOrderUncheckedCreateWithoutStatusHistoryInput>
+  }
+
+  export type UserCreateWithoutBranchOrderStatusChangesInput = {
+    id?: string
+    username: string
+    phone?: string | null
+    email: string
+    role?: $Enums.Role
+    password: string
+    picture_url?: string | null
+    picture_url_id?: string | null
+    otp?: string | null
+    otp_expiration?: Date | string | null
+    otp_purpose?: $Enums.otpPurpose | null
+    isVerified?: boolean
+    isBanned?: boolean
+    refreshToken?: string | null
+    created_At?: Date | string
+    updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
+    accountId?: string | null
+    payment_id?: string | null
+    passwordChangedAt?: Date | string | null
+    failedLoginAttempts?: number
+    lockedUntil?: Date | string | null
+    isOnline?: boolean
+    cart?: CartCreateNestedOneWithoutUserInput
+    wishlist?: wishlistCreateNestedOneWithoutUserInput
+    addresses?: AddressCreateNestedManyWithoutUserInput
+    orders?: ParentOrderCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    brandFollowers?: BrandFollowerCreateNestedManyWithoutUserInput
+    brand?: BrandCreateNestedOneWithoutUserInput
+    brandTenant?: BrandCreateNestedOneWithoutBrandUsersInput
+    branchTenant?: BrandBranchCreateNestedOneWithoutUsersInput
+    reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
+    brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
+    branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierCreateNestedOneWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutBranchOrderStatusChangesInput = {
+    id?: string
+    username: string
+    phone?: string | null
+    email: string
+    role?: $Enums.Role
+    password: string
+    picture_url?: string | null
+    picture_url_id?: string | null
+    otp?: string | null
+    otp_expiration?: Date | string | null
+    otp_purpose?: $Enums.otpPurpose | null
+    isVerified?: boolean
+    isBanned?: boolean
+    refreshToken?: string | null
+    created_At?: Date | string
+    updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
+    accountId?: string | null
+    payment_id?: string | null
+    passwordChangedAt?: Date | string | null
+    failedLoginAttempts?: number
+    lockedUntil?: Date | string | null
+    isOnline?: boolean
+    brandId?: string | null
+    branchId?: string | null
+    brandBranchId?: string | null
+    cart?: CartUncheckedCreateNestedOneWithoutUserInput
+    wishlist?: wishlistUncheckedCreateNestedOneWithoutUserInput
+    addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
+    orders?: ParentOrderUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    brandFollowers?: BrandFollowerUncheckedCreateNestedManyWithoutUserInput
+    brand?: BrandUncheckedCreateNestedOneWithoutUserInput
+    reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
+    branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyUncheckedCreateNestedOneWithoutOwnerInput
+    courierProfile?: CourierUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutBranchOrderStatusChangesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutBranchOrderStatusChangesInput, UserUncheckedCreateWithoutBranchOrderStatusChangesInput>
+  }
+
+  export type BranchOrderUpsertWithoutStatusHistoryInput = {
+    update: XOR<BranchOrderUpdateWithoutStatusHistoryInput, BranchOrderUncheckedUpdateWithoutStatusHistoryInput>
+    create: XOR<BranchOrderCreateWithoutStatusHistoryInput, BranchOrderUncheckedCreateWithoutStatusHistoryInput>
+    where?: BranchOrderWhereInput
+  }
+
+  export type BranchOrderUpdateToOneWithWhereWithoutStatusHistoryInput = {
+    where?: BranchOrderWhereInput
+    data: XOR<BranchOrderUpdateWithoutStatusHistoryInput, BranchOrderUncheckedUpdateWithoutStatusHistoryInput>
+  }
+
+  export type BranchOrderUpdateWithoutStatusHistoryInput = {
+    branchOrderId?: StringFieldUpdateOperationsInput | string
+    status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
+    subtotal?: IntFieldUpdateOperationsInput | number
+    deliveryFee?: IntFieldUpdateOperationsInput | number
+    discountShare?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    etaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: ParentOrderUpdateOneRequiredWithoutBranchOrdersNestedInput
+    brand?: BrandUpdateOneRequiredWithoutBranchOrdersNestedInput
+    brandBranch?: BrandBranchUpdateOneRequiredWithoutOrdersNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOrdersNestedInput
+    courier?: CourierUpdateOneWithoutOrdersNestedInput
+    orderItems?: OrderItemUpdateManyWithoutBranchOrderNestedInput
+    deliveryProofs?: DeliveryProofUpdateManyWithoutBranchOrderNestedInput
+  }
+
+  export type BranchOrderUncheckedUpdateWithoutStatusHistoryInput = {
+    branchOrderId?: StringFieldUpdateOperationsInput | string
+    parentOrderId?: StringFieldUpdateOperationsInput | string
+    brandId?: StringFieldUpdateOperationsInput | string
+    brandBranchId?: StringFieldUpdateOperationsInput | string
+    status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
+    subtotal?: IntFieldUpdateOperationsInput | number
+    deliveryFee?: IntFieldUpdateOperationsInput | number
+    discountShare?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    etaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deliveryCompanyId?: NullableStringFieldUpdateOperationsInput | string | null
+    courierId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orderItems?: OrderItemUncheckedUpdateManyWithoutBranchOrderNestedInput
+    deliveryProofs?: DeliveryProofUncheckedUpdateManyWithoutBranchOrderNestedInput
+  }
+
+  export type UserUpsertWithoutBranchOrderStatusChangesInput = {
+    update: XOR<UserUpdateWithoutBranchOrderStatusChangesInput, UserUncheckedUpdateWithoutBranchOrderStatusChangesInput>
+    create: XOR<UserCreateWithoutBranchOrderStatusChangesInput, UserUncheckedCreateWithoutBranchOrderStatusChangesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutBranchOrderStatusChangesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutBranchOrderStatusChangesInput, UserUncheckedUpdateWithoutBranchOrderStatusChangesInput>
+  }
+
+  export type UserUpdateWithoutBranchOrderStatusChangesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    password?: StringFieldUpdateOperationsInput | string
+    picture_url?: NullableStringFieldUpdateOperationsInput | string | null
+    picture_url_id?: NullableStringFieldUpdateOperationsInput | string | null
+    otp?: NullableStringFieldUpdateOperationsInput | string | null
+    otp_expiration?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    otp_purpose?: NullableEnumotpPurposeFieldUpdateOperationsInput | $Enums.otpPurpose | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    created_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    accountId?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedLoginAttempts?: IntFieldUpdateOperationsInput | number
+    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    cart?: CartUpdateOneWithoutUserNestedInput
+    wishlist?: wishlistUpdateOneWithoutUserNestedInput
+    addresses?: AddressUpdateManyWithoutUserNestedInput
+    orders?: ParentOrderUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    brandFollowers?: BrandFollowerUpdateManyWithoutUserNestedInput
+    brand?: BrandUpdateOneWithoutUserNestedInput
+    brandTenant?: BrandUpdateOneWithoutBrandUsersNestedInput
+    branchTenant?: BrandBranchUpdateOneWithoutUsersNestedInput
+    reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
+    brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
+    branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutBranchOrderStatusChangesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    password?: StringFieldUpdateOperationsInput | string
+    picture_url?: NullableStringFieldUpdateOperationsInput | string | null
+    picture_url_id?: NullableStringFieldUpdateOperationsInput | string | null
+    otp?: NullableStringFieldUpdateOperationsInput | string | null
+    otp_expiration?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    otp_purpose?: NullableEnumotpPurposeFieldUpdateOperationsInput | $Enums.otpPurpose | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    created_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    accountId?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedLoginAttempts?: IntFieldUpdateOperationsInput | number
+    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    brandBranchId?: NullableStringFieldUpdateOperationsInput | string | null
+    cart?: CartUncheckedUpdateOneWithoutUserNestedInput
+    wishlist?: wishlistUncheckedUpdateOneWithoutUserNestedInput
+    addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
+    orders?: ParentOrderUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    brandFollowers?: BrandFollowerUncheckedUpdateManyWithoutUserNestedInput
+    brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
+    reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
+    branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type BranchOrderCreateWithoutDeliveryProofsInput = {
+    branchOrderId?: string
+    status?: $Enums.orderStatus
+    subtotal: number
+    deliveryFee?: number
+    discountShare?: number
+    total: number
+    etaAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    order: ParentOrderCreateNestedOneWithoutBranchOrdersInput
+    brand: BrandCreateNestedOneWithoutBranchOrdersInput
+    brandBranch: BrandBranchCreateNestedOneWithoutOrdersInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOrdersInput
+    courier?: CourierCreateNestedOneWithoutOrdersInput
+    orderItems?: OrderItemCreateNestedManyWithoutBranchOrderInput
+    statusHistory?: BranchOrderStatusHistoryCreateNestedManyWithoutBranchOrderInput
+  }
+
+  export type BranchOrderUncheckedCreateWithoutDeliveryProofsInput = {
+    branchOrderId?: string
+    parentOrderId: string
+    brandId: string
+    brandBranchId: string
+    status?: $Enums.orderStatus
+    subtotal: number
+    deliveryFee?: number
+    discountShare?: number
+    total: number
+    etaAt?: Date | string | null
+    deliveryCompanyId?: string | null
+    courierId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    orderItems?: OrderItemUncheckedCreateNestedManyWithoutBranchOrderInput
+    statusHistory?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutBranchOrderInput
+  }
+
+  export type BranchOrderCreateOrConnectWithoutDeliveryProofsInput = {
+    where: BranchOrderWhereUniqueInput
+    create: XOR<BranchOrderCreateWithoutDeliveryProofsInput, BranchOrderUncheckedCreateWithoutDeliveryProofsInput>
+  }
+
+  export type CourierCreateWithoutProofsInput = {
+    id?: string
+    photo_url: string
+    photo_id: string
+    phoneNumber: string
+    documents?: CourierCreatedocumentsInput | $Enums.courierDocuments[]
+    plateNumber: string
+    isVerified?: boolean
+    isBanned?: boolean
+    isActive?: boolean
+    user?: UserCreateNestedOneWithoutCourierProfileInput
+    deliveryCompany: D_CompanyCreateNestedOneWithoutCouriersInput
+    orders?: BranchOrderCreateNestedManyWithoutCourierInput
+  }
+
+  export type CourierUncheckedCreateWithoutProofsInput = {
+    id?: string
+    userId?: string | null
+    photo_url: string
+    photo_id: string
+    phoneNumber: string
+    documents?: CourierCreatedocumentsInput | $Enums.courierDocuments[]
+    plateNumber: string
+    isVerified?: boolean
+    isBanned?: boolean
+    isActive?: boolean
+    deliveryCompanyId: string
+    orders?: BranchOrderUncheckedCreateNestedManyWithoutCourierInput
+  }
+
+  export type CourierCreateOrConnectWithoutProofsInput = {
+    where: CourierWhereUniqueInput
+    create: XOR<CourierCreateWithoutProofsInput, CourierUncheckedCreateWithoutProofsInput>
+  }
+
+  export type BranchOrderUpsertWithoutDeliveryProofsInput = {
+    update: XOR<BranchOrderUpdateWithoutDeliveryProofsInput, BranchOrderUncheckedUpdateWithoutDeliveryProofsInput>
+    create: XOR<BranchOrderCreateWithoutDeliveryProofsInput, BranchOrderUncheckedCreateWithoutDeliveryProofsInput>
+    where?: BranchOrderWhereInput
+  }
+
+  export type BranchOrderUpdateToOneWithWhereWithoutDeliveryProofsInput = {
+    where?: BranchOrderWhereInput
+    data: XOR<BranchOrderUpdateWithoutDeliveryProofsInput, BranchOrderUncheckedUpdateWithoutDeliveryProofsInput>
+  }
+
+  export type BranchOrderUpdateWithoutDeliveryProofsInput = {
+    branchOrderId?: StringFieldUpdateOperationsInput | string
+    status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
+    subtotal?: IntFieldUpdateOperationsInput | number
+    deliveryFee?: IntFieldUpdateOperationsInput | number
+    discountShare?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    etaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: ParentOrderUpdateOneRequiredWithoutBranchOrdersNestedInput
+    brand?: BrandUpdateOneRequiredWithoutBranchOrdersNestedInput
+    brandBranch?: BrandBranchUpdateOneRequiredWithoutOrdersNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOrdersNestedInput
+    courier?: CourierUpdateOneWithoutOrdersNestedInput
+    orderItems?: OrderItemUpdateManyWithoutBranchOrderNestedInput
+    statusHistory?: BranchOrderStatusHistoryUpdateManyWithoutBranchOrderNestedInput
+  }
+
+  export type BranchOrderUncheckedUpdateWithoutDeliveryProofsInput = {
+    branchOrderId?: StringFieldUpdateOperationsInput | string
+    parentOrderId?: StringFieldUpdateOperationsInput | string
+    brandId?: StringFieldUpdateOperationsInput | string
+    brandBranchId?: StringFieldUpdateOperationsInput | string
+    status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
+    subtotal?: IntFieldUpdateOperationsInput | number
+    deliveryFee?: IntFieldUpdateOperationsInput | number
+    discountShare?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    etaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deliveryCompanyId?: NullableStringFieldUpdateOperationsInput | string | null
+    courierId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orderItems?: OrderItemUncheckedUpdateManyWithoutBranchOrderNestedInput
+    statusHistory?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutBranchOrderNestedInput
+  }
+
+  export type CourierUpsertWithoutProofsInput = {
+    update: XOR<CourierUpdateWithoutProofsInput, CourierUncheckedUpdateWithoutProofsInput>
+    create: XOR<CourierCreateWithoutProofsInput, CourierUncheckedCreateWithoutProofsInput>
+    where?: CourierWhereInput
+  }
+
+  export type CourierUpdateToOneWithWhereWithoutProofsInput = {
+    where?: CourierWhereInput
+    data: XOR<CourierUpdateWithoutProofsInput, CourierUncheckedUpdateWithoutProofsInput>
+  }
+
+  export type CourierUpdateWithoutProofsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    photo_url?: StringFieldUpdateOperationsInput | string
+    photo_id?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    documents?: CourierUpdatedocumentsInput | $Enums.courierDocuments[]
+    plateNumber?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneWithoutCourierProfileNestedInput
+    deliveryCompany?: D_CompanyUpdateOneRequiredWithoutCouriersNestedInput
+    orders?: BranchOrderUpdateManyWithoutCourierNestedInput
+  }
+
+  export type CourierUncheckedUpdateWithoutProofsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    photo_url?: StringFieldUpdateOperationsInput | string
+    photo_id?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    documents?: CourierUpdatedocumentsInput | $Enums.courierDocuments[]
+    plateNumber?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deliveryCompanyId?: StringFieldUpdateOperationsInput | string
+    orders?: BranchOrderUncheckedUpdateManyWithoutCourierNestedInput
+  }
+
   export type BranchOrderCreateWithoutOrderItemsInput = {
     branchOrderId?: string
     status?: $Enums.orderStatus
@@ -68161,6 +72870,8 @@ export namespace Prisma {
     brandBranch: BrandBranchCreateNestedOneWithoutOrdersInput
     deliveryCompany?: D_CompanyCreateNestedOneWithoutOrdersInput
     courier?: CourierCreateNestedOneWithoutOrdersInput
+    statusHistory?: BranchOrderStatusHistoryCreateNestedManyWithoutBranchOrderInput
+    deliveryProofs?: DeliveryProofCreateNestedManyWithoutBranchOrderInput
   }
 
   export type BranchOrderUncheckedCreateWithoutOrderItemsInput = {
@@ -68178,6 +72889,8 @@ export namespace Prisma {
     courierId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    statusHistory?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutBranchOrderInput
+    deliveryProofs?: DeliveryProofUncheckedCreateNestedManyWithoutBranchOrderInput
   }
 
   export type BranchOrderCreateOrConnectWithoutOrderItemsInput = {
@@ -68258,6 +72971,8 @@ export namespace Prisma {
     brandBranch?: BrandBranchUpdateOneRequiredWithoutOrdersNestedInput
     deliveryCompany?: D_CompanyUpdateOneWithoutOrdersNestedInput
     courier?: CourierUpdateOneWithoutOrdersNestedInput
+    statusHistory?: BranchOrderStatusHistoryUpdateManyWithoutBranchOrderNestedInput
+    deliveryProofs?: DeliveryProofUpdateManyWithoutBranchOrderNestedInput
   }
 
   export type BranchOrderUncheckedUpdateWithoutOrderItemsInput = {
@@ -68275,6 +72990,8 @@ export namespace Prisma {
     courierId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    statusHistory?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutBranchOrderNestedInput
+    deliveryProofs?: DeliveryProofUncheckedUpdateManyWithoutBranchOrderNestedInput
   }
 
   export type VariantUpsertWithoutOrderItemsInput = {
@@ -68330,6 +73047,97 @@ export namespace Prisma {
     availability?: VariantAvailabilityUncheckedUpdateOneWithoutVariantNestedInput
   }
 
+  export type UserCreateWithoutDeliveryCompanyInput = {
+    id?: string
+    username: string
+    phone?: string | null
+    email: string
+    role?: $Enums.Role
+    password: string
+    picture_url?: string | null
+    picture_url_id?: string | null
+    otp?: string | null
+    otp_expiration?: Date | string | null
+    otp_purpose?: $Enums.otpPurpose | null
+    isVerified?: boolean
+    isBanned?: boolean
+    refreshToken?: string | null
+    created_At?: Date | string
+    updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
+    accountId?: string | null
+    payment_id?: string | null
+    passwordChangedAt?: Date | string | null
+    failedLoginAttempts?: number
+    lockedUntil?: Date | string | null
+    isOnline?: boolean
+    cart?: CartCreateNestedOneWithoutUserInput
+    wishlist?: wishlistCreateNestedOneWithoutUserInput
+    addresses?: AddressCreateNestedManyWithoutUserInput
+    orders?: ParentOrderCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    brandFollowers?: BrandFollowerCreateNestedManyWithoutUserInput
+    brand?: BrandCreateNestedOneWithoutUserInput
+    brandTenant?: BrandCreateNestedOneWithoutBrandUsersInput
+    branchTenant?: BrandBranchCreateNestedOneWithoutUsersInput
+    reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
+    brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
+    branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
+    courierProfile?: CourierCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput
+  }
+
+  export type UserUncheckedCreateWithoutDeliveryCompanyInput = {
+    id?: string
+    username: string
+    phone?: string | null
+    email: string
+    role?: $Enums.Role
+    password: string
+    picture_url?: string | null
+    picture_url_id?: string | null
+    otp?: string | null
+    otp_expiration?: Date | string | null
+    otp_purpose?: $Enums.otpPurpose | null
+    isVerified?: boolean
+    isBanned?: boolean
+    refreshToken?: string | null
+    created_At?: Date | string
+    updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
+    accountId?: string | null
+    payment_id?: string | null
+    passwordChangedAt?: Date | string | null
+    failedLoginAttempts?: number
+    lockedUntil?: Date | string | null
+    isOnline?: boolean
+    brandId?: string | null
+    branchId?: string | null
+    brandBranchId?: string | null
+    cart?: CartUncheckedCreateNestedOneWithoutUserInput
+    wishlist?: wishlistUncheckedCreateNestedOneWithoutUserInput
+    addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
+    orders?: ParentOrderUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    brandFollowers?: BrandFollowerUncheckedCreateNestedManyWithoutUserInput
+    brand?: BrandUncheckedCreateNestedOneWithoutUserInput
+    reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
+    branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
+    courierProfile?: CourierUncheckedCreateNestedOneWithoutUserInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  }
+
+  export type UserCreateOrConnectWithoutDeliveryCompanyInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutDeliveryCompanyInput, UserUncheckedCreateWithoutDeliveryCompanyInput>
+  }
+
   export type CourierCreateWithoutDeliveryCompanyInput = {
     id?: string
     photo_url: string
@@ -68339,11 +73147,15 @@ export namespace Prisma {
     plateNumber: string
     isVerified?: boolean
     isBanned?: boolean
+    isActive?: boolean
+    user?: UserCreateNestedOneWithoutCourierProfileInput
     orders?: BranchOrderCreateNestedManyWithoutCourierInput
+    proofs?: DeliveryProofCreateNestedManyWithoutCourierInput
   }
 
   export type CourierUncheckedCreateWithoutDeliveryCompanyInput = {
     id?: string
+    userId?: string | null
     photo_url: string
     photo_id: string
     phoneNumber: string
@@ -68351,7 +73163,9 @@ export namespace Prisma {
     plateNumber: string
     isVerified?: boolean
     isBanned?: boolean
+    isActive?: boolean
     orders?: BranchOrderUncheckedCreateNestedManyWithoutCourierInput
+    proofs?: DeliveryProofUncheckedCreateNestedManyWithoutCourierInput
   }
 
   export type CourierCreateOrConnectWithoutDeliveryCompanyInput = {
@@ -68379,6 +73193,8 @@ export namespace Prisma {
     brandBranch: BrandBranchCreateNestedOneWithoutOrdersInput
     courier?: CourierCreateNestedOneWithoutOrdersInput
     orderItems?: OrderItemCreateNestedManyWithoutBranchOrderInput
+    statusHistory?: BranchOrderStatusHistoryCreateNestedManyWithoutBranchOrderInput
+    deliveryProofs?: DeliveryProofCreateNestedManyWithoutBranchOrderInput
   }
 
   export type BranchOrderUncheckedCreateWithoutDeliveryCompanyInput = {
@@ -68396,6 +73212,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutBranchOrderInput
+    statusHistory?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutBranchOrderInput
+    deliveryProofs?: DeliveryProofUncheckedCreateNestedManyWithoutBranchOrderInput
   }
 
   export type BranchOrderCreateOrConnectWithoutDeliveryCompanyInput = {
@@ -68405,6 +73223,46 @@ export namespace Prisma {
 
   export type BranchOrderCreateManyDeliveryCompanyInputEnvelope = {
     data: BranchOrderCreateManyDeliveryCompanyInput | BranchOrderCreateManyDeliveryCompanyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type StaffInvitationCreateWithoutDeliveryCompanyInput = {
+    id?: string
+    email: string
+    role: $Enums.Role
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
+    tokenHash: string
+    expiresAt: Date | string
+    acceptedAt?: Date | string | null
+    revokedAt?: Date | string | null
+    createdAt?: Date | string
+    brand?: BrandCreateNestedOneWithoutStaffInvitationsInput
+    branch?: BrandBranchCreateNestedOneWithoutStaffInvitationsInput
+    creator: UserCreateNestedOneWithoutCreatedStaffInvitationsInput
+  }
+
+  export type StaffInvitationUncheckedCreateWithoutDeliveryCompanyInput = {
+    id?: string
+    email: string
+    role: $Enums.Role
+    brandId?: string | null
+    branchId?: string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
+    tokenHash: string
+    expiresAt: Date | string
+    acceptedAt?: Date | string | null
+    revokedAt?: Date | string | null
+    createdById: string
+    createdAt?: Date | string
+  }
+
+  export type StaffInvitationCreateOrConnectWithoutDeliveryCompanyInput = {
+    where: StaffInvitationWhereUniqueInput
+    create: XOR<StaffInvitationCreateWithoutDeliveryCompanyInput, StaffInvitationUncheckedCreateWithoutDeliveryCompanyInput>
+  }
+
+  export type StaffInvitationCreateManyDeliveryCompanyInputEnvelope = {
+    data: StaffInvitationCreateManyDeliveryCompanyInput | StaffInvitationCreateManyDeliveryCompanyInput[]
     skipDuplicates?: boolean
   }
 
@@ -68440,6 +73298,103 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserUpsertWithoutDeliveryCompanyInput = {
+    update: XOR<UserUpdateWithoutDeliveryCompanyInput, UserUncheckedUpdateWithoutDeliveryCompanyInput>
+    create: XOR<UserCreateWithoutDeliveryCompanyInput, UserUncheckedCreateWithoutDeliveryCompanyInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutDeliveryCompanyInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutDeliveryCompanyInput, UserUncheckedUpdateWithoutDeliveryCompanyInput>
+  }
+
+  export type UserUpdateWithoutDeliveryCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    password?: StringFieldUpdateOperationsInput | string
+    picture_url?: NullableStringFieldUpdateOperationsInput | string | null
+    picture_url_id?: NullableStringFieldUpdateOperationsInput | string | null
+    otp?: NullableStringFieldUpdateOperationsInput | string | null
+    otp_expiration?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    otp_purpose?: NullableEnumotpPurposeFieldUpdateOperationsInput | $Enums.otpPurpose | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    created_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    accountId?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedLoginAttempts?: IntFieldUpdateOperationsInput | number
+    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    cart?: CartUpdateOneWithoutUserNestedInput
+    wishlist?: wishlistUpdateOneWithoutUserNestedInput
+    addresses?: AddressUpdateManyWithoutUserNestedInput
+    orders?: ParentOrderUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    brandFollowers?: BrandFollowerUpdateManyWithoutUserNestedInput
+    brand?: BrandUpdateOneWithoutUserNestedInput
+    brandTenant?: BrandUpdateOneWithoutBrandUsersNestedInput
+    branchTenant?: BrandBranchUpdateOneWithoutUsersNestedInput
+    reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
+    brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
+    branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
+    courierProfile?: CourierUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDeliveryCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    password?: StringFieldUpdateOperationsInput | string
+    picture_url?: NullableStringFieldUpdateOperationsInput | string | null
+    picture_url_id?: NullableStringFieldUpdateOperationsInput | string | null
+    otp?: NullableStringFieldUpdateOperationsInput | string | null
+    otp_expiration?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    otp_purpose?: NullableEnumotpPurposeFieldUpdateOperationsInput | $Enums.otpPurpose | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    created_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    accountId?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedLoginAttempts?: IntFieldUpdateOperationsInput | number
+    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    brandBranchId?: NullableStringFieldUpdateOperationsInput | string | null
+    cart?: CartUncheckedUpdateOneWithoutUserNestedInput
+    wishlist?: wishlistUncheckedUpdateOneWithoutUserNestedInput
+    addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
+    orders?: ParentOrderUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    brandFollowers?: BrandFollowerUncheckedUpdateManyWithoutUserNestedInput
+    brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
+    reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
+    branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+    courierProfile?: CourierUncheckedUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  }
+
   export type CourierUpsertWithWhereUniqueWithoutDeliveryCompanyInput = {
     where: CourierWhereUniqueInput
     update: XOR<CourierUpdateWithoutDeliveryCompanyInput, CourierUncheckedUpdateWithoutDeliveryCompanyInput>
@@ -68461,6 +73416,7 @@ export namespace Prisma {
     OR?: CourierScalarWhereInput[]
     NOT?: CourierScalarWhereInput | CourierScalarWhereInput[]
     id?: UuidFilter<"Courier"> | string
+    userId?: UuidNullableFilter<"Courier"> | string | null
     photo_url?: StringFilter<"Courier"> | string
     photo_id?: StringFilter<"Courier"> | string
     phoneNumber?: StringFilter<"Courier"> | string
@@ -68468,6 +73424,7 @@ export namespace Prisma {
     plateNumber?: StringFilter<"Courier"> | string
     isVerified?: BoolFilter<"Courier"> | boolean
     isBanned?: BoolFilter<"Courier"> | boolean
+    isActive?: BoolFilter<"Courier"> | boolean
     deliveryCompanyId?: UuidFilter<"Courier"> | string
   }
 
@@ -68485,6 +73442,22 @@ export namespace Prisma {
   export type BranchOrderUpdateManyWithWhereWithoutDeliveryCompanyInput = {
     where: BranchOrderScalarWhereInput
     data: XOR<BranchOrderUpdateManyMutationInput, BranchOrderUncheckedUpdateManyWithoutDeliveryCompanyInput>
+  }
+
+  export type StaffInvitationUpsertWithWhereUniqueWithoutDeliveryCompanyInput = {
+    where: StaffInvitationWhereUniqueInput
+    update: XOR<StaffInvitationUpdateWithoutDeliveryCompanyInput, StaffInvitationUncheckedUpdateWithoutDeliveryCompanyInput>
+    create: XOR<StaffInvitationCreateWithoutDeliveryCompanyInput, StaffInvitationUncheckedCreateWithoutDeliveryCompanyInput>
+  }
+
+  export type StaffInvitationUpdateWithWhereUniqueWithoutDeliveryCompanyInput = {
+    where: StaffInvitationWhereUniqueInput
+    data: XOR<StaffInvitationUpdateWithoutDeliveryCompanyInput, StaffInvitationUncheckedUpdateWithoutDeliveryCompanyInput>
+  }
+
+  export type StaffInvitationUpdateManyWithWhereWithoutDeliveryCompanyInput = {
+    where: StaffInvitationScalarWhereInput
+    data: XOR<StaffInvitationUpdateManyMutationInput, StaffInvitationUncheckedUpdateManyWithoutDeliveryCompanyInput>
   }
 
   export type DeliveryCompanyTransactionUpsertWithWhereUniqueWithoutDeliveryCompanyInput = {
@@ -68526,8 +73499,10 @@ export namespace Prisma {
     isVerified?: boolean
     isBanned?: boolean
     balance?: number
+    owner?: UserCreateNestedOneWithoutDeliveryCompanyInput
     couriers?: CourierCreateNestedManyWithoutDeliveryCompanyInput
     orders?: BranchOrderCreateNestedManyWithoutDeliveryCompanyInput
+    invitations?: StaffInvitationCreateNestedManyWithoutDeliveryCompanyInput
   }
 
   export type D_CompanyUncheckedCreateWithoutTransactionsInput = {
@@ -68535,11 +73510,13 @@ export namespace Prisma {
     name: string
     address: string
     phoneNumber: string
+    ownerUserId?: string | null
     isVerified?: boolean
     isBanned?: boolean
     balance?: number
     couriers?: CourierUncheckedCreateNestedManyWithoutDeliveryCompanyInput
     orders?: BranchOrderUncheckedCreateNestedManyWithoutDeliveryCompanyInput
+    invitations?: StaffInvitationUncheckedCreateNestedManyWithoutDeliveryCompanyInput
   }
 
   export type D_CompanyCreateOrConnectWithoutTransactionsInput = {
@@ -68566,8 +73543,10 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
     balance?: IntFieldUpdateOperationsInput | number
+    owner?: UserUpdateOneWithoutDeliveryCompanyNestedInput
     couriers?: CourierUpdateManyWithoutDeliveryCompanyNestedInput
     orders?: BranchOrderUpdateManyWithoutDeliveryCompanyNestedInput
+    invitations?: StaffInvitationUpdateManyWithoutDeliveryCompanyNestedInput
   }
 
   export type D_CompanyUncheckedUpdateWithoutTransactionsInput = {
@@ -68575,11 +73554,104 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
+    ownerUserId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
     balance?: IntFieldUpdateOperationsInput | number
     couriers?: CourierUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
     orders?: BranchOrderUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
+    invitations?: StaffInvitationUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
+  }
+
+  export type UserCreateWithoutCourierProfileInput = {
+    id?: string
+    username: string
+    phone?: string | null
+    email: string
+    role?: $Enums.Role
+    password: string
+    picture_url?: string | null
+    picture_url_id?: string | null
+    otp?: string | null
+    otp_expiration?: Date | string | null
+    otp_purpose?: $Enums.otpPurpose | null
+    isVerified?: boolean
+    isBanned?: boolean
+    refreshToken?: string | null
+    created_At?: Date | string
+    updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
+    accountId?: string | null
+    payment_id?: string | null
+    passwordChangedAt?: Date | string | null
+    failedLoginAttempts?: number
+    lockedUntil?: Date | string | null
+    isOnline?: boolean
+    cart?: CartCreateNestedOneWithoutUserInput
+    wishlist?: wishlistCreateNestedOneWithoutUserInput
+    addresses?: AddressCreateNestedManyWithoutUserInput
+    orders?: ParentOrderCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    brandFollowers?: BrandFollowerCreateNestedManyWithoutUserInput
+    brand?: BrandCreateNestedOneWithoutUserInput
+    brandTenant?: BrandCreateNestedOneWithoutBrandUsersInput
+    branchTenant?: BrandBranchCreateNestedOneWithoutUsersInput
+    reviewedBrandDocs?: BrandDocumentCreateNestedManyWithoutReviewerInput
+    brandBranch?: BrandBranchCreateNestedOneWithoutStaffInput
+    branchStaffs?: branchStaffCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyCreateNestedOneWithoutOwnerInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryCreateNestedManyWithoutChangedByInput
+  }
+
+  export type UserUncheckedCreateWithoutCourierProfileInput = {
+    id?: string
+    username: string
+    phone?: string | null
+    email: string
+    role?: $Enums.Role
+    password: string
+    picture_url?: string | null
+    picture_url_id?: string | null
+    otp?: string | null
+    otp_expiration?: Date | string | null
+    otp_purpose?: $Enums.otpPurpose | null
+    isVerified?: boolean
+    isBanned?: boolean
+    refreshToken?: string | null
+    created_At?: Date | string
+    updated_At?: Date | string
+    provider?: $Enums.Providers | null
+    providerCustomerId?: string | null
+    accountId?: string | null
+    payment_id?: string | null
+    passwordChangedAt?: Date | string | null
+    failedLoginAttempts?: number
+    lockedUntil?: Date | string | null
+    isOnline?: boolean
+    brandId?: string | null
+    branchId?: string | null
+    brandBranchId?: string | null
+    cart?: CartUncheckedCreateNestedOneWithoutUserInput
+    wishlist?: wishlistUncheckedCreateNestedOneWithoutUserInput
+    addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
+    orders?: ParentOrderUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    brandFollowers?: BrandFollowerUncheckedCreateNestedManyWithoutUserInput
+    brand?: BrandUncheckedCreateNestedOneWithoutUserInput
+    reviewedBrandDocs?: BrandDocumentUncheckedCreateNestedManyWithoutReviewerInput
+    branchStaffs?: branchStaffUncheckedCreateNestedManyWithoutUserInput
+    createdStaffInvitations?: StaffInvitationUncheckedCreateNestedManyWithoutCreatorInput
+    checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutUserInput
+    deliveryCompany?: D_CompanyUncheckedCreateNestedOneWithoutOwnerInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  }
+
+  export type UserCreateOrConnectWithoutCourierProfileInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCourierProfileInput, UserUncheckedCreateWithoutCourierProfileInput>
   }
 
   export type D_CompanyCreateWithoutCouriersInput = {
@@ -68590,7 +73662,9 @@ export namespace Prisma {
     isVerified?: boolean
     isBanned?: boolean
     balance?: number
+    owner?: UserCreateNestedOneWithoutDeliveryCompanyInput
     orders?: BranchOrderCreateNestedManyWithoutDeliveryCompanyInput
+    invitations?: StaffInvitationCreateNestedManyWithoutDeliveryCompanyInput
     transactions?: DeliveryCompanyTransactionCreateNestedManyWithoutDeliveryCompanyInput
   }
 
@@ -68599,10 +73673,12 @@ export namespace Prisma {
     name: string
     address: string
     phoneNumber: string
+    ownerUserId?: string | null
     isVerified?: boolean
     isBanned?: boolean
     balance?: number
     orders?: BranchOrderUncheckedCreateNestedManyWithoutDeliveryCompanyInput
+    invitations?: StaffInvitationUncheckedCreateNestedManyWithoutDeliveryCompanyInput
     transactions?: DeliveryCompanyTransactionUncheckedCreateNestedManyWithoutDeliveryCompanyInput
   }
 
@@ -68626,6 +73702,8 @@ export namespace Prisma {
     brandBranch: BrandBranchCreateNestedOneWithoutOrdersInput
     deliveryCompany?: D_CompanyCreateNestedOneWithoutOrdersInput
     orderItems?: OrderItemCreateNestedManyWithoutBranchOrderInput
+    statusHistory?: BranchOrderStatusHistoryCreateNestedManyWithoutBranchOrderInput
+    deliveryProofs?: DeliveryProofCreateNestedManyWithoutBranchOrderInput
   }
 
   export type BranchOrderUncheckedCreateWithoutCourierInput = {
@@ -68643,6 +73721,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutBranchOrderInput
+    statusHistory?: BranchOrderStatusHistoryUncheckedCreateNestedManyWithoutBranchOrderInput
+    deliveryProofs?: DeliveryProofUncheckedCreateNestedManyWithoutBranchOrderInput
   }
 
   export type BranchOrderCreateOrConnectWithoutCourierInput = {
@@ -68653,6 +73733,129 @@ export namespace Prisma {
   export type BranchOrderCreateManyCourierInputEnvelope = {
     data: BranchOrderCreateManyCourierInput | BranchOrderCreateManyCourierInput[]
     skipDuplicates?: boolean
+  }
+
+  export type DeliveryProofCreateWithoutCourierInput = {
+    id?: string
+    proofUrl: string
+    proofStorageId: string
+    createdAt?: Date | string
+    branchOrder: BranchOrderCreateNestedOneWithoutDeliveryProofsInput
+  }
+
+  export type DeliveryProofUncheckedCreateWithoutCourierInput = {
+    id?: string
+    branchOrderId: string
+    proofUrl: string
+    proofStorageId: string
+    createdAt?: Date | string
+  }
+
+  export type DeliveryProofCreateOrConnectWithoutCourierInput = {
+    where: DeliveryProofWhereUniqueInput
+    create: XOR<DeliveryProofCreateWithoutCourierInput, DeliveryProofUncheckedCreateWithoutCourierInput>
+  }
+
+  export type DeliveryProofCreateManyCourierInputEnvelope = {
+    data: DeliveryProofCreateManyCourierInput | DeliveryProofCreateManyCourierInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutCourierProfileInput = {
+    update: XOR<UserUpdateWithoutCourierProfileInput, UserUncheckedUpdateWithoutCourierProfileInput>
+    create: XOR<UserCreateWithoutCourierProfileInput, UserUncheckedCreateWithoutCourierProfileInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCourierProfileInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCourierProfileInput, UserUncheckedUpdateWithoutCourierProfileInput>
+  }
+
+  export type UserUpdateWithoutCourierProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    password?: StringFieldUpdateOperationsInput | string
+    picture_url?: NullableStringFieldUpdateOperationsInput | string | null
+    picture_url_id?: NullableStringFieldUpdateOperationsInput | string | null
+    otp?: NullableStringFieldUpdateOperationsInput | string | null
+    otp_expiration?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    otp_purpose?: NullableEnumotpPurposeFieldUpdateOperationsInput | $Enums.otpPurpose | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    created_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    accountId?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedLoginAttempts?: IntFieldUpdateOperationsInput | number
+    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    cart?: CartUpdateOneWithoutUserNestedInput
+    wishlist?: wishlistUpdateOneWithoutUserNestedInput
+    addresses?: AddressUpdateManyWithoutUserNestedInput
+    orders?: ParentOrderUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    brandFollowers?: BrandFollowerUpdateManyWithoutUserNestedInput
+    brand?: BrandUpdateOneWithoutUserNestedInput
+    brandTenant?: BrandUpdateOneWithoutBrandUsersNestedInput
+    branchTenant?: BrandBranchUpdateOneWithoutUsersNestedInput
+    reviewedBrandDocs?: BrandDocumentUpdateManyWithoutReviewerNestedInput
+    brandBranch?: BrandBranchUpdateOneWithoutStaffNestedInput
+    branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOwnerNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCourierProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    password?: StringFieldUpdateOperationsInput | string
+    picture_url?: NullableStringFieldUpdateOperationsInput | string | null
+    picture_url_id?: NullableStringFieldUpdateOperationsInput | string | null
+    otp?: NullableStringFieldUpdateOperationsInput | string | null
+    otp_expiration?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    otp_purpose?: NullableEnumotpPurposeFieldUpdateOperationsInput | $Enums.otpPurpose | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    created_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_At?: DateTimeFieldUpdateOperationsInput | Date | string
+    provider?: NullableEnumProvidersFieldUpdateOperationsInput | $Enums.Providers | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    accountId?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedLoginAttempts?: IntFieldUpdateOperationsInput | number
+    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    brandBranchId?: NullableStringFieldUpdateOperationsInput | string | null
+    cart?: CartUncheckedUpdateOneWithoutUserNestedInput
+    wishlist?: wishlistUncheckedUpdateOneWithoutUserNestedInput
+    addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
+    orders?: ParentOrderUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    brandFollowers?: BrandFollowerUncheckedUpdateManyWithoutUserNestedInput
+    brand?: BrandUncheckedUpdateOneWithoutUserNestedInput
+    reviewedBrandDocs?: BrandDocumentUncheckedUpdateManyWithoutReviewerNestedInput
+    branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
+    createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
+    checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   }
 
   export type D_CompanyUpsertWithoutCouriersInput = {
@@ -68674,7 +73877,9 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
     balance?: IntFieldUpdateOperationsInput | number
+    owner?: UserUpdateOneWithoutDeliveryCompanyNestedInput
     orders?: BranchOrderUpdateManyWithoutDeliveryCompanyNestedInput
+    invitations?: StaffInvitationUpdateManyWithoutDeliveryCompanyNestedInput
     transactions?: DeliveryCompanyTransactionUpdateManyWithoutDeliveryCompanyNestedInput
   }
 
@@ -68683,10 +73888,12 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
+    ownerUserId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
     balance?: IntFieldUpdateOperationsInput | number
     orders?: BranchOrderUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
+    invitations?: StaffInvitationUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
     transactions?: DeliveryCompanyTransactionUncheckedUpdateManyWithoutDeliveryCompanyNestedInput
   }
 
@@ -68704,6 +73911,22 @@ export namespace Prisma {
   export type BranchOrderUpdateManyWithWhereWithoutCourierInput = {
     where: BranchOrderScalarWhereInput
     data: XOR<BranchOrderUpdateManyMutationInput, BranchOrderUncheckedUpdateManyWithoutCourierInput>
+  }
+
+  export type DeliveryProofUpsertWithWhereUniqueWithoutCourierInput = {
+    where: DeliveryProofWhereUniqueInput
+    update: XOR<DeliveryProofUpdateWithoutCourierInput, DeliveryProofUncheckedUpdateWithoutCourierInput>
+    create: XOR<DeliveryProofCreateWithoutCourierInput, DeliveryProofUncheckedCreateWithoutCourierInput>
+  }
+
+  export type DeliveryProofUpdateWithWhereUniqueWithoutCourierInput = {
+    where: DeliveryProofWhereUniqueInput
+    data: XOR<DeliveryProofUpdateWithoutCourierInput, DeliveryProofUncheckedUpdateWithoutCourierInput>
+  }
+
+  export type DeliveryProofUpdateManyWithWhereWithoutCourierInput = {
+    where: DeliveryProofScalarWhereInput
+    data: XOR<DeliveryProofUpdateManyMutationInput, DeliveryProofUncheckedUpdateManyWithoutCourierInput>
   }
 
   export type AddressCreateManyUserInput = {
@@ -68774,6 +73997,8 @@ export namespace Prisma {
     role: $Enums.Role
     brandId?: string | null
     branchId?: string | null
+    deliveryCompanyId?: string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash: string
     expiresAt: Date | string
     acceptedAt?: Date | string | null
@@ -68802,6 +74027,16 @@ export namespace Prisma {
     updatedAt?: Date | string
     brandId: string
     brandBranchId?: string | null
+  }
+
+  export type BranchOrderStatusHistoryCreateManyChangedByInput = {
+    id?: string
+    branchOrderId: string
+    fromStatus?: $Enums.orderStatus | null
+    toStatus: $Enums.orderStatus
+    changedByRole: $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
   }
 
   export type AddressUpdateWithoutUserInput = {
@@ -68996,6 +74231,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -69003,6 +74239,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brand?: BrandUpdateOneWithoutStaffInvitationsNestedInput
     branch?: BrandBranchUpdateOneWithoutStaffInvitationsNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutInvitationsNestedInput
   }
 
   export type StaffInvitationUncheckedUpdateWithoutCreatorInput = {
@@ -69011,6 +74248,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     brandId?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryCompanyId?: NullableStringFieldUpdateOperationsInput | string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -69024,6 +74263,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     brandId?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryCompanyId?: NullableStringFieldUpdateOperationsInput | string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -69098,6 +74339,36 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brandId?: StringFieldUpdateOperationsInput | string
     brandBranchId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type BranchOrderStatusHistoryUpdateWithoutChangedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableEnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus | null
+    toStatus?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
+    changedByRole?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branchOrder?: BranchOrderUpdateOneRequiredWithoutStatusHistoryNestedInput
+  }
+
+  export type BranchOrderStatusHistoryUncheckedUpdateWithoutChangedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    branchOrderId?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableEnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus | null
+    toStatus?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
+    changedByRole?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    branchOrderId?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableEnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus | null
+    toStatus?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
+    changedByRole?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateManyBrandTenantInput = {
@@ -69233,6 +74504,8 @@ export namespace Prisma {
     email: string
     role: $Enums.Role
     branchId?: string | null
+    deliveryCompanyId?: string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash: string
     expiresAt: Date | string
     acceptedAt?: Date | string | null
@@ -69313,6 +74586,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBrandTenantInput = {
@@ -69353,6 +74629,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUncheckedUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutBrandTenantInput = {
@@ -69682,6 +74961,8 @@ export namespace Prisma {
     deliveryCompany?: D_CompanyUpdateOneWithoutOrdersNestedInput
     courier?: CourierUpdateOneWithoutOrdersNestedInput
     orderItems?: OrderItemUpdateManyWithoutBranchOrderNestedInput
+    statusHistory?: BranchOrderStatusHistoryUpdateManyWithoutBranchOrderNestedInput
+    deliveryProofs?: DeliveryProofUpdateManyWithoutBranchOrderNestedInput
   }
 
   export type BranchOrderUncheckedUpdateWithoutBrandInput = {
@@ -69699,6 +74980,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderItems?: OrderItemUncheckedUpdateManyWithoutBranchOrderNestedInput
+    statusHistory?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutBranchOrderNestedInput
+    deliveryProofs?: DeliveryProofUncheckedUpdateManyWithoutBranchOrderNestedInput
   }
 
   export type BranchOrderUncheckedUpdateManyWithoutBrandInput = {
@@ -69721,12 +75004,14 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     branch?: BrandBranchUpdateOneWithoutStaffInvitationsNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutInvitationsNestedInput
     creator?: UserUpdateOneRequiredWithoutCreatedStaffInvitationsNestedInput
   }
 
@@ -69735,6 +75020,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryCompanyId?: NullableStringFieldUpdateOperationsInput | string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -69748,6 +75035,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryCompanyId?: NullableStringFieldUpdateOperationsInput | string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -69954,6 +75243,8 @@ export namespace Prisma {
     email: string
     role: $Enums.Role
     brandId?: string | null
+    deliveryCompanyId?: string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash: string
     expiresAt: Date | string
     acceptedAt?: Date | string | null
@@ -70023,6 +75314,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBrandBranchInput = {
@@ -70063,6 +75357,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUncheckedUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutBrandBranchInput = {
@@ -70132,6 +75429,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBranchTenantInput = {
@@ -70172,6 +75472,9 @@ export namespace Prisma {
     branchStaffs?: branchStaffUncheckedUpdateManyWithoutUserNestedInput
     createdStaffInvitations?: StaffInvitationUncheckedUpdateManyWithoutCreatorNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutUserNestedInput
+    deliveryCompany?: D_CompanyUncheckedUpdateOneWithoutOwnerNestedInput
+    courierProfile?: CourierUncheckedUpdateOneWithoutUserNestedInput
+    branchOrderStatusChanges?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutBranchTenantInput = {
@@ -70242,6 +75545,8 @@ export namespace Prisma {
     deliveryCompany?: D_CompanyUpdateOneWithoutOrdersNestedInput
     courier?: CourierUpdateOneWithoutOrdersNestedInput
     orderItems?: OrderItemUpdateManyWithoutBranchOrderNestedInput
+    statusHistory?: BranchOrderStatusHistoryUpdateManyWithoutBranchOrderNestedInput
+    deliveryProofs?: DeliveryProofUpdateManyWithoutBranchOrderNestedInput
   }
 
   export type BranchOrderUncheckedUpdateWithoutBrandBranchInput = {
@@ -70259,6 +75564,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderItems?: OrderItemUncheckedUpdateManyWithoutBranchOrderNestedInput
+    statusHistory?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutBranchOrderNestedInput
+    deliveryProofs?: DeliveryProofUncheckedUpdateManyWithoutBranchOrderNestedInput
   }
 
   export type BranchOrderUncheckedUpdateManyWithoutBrandBranchInput = {
@@ -70302,12 +75609,14 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brand?: BrandUpdateOneWithoutStaffInvitationsNestedInput
+    deliveryCompany?: D_CompanyUpdateOneWithoutInvitationsNestedInput
     creator?: UserUpdateOneRequiredWithoutCreatedStaffInvitationsNestedInput
   }
 
@@ -70316,6 +75625,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryCompanyId?: NullableStringFieldUpdateOperationsInput | string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -70329,6 +75640,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryCompanyId?: NullableStringFieldUpdateOperationsInput | string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
     tokenHash?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -71204,6 +76517,8 @@ export namespace Prisma {
     deliveryCompany?: D_CompanyUpdateOneWithoutOrdersNestedInput
     courier?: CourierUpdateOneWithoutOrdersNestedInput
     orderItems?: OrderItemUpdateManyWithoutBranchOrderNestedInput
+    statusHistory?: BranchOrderStatusHistoryUpdateManyWithoutBranchOrderNestedInput
+    deliveryProofs?: DeliveryProofUpdateManyWithoutBranchOrderNestedInput
   }
 
   export type BranchOrderUncheckedUpdateWithoutOrderInput = {
@@ -71221,6 +76536,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderItems?: OrderItemUncheckedUpdateManyWithoutBranchOrderNestedInput
+    statusHistory?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutBranchOrderNestedInput
+    deliveryProofs?: DeliveryProofUncheckedUpdateManyWithoutBranchOrderNestedInput
   }
 
   export type BranchOrderUncheckedUpdateManyWithoutOrderInput = {
@@ -71246,6 +76563,24 @@ export namespace Prisma {
     skuSnapshot: string
     priceSnapshot: number
     quantity: number
+  }
+
+  export type BranchOrderStatusHistoryCreateManyBranchOrderInput = {
+    id?: string
+    fromStatus?: $Enums.orderStatus | null
+    toStatus: $Enums.orderStatus
+    changedByUserId: string
+    changedByRole: $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type DeliveryProofCreateManyBranchOrderInput = {
+    id?: string
+    courierId: string
+    proofUrl: string
+    proofStorageId: string
+    createdAt?: Date | string
   }
 
   export type OrderItemUpdateWithoutBranchOrderInput = {
@@ -71275,8 +76610,63 @@ export namespace Prisma {
     quantity?: IntFieldUpdateOperationsInput | number
   }
 
+  export type BranchOrderStatusHistoryUpdateWithoutBranchOrderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableEnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus | null
+    toStatus?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
+    changedByRole?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    changedBy?: UserUpdateOneRequiredWithoutBranchOrderStatusChangesNestedInput
+  }
+
+  export type BranchOrderStatusHistoryUncheckedUpdateWithoutBranchOrderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableEnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus | null
+    toStatus?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
+    changedByUserId?: StringFieldUpdateOperationsInput | string
+    changedByRole?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BranchOrderStatusHistoryUncheckedUpdateManyWithoutBranchOrderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fromStatus?: NullableEnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus | null
+    toStatus?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
+    changedByUserId?: StringFieldUpdateOperationsInput | string
+    changedByRole?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliveryProofUpdateWithoutBranchOrderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    proofUrl?: StringFieldUpdateOperationsInput | string
+    proofStorageId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    courier?: CourierUpdateOneRequiredWithoutProofsNestedInput
+  }
+
+  export type DeliveryProofUncheckedUpdateWithoutBranchOrderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    courierId?: StringFieldUpdateOperationsInput | string
+    proofUrl?: StringFieldUpdateOperationsInput | string
+    proofStorageId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliveryProofUncheckedUpdateManyWithoutBranchOrderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    courierId?: StringFieldUpdateOperationsInput | string
+    proofUrl?: StringFieldUpdateOperationsInput | string
+    proofStorageId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type CourierCreateManyDeliveryCompanyInput = {
     id?: string
+    userId?: string | null
     photo_url: string
     photo_id: string
     phoneNumber: string
@@ -71284,6 +76674,7 @@ export namespace Prisma {
     plateNumber: string
     isVerified?: boolean
     isBanned?: boolean
+    isActive?: boolean
   }
 
   export type BranchOrderCreateManyDeliveryCompanyInput = {
@@ -71300,6 +76691,21 @@ export namespace Prisma {
     courierId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type StaffInvitationCreateManyDeliveryCompanyInput = {
+    id?: string
+    email: string
+    role: $Enums.Role
+    brandId?: string | null
+    branchId?: string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
+    tokenHash: string
+    expiresAt: Date | string
+    acceptedAt?: Date | string | null
+    revokedAt?: Date | string | null
+    createdById: string
+    createdAt?: Date | string
   }
 
   export type DeliveryCompanyTransactionCreateManyDeliveryCompanyInput = {
@@ -71322,11 +76728,15 @@ export namespace Prisma {
     plateNumber?: StringFieldUpdateOperationsInput | string
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneWithoutCourierProfileNestedInput
     orders?: BranchOrderUpdateManyWithoutCourierNestedInput
+    proofs?: DeliveryProofUpdateManyWithoutCourierNestedInput
   }
 
   export type CourierUncheckedUpdateWithoutDeliveryCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     photo_url?: StringFieldUpdateOperationsInput | string
     photo_id?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -71334,11 +76744,14 @@ export namespace Prisma {
     plateNumber?: StringFieldUpdateOperationsInput | string
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     orders?: BranchOrderUncheckedUpdateManyWithoutCourierNestedInput
+    proofs?: DeliveryProofUncheckedUpdateManyWithoutCourierNestedInput
   }
 
   export type CourierUncheckedUpdateManyWithoutDeliveryCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     photo_url?: StringFieldUpdateOperationsInput | string
     photo_id?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
@@ -71346,6 +76759,7 @@ export namespace Prisma {
     plateNumber?: StringFieldUpdateOperationsInput | string
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isBanned?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type BranchOrderUpdateWithoutDeliveryCompanyInput = {
@@ -71363,6 +76777,8 @@ export namespace Prisma {
     brandBranch?: BrandBranchUpdateOneRequiredWithoutOrdersNestedInput
     courier?: CourierUpdateOneWithoutOrdersNestedInput
     orderItems?: OrderItemUpdateManyWithoutBranchOrderNestedInput
+    statusHistory?: BranchOrderStatusHistoryUpdateManyWithoutBranchOrderNestedInput
+    deliveryProofs?: DeliveryProofUpdateManyWithoutBranchOrderNestedInput
   }
 
   export type BranchOrderUncheckedUpdateWithoutDeliveryCompanyInput = {
@@ -71380,6 +76796,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderItems?: OrderItemUncheckedUpdateManyWithoutBranchOrderNestedInput
+    statusHistory?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutBranchOrderNestedInput
+    deliveryProofs?: DeliveryProofUncheckedUpdateManyWithoutBranchOrderNestedInput
   }
 
   export type BranchOrderUncheckedUpdateManyWithoutDeliveryCompanyInput = {
@@ -71396,6 +76814,51 @@ export namespace Prisma {
     courierId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StaffInvitationUpdateWithoutDeliveryCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brand?: BrandUpdateOneWithoutStaffInvitationsNestedInput
+    branch?: BrandBranchUpdateOneWithoutStaffInvitationsNestedInput
+    creator?: UserUpdateOneRequiredWithoutCreatedStaffInvitationsNestedInput
+  }
+
+  export type StaffInvitationUncheckedUpdateWithoutDeliveryCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StaffInvitationUncheckedUpdateManyWithoutDeliveryCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    courierProfile?: NullableJsonNullValueInput | InputJsonValue
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DeliveryCompanyTransactionUpdateWithoutDeliveryCompanyInput = {
@@ -71447,6 +76910,14 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type DeliveryProofCreateManyCourierInput = {
+    id?: string
+    branchOrderId: string
+    proofUrl: string
+    proofStorageId: string
+    createdAt?: Date | string
+  }
+
   export type BranchOrderUpdateWithoutCourierInput = {
     branchOrderId?: StringFieldUpdateOperationsInput | string
     status?: EnumorderStatusFieldUpdateOperationsInput | $Enums.orderStatus
@@ -71462,6 +76933,8 @@ export namespace Prisma {
     brandBranch?: BrandBranchUpdateOneRequiredWithoutOrdersNestedInput
     deliveryCompany?: D_CompanyUpdateOneWithoutOrdersNestedInput
     orderItems?: OrderItemUpdateManyWithoutBranchOrderNestedInput
+    statusHistory?: BranchOrderStatusHistoryUpdateManyWithoutBranchOrderNestedInput
+    deliveryProofs?: DeliveryProofUpdateManyWithoutBranchOrderNestedInput
   }
 
   export type BranchOrderUncheckedUpdateWithoutCourierInput = {
@@ -71479,6 +76952,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderItems?: OrderItemUncheckedUpdateManyWithoutBranchOrderNestedInput
+    statusHistory?: BranchOrderStatusHistoryUncheckedUpdateManyWithoutBranchOrderNestedInput
+    deliveryProofs?: DeliveryProofUncheckedUpdateManyWithoutBranchOrderNestedInput
   }
 
   export type BranchOrderUncheckedUpdateManyWithoutCourierInput = {
@@ -71495,6 +76970,30 @@ export namespace Prisma {
     deliveryCompanyId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliveryProofUpdateWithoutCourierInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    proofUrl?: StringFieldUpdateOperationsInput | string
+    proofStorageId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branchOrder?: BranchOrderUpdateOneRequiredWithoutDeliveryProofsNestedInput
+  }
+
+  export type DeliveryProofUncheckedUpdateWithoutCourierInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    branchOrderId?: StringFieldUpdateOperationsInput | string
+    proofUrl?: StringFieldUpdateOperationsInput | string
+    proofStorageId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliveryProofUncheckedUpdateManyWithoutCourierInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    branchOrderId?: StringFieldUpdateOperationsInput | string
+    proofUrl?: StringFieldUpdateOperationsInput | string
+    proofStorageId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

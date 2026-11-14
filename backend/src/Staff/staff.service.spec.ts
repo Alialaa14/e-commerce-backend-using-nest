@@ -108,6 +108,117 @@ describe('StaffService', () => {
     );
   });
 
+  it('lets an admin invite a user to an unclaimed delivery-company profile', async () => {
+    let createInput: unknown;
+    const create = jest.fn((input: unknown) => {
+      createInput = input;
+      return Promise.resolve({
+        id: 'invitation-1',
+        email: 'dispatcher@example.com',
+        role: Role.deliveryC,
+        expiresAt: new Date(),
+        brandId: null,
+        branchId: null,
+        deliveryCompanyId: 'company-1',
+      });
+    });
+    const prismaService = {
+      prisma: {
+        d_Company: {
+          findFirst: jest.fn().mockResolvedValue({
+            deliveryCompany: 'company-1',
+          }),
+        },
+        $transaction: runTransaction({
+          user: { findFirst: jest.fn().mockResolvedValue(null) },
+          staffInvitation: {
+            updateMany: jest.fn().mockResolvedValue({ count: 0 }),
+            findFirst: jest.fn().mockResolvedValue(null),
+            create,
+          },
+        }),
+      },
+    } as unknown as PrismaService;
+    const service = new StaffService(
+      prismaService,
+      mailService,
+      configService as never,
+    );
+
+    await service.inviteDeliveryCompany(
+      { sub: 'admin-1', role: Role.admin },
+      'company-1',
+      ' DISPATCHER@example.com ',
+    );
+
+    const createdData = asRecord(asRecord(createInput).data);
+    expect(createdData.email).toBe('dispatcher@example.com');
+    expect(createdData.role).toBe(Role.deliveryC);
+    expect(createdData.deliveryCompanyId).toBe('company-1');
+    expect(createdData.createdById).toBe('admin-1');
+  });
+
+  it('lets a delivery-company user invite a courier with normalized contact data', async () => {
+    let createInput: unknown;
+    const create = jest.fn((input: unknown) => {
+      createInput = input;
+      return Promise.resolve({
+        id: 'invitation-2',
+        email: 'courier@example.com',
+        role: Role.courier,
+        expiresAt: new Date(),
+        brandId: null,
+        branchId: null,
+        deliveryCompanyId: 'company-1',
+      });
+    });
+    const prismaService = {
+      prisma: {
+        d_Company: {
+          findFirst: jest.fn().mockResolvedValue({
+            deliveryCompany: 'company-1',
+          }),
+        },
+        $transaction: runTransaction({
+          user: { findFirst: jest.fn().mockResolvedValue(null) },
+          staffInvitation: {
+            updateMany: jest.fn().mockResolvedValue({ count: 0 }),
+            findFirst: jest.fn().mockResolvedValue(null),
+            create,
+          },
+        }),
+      },
+    } as unknown as PrismaService;
+    const service = new StaffService(
+      prismaService,
+      mailService,
+      configService as never,
+    );
+
+    await service.inviteCourier(
+      { sub: 'manager-1', role: Role.deliveryC },
+      {
+        email: ' COURIER@example.com ',
+        phoneNumber: '01012345678',
+        photo_url: 'https://cdn.example.com/courier.jpg',
+        photo_id: 'courier-photo',
+        documents: ['nationalId', 'drivingLicense'],
+        plateNumber: 'ABC-123',
+      },
+    );
+
+    const createdData = asRecord(asRecord(createInput).data);
+    expect(createdData.role).toBe(Role.courier);
+    expect(createdData.deliveryCompanyId).toBe('company-1');
+    expect(asRecord(createdData.courierProfile)).toEqual({
+      phoneNumber: '+201012345678',
+      photo_url: 'https://cdn.example.com/courier.jpg',
+      photo_id: 'courier-photo',
+      documents: ['nationalId', 'drivingLicense'],
+      plateNumber: 'ABC-123',
+    });
+  });
+
   it('does not let a brand owner invite a manager into another brand branch', async () => {
     const create = jest.fn();
     const branchFindFirst = jest.fn().mockResolvedValue(null);
@@ -319,6 +430,144 @@ describe('StaffService', () => {
         branchId: 'branch-1',
         userId: 'user-1',
         role: 'manager',
+      },
+    });
+  });
+
+  it('links an invited delivery-company user to the invited company', async () => {
+    const invitation = {
+      id: 'invitation-1',
+      email: 'dispatcher@example.com',
+      role: Role.deliveryC,
+      brandId: null,
+      branchId: null,
+      deliveryCompanyId: 'company-1',
+      courierProfile: null,
+    };
+    const user = {
+      id: 'user-1',
+      username: 'Dispatcher',
+      email: invitation.email,
+      role: Role.deliveryC,
+      brandId: null,
+      branchId: null,
+    };
+    const companyUpdateMany = jest.fn().mockResolvedValue({ count: 1 });
+    const transaction = {
+      staffInvitation: {
+        findFirst: jest.fn().mockResolvedValue(invitation),
+        updateMany: jest.fn().mockResolvedValue({ count: 1 }),
+      },
+      user: { create: jest.fn().mockResolvedValue(user) },
+      d_Company: {
+        findFirst: jest.fn().mockResolvedValue({
+          deliveryCompany: 'company-1',
+        }),
+        updateMany: companyUpdateMany,
+      },
+    };
+    const prismaService = {
+      prisma: { $transaction: runTransaction(transaction) },
+    } as unknown as PrismaService;
+    const service = new StaffService(
+      prismaService,
+      mailService,
+      configService as never,
+    );
+
+    await expect(
+      service.acceptInvitation(
+        'invitation-token',
+        invitation.email,
+        'Dispatcher',
+        'SecurePass12345',
+      ),
+    ).resolves.toEqual(user);
+
+    expect(companyUpdateMany).toHaveBeenCalledWith({
+      where: {
+        deliveryCompany: 'company-1',
+        ownerUserId: null,
+        isBanned: false,
+      },
+      data: { ownerUserId: user.id },
+    });
+  });
+
+  it('creates a courier user and courier profile from an accepted company invite', async () => {
+    const courierProfile = {
+      phoneNumber: '+201012345678',
+      photo_url: 'https://cdn.example.com/courier.jpg',
+      photo_id: 'courier-photo',
+      documents: ['nationalId', 'drivingLicense'],
+      plateNumber: 'ABC-123',
+    };
+    const invitation = {
+      id: 'invitation-2',
+      email: 'courier@example.com',
+      role: Role.courier,
+      brandId: null,
+      branchId: null,
+      deliveryCompanyId: 'company-1',
+      courierProfile,
+    };
+    const user = {
+      id: 'courier-user-1',
+      username: 'Courier One',
+      email: invitation.email,
+      role: Role.courier,
+      brandId: null,
+      branchId: null,
+    };
+    let userCreateInput: unknown;
+    const userCreate = jest.fn((input: unknown) => {
+      userCreateInput = input;
+      return Promise.resolve(user);
+    });
+    const courierCreate = jest.fn().mockResolvedValue({
+      id: 'courier-1',
+      userId: user.id,
+      deliveryCompanyId: 'company-1',
+      ...courierProfile,
+    });
+    const transaction = {
+      staffInvitation: {
+        findFirst: jest.fn().mockResolvedValue(invitation),
+        updateMany: jest.fn().mockResolvedValue({ count: 1 }),
+      },
+      user: { create: userCreate },
+      courier: { create: courierCreate },
+      d_Company: {
+        findFirst: jest.fn().mockResolvedValue({
+          deliveryCompany: 'company-1',
+        }),
+      },
+    };
+    const prismaService = {
+      prisma: { $transaction: runTransaction(transaction) },
+    } as unknown as PrismaService;
+    const service = new StaffService(
+      prismaService,
+      mailService,
+      configService as never,
+    );
+
+    await service.acceptInvitation(
+      'invitation-token',
+      invitation.email,
+      'Courier One',
+      'SecurePass12345',
+    );
+
+    const createdUser = asRecord(asRecord(userCreateInput).data);
+    expect(createdUser.email).toBe(invitation.email);
+    expect(createdUser.phone).toBe(courierProfile.phoneNumber);
+    expect(createdUser.role).toBe(Role.courier);
+    expect(courierCreate).toHaveBeenCalledWith({
+      data: {
+        userId: user.id,
+        deliveryCompanyId: 'company-1',
+        ...courierProfile,
       },
     });
   });

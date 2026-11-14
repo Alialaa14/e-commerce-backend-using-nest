@@ -96,9 +96,58 @@ describe('SocketServices branch authorization', () => {
     expect(join).toHaveBeenCalledWith('branch:branch-1');
     expect(join).not.toHaveBeenCalledWith('branch-managers');
   });
+
+  it('joins a courier to a private room for delivery assignment events', async () => {
+    const userService = {
+      getCurrentUser: jest.fn().mockResolvedValue({
+        id: 'courier-user-1',
+        role: 'courier',
+      }),
+    } as unknown as UserService;
+    const service = new SocketServices(
+      {} as TokenService,
+      userService,
+      {} as PrismaService,
+    );
+    const join = jest.fn();
+    const client = {
+      id: 'socket-1',
+      data: { user: { sub: 'courier-user-1' } },
+      disconnect: jest.fn(),
+      join,
+    } as unknown as Socket;
+
+    await service.handleConnection(client);
+
+    expect(join).toHaveBeenCalledWith('user:courier-user-1');
+  });
 });
 
 describe('SocketServices order notifications', () => {
+  it('sends delivery assignment events only to the assigned courier room', () => {
+    const service = new SocketServices(
+      {} as TokenService,
+      {} as UserService,
+      {} as PrismaService,
+    );
+    const emit = jest.fn();
+    const to = jest.fn().mockReturnValue({ emit });
+    Object.assign(service, { server: { to } });
+
+    service.notifyCourierAssigned('courier-user-1', {
+      branchOrderId: 'branch-order-1',
+      parentOrderId: 'parent-order-1',
+      status: 'readytoship',
+    });
+
+    expect(to).toHaveBeenCalledWith('user:courier-user-1');
+    expect(emit).toHaveBeenCalledWith('delivery:assigned', {
+      branchOrderId: 'branch-order-1',
+      parentOrderId: 'parent-order-1',
+      status: 'readytoship',
+    });
+  });
+
   it('sends new orders to the brand owner and the matching branch rooms', () => {
     const service = new SocketServices(
       {} as TokenService,
@@ -134,14 +183,28 @@ describe('SocketServices order notifications', () => {
     expect(to).toHaveBeenCalledWith('brand:brand-1');
     expect(to).toHaveBeenCalledWith('branch:branch-1');
     expect(to).toHaveBeenCalledWith('branch:branch-2');
-    expect(emit).toHaveBeenCalledWith(
-      'order:created',
-      expect.objectContaining({
-        branchOrders: expect.arrayContaining([
-          expect.objectContaining({ branchOrderId: 'branch-order-1' }),
-        ]),
-      }),
-    );
+    expect(emit).toHaveBeenNthCalledWith(1, 'order:created', {
+      brandId: 'brand-1',
+      parentOrderId: 'order-1',
+      address: 'Test address',
+      phoneNumber: '+201000000000',
+      branchOrders: [
+        {
+          branchOrderId: 'branch-order-1',
+          brandBranchId: 'branch-1',
+          status: 'ordering',
+          total: 50,
+          orderItems: [],
+        },
+        {
+          branchOrderId: 'branch-order-2',
+          brandBranchId: 'branch-2',
+          status: 'ordering',
+          total: 50,
+          orderItems: [],
+        },
+      ],
+    });
   });
 
   it('sends branch order updates only to that branch room', () => {

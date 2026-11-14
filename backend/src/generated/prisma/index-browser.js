@@ -253,6 +253,8 @@ exports.Prisma.StaffInvitationScalarFieldEnum = {
   role: 'role',
   brandId: 'brandId',
   branchId: 'branchId',
+  deliveryCompanyId: 'deliveryCompanyId',
+  courierProfile: 'courierProfile',
   tokenHash: 'tokenHash',
   expiresAt: 'expiresAt',
   acceptedAt: 'acceptedAt',
@@ -489,6 +491,26 @@ exports.Prisma.BranchOrderScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.BranchOrderStatusHistoryScalarFieldEnum = {
+  id: 'id',
+  branchOrderId: 'branchOrderId',
+  fromStatus: 'fromStatus',
+  toStatus: 'toStatus',
+  changedByUserId: 'changedByUserId',
+  changedByRole: 'changedByRole',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.DeliveryProofScalarFieldEnum = {
+  id: 'id',
+  branchOrderId: 'branchOrderId',
+  courierId: 'courierId',
+  proofUrl: 'proofUrl',
+  proofStorageId: 'proofStorageId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.OrderItemScalarFieldEnum = {
   id: 'id',
   branchOrderId: 'branchOrderId',
@@ -504,6 +526,7 @@ exports.Prisma.D_CompanyScalarFieldEnum = {
   name: 'name',
   address: 'address',
   phoneNumber: 'phoneNumber',
+  ownerUserId: 'ownerUserId',
   isVerified: 'isVerified',
   isBanned: 'isBanned',
   balance: 'balance'
@@ -523,6 +546,7 @@ exports.Prisma.DeliveryCompanyTransactionScalarFieldEnum = {
 
 exports.Prisma.CourierScalarFieldEnum = {
   id: 'id',
+  userId: 'userId',
   photo_url: 'photo_url',
   photo_id: 'photo_id',
   phoneNumber: 'phoneNumber',
@@ -530,6 +554,7 @@ exports.Prisma.CourierScalarFieldEnum = {
   plateNumber: 'plateNumber',
   isVerified: 'isVerified',
   isBanned: 'isBanned',
+  isActive: 'isActive',
   deliveryCompanyId: 'deliveryCompanyId'
 };
 
@@ -748,6 +773,8 @@ exports.Prisma.ModelName = {
   ProductAvailability: 'ProductAvailability',
   ParentOrder: 'ParentOrder',
   BranchOrder: 'BranchOrder',
+  BranchOrderStatusHistory: 'BranchOrderStatusHistory',
+  DeliveryProof: 'DeliveryProof',
   OrderItem: 'OrderItem',
   D_Company: 'D_Company',
   DeliveryCompanyTransaction: 'DeliveryCompanyTransaction',
